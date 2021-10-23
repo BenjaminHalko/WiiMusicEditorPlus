@@ -1,0 +1,352 @@
+([('WiiMusicEditorPlus.exe',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
+   'Plus\\build\\WiiMusicEditorPlus\\WiiMusicEditorPlus.exe',
+   'EXECUTABLE'),
+  ('WiiMusicEditorPlus.exe.manifest',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
+   'Plus\\build\\WiiMusicEditorPlus\\WiiMusicEditorPlus.exe.manifest',
+   'BINARY'),
+  ('api-ms-win-crt-runtime-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-runtime-l1-1-0.dll',
+   'BINARY'),
+  ('VCRUNTIME140.dll',
+   'D:\\Program Files\\Python39\\VCRUNTIME140.dll',
+   'BINARY'),
+  ('api-ms-win-crt-stdio-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-stdio-l1-1-0.dll',
+   'BINARY'),
+  ('python39.dll', 'D:\\Program Files\\Python39\\python39.dll', 'BINARY'),
+  ('api-ms-win-crt-locale-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-locale-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-heap-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-heap-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-math-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-math-l1-1-0.dll',
+   'BINARY'),
+  ('ucrtbase.dll', 'C:\\WINDOWS\\system32\\ucrtbase.dll', 'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platforms\\qminimal.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qminimal.dll',
+   'BINARY'),
+  ('d3dcompiler_47.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\d3dcompiler_47.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
+   'BINARY'),
+  ('opengl32sw.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\opengl32sw.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qjpeg.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qjpeg.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
+   'BINARY'),
+  ('libEGL.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libEGL.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platforms\\qwebgl.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwebgl.dll',
+   'BINARY'),
+  ('libGLESv2.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libGLESv2.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platforms\\qoffscreen.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qoffscreen.dll',
+   'BINARY'),
+  ('_decimal', 'D:\\Program Files\\Python39\\DLLs\\_decimal.pyd', 'EXTENSION'),
+  ('_hashlib', 'D:\\Program Files\\Python39\\DLLs\\_hashlib.pyd', 'EXTENSION'),
+  ('unicodedata',
+   'D:\\Program Files\\Python39\\DLLs\\unicodedata.pyd',
+   'EXTENSION'),
+  ('_lzma', 'D:\\Program Files\\Python39\\DLLs\\_lzma.pyd', 'EXTENSION'),
+  ('_bz2', 'D:\\Program Files\\Python39\\DLLs\\_bz2.pyd', 'EXTENSION'),
+  ('select', 'D:\\Program Files\\Python39\\DLLs\\select.pyd', 'EXTENSION'),
+  ('_socket', 'D:\\Program Files\\Python39\\DLLs\\_socket.pyd', 'EXTENSION'),
+  ('_ssl', 'D:\\Program Files\\Python39\\DLLs\\_ssl.pyd', 'EXTENSION'),
+  ('_multiprocessing',
+   'D:\\Program Files\\Python39\\DLLs\\_multiprocessing.pyd',
+   'EXTENSION'),
+  ('pyexpat', 'D:\\Program Files\\Python39\\DLLs\\pyexpat.pyd', 'EXTENSION'),
+  ('_ctypes', 'D:\\Program Files\\Python39\\DLLs\\_ctypes.pyd', 'EXTENSION'),
+  ('_queue', 'D:\\Program Files\\Python39\\DLLs\\_queue.pyd', 'EXTENSION'),
+  ('_overlapped',
+   'D:\\Program Files\\Python39\\DLLs\\_overlapped.pyd',
+   'EXTENSION'),
+  ('_asyncio', 'D:\\Program Files\\Python39\\DLLs\\_asyncio.pyd', 'EXTENSION'),
+  ('PyQt5.QtGui',
+   'D:\\Program Files\\Python39\\lib\\site-packages\\PyQt5\\QtGui.pyd',
+   'EXTENSION'),
+  ('_uuid', 'D:\\Program Files\\Python39\\DLLs\\_uuid.pyd', 'EXTENSION'),
+  ('_cffi_backend',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\_cffi_backend.cp39-win_amd64.pyd',
+   'EXTENSION'),
+  ('cryptography.hazmat.bindings._openssl',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\cryptography\\hazmat\\bindings\\_openssl.pyd',
+   'EXTENSION'),
+  ('cryptography.hazmat.bindings._rust',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\cryptography\\hazmat\\bindings\\_rust.pyd',
+   'EXTENSION'),
+  ('bcrypt._bcrypt',
+   'D:\\Program Files\\Python39\\lib\\site-packages\\bcrypt\\_bcrypt.pyd',
+   'EXTENSION'),
+  ('PyQt5.QtWidgets',
+   'D:\\Program Files\\Python39\\lib\\site-packages\\PyQt5\\QtWidgets.pyd',
+   'EXTENSION'),
+  ('PyQt5.QtCore',
+   'D:\\Program Files\\Python39\\lib\\site-packages\\PyQt5\\QtCore.pyd',
+   'EXTENSION'),
+  ('PyQt5.sip',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\sip.cp39-win_amd64.pyd',
+   'EXTENSION'),
+  ('Qt5Core.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Core.dll',
+   'BINARY'),
+  ('Qt5Gui.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Gui.dll',
+   'BINARY'),
+  ('Qt5DBus.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5DBus.dll',
+   'BINARY'),
+  ('Qt5Svg.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Svg.dll',
+   'BINARY'),
+  ('MSVCP140.dll', 'C:\\WINDOWS\\system32\\MSVCP140.dll', 'BINARY'),
+  ('VCRUNTIME140_1.dll',
+   'D:\\Program Files\\Python39\\VCRUNTIME140_1.dll',
+   'BINARY'),
+  ('Qt5Network.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Network.dll',
+   'BINARY'),
+  ('Qt5Quick.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Quick.dll',
+   'BINARY'),
+  ('Qt5WebSockets.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5WebSockets.dll',
+   'BINARY'),
+  ('Qt5Widgets.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Widgets.dll',
+   'BINARY'),
+  ('libcrypto-1_1.dll',
+   'D:\\Program Files\\Python39\\DLLs\\libcrypto-1_1.dll',
+   'BINARY'),
+  ('libssl-1_1.dll',
+   'D:\\Program Files\\Python39\\DLLs\\libssl-1_1.dll',
+   'BINARY'),
+  ('libffi-7.dll', 'D:\\Program Files\\Python39\\DLLs\\libffi-7.dll', 'BINARY'),
+  ('python3.dll', 'D:\\Program Files\\Python39\\python3.dll', 'BINARY'),
+  ('MSVCP140_1.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\MSVCP140_1.dll',
+   'BINARY'),
+  ('Qt5Qml.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Qml.dll',
+   'BINARY'),
+  ('Qt5QmlModels.dll',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5QmlModels.dll',
+   'BINARY'),
+  ('base_library.zip',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
+   'Plus\\build\\WiiMusicEditorPlus\\base_library.zip',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_es.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_es.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_lv.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_lv.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_da.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_da.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_it.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_it.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\LICENSE.APACHE',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\LICENSE.APACHE',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_gd.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_gd.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\top_level.txt',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\top_level.txt',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_uk.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_uk.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\METADATA',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\METADATA',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\INSTALLER',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\INSTALLER',
+   'DATA'),
+  ('certifi\\cacert.pem',
+   'D:\\Program Files\\Python39\\lib\\site-packages\\certifi\\cacert.pem',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\LICENSE',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\LICENSE',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\LICENSE.PSF',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\LICENSE.PSF',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_en.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_en.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_fr.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fr.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ar.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ar.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_hu.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_hu.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_bg.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_bg.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ru.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ru.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_he.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_he.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_sk.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_sk.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\LICENSE.BSD',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\LICENSE.BSD',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\WHEEL',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\WHEEL',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ko.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ko.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_tr.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_tr.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ja.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ja.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ca.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ca.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+   'DATA'),
+  ('cryptography-35.0.0.dist-info\\RECORD',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\cryptography-35.0.0.dist-info\\RECORD',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_de.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_de.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_cs.qm',
+   'D:\\Program '
+   'Files\\Python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_cs.qm',
+   'DATA'),
+  ('images\\Title.png',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
+   'Plus\\images\\Title.png',
+   'DATA')],)

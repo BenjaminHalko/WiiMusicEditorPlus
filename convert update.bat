@@ -1,0 +1,1 @@
+pyuic5 -o update_ui.py Update.ui
