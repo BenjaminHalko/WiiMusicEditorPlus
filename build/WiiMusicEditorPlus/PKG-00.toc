@@ -1,5 +1,5 @@
-('D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
- 'Plus\\build\\WiiMusicEditorPlus\\PKG-00.pkg',
+('D:\\Benjaminz\\Projects\\Custom Wii '
+ 'Music\\WiiMusicEditorPlus\\build\\WiiMusicEditorPlus\\PKG-00.pkg',
  {'BINARY': 1,
   'DATA': 1,
   'EXECUTABLE': 1,
@@ -9,8 +9,8 @@
   'PYZ': 0,
   'SPLASH': 1},
  [('PYZ-00.pyz',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\build\\WiiMusicEditorPlus\\PYZ-00.pyz',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\build\\WiiMusicEditorPlus\\PYZ-00.pyz',
    'PYZ'),
   ('struct', 'd:\\program files\\python39\\lib\\struct.pyo', 'PYMODULE'),
   ('pyimod01_os_path',
@@ -54,100 +54,52 @@
    'Files\\Python39\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pyqt5.py',
    'PYSOURCE'),
   ('WiiMusicEditorPlus',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\WiiMusicEditorPlus.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\WiiMusicEditorPlus.py',
    'PYSOURCE'),
+  ('api-ms-win-crt-runtime-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-runtime-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-locale-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-locale-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-heap-l1-1-0.dll',
+   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-heap-l1-1-0.dll',
+   'BINARY'),
   ('VCRUNTIME140.dll',
    'd:\\program files\\python39\\VCRUNTIME140.dll',
    'BINARY'),
+  ('python39.dll', 'd:\\program files\\python39\\python39.dll', 'BINARY'),
   ('api-ms-win-crt-stdio-l1-1-0.dll',
    'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-stdio-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-crt-math-l1-1-0.dll',
    'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-math-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-crt-heap-l1-1-0.dll',
-   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-heap-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-crt-locale-l1-1-0.dll',
-   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-locale-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-crt-runtime-l1-1-0.dll',
-   'D:\\Program Files\\GeckoLoader-7.1.0\\api-ms-win-crt-runtime-l1-1-0.dll',
-   'BINARY'),
-  ('python39.dll', 'd:\\program files\\python39\\python39.dll', 'BINARY'),
   ('ucrtbase.dll', 'C:\\WINDOWS\\system32\\ucrtbase.dll', 'BINARY'),
-  ('libEGL.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libEGL.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
-   'BINARY'),
   ('d3dcompiler_47.dll',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\d3dcompiler_47.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
-   'BINARY'),
-  ('libGLESv2.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libGLESv2.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
    'BINARY'),
   ('PyQt5\\Qt5\\plugins\\platforms\\qminimal.dll',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qminimal.dll',
    'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
+  ('libGLESv2.dll',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libGLESv2.dll',
    'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
-   'BINARY'),
-  ('PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll',
    'BINARY'),
   ('PyQt5\\Qt5\\plugins\\platforms\\qoffscreen.dll',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qoffscreen.dll',
    'BINARY'),
-  ('opengl32sw.dll',
+  ('PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\opengl32sw.dll',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll',
    'BINARY'),
   ('PyQt5\\Qt5\\plugins\\imageformats\\qjpeg.dll',
    'D:\\program '
@@ -156,6 +108,54 @@
   ('PyQt5\\Qt5\\plugins\\platforms\\qwebgl.dll',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwebgl.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qico.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll',
+   'BINARY'),
+  ('libEGL.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\libEGL.dll',
+   'BINARY'),
+  ('opengl32sw.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\opengl32sw.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll',
+   'BINARY'),
+  ('PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll',
    'BINARY'),
   ('_decimal', 'd:\\program files\\python39\\DLLs\\_decimal.pyd', 'EXTENSION'),
   ('select', 'd:\\program files\\python39\\DLLs\\select.pyd', 'EXTENSION'),
@@ -194,37 +194,41 @@
    'd:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Gui.dll',
    'BINARY'),
-  ('MSVCP140.dll', 'C:\\WINDOWS\\system32\\MSVCP140.dll', 'BINARY'),
   ('Qt5Core.dll',
    'd:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Core.dll',
    'BINARY'),
   ('VCRUNTIME140_1.dll',
-   'd:\\program files\\python39\\VCRUNTIME140_1.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\VCRUNTIME140_1.dll',
    'BINARY'),
-  ('Qt5Svg.dll',
-   'd:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Svg.dll',
+  ('MSVCP140.dll',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\MSVCP140.dll',
    'BINARY'),
   ('Qt5DBus.dll',
    'd:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5DBus.dll',
    'BINARY'),
-  ('Qt5Widgets.dll',
+  ('Qt5Quick.dll',
    'd:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Widgets.dll',
-   'BINARY'),
-  ('Qt5Network.dll',
-   'd:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Network.dll',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Quick.dll',
    'BINARY'),
   ('Qt5WebSockets.dll',
    'd:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5WebSockets.dll',
    'BINARY'),
-  ('Qt5Quick.dll',
+  ('Qt5Network.dll',
    'd:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Quick.dll',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Network.dll',
+   'BINARY'),
+  ('Qt5Svg.dll',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Svg.dll',
+   'BINARY'),
+  ('Qt5Widgets.dll',
+   'd:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Widgets.dll',
    'BINARY'),
   ('libffi-7.dll', 'd:\\program files\\python39\\DLLs\\libffi-7.dll', 'BINARY'),
   ('libcrypto-1_1.dll',
@@ -247,12 +251,67 @@
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5QmlModels.dll',
    'BINARY'),
   ('base_library.zip',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\build\\WiiMusicEditorPlus\\base_library.zip',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\build\\WiiMusicEditorPlus\\base_library.zip',
    'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+  ('PyQt5\\Qt5\\translations\\qtbase_da.qm',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_da.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_lv.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_lv.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ar.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ar.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_ca.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ca.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_bg.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_bg.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_fr.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fr.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_sk.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_sk.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_en.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_en.qm',
+   'DATA'),
+  ('certifi\\cacert.pem',
+   'd:\\program files\\python39\\lib\\site-packages\\certifi\\cacert.pem',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_it.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_it.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_es.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_es.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_gd.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_gd.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_uk.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_uk.qm',
    'DATA'),
   ('PyQt5\\Qt5\\translations\\qtbase_tr.qm',
    'D:\\program '
@@ -262,96 +321,41 @@
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ru.qm',
    'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_ar.qm',
+  ('PyQt5\\Qt5\\translations\\qtbase_cs.qm',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ar.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_uk.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_uk.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_it.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_it.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_ko.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ko.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_gd.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_gd.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_sk.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_sk.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_bg.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_bg.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_he.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_he.qm',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_cs.qm',
    'DATA'),
   ('PyQt5\\Qt5\\translations\\qtbase_ja.qm',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ja.qm',
    'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_cs.qm',
+  ('PyQt5\\Qt5\\translations\\qtbase_he.qm',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_cs.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_en.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_en.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_hu.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_hu.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_lv.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_lv.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_ca.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ca.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_da.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_da.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_fr.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fr.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_zh_TW.qm',
-   'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_es.qm',
-   'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_es.qm',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_he.qm',
    'DATA'),
   ('PyQt5\\Qt5\\translations\\qtbase_de.qm',
    'D:\\program '
    'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_de.qm',
    'DATA'),
-  ('PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+  ('PyQt5\\Qt5\\translations\\qtbase_ko.qm',
    'D:\\program '
-   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_pl.qm',
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_ko.qm',
    'DATA'),
-  ('certifi\\cacert.pem',
-   'd:\\program files\\python39\\lib\\site-packages\\certifi\\cacert.pem',
+  ('PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_fi.qm',
+   'DATA'),
+  ('PyQt5\\Qt5\\translations\\qtbase_hu.qm',
+   'D:\\program '
+   'files\\python39\\lib\\site-packages\\PyQt5\\Qt5\\translations\\qtbase_hu.qm',
    'DATA'),
   ('images\\Title.png',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\images\\Title.png',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\images\\Title.png',
    'DATA'),
   ('WiiMusicEditorPlus.exe.manifest',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\build\\WiiMusicEditorPlus\\WiiMusicEditorPlus.exe.manifest',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\build\\WiiMusicEditorPlus\\WiiMusicEditorPlus.exe.manifest',
    'BINARY'),
   ('pyi-windows-manifest-filename WiiMusicEditorPlus.exe.manifest',
    '',

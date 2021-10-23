@@ -1,5 +1,5 @@
-('D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
- 'Plus\\build\\WiiMusicEditorPlus\\PYZ-00.pyz',
+('D:\\Benjaminz\\Projects\\Custom Wii '
+ 'Music\\WiiMusicEditorPlus\\build\\WiiMusicEditorPlus\\PYZ-00.pyz',
  [('ssl', 'd:\\program files\\python39\\lib\\ssl.py', 'PYMODULE'),
   ('calendar', 'd:\\program files\\python39\\lib\\calendar.py', 'PYMODULE'),
   ('argparse', 'd:\\program files\\python39\\lib\\argparse.py', 'PYMODULE'),
@@ -476,14 +476,13 @@
   ('_strptime', 'd:\\program files\\python39\\lib\\_strptime.py', 'PYMODULE'),
   ('base64', 'd:\\program files\\python39\\lib\\base64.py', 'PYMODULE'),
   ('socket', 'd:\\program files\\python39\\lib\\socket.py', 'PYMODULE'),
+  ('_py_abc', 'd:\\program files\\python39\\lib\\_py_abc.py', 'PYMODULE'),
   ('tracemalloc',
    'd:\\program files\\python39\\lib\\tracemalloc.py',
    'PYMODULE'),
   ('stringprep', 'd:\\program files\\python39\\lib\\stringprep.py', 'PYMODULE'),
-  ('_py_abc', 'd:\\program files\\python39\\lib\\_py_abc.py', 'PYMODULE'),
   ('update',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\update.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\WiiMusicEditorPlus\\update.py',
    'PYMODULE'),
   ('requests',
    'd:\\program files\\python39\\lib\\site-packages\\requests\\__init__.py',
@@ -730,8 +729,8 @@
    'd:\\program files\\python39\\lib\\site-packages\\urllib3\\__init__.py',
    'PYMODULE'),
   ('update_ui',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\update_ui.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\update_ui.py',
    'PYMODULE'),
   ('dirsync',
    'd:\\program files\\python39\\lib\\site-packages\\dirsync\\__init__.py',
@@ -753,8 +752,7 @@
    'd:\\program files\\python39\\lib\\site-packages\\dirsync\\version.py',
    'PYMODULE'),
   ('editor',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\editor.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii Music\\WiiMusicEditorPlus\\editor.py',
    'PYMODULE'),
   ('mido',
    'd:\\program files\\python39\\lib\\site-packages\\mido\\__init__.py',
@@ -834,12 +832,12 @@
    'd:\\program files\\python39\\lib\\site-packages\\mido\\ports.py',
    'PYMODULE'),
   ('main_window_ui',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\main_window_ui.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\main_window_ui.py',
    'PYMODULE'),
   ('resources_rc',
-   'D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor '
-   'Plus\\resources_rc.py',
+   'D:\\Benjaminz\\Projects\\Custom Wii '
+   'Music\\WiiMusicEditorPlus\\resources_rc.py',
    'PYMODULE'),
   ('PyQt5',
    'd:\\program files\\python39\\lib\\site-packages\\PyQt5\\__init__.py',

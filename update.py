@@ -1,6 +1,6 @@
 from os import path, mkdir
 from editor import ProgramPath, GetBeta, GetPlatform
-from shutil import copytree,move
+from shutil import move
 from tempfile import TemporaryDirectory
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -21,7 +21,6 @@ class Download(QThread):
 
     def run(self):
         with TemporaryDirectory() as directory:
-            directory = "D:\Benjaminz\\test"
             file = open(directory+"/downloaded.zip", "wb")
             with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-Windows.zip",stream=True) as response:
                 total =  int(response.headers['content-length'])
@@ -37,7 +36,7 @@ class Download(QThread):
             zip.extractall(directory+"/downloaded")
 
             move(directory+"/downloaded/WiiMusicEditorPlus.exe",directory+"/downloaded/Helper/Update/NewProgram.exe")
-            #sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Backup/Version.txt"),exclude=(r".git",))
+            sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Backup/Version.txt"))
         UpdateThread.done.emit()
 
 class UpdateWindow(QDialog,Ui_Update):

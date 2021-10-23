@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['WiiMusicEditorPlus.py'],
-             pathex=['D:\\Benjaminz\\Projects\\Custom Wii Music\\Wii Music Editor Plus'],
+             pathex=['D:\\Benjaminz\\Projects\\Custom Wii Music\\WiiMusicEditorPlus'],
              binaries=[],
              datas=[('images', 'images')],
              hiddenimports=[],
