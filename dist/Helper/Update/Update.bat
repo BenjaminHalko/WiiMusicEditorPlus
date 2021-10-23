@@ -3,8 +3,8 @@
 cd "%~dp0"
 cd..
 cd..
-cd..
-
-robocopy "%CD%\WiiMusicEditorNew" "%CD%" /MIR /XF settings.ini /XD .git WiiMusicEditorNew "%CD%\Helper\Backup" > nul
-
-WiiMusicEditor.bat
+timeout 1
+:loop
+move "%~dp0NewProgram.exe" WiiMusicEditorPlus.exe
+if exist "%~dp0NewProgram.exe" goto loop
+START WiiMusicEditorPlus.exe
