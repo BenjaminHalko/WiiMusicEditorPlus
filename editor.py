@@ -1,5 +1,6 @@
 #Imports
 import os
+import platform
 import getpass
 import time
 import subprocess
@@ -721,7 +722,12 @@ def GetBeta():
 	return True
 
 def GetPlatform():
-	return "Windows"
+	return ChooseFromOS(["Windows","Mac","Linux"])
+
+def ChooseFromOS(array):
+	if(platform.system() == "Windows"): return array[0]
+	elif(platform.system() == "Darwin"): return array[1]
+	else: return array[2]
 
 #Constants
 textFromTxt = []
