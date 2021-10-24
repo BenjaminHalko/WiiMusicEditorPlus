@@ -1,27 +1,13 @@
 #Imports
 import os
 import platform
-import getpass
-import time
 import subprocess
 import configparser
 import pathlib
 import tempfile
-from shutil import copyfile, rmtree, copytree
+from shutil import copyfile, rmtree
 from math import floor, ceil
-import webbrowser
-import zipfile
-
-#Special Imports
-while True:
-	try:
-		import requests
-		import mido
-		break
-	except ImportError:
-		print("Installing Dependencies...\n")
-		subprocess.run('python -m pip install --upgrade pip')
-		subprocess.run('pip install mido requests')
+import mido
 
 #Classes
 class SongClass:

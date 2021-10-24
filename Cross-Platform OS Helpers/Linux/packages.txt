@@ -1,2 +1,2 @@
-sudo apt install pip3 build-essential zlib1g-dev
-pip3 install pyinstaller dirsync PyQt5==5.12.2
+sudo apt install python3-pip build-essential zlib1g-dev
+pip3 install pyinstaller dirsync PyQt5==5.12.2 mido requests
