@@ -1,6 +1,6 @@
 from os import path, mkdir
-from editor import ProgramPath, GetBeta, GetPlatform
-from shutil import move
+from editor import ProgramPath, GetBeta
+from shutil import move, rmtree
 from tempfile import TemporaryDirectory
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -20,23 +20,26 @@ class Download(QThread):
     version = "null"
 
     def run(self):
-        with TemporaryDirectory() as directory:
-            file = open(directory+"/downloaded.zip", "wb")
-            with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-Windows.zip",stream=True) as response:
-                total =  int(response.headers['content-length'])
-                downloaded = 0
-                for i in response.iter_content(1024):
-                    downloaded+=len(i)
-                    file.write(i)
-                    UpdateThread.progress.emit(downloaded/total*100)
+        directory = ProgramPath+"/tmp"
+        if(not path.isdir(directory)): mkdir(directory)
+        file = open(directory+"/downloaded.zip", "wb")
+        with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-Windows.zip",stream=True) as response:
+            total =  int(response.headers['content-length'])
+            downloaded = 0
+            for i in response.iter_content(1024):
+                downloaded+=len(i)
+                file.write(i)
+                UpdateThread.progress.emit(downloaded/total*100)
 
-            file.close()
+        file.close()
 
-            zip = ZipFile(directory+"/downloaded.zip")
-            zip.extractall(directory+"/downloaded")
+        zip = ZipFile(directory+"/downloaded.zip")
+        zip.extractall(directory+"/downloaded")
+        zip.close()
 
-            move(directory+"/downloaded/WiiMusicEditorPlus.exe",directory+"/downloaded/Helper/Update/NewProgram.exe")
-            sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Backup/Version.txt"))
+        move(directory+"/downloaded/WiiMusicEditorPlus.exe",directory+"/downloaded/Helper/Update/NewProgram.exe")
+        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Update/Version.txt",r"tmp"))
+        rmtree(directory)
         UpdateThread.done.emit()
 
 class UpdateWindow(QDialog,Ui_Update):
@@ -53,28 +56,29 @@ class UpdateWindow(QDialog,Ui_Update):
             if(check == "null"):
                 self.MainWidget.setCurrentIndex(2)
 
-        self.NewUpdate_Update.clicked.connect(lambda: self.startupdate(check))
+        self.version = check
+        self.NewUpdate_Update.clicked.connect(self.startupdate)
         self.NewUpdate_Cancel.clicked.connect(self.closewindow)
         self.NoUpdate_Button.clicked.connect(self.closewindow)
 
         self.show()
         self.exec()
         
-    def startupdate(self,version):
+    def startupdate(self):
         global UpdateThread
         self.MainWidget.setCurrentIndex(1)
         UpdateThread = Download()
-        UpdateThread.version = version
+        UpdateThread.version = self.version
         UpdateThread.progress.connect(self.reportProgress)
-        UpdateThread.done.connect(lambda: self.restart(version))
+        UpdateThread.done.connect(self.restart)
         UpdateThread.start()
 
     def reportProgress(self,value):
         self.Update_Progress.setValue(value)
 
-    def restart(self,version):
+    def restart(self):
         file = open(ProgramPath+"/Helper/Update/Version.txt","w")
-        file.write(version)
+        file.write(self.version)
         file.close()
         Popen(ProgramPath+'/Helper/Update/Update.bat')
         self.close()

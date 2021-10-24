@@ -734,7 +734,7 @@ ProgramPath = os.path.dirname(os.path.realpath(__file__))
 if(not os.path.isfile(ProgramPath+"/WiiMusicPlus.ui")): ProgramPath = os.getcwd()
 
 #Variables
-loadedFile = "D:/Benjaminz/Projects/Custom Wii Music/Disks/Wii Music/DATA"
+loadedFile = ""
 loadedType = 0
 dolphinPath = ""
 dolphinSavePath = ""
