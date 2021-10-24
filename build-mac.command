@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd "`dirname "$0"`"
 pyinstaller -F -w --add-data images:images WiiMusicEditorPlus.py
 rm -r dist/Helper
 cp -r crossplatformhelpers/Linux/Helper dist/Helper
