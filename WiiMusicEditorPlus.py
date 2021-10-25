@@ -12,20 +12,21 @@ from update import UpdateWindow, CheckForUpdate
 
 os.chdir(ProgramPath)
 
-root = logging.getLogger()
-root.setLevel(logging.DEBUG)
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 handler = logging.StreamHandler(sys.stdout)
-root.setLevel(logging.DEBUG)
+logger.name = "logger"
+logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 fh = logging.FileHandler('log.txt')
 fh.setFormatter(formatter)
-root.addHandler(handler)
-root.addHandler(fh)
+logger.addHandler(handler)
+logger.addHandler(fh)
 
-root.info("Program Started in "+ProgramPath)
-root.info("OS: "+os.name)
+logger.info("Program Started in "+ProgramPath)
+logger.info("OS: "+os.name)
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
