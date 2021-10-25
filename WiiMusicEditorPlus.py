@@ -10,8 +10,6 @@ import editor
 from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 
-os.chdir(ProgramPath)
-
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -20,10 +18,10 @@ logger.name = "logger"
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
-fh = logging.FileHandler('log.txt')
-fh.setFormatter(formatter)
+#fh = logging.FileHandler('log.txt')
+#fh.setFormatter(formatter)
 logger.addHandler(handler)
-logger.addHandler(fh)
+#logger.addHandler(fh)
 
 logger.info("Program Started in "+ProgramPath)
 logger.info("OS: "+currentSystem)
