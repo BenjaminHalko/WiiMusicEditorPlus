@@ -18,7 +18,7 @@ logger.name = "logger"
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
-fh = logging.FileHandler('log.txt')
+fh = logging.FileHandler(ProgramPath+'/log.txt')
 fh.setFormatter(formatter)
 logger.addHandler(handler)
 logger.addHandler(fh)
