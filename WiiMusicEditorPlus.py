@@ -4,12 +4,26 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from main_window_ui import Ui_MainWindow
+import logging
 
 import editor
-from editor import ChangeName, Songs, Styles, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
+from editor import ChangeName, ProgramPath, Songs, Styles, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 
-print("Program Started in",editor.ProgramPath)
+root = logging.getLogger()
+root.setLevel(logging.DEBUG)
+
+handler = logging.StreamHandler(sys.stdout)
+root.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+fh = logging.FileHandler('log.txt')
+fh.setFormatter(formatter)
+root.addHandler(handler)
+root.addHandler(fh)
+
+root.info("Program Started in "+editor.ProgramPath)
+root.info("OS: "+os.name)
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
