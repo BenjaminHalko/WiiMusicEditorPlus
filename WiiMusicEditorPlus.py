@@ -7,7 +7,7 @@ from main_window_ui import Ui_MainWindow
 import logging
 
 import editor
-from editor import ChangeName, ProgramPath, Songs, Styles, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
+from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 
 os.chdir(ProgramPath)
@@ -26,7 +26,7 @@ logger.addHandler(handler)
 logger.addHandler(fh)
 
 logger.info("Program Started in "+ProgramPath)
-logger.info("OS: "+os.name)
+logger.info("OS: "+currentSystem)
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
