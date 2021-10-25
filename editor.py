@@ -724,7 +724,7 @@ gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
 gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 
-if(os.name == "Darwin"):
+if(os.system == "Darwin"):
 	import Cocoa
 	ProgramPath = Cocoa.NSBundle.mainBundle().bundlePath()
 elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
