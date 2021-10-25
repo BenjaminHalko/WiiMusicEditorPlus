@@ -228,6 +228,6 @@ if __name__ == "__main__":
     app = QApplication([])
     win = Window()
     win.show()
-    version = CheckForUpdate()
-    if(version != "null"): updater = UpdateWindow(win,version)
+    #version = CheckForUpdate()
+    #if(version != "null"): updater = UpdateWindow(win,version)
     sys.exit(app.exec())
