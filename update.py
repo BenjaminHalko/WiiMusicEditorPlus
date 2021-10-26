@@ -20,7 +20,7 @@ class Download(QThread):
 
     def run(self):
         directory = ProgramPath+"/tmp"
-        if(not path.isdir(directory)): mkdir(directory)
+        if(not path.exists(directory)): mkdir(directory)
         file = open(directory+"/downloaded.zip", "wb")
         with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-Windows.zip",stream=True) as response:
             total =  int(response.headers['content-length'])
@@ -50,7 +50,6 @@ class UpdateWindow(QDialog,Ui_Update):
         self.setupUi(self)
 
         if(check == False):
-            print("check")
             check = CheckForUpdate()
             if(check == "null"):
                 self.MainWidget.setCurrentIndex(2)

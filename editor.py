@@ -726,10 +726,7 @@ savePathIds = ["52363445","52363450","5236344a","5236344b"]
 gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 currentSystem = platform.system()
 
-if(currentSystem == "Darwin"):
-	import Cocoa
-	ProgramPath = Cocoa.NSBundle.mainBundle().bundlePath()
-elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
+if getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
