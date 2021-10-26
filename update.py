@@ -1,7 +1,6 @@
 from os import path, mkdir
 from editor import ProgramPath, GetBeta
 from shutil import move, rmtree
-from tempfile import TemporaryDirectory
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal
@@ -88,7 +87,7 @@ class UpdateWindow(QDialog,Ui_Update):
         self.close()
 
 def CheckForUpdate():
-    if(path.isfile(ProgramPath+"/Helper/Update/Version.txt")):
+    if(path.exists(ProgramPath+"/Helper/Update/Version.txt")):
         file = open(ProgramPath+"/Helper/Update/Version.txt")
         version = file.read()
         file.close()

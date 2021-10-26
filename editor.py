@@ -708,6 +708,7 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 def GetBeta():
 	return True
 
+#OS Specific
 def GetPlatform():
 	return ChooseFromOS(["Windows","Mac","Linux"])
 

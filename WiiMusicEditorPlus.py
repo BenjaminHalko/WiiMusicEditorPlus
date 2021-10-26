@@ -207,7 +207,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.menuBar().setNativeMenuBar(False)
 
-
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(lambda: MenuBar_Load_Rom(self))
         self.MB_CheckForUpdates.triggered.connect(lambda: MenuBar_CheckForUpdates(self))
