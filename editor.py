@@ -45,6 +45,11 @@ class StyleTypeValue:
 	QuickJam = 2
 	Menu = 3
 
+class LoadedFile:
+	def __init__(self,path,type):
+		self.path = path
+		self.type = type
+
 Songs = [
 SongClass(SongTypeValue.Regular,'A Little Night Music',6),
 SongClass(SongTypeValue.Regular,'American Patrol',11),
@@ -256,16 +261,16 @@ class LoadType:
 
 #Get File
 def GetBrsarPath():
-	if(os.path.isdir(loadedFile)):
-		return loadedFile+"/files/Sound/MusicStatic/rp_Music_sound.brsar"
+	if(os.path.isdir(file.path)):
+		return file.path+"/files/Sound/MusicStatic/rp_Music_sound.brsar"
 	else:
-		return loadedFile
+		return file.path
 
 def GetMessagePath():
-	if(os.path.isdir(loadedFile)):
-		return loadedFile+"/files/"+BasedOnRegion(regionNames)+"/Message"
+	if(os.path.isdir(file.path)):
+		return file.path+"/files/"+BasedOnRegion(regionNames)+"/Message"
 	else:
-		return os.path.dirname(loadedFile)
+		return os.path.dirname(file.path)
 
 #Other
 def Run(command):
@@ -287,7 +292,7 @@ def EncodeTxt(path):
 
 def AddPatch(PatchName,PatchInfo,PatchPath):
     if(PatchPath==-1):
-        codePath = loadedFile+'/GeckoCodes.ini'
+        codePath = file.path+'/GeckoCodes.ini'
     else:
         codePath = PatchPath
 
@@ -667,9 +672,9 @@ def GetSongNames():
 					break
 
 def GetFileType():
-	if(os.path.isdir(loadedFile)): return LoadType.Rom
+	if(os.path.isdir(file.path)): return LoadType.Rom
 	else:
-		extension = pathlib.Path(loadedFile).suffix
+		extension = pathlib.Path(file.path).suffix
 		if(extension == ".brsar"): return LoadType.Brsar
 		elif(extension == ".carc"): return LoadType.Carc
 		elif(extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq"): return LoadType.Midi
@@ -678,9 +683,9 @@ def GetFileType():
 		elif(extension == ".wbfs" or extension == ".iso"): return LoadType.RomFile
 
 def PrepareFile():
-	global loadedType
-	loadedType = GetFileType()
-	if(loadedType == LoadType.Rom or loadedType == LoadType.Carc): GetSongNames()
+	global file
+	file.type = GetFileType()
+	if(file.type == LoadType.Rom or file.type == LoadType.Carc): GetSongNames()
 
 #Other
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1,GctPath=-1):
@@ -731,8 +736,7 @@ elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
-loadedFile = ""
-loadedType = 0
+file = LoadedFile("",None)
 dolphinPath = ""
 dolphinSavePath = ""
 regionSelected = 0

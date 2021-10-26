@@ -2,5 +2,6 @@
 /build/
 /dist/
 log.txt
+settings.txt
 *.spec
 *.pyo

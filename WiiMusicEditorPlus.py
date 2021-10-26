@@ -57,7 +57,7 @@ def LoadMainFile(filter):
     file.setViewMode(QtWidgets.QFileDialog.Detail)
     file.setDirectory(lastFileDirectory)
     if file.exec_():
-        editor.loadedFile = file.selectedFiles()[0]
+        editor.file.path = file.selectedFiles()[0]
         lastFileDirectory = os.path.dirname(extraFile)
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
         return True
@@ -102,7 +102,7 @@ def MenuBar_Load_Rom(self):
     Midi-Type File (*.midi *.mid *.brseq *.rseq)
     Geckocode (*.gct *.txt)""")):
         PrepareFile()
-        self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.loadedFile))
+        self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
 
 #Song Editor Buttons
 
@@ -208,7 +208,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.menuBar().setNativeMenuBar(False)
 
         self.MP_LoadedFile_Path.setText(ProgramPath)
-
 
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(lambda: MenuBar_Load_Rom(self))
