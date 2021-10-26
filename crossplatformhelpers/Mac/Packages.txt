@@ -1,1 +1,0 @@
-pip3 install dirsync pyqt5 pyinstaller pyobjc-framework-Cocoa requests mido

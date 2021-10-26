@@ -709,12 +709,9 @@ def GetBeta():
 	return True
 
 #OS Specific
-def GetPlatform():
-	return ChooseFromOS(["Windows","Mac","Linux"])
-
 def ChooseFromOS(array):
 	if(currentSystem == "Windows"): return array[0]
-	elif(currentSystem == "Darwin"): return array[1]
+	elif(currentSystem == "Mac"): return array[1]
 	else: return array[2]
 
 #Constants
@@ -725,8 +722,12 @@ gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
 gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 currentSystem = platform.system()
+if(currentSystem == "Darwin"): currentSystem = "Mac"
 
-if getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
+if(currentSystem == "Mac"):
+	import Cocoa
+	ProgramPath = Cocoa.NSBundle.mainBundle().bundlePath()
+elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables

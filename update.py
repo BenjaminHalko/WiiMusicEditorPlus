@@ -1,5 +1,5 @@
 from os import path, mkdir
-from editor import ProgramPath, GetBeta
+from editor import ProgramPath, GetBeta, currentSystem
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -22,7 +22,9 @@ class Download(QThread):
         directory = ProgramPath+"/tmp"
         if(not path.exists(directory)): mkdir(directory)
         file = open(directory+"/downloaded.zip", "wb")
-        with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-Windows.zip",stream=True) as response:
+        ext = ".zip"
+        if(currentSystem == "Linux"): ext = ".tar.gz"
+        with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-"+currentSystem+ext,stream=True) as response:
             total =  int(response.headers['content-length'])
             downloaded = 0
             for i in response.iter_content(1024):
