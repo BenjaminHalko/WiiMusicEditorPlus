@@ -3,8 +3,9 @@ import sys
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
-from main_window_ui import Ui_MainWindow
+from main_window_ui import Ui_MainWindow 
 import logging
+
 
 import editor
 from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
