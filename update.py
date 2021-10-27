@@ -22,9 +22,7 @@ class Download(QThread):
         directory = ProgramPath+"/tmp"
         if(not path.exists(directory)): mkdir(directory)
         file = open(directory+"/downloaded.zip", "wb")
-        ext = ".zip"
-        if(currentSystem == "Linux"): ext = ".tar.gz"
-        with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-"+currentSystem+ext,stream=True) as response:
+        with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-"+currentSystem+".zip",stream=True) as response:
             total =  int(response.headers['content-length'])
             downloaded = 0
             for i in response.iter_content(1024):
