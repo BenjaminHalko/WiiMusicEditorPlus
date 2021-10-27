@@ -3,7 +3,7 @@ from editor import ProgramPath, GetBeta, currentSystem
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
 from subprocess import Popen
 from requests import get, ConnectionError, Timeout
@@ -46,10 +46,11 @@ class Download(QThread):
 class UpdateWindow(QDialog,Ui_Update):
     def __init__(self,otherWindow,check):
         global UpdateThread
-
         super().__init__(None)
         self.otherWindow = otherWindow
         self.setupUi(self)
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
+        self.setWindowModality(Qt.ApplicationModal)
 
         if(check == False):
             check = CheckForUpdate()

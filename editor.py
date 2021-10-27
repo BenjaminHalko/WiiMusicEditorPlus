@@ -437,7 +437,6 @@ def SaveSetting(section,key,value):
 	if(not ini.has_section(section)):
 		ini.add_section(section)
 	ini.set(section,key,value)
-	print(str(ini))
 	with open(ProgramPath+'/settings.ini', 'w') as inifile:
 		ini.write(inifile)
 
@@ -671,23 +670,6 @@ def GetSongNames():
 					textFromTxt[i].append(textToAdd)
 					break
 
-def GetFileType():
-	if(os.path.isdir(file.path)): return LoadType.Rom
-	else:
-		extension = pathlib.Path(file.path).suffix
-		if(extension == ".brsar"): return LoadType.Brsar
-		elif(extension == ".carc"): return LoadType.Carc
-		elif(extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq"): return LoadType.Midi
-		elif(extension == ".dol"): return LoadType.Dol
-		elif(extension == ".gct" or extension == ".txt"): return LoadType.Gct
-		elif(extension == ".wbfs" or extension == ".iso"): return LoadType.RomFile
-
-def PrepareFile():
-	global file
-	file.type = GetFileType()
-	if(file.type == LoadType.Rom or file.type == LoadType.Carc): GetSongNames()
-
-#Other
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1,GctPath=-1):
 	LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+6,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 	TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
@@ -709,6 +691,31 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 		LengthCode2 = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+4,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		MeasureCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+24,'x').lower()+' '+'00000000\n'
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode,GctPath)
+
+def GetFileType():
+	if(os.path.isdir(file.path)): return LoadType.Rom
+	else:
+		extension = pathlib.Path(file.path).suffix
+		if(extension == ".brsar"): return LoadType.Brsar
+		elif(extension == ".carc"): return LoadType.Carc
+		elif(extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq"): return LoadType.Midi
+		elif(extension == ".dol"): return LoadType.Dol
+		elif(extension == ".gct" or extension == ".txt"): return LoadType.Gct
+		elif(extension == ".wbfs" or extension == ".iso"): return LoadType.RomFile
+
+def PrepareFile():
+	global file
+	file.type = GetFileType()
+	if(file.type == LoadType.RomFile): ConvertRom()
+	if(file.type == LoadType.Rom or file.type == LoadType.Carc): GetSongNames()
+
+def ConvertRom():
+	Run('\"'+ProgramPath+'/Helper/Wiimms/wit\" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
+	if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
+		file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
+	else:
+		file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]
+	file.type = LoadType.Rom
 
 def GetBeta():
 	return True
@@ -736,7 +743,9 @@ elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
-file = LoadedFile("",None)
+file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
+if(not os.path.exists(file.path)): file.path = ""
+if(file.path != ""): GetFileType()
 dolphinPath = ""
 dolphinSavePath = ""
 regionSelected = 0

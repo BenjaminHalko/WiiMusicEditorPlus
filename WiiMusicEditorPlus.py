@@ -1,16 +1,17 @@
 import os
 import sys
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 
 from main_window_ui import Ui_MainWindow 
+from error_ui import Ui_Error
 import logging
-
 
 import editor
 from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 
+#Logging
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -19,13 +20,24 @@ logger.name = "logger"
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
-#fh = logging.FileHandler(ProgramPath+'/log.txt')
-#fh.setFormatter(formatter)
+fh = logging.FileHandler(ProgramPath+'/log.txt')
+fh.setFormatter(formatter)
 logger.addHandler(handler)
-#logger.addHandler(fh)
+logger.addHandler(fh)
 
 logger.info("Program Started in "+ProgramPath)
 logger.info("OS: "+currentSystem)
+
+#Error
+class ErrorWindow(QDialog,Ui_Error):
+    def __init__(self,message):
+        super().__init__(None)
+        self.setWindowFlag(QtCore.Qt.WindowContextHelpButtonHint,False)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setupUi(self)
+        self.ErrorMessage.setText(_translate("MainWindow",message))
+        self.show()
+        self.exec()
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -52,14 +64,19 @@ def AllowType(type):
 def LoadMainFile(filter):
     global extraFile
     global lastFileDirectory
-    file = QtWidgets.QFileDialog() 
-    file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+    file = QtWidgets.QFileDialog()
+    if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+    else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
     file.setNameFilter(filter)
     file.setViewMode(QtWidgets.QFileDialog.Detail)
     file.setDirectory(lastFileDirectory)
     if file.exec_():
+        if(filter == "" and (not os.path.exists(file.selectedFiles()[0]+"/files") or not os.path.exists(file.selectedFiles()[0]+"/sys"))):
+            ErrorWindow("Not a valid Wii Music folder\n(files and sys folder not found)")
+            return False
         editor.file.path = file.selectedFiles()[0]
-        lastFileDirectory = os.path.dirname(extraFile)
+        if(filter == ""): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
+        else: lastFileDirectory = os.path.dirname(editor.file.path)
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
         return True
     return False
@@ -103,7 +120,14 @@ def MenuBar_Load_Rom(self):
     Midi-Type File (*.midi *.mid *.brseq *.rseq)
     Geckocode (*.gct *.txt)""")):
         PrepareFile()
+        SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
         self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
+
+def MenuBar_Load_RomFolder(self):
+    LoadMainFile("")
+    PrepareFile()
+    SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
+    self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
 
 #Song Editor Buttons
 
@@ -195,6 +219,9 @@ def LoadSongEditor(self):
     PrepareFile()
     LoadSongs(self.SE_SongToChange)
 
+def LoadStyleEditor(self):
+    ErrorWindow("There is no cheese")
+
 def MenuBar_CheckForUpdates(self):
     updater = UpdateWindow(self,False)
 
@@ -208,14 +235,14 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.menuBar().setNativeMenuBar(False)
 
-        self.MP_LoadedFile_Path.setText(ProgramPath)
-
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(lambda: MenuBar_Load_Rom(self))
+        self.MB_LoadFolder.triggered.connect(lambda: MenuBar_Load_RomFolder(self))
         self.MB_CheckForUpdates.triggered.connect(lambda: MenuBar_CheckForUpdates(self))
 
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(lambda: LoadSongEditor(self))
+        self.MP_StyleEditor_Button.clicked.connect(lambda: LoadStyleEditor(self))
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(lambda: Button_SE_SongToChange(self))

@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>images/Error.png</file>
     <file>images/Title.png</file>
   </qresource>
 </RCC>
