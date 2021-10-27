@@ -1,15 +1,15 @@
 import os
 import sys
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from main_window_ui import Ui_MainWindow 
-from error_ui import Ui_Error
 import logging
 
 import editor
 from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
+from errorhandler import ShowError
 
 #Logging
 logger = logging.getLogger()
@@ -27,17 +27,6 @@ logger.addHandler(fh)
 
 logger.info("Program Started in "+ProgramPath)
 logger.info("OS: "+currentSystem)
-
-#Error
-class ErrorWindow(QDialog,Ui_Error):
-    def __init__(self,message):
-        super().__init__(None)
-        self.setWindowFlag(QtCore.Qt.WindowContextHelpButtonHint,False)
-        self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setupUi(self)
-        self.ErrorMessage.setText(_translate("MainWindow",message))
-        self.show()
-        self.exec()
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -59,7 +48,7 @@ def UnError(widget):
     widget.update()
 
 def AllowType(type):
-    return (editor.loadedType == LoadType.Rom or editor.loadedType == type)
+    return (editor.file.type == LoadType.Rom or editor.file.type == type)
 
 def LoadMainFile(filter):
     global extraFile
@@ -72,7 +61,7 @@ def LoadMainFile(filter):
     file.setDirectory(lastFileDirectory)
     if file.exec_():
         if(filter == "" and (not os.path.exists(file.selectedFiles()[0]+"/files") or not os.path.exists(file.selectedFiles()[0]+"/sys"))):
-            ErrorWindow("Not a valid Wii Music folder\n(files and sys folder not found)")
+            ShowError("Not a valid Wii Music folder","Files and sys folder not found")
             return False
         editor.file.path = file.selectedFiles()[0]
         if(filter == ""): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
@@ -96,7 +85,9 @@ def LoadExtraFile(filter):
         return True
     return False
 
+#Lists
 def LoadSongs(widgetID):
+    widgetID.clear()
     for i in range(len(Songs)):
         item = QtWidgets.QListWidgetItem()
         extraText = ""
@@ -105,6 +96,7 @@ def LoadSongs(widgetID):
         widgetID.addItem(item)
 
 def LoadStyles(widgetID):
+    widgetID.clear()
     for i in range(len(Styles)):
         item = QtWidgets.QListWidgetItem()
         item.setText(_translate("MainWindow", Styles[i].Name))
@@ -122,12 +114,14 @@ def MenuBar_Load_Rom(self):
         PrepareFile()
         SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
         self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
+        self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded File:'))
 
 def MenuBar_Load_RomFolder(self):
     LoadMainFile("")
     PrepareFile()
     SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
     self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
+    self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))   
 
 #Song Editor Buttons
 
@@ -167,7 +161,7 @@ def Button_SE_Midi_Length(self):
 
 def List_SE_SongToChange(self):
     UnError(self.SE_SongToChange)
-    if(editor.loadedType == LoadType.Carc or editor.loadedType == LoadType.Rom):
+    if(editor.file.type == LoadType.Carc or editor.file.type == LoadType.Rom):
         self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
         self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
         self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
@@ -215,12 +209,21 @@ def GotoMainMenu(self):
     self.MainWidget.setCurrentIndex(TAB.MainMenu)
 
 def LoadSongEditor(self):
-    self.MainWidget.setCurrentIndex(TAB.SongEditor)
-    PrepareFile()
-    LoadSongs(self.SE_SongToChange)
+    if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
+        self.MainWidget.setCurrentIndex(TAB.SongEditor)
+        LoadSongs(self.SE_SongToChange)
+        if(editor.file.type == LoadType.Carc):
+            self.SE_Midi.setCheckable(False)
+            self.SE_Midi.setEnabled(False)
+        else:
+            self.SE_Midi.setCheckable(True)
+            self.SE_Midi.setEnabled(True)
+        self.SE_ChangeSongText.setEnabled(editor.file.type != LoadType.Brsar)
+    else:
+        ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
 def LoadStyleEditor(self):
-    ErrorWindow("There is no cheese")
+    ShowError("There is no cheese","Cheese not found")
 
 def MenuBar_CheckForUpdates(self):
     updater = UpdateWindow(self,False)
@@ -233,6 +236,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         defaultStyle=self.styleSheet()
 
+        if(editor.file.path != ""):
+            if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
+            self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
         self.menuBar().setNativeMenuBar(False)
 
         #Menu Bar Buttons
@@ -258,6 +264,6 @@ if __name__ == "__main__":
     app = QApplication([])
     win = Window()
     win.show()
-    #version = CheckForUpdate()
-    #if(version != "null"): updater = UpdateWindow(win,version)
+    version = CheckForUpdate()
+    if(version != "null"): updater = UpdateWindow(win,version)
     sys.exit(app.exec())

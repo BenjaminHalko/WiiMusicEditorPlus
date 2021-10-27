@@ -9,6 +9,8 @@ import tempfile
 from shutil import copyfile, rmtree
 from math import floor, ceil
 import mido
+from errorhandler import ShowError
+from enum import Enum
 
 #Classes
 class SongClass:
@@ -242,12 +244,6 @@ InstrumentClass('Whistle',65,False,[]),
 InstrumentClass('Beatbox',66,True,[]),
 InstrumentClass('None',-1,False,[])]
 
-class Region:
-    US = 0,
-    EU = 1,
-    JP = 2,
-    KR = 3
-
 class LoadType:
 	Rom = 0
 	Brsar = 1
@@ -277,19 +273,33 @@ def Run(command):
     subprocess.run(command.replace("\\","/"),capture_output=True)
 
 def DecodeTxt(path):
-    if(os.path.isdir(path+"\message.d")): rmtree(path+"\message.d")
-    Run('"'+ProgramPath+'/Helper/Wiimms/wszst" extract "'+path+'/message.carc"')
-    os.remove(path+"/message.d/wszst-setup.txt")
-    Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" decode "'+path+'/message.d/new_music_message.bmg"')
-    os.remove(path+"/message.d/new_music_message.bmg")
+	try:
+		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
+		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" extract "'+path+'/message.carc"')
+		os.remove(path+"/message.d/wszst-setup.txt")
+		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" decode "'+path+'/message.d/new_music_message.bmg"')
+		os.remove(path+"/message.d/new_music_message.bmg")
+	except:
+		ShowError("Could not decode text file","Attempted text path: "+path)
 
 def EncodeTxt(path):
-    Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
-    os.remove(path+"/message.d/new_music_message.txt")
-    os.remove(path+"/message.carc")
-    Run('"'+ProgramPath+'/Helper/Wiimms/wszst" create "'+path+'/message.d" --dest "'+path+'/message.carc"')
-    rmtree(path+'/message.d')
+	try:
+		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
+		os.remove(path+"/message.d/new_music_message.txt")
+		os.remove(path+"/message.carc")
+		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" create "'+path+'/message.d" --dest "'+path+'/message.carc"')
+		rmtree(path+'/message.d')
+	except:
+		ShowError("Could not encode text file","Attempted text path: "+path)
 
+def GetRegion():
+	for i in range(len(regionNames)):
+		if(os.path.isdir(file.path+"/files/"+BasedOnRegion(regionNames)+"/Message")):
+			return i
+	ShowError("Could not determine region","Using fallback region: "+BasedOnRegion(regionNames))
+	return regionSelected
+
+#Main Functions
 def AddPatch(PatchName,PatchInfo,PatchPath):
     if(PatchPath==-1):
         codePath = file.path+'/GeckoCodes.ini'
@@ -705,17 +715,22 @@ def GetFileType():
 
 def PrepareFile():
 	global file
+	global regionSelected
 	file.type = GetFileType()
 	if(file.type == LoadType.RomFile): ConvertRom()
+	if(file.type == LoadType.Rom): regionSelected = GetRegion()
 	if(file.type == LoadType.Rom or file.type == LoadType.Carc): GetSongNames()
 
 def ConvertRom():
-	Run('\"'+ProgramPath+'/Helper/Wiimms/wit\" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
-	if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
-		file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
-	else:
-		file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]
-	file.type = LoadType.Rom
+	try:
+		Run('\"'+ProgramPath+'/Helper/Wiimms/wit\" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
+		if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
+			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
+		else:
+			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]
+		file.type = LoadType.Rom
+	except:
+		ShowError("Could not extract rom","The program will likely crash")
 
 def GetBeta():
 	return True
@@ -736,16 +751,16 @@ gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 currentSystem = platform.system()
 if(currentSystem == "Darwin"): currentSystem = "Mac"
 
-if(currentSystem == "Mac"):
+if(sys.platform == "darwin"):
 	import Cocoa
 	ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
 elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
-file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
-if(not os.path.exists(file.path)): file.path = ""
-if(file.path != ""): GetFileType()
 dolphinPath = ""
 dolphinSavePath = ""
-regionSelected = 0
+regionSelected = LoadSetting("Settings","DefaultRegion",0)
+file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
+if(not os.path.exists(file.path)): file.path = ""
+if(file.path != ""): PrepareFile()

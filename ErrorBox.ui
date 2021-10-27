@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>274</width>
-    <height>99</height>
+    <width>268</width>
+    <height>119</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Wii Music Editor Plus</string>
+   <string>Wii Music Editor Plus - Error</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QToolTip
@@ -520,15 +520,11 @@ QWidget[error=&quot;true&quot;]
        <property name="font">
         <font>
          <family>Continuum Medium</family>
-         <pointsize>22</pointsize>
+         <pointsize>16</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Continuum Medium'; font-size:22pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:20pt;&quot;&gt;Error:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>Error</string>
        </property>
       </widget>
      </item>
@@ -565,6 +561,13 @@ p, li { white-space: pre-wrap; }
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="ErrorClose">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

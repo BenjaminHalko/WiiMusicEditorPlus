@@ -59,8 +59,8 @@ class UpdateWindow(QDialog,Ui_Update):
 
         self.version = check
         self.NewUpdate_Update.clicked.connect(self.startupdate)
-        self.NewUpdate_Cancel.clicked.connect(self.closewindow)
-        self.NoUpdate_Button.clicked.connect(self.closewindow)
+        self.NewUpdate_Cancel.clicked.connect(self.close)
+        self.NoUpdate_Button.clicked.connect(self.close)
 
         self.show()
         self.exec()
@@ -84,9 +84,6 @@ class UpdateWindow(QDialog,Ui_Update):
         Popen(ProgramPath+'/Helper/Update/Update.bat')
         self.close()
         self.otherWindow.close()
-
-    def closewindow(self):
-        self.close()
 
 def CheckForUpdate():
     if(path.exists(ProgramPath+"/Helper/Update/Version.txt")):

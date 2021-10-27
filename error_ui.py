@@ -15,7 +15,7 @@ class Ui_Error(object):
     def setupUi(self, Error):
         Error.setObjectName("Error")
         Error.setEnabled(True)
-        Error.resize(274, 99)
+        Error.resize(268, 119)
         Error.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -504,7 +504,7 @@ class Ui_Error(object):
         self.ErrorTitle = QtWidgets.QLabel(Error)
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
-        font.setPointSize(22)
+        font.setPointSize(16)
         self.ErrorTitle.setFont(font)
         self.ErrorTitle.setObjectName("ErrorTitle")
         self.Title.addWidget(self.ErrorTitle)
@@ -522,18 +522,18 @@ class Ui_Error(object):
         self.verticalLayout.addWidget(self.ErrorMessage)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
+        self.ErrorClose = QtWidgets.QPushButton(Error)
+        self.ErrorClose.setObjectName("ErrorClose")
+        self.verticalLayout.addWidget(self.ErrorClose)
 
         self.retranslateUi(Error)
         QtCore.QMetaObject.connectSlotsByName(Error)
 
     def retranslateUi(self, Error):
         _translate = QtCore.QCoreApplication.translate
-        Error.setWindowTitle(_translate("Error", "Wii Music Editor Plus"))
+        Error.setWindowTitle(_translate("Error", "Wii Music Editor Plus - Error"))
         self.ErrorSymbol.setText(_translate("Error", "<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>"))
-        self.ErrorTitle.setText(_translate("Error", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Continuum Medium\'; font-size:22pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Segoe UI\'; font-size:20pt;\">Error:</span></p></body></html>"))
+        self.ErrorTitle.setText(_translate("Error", "Error"))
         self.ErrorMessage.setText(_translate("Error", "ErrorText"))
+        self.ErrorClose.setText(_translate("Error", "Close"))
 import resources_rc

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
+    <width>839</width>
     <height>547</height>
    </rect>
   </property>
@@ -1391,7 +1391,7 @@ QWidget[error=&quot;true&quot;]
        <enum>Qt::NoContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="MainPage">
        <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2536,8 +2536,8 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>698</width>
-     <height>22</height>
+     <width>839</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
