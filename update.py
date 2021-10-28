@@ -36,11 +36,9 @@ class Download(QThread):
         zip = ZipFile(directory+"/downloaded.zip")
         zip.extractall(directory+"/downloaded")
         zip.close()
-
-        programExt = ChooseFromOS([".exe",".app",""])
             
-        move(directory+"/downloaded/WiiMusicEditorPlus"+programExt,directory+"/downloaded/Helper/Update/NewProgram"+programExt)
-        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus"+programExt,r"Helper/Update/Version.txt",r"tmp"))
+        if(currentSystem == "Windows"): move(directory+"/downloaded/WiiMusicEditorPlus.exe",directory+"/downloaded/Helper/Update/NewProgram.exe")
+        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Update/Version.txt",r"tmp"))
         rmtree(directory)
         UpdateThread.done.emit()
 
@@ -84,13 +82,8 @@ class UpdateWindow(QDialog,Ui_Update):
         file.close()
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
-        else:
-            st = stat(ProgramPath+'/Helper/Update/Update.sh')
-            chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stats.S_IEXEC)
-            programExt = ChooseFromOS([".exe",".app",""])
-            st = stat(ProgramPath+'/Helper/Update/NewProgram'+programExt)
-            chmod(ProgramPath+'/Helper/Update/NewProgram'+programExt,st.st_mode | stats.S_IEXEC)
-            Popen(ProgramPath+'/Helper/Update/Update.sh')
+        elif(currentSystem == "Linux"):
+            Popen(ProgramPath+'/WiiMusicEditorPlus')
         self.close()
         self.otherWindow.close()
 
