@@ -79,7 +79,10 @@ class UpdateWindow(QDialog,Ui_Update):
         file = open(ProgramPath+"/Helper/Update/Version.txt","w")
         file.write(self.version)
         file.close()
-        Popen(ProgramPath+'/Helper/Update/Update.bat')
+        if(currentSystem == "Windows"):
+            Popen(ProgramPath+'/Helper/Update/Update.bat')
+        else:
+            Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
 
