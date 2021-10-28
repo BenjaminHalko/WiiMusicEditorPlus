@@ -1,4 +1,4 @@
-from os import path, mkdir
+from os import chmod, path, mkdir, stat
 from editor import ProgramPath, GetBeta, currentSystem, ChooseFromOS
 from shutil import move, rmtree
 from dirsync import sync
@@ -84,6 +84,8 @@ class UpdateWindow(QDialog,Ui_Update):
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
+            st = stat('somefile')
+            chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stat.S_IEXEC)
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
