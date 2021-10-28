@@ -36,7 +36,7 @@ class Download(QThread):
         zip.extractall(directory+"/downloaded")
         zip.close()
 
-        programExt = BasedOnRegion(".exe",".app","")
+        programExt = BasedOnRegion([".exe",".app",""])
             
         move(directory+"/downloaded/WiiMusicEditorPlus"+programExt,directory+"/downloaded/Helper/Update/NewProgram"+programExt)
         sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Update/Version.txt",r"tmp"))
