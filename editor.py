@@ -3,7 +3,6 @@ import os
 import sys
 import platform
 import subprocess
-import configparser
 import pathlib
 import tempfile
 from shutil import copyfile, rmtree
@@ -11,6 +10,7 @@ from math import floor, ceil
 import mido
 from errorhandler import ShowError
 from enum import Enum
+from configparser import ConfigParser
 
 #Classes
 class SongClass:
@@ -713,6 +713,26 @@ def ConvertRom():
 	except:
 		ShowError("Could not extract rom","The program will likely crash")
 
+def LoadSetting(section,key,default):
+	ini = ConfigParser()
+	ini.read(ProgramPath+'/settings.ini')
+	if(ini.has_option(section, key)):
+		if(type(default) == str):
+			return ini[section][key]
+		else:
+			return int(ini[section][key])
+	else:
+		return default
+
+def SaveSetting(section,key,value):
+	ini = ConfigParser()
+	ini.read(ProgramPath+'/settings.ini')
+	if(not ini.has_section(section)):
+		ini.add_section(section)
+	ini.set(section,key,str(value))
+	with open(ProgramPath+'/settings.ini', 'w') as inifile:
+		ini.write(inifile)
+
 def GetBeta():
 	return True
 
@@ -739,6 +759,7 @@ elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
+regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = ""
 dolphinSavePath = ""
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)

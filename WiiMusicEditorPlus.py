@@ -7,7 +7,7 @@ from main_window_ui import Ui_MainWindow
 import logging
 
 import editor
-from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
+from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
