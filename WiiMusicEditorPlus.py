@@ -91,7 +91,7 @@ def LoadSongs(widgetID):
     for i in range(len(Songs)):
         item = QtWidgets.QListWidgetItem()
         extraText = ""
-        if(len(editor.textFromTxt[0]) > i) and AllowType(LoadType.Carc) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
+        if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
         item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
         widgetID.addItem(item)
 
@@ -168,7 +168,7 @@ def List_SE_SongToChange(self):
 
 def Button_SE_Patch(self):
     allow = True
-    if(AllowType(LoadType.Brsar) and self.SE_Midi.isChecked()): #Replace Song
+    if(AllowType(LoadType.Brsar) and self.SE_Midi.isEnabled()): #Replace Song
         #Check for Error
         if(self.SE_Midi_Tempo_Input.text() == ""):
             allow = False
@@ -212,12 +212,8 @@ def LoadSongEditor(self):
     if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
         self.MainWidget.setCurrentIndex(TAB.SongEditor)
         LoadSongs(self.SE_SongToChange)
-        if(editor.file.type == LoadType.Carc):
-            self.SE_Midi.setCheckable(False)
-            self.SE_Midi.setEnabled(False)
-        else:
-            self.SE_Midi.setCheckable(True)
-            self.SE_Midi.setEnabled(True)
+        self.SE_Midi.setEnabled(editor.file.type != LoadType.Carc)
+        self.SE_Midi.setCheckable(editor.file.type == LoadType.Rom)
         self.SE_ChangeSongText.setEnabled(editor.file.type != LoadType.Brsar)
     else:
         ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
