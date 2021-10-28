@@ -6,4 +6,5 @@ echo "PyInstalling"
 rm -r dist/Helper
 cp -r crossplatformhelpers/Linux/Helper dist/Helper
 cd dist
+chmod +x Helper/Update/Update.sh
 zip -r WiiMusicEditorPlus-Linux.zip WiiMusicEditorPlus Helper
