@@ -302,7 +302,7 @@ def GetRegion():
 #Main Functions
 def AddPatch(PatchName,PatchInfo,PatchPath):
     if(PatchPath==-1):
-        codePath = file.path+'/GeckoCodes.ini'
+        codePath = os.path.dirname(file.path)+'/GeckoCodes.ini'
     else:
         codePath = PatchPath
 
