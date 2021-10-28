@@ -5,7 +5,7 @@ from dirsync import sync
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
-from subprocess import Popen
+from subprocess import Popen, run
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 
@@ -84,6 +84,7 @@ class UpdateWindow(QDialog,Ui_Update):
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
+            run('chmod +x "'+ProgramPath+'/Helper/Update/Update.sh"')
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
