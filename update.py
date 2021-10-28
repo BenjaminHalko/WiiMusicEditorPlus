@@ -8,6 +8,7 @@ from update_ui import Ui_Update
 from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
+import stat as stats
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -85,7 +86,7 @@ class UpdateWindow(QDialog,Ui_Update):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
             st = stat(ProgramPath+'/Helper/Update/Update.sh')
-            chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stat.S_IEXEC)
+            chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stats.S_IEXEC)
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
