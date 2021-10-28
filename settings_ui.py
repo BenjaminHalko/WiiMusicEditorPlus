@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 299)
-        Dialog.setStyleSheet("QToolTip\n"
+class Ui_Settings(object):
+    def setupUi(self, Settings):
+        Settings.setObjectName("Settings")
+        Settings.resize(476, 261)
+        Settings.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -128,6 +128,7 @@ class Ui_Dialog(object):
 "    border-style: solid;\n"
 "    border: 1px solid #1e1e1e;\n"
 "    border-radius: 5;\n"
+"    padding-left: 5px;\n"
 "}\n"
 "\n"
 "QComboBox:hover,QPushButton:hover\n"
@@ -138,8 +139,6 @@ class Ui_Dialog(object):
 "\n"
 "QComboBox:on\n"
 "{\n"
-"    padding-top: 3px;\n"
-"    padding-left: 4px;\n"
 "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);\n"
 "    selection-background-color: #ffaa00;\n"
 "}\n"
@@ -490,23 +489,161 @@ class Ui_Dialog(object):
 "{\n"
 "    border: 1px solid red;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Settings)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.MainWidget = QtWidgets.QTabWidget(Dialog)
+        self.MainWidget = QtWidgets.QTabWidget(Settings)
         self.MainWidget.setObjectName("MainWidget")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.MainWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.MainWidget.addTab(self.tab_2, "")
+        self.Tab_General = QtWidgets.QWidget()
+        self.Tab_General.setObjectName("Tab_General")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.Tab_General)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.DefaultRegion = QtWidgets.QHBoxLayout()
+        self.DefaultRegion.setObjectName("DefaultRegion")
+        self.RegionLabel = QtWidgets.QLabel(self.Tab_General)
+        self.RegionLabel.setObjectName("RegionLabel")
+        self.DefaultRegion.addWidget(self.RegionLabel)
+        self.RegionBox = QtWidgets.QComboBox(self.Tab_General)
+        self.RegionBox.setMinimumSize(QtCore.QSize(60, 20))
+        self.RegionBox.setObjectName("RegionBox")
+        self.RegionBox.addItem("")
+        self.RegionBox.addItem("")
+        self.RegionBox.addItem("")
+        self.RegionBox.addItem("")
+        self.DefaultRegion.addWidget(self.RegionBox)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.DefaultRegion.addItem(spacerItem)
+        self.verticalLayout_3.addLayout(self.DefaultRegion)
+        self.SongScoreCheckbox = QtWidgets.QCheckBox(self.Tab_General)
+        self.SongScoreCheckbox.setObjectName("SongScoreCheckbox")
+        self.verticalLayout_3.addWidget(self.SongScoreCheckbox)
+        self.checkBox = QtWidgets.QCheckBox(self.Tab_General)
+        self.checkBox.setChecked(True)
+        self.checkBox.setObjectName("checkBox")
+        self.verticalLayout_3.addWidget(self.checkBox)
+        self.Updates = QtWidgets.QHBoxLayout()
+        self.Updates.setObjectName("Updates")
+        self.CheckForUpdates = QtWidgets.QCheckBox(self.Tab_General)
+        self.CheckForUpdates.setChecked(True)
+        self.CheckForUpdates.setObjectName("CheckForUpdates")
+        self.Updates.addWidget(self.CheckForUpdates)
+        self.SwitchBeta = QtWidgets.QPushButton(self.Tab_General)
+        self.SwitchBeta.setObjectName("SwitchBeta")
+        self.Updates.addWidget(self.SwitchBeta)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Updates.addItem(spacerItem1)
+        self.verticalLayout_3.addLayout(self.Updates)
+        self.UnsafeMode = QtWidgets.QCheckBox(self.Tab_General)
+        self.UnsafeMode.setObjectName("UnsafeMode")
+        self.verticalLayout_3.addWidget(self.UnsafeMode)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
+        self.MainWidget.addTab(self.Tab_General, "")
+        self.Tab_Dolphin = QtWidgets.QWidget()
+        self.Tab_Dolphin.setObjectName("Tab_Dolphin")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.Tab_Dolphin)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.DolphinPath_Title = QtWidgets.QLabel(self.Tab_Dolphin)
+        self.DolphinPath_Title.setObjectName("DolphinPath_Title")
+        self.verticalLayout_2.addWidget(self.DolphinPath_Title)
+        self.DolphinPath_Label = QtWidgets.QLabel(self.Tab_Dolphin)
+        self.DolphinPath_Label.setMinimumSize(QtCore.QSize(0, 26))
+        self.DolphinPath_Label.setMaximumSize(QtCore.QSize(16777215, 26))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.DolphinPath_Label.setFont(font)
+        self.DolphinPath_Label.setAcceptDrops(True)
+        self.DolphinPath_Label.setStyleSheet("QLabel\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: #1e1e1e;\n"
+"background-color: #242424;\n"
+"}\n"
+"\n"
+"QLabel[error=\"true\"]\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: red;\n"
+"background-color: #242424;\n"
+"}")
+        self.DolphinPath_Label.setObjectName("DolphinPath_Label")
+        self.verticalLayout_2.addWidget(self.DolphinPath_Label)
+        self.DolphinPath_Browse = QtWidgets.QPushButton(self.Tab_Dolphin)
+        self.DolphinPath_Browse.setObjectName("DolphinPath_Browse")
+        self.verticalLayout_2.addWidget(self.DolphinPath_Browse)
+        self.DolphinSave_Title = QtWidgets.QLabel(self.Tab_Dolphin)
+        self.DolphinSave_Title.setObjectName("DolphinSave_Title")
+        self.verticalLayout_2.addWidget(self.DolphinSave_Title)
+        self.DolphinSave_Label = QtWidgets.QLabel(self.Tab_Dolphin)
+        self.DolphinSave_Label.setMinimumSize(QtCore.QSize(0, 26))
+        self.DolphinSave_Label.setMaximumSize(QtCore.QSize(16777215, 26))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.DolphinSave_Label.setFont(font)
+        self.DolphinSave_Label.setAcceptDrops(True)
+        self.DolphinSave_Label.setStyleSheet("QLabel\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: #1e1e1e;\n"
+"background-color: #242424;\n"
+"}\n"
+"\n"
+"QLabel[error=\"true\"]\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: red;\n"
+"background-color: #242424;\n"
+"}")
+        self.DolphinSave_Label.setObjectName("DolphinSave_Label")
+        self.verticalLayout_2.addWidget(self.DolphinSave_Label)
+        self.DolphinSave_Buttons = QtWidgets.QHBoxLayout()
+        self.DolphinSave_Buttons.setObjectName("DolphinSave_Buttons")
+        self.DolphinSave_Browse = QtWidgets.QPushButton(self.Tab_Dolphin)
+        self.DolphinSave_Browse.setObjectName("DolphinSave_Browse")
+        self.DolphinSave_Buttons.addWidget(self.DolphinSave_Browse)
+        self.DolphinSave_Default = QtWidgets.QPushButton(self.Tab_Dolphin)
+        self.DolphinSave_Default.setObjectName("DolphinSave_Default")
+        self.DolphinSave_Buttons.addWidget(self.DolphinSave_Default)
+        self.verticalLayout_2.addLayout(self.DolphinSave_Buttons)
+        self.Dolphin_Geckocodes_Title = QtWidgets.QLabel(self.Tab_Dolphin)
+        self.Dolphin_Geckocodes_Title.setObjectName("Dolphin_Geckocodes_Title")
+        self.verticalLayout_2.addWidget(self.Dolphin_Geckocodes_Title)
+        self.Dolphon_Geckocodes = QtWidgets.QCheckBox(self.Tab_Dolphin)
+        self.Dolphon_Geckocodes.setObjectName("Dolphon_Geckocodes")
+        self.verticalLayout_2.addWidget(self.Dolphon_Geckocodes)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem3)
+        self.MainWidget.addTab(self.Tab_Dolphin, "")
         self.verticalLayout.addWidget(self.MainWidget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Settings)
+        self.MainWidget.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(Settings)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, Settings):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Settings"))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab), _translate("Dialog", "Tab 1"))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab_2), _translate("Dialog", "Tab 2"))
+        Settings.setWindowTitle(_translate("Settings", "Settings"))
+        self.RegionLabel.setText(_translate("Settings", "Fallback Region (Used if rom region can\'t be determinded):"))
+        self.RegionBox.setItemText(0, _translate("Settings", "US"))
+        self.RegionBox.setItemText(1, _translate("Settings", "Europe"))
+        self.RegionBox.setItemText(2, _translate("Settings", "Japan"))
+        self.RegionBox.setItemText(3, _translate("Settings", "Korea"))
+        self.SongScoreCheckbox.setText(_translate("Settings", "Load Song and Score separately"))
+        self.checkBox.setText(_translate("Settings", "Add the Rapper Crash fix to Gecko codes (recommended)"))
+        self.CheckForUpdates.setText(_translate("Settings", "Check for Updates on Startup"))
+        self.SwitchBeta.setText(_translate("Settings", "Switch to Beta"))
+        self.UnsafeMode.setText(_translate("Settings", "Unsafe mode (Enables options that might crash the game)"))
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_General), _translate("Settings", "General"))
+        self.DolphinPath_Title.setText(_translate("Settings", "Dolphin Path:"))
+        self.DolphinPath_Label.setText(_translate("Settings", "No Specified Path"))
+        self.DolphinPath_Browse.setText(_translate("Settings", "Browse"))
+        self.DolphinSave_Title.setText(_translate("Settings", "Dolphin Save Path:"))
+        self.DolphinSave_Label.setText(_translate("Settings", "Default Path"))
+        self.DolphinSave_Browse.setText(_translate("Settings", "Browse"))
+        self.DolphinSave_Default.setText(_translate("Settings", "Set as Default"))
+        self.Dolphin_Geckocodes_Title.setText(_translate("Settings", "Gecko codes:"))
+        self.Dolphon_Geckocodes.setText(_translate("Settings", "Copy Gecko codes to Dolphin save directory (recommended)"))
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_Dolphin), _translate("Settings", "Dolphin"))

@@ -431,25 +431,6 @@ def ChangeName(SongToChange,newText,txtPath=-1):
 		if(type(newText) == str): break
 	EncodeTxt(txtPath)
 
-def LoadSetting(section,key,default):
-	global ProgramPath
-	ini = configparser.ConfigParser()
-	ini.read(ProgramPath+'/settings.ini')
-	if(ini.has_option(section, key)):
-		return ini[section][key]
-	else:
-		return default
-
-def SaveSetting(section,key,value):
-	global ProgramPath
-	ini = configparser.ConfigParser()
-	ini.read(ProgramPath+'/settings.ini')
-	if(not ini.has_section(section)):
-		ini.add_section(section)
-	ini.set(section,key,value)
-	with open(ProgramPath+'/settings.ini', 'w') as inifile:
-		ini.write(inifile)
-
 def CreateGct(path):
 	patches = open(path)
 	textlines = patches.readlines()
@@ -760,7 +741,6 @@ else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 #Variables
 dolphinPath = ""
 dolphinSavePath = ""
-regionSelected = LoadSetting("Settings","DefaultRegion",0)
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 if(file.path != ""): PrepareFile()

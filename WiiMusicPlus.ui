@@ -1391,7 +1391,7 @@ QWidget[error=&quot;true&quot;]
        <enum>Qt::NoContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="MainPage">
        <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2551,14 +2551,16 @@ background-color: #242424;</string>
     <addaction name="MB_DolphinMenu"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="MB_CheckForUpdates">
+   <widget class="QMenu" name="MB_Options">
     <property name="title">
-     <string>Settings</string>
+     <string>Options</string>
     </property>
-    <addaction name="MB_CheckForUpdates_2"/>
+    <addaction name="MB_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="MB_Updates"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="MB_CheckForUpdates"/>
+   <addaction name="MB_Options"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="MB_LoadFile">
@@ -2590,9 +2592,14 @@ background-color: #242424;</string>
     <string>F6</string>
    </property>
   </action>
-  <action name="MB_CheckForUpdates_2">
+  <action name="MB_Updates">
    <property name="text">
     <string>Check for Updates</string>
+   </property>
+  </action>
+  <action name="MB_Settings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

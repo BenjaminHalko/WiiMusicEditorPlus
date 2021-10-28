@@ -10,6 +10,7 @@ import editor
 from editor import ChangeName, ProgramPath, Songs, Styles, currentSystem, SongTypeValue, LoadType, PrepareFile, SaveSetting, LoadSetting, LoadMidi, PatchBrsar
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
+from settings import SettingsWindow
 
 #Logging
 logger = logging.getLogger()
@@ -103,6 +104,9 @@ def LoadStyles(widgetID):
         widgetID.addItem(item)
 
 #Menu Bar Buttons
+def MenuBar_Load_Settings():
+    SettingsWindow()
+
 def MenuBar_Load_Rom(self):
     if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.gct *.txt)
     Wii Music Rom (*.wbfs *.iso)
@@ -240,7 +244,8 @@ class Window(QMainWindow, Ui_MainWindow):
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(lambda: MenuBar_Load_Rom(self))
         self.MB_LoadFolder.triggered.connect(lambda: MenuBar_Load_RomFolder(self))
-        self.MB_CheckForUpdates.triggered.connect(lambda: MenuBar_CheckForUpdates(self))
+        self.MB_Settings.triggered.connect(MenuBar_Load_Settings)
+        self.MB_Updates.triggered.connect(lambda: MenuBar_CheckForUpdates(self))
 
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(lambda: LoadSongEditor(self))
