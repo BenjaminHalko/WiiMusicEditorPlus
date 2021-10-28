@@ -1,5 +1,5 @@
 from os import path, mkdir
-from editor import BasedOnRegion, ProgramPath, GetBeta, currentSystem
+from editor import ProgramPath, GetBeta, currentSystem, ChooseFromOS
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -36,7 +36,7 @@ class Download(QThread):
         zip.extractall(directory+"/downloaded")
         zip.close()
 
-        programExt = BasedOnRegion([".exe",".app",""])
+        programExt = ChooseFromOS([".exe",".app",""])
             
         move(directory+"/downloaded/WiiMusicEditorPlus"+programExt,directory+"/downloaded/Helper/Update/NewProgram"+programExt)
         sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus.exe",r"Helper/Update/Version.txt",r"tmp"))
