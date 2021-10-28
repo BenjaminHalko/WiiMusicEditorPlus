@@ -84,7 +84,7 @@ class UpdateWindow(QDialog,Ui_Update):
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
-            st = stat('somefile')
+            st = stat(ProgramPath+'/Helper/Update/Update.sh')
             chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stat.S_IEXEC)
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
