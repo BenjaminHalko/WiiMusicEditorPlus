@@ -11,6 +11,7 @@ import mido
 from errorhandler import ShowError
 from enum import Enum
 from configparser import ConfigParser
+from getpass import getuser
 
 #Classes
 class SongClass:
@@ -294,77 +295,83 @@ def EncodeTxt(path):
 
 def GetRegion():
 	for i in range(len(regionNames)):
-		if(os.path.isdir(file.path+"/files/"+BasedOnRegion(regionNames)+"/Message")):
+		if(os.path.isdir(file.path+"/files/"+regionNames[i]+"/Message")):
 			return i
-	ShowError("Could not determine region","Using fallback region: "+BasedOnRegion(regionNames))
+	ShowError("Could not determine region","Using fallback region: "+BasedOnRegion(regionFullNames))
 	return regionSelected
 
 #Main Functions
 def AddPatch(PatchName,PatchInfo,PatchPath):
-    if(PatchPath==-1):
-        codePath = os.path.dirname(file.path)+'/GeckoCodes.ini'
-    else:
-        codePath = PatchPath
+	if(PatchPath==-1):
+		codePath = os.path.dirname(file.path)+'/GeckoCodes.ini'
+	else:
+		codePath = PatchPath
 
-    if(type(PatchName) == str):
-        PatchName = [PatchName]
-        PatchInfo = [PatchInfo]
+	if(type(PatchName) == str):
+		PatchName = [PatchName]
+		PatchInfo = [PatchInfo]
 
-    for patchNum in range(len(PatchName)):
-        if(os.path.exists(codePath)):
-            codes = open(codePath,'r')
-            lineText = codes.readlines()
-            codes.close()
-            geckoExists = -1
-            songExists = -1
-            geckoEnabled = -1
-            songEnabled = -1
-            for num in range(len(lineText)):
-                if(lineText[num].rstrip() == '[Gecko]'):
-                    geckoExists = num
-                if(lineText[num].rstrip() == '$'+PatchName[patchNum]+' [WiiMusicEditor]'):
-                    songExists = num
+	for patchNum in range(len(PatchName)):
+		if(os.path.exists(codePath)):
+			codes = open(codePath,'r')
+			lineText = codes.readlines()
+			codes.close()
+			geckoExists = -1
+			songExists = -1
+			geckoEnabled = -1
+			songEnabled = -1
+			for num in range(len(lineText)):
+				if(lineText[num].rstrip() == '[Gecko]'):
+					geckoExists = num
+				if(lineText[num].rstrip() == '$'+PatchName[patchNum]+' [WiiMusicEditor]'):
+					songExists = num
 
-            if(geckoExists == -1):
-                lineText.insert(0,'[Gecko]\n'+'$'+PatchName[patchNum]+' [WiiMusicEditor]\n'+PatchInfo[patchNum])
-            elif(songExists == -1):
-                lineText.insert(geckoExists+1,'$'+PatchName[patchNum]+' [WiiMusicEditor]\n'+PatchInfo[patchNum])
-            else:
-                while True:
-                    if(len(lineText) <= songExists+1):
-                        break
-                    elif(not lineText[songExists+1][0].isnumeric() and (lineText[songExists+1][0] != 'f')):
-                        break
-                    else:
-                        lineText.pop(songExists+1)
-                lineText.insert(songExists+1,PatchInfo[patchNum])
-            
-            for num in range(len(lineText)):
-                if(lineText[num].rstrip() == '[Gecko_Enabled]'):
-                    geckoEnabled = num
-                if(lineText[num].rstrip() == '$'+PatchName[patchNum]):
-                    songEnabled = num
+			if(geckoExists == -1):
+				lineText.insert(0,'[Gecko]\n'+'$'+PatchName[patchNum]+' [WiiMusicEditor]\n'+PatchInfo[patchNum])
+			elif(songExists == -1):
+				lineText.insert(geckoExists+1,'$'+PatchName[patchNum]+' [WiiMusicEditor]\n'+PatchInfo[patchNum])
+			else:
+				while True:
+					if(len(lineText) <= songExists+1):
+						break
+					elif(not lineText[songExists+1][0].isnumeric() and (lineText[songExists+1][0] != 'f')):
+						break
+					else:
+						lineText.pop(songExists+1)
+				lineText.insert(songExists+1,PatchInfo[patchNum])
+			
+			for num in range(len(lineText)):
+				if(lineText[num].rstrip() == '[Gecko_Enabled]'):
+					geckoEnabled = num
+				if(lineText[num].rstrip() == '$'+PatchName[patchNum]):
+					songEnabled = num
 
-            if(geckoEnabled == -1):
-                lineText.insert(len(lineText),'[Gecko_Enabled]\n'+'$'+PatchName[patchNum]+'\n')
-            elif(songEnabled == -1):
-                lineText.insert(geckoEnabled+1,'$'+PatchName[patchNum]+'\n')
-            
-            codes = open(codePath,'w')
-            codes.writelines(lineText)
-            codes.close()
-        else:
-            codes = open(codePath,'w')
-            codes.write('[Gecko]\n')
-            codes.write('$'+PatchName[patchNum]+' [WiiMusicEditor]\n')
-            codes.write(PatchInfo[patchNum])
-            codes.write('[Gecko_Enabled]\n')
-            codes.write('$'+PatchName[patchNum]+'\n')
-            codes.close()
+			if(geckoEnabled == -1):
+				lineText.insert(len(lineText),'[Gecko_Enabled]\n'+'$'+PatchName[patchNum]+'\n')
+			elif(songEnabled == -1):
+				lineText.insert(geckoEnabled+1,'$'+PatchName[patchNum]+'\n')
+			
+			codes = open(codePath,'w')
+			codes.writelines(lineText)
+			codes.close()
+		else:
+			codes = open(codePath,'w')
+			codes.write('[Gecko]\n')
+			codes.write('$'+PatchName[patchNum]+' [WiiMusicEditor]\n')
+			codes.write(PatchInfo[patchNum])
+			codes.write('[Gecko_Enabled]\n')
+			codes.write('$'+PatchName[patchNum]+'\n')
+			codes.close()
 
-        ##Copy Code to Dolphin
-        #if(os.path.isfile(CodePath)): os.remove(CodePath)
-        #copyfile(codePathInGamePath,CodePath)
+	#Copy Code to Dolphin
+	if(LoadSetting("Settings","CopyCodes",True)):
+		dir = GetDolphinSave()
+		if(os.path.isdir(dir)):
+			if(os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")):
+				if(not os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")):
+					copyfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini",dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")
+				os.remove(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
+			copyfile(codePath,dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
 
 def ChangeName(SongToChange,newText,txtPath=-1):
 	if(txtPath==-1): txtPath = GetMessagePath()
@@ -662,9 +669,11 @@ def GetSongNames():
 					break
 
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1,GctPath=-1):
+	Tempo = format(Tempo,"x")
+	Length = format(Length,"x")
 	LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+6,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 	TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
-	TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(3+TimeSignature)+'00\n'
+	TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
 	if(Songs[SongSelected].SongType == SongTypeValue.Regular):
 		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength,BrsarPath)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode,GctPath)
@@ -720,6 +729,8 @@ def LoadSetting(section,key,default):
 		if(type(default) == str):
 			return ini[section][key]
 		else:
+			if(ini[section][key] == "True"): return True
+			elif(ini[section][key] == "False"): return False
 			return int(ini[section][key])
 	else:
 		return default
@@ -733,9 +744,11 @@ def SaveSetting(section,key,value):
 	with open(ProgramPath+'/settings.ini', 'w') as inifile:
 		ini.write(inifile)
 
-def GetBeta():
-	return True
-
+def GetDolphinSave():
+	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
+	if(os.path.exists(os.path.dirname(dolphinSavePath)+"/portable.txt")): return os.path.dirname(dolphinSavePath)+"/User"
+	return "C:/Users/"+getuser()+"/Documents/Dolphin Emulator"
+		
 #OS Specific
 def ChooseFromOS(array):
 	if(currentSystem == "Windows"): return array[0]
@@ -746,6 +759,7 @@ def ChooseFromOS(array):
 textFromTxt = []
 rseqList = [0x3364C,0x336B8,0x33744,0x343F0,0x343F8,0x359FC,0x35A04,0x35A68,0x35A70,0x35AD4,0x35ADC,0x35B40,0x35B48,0x35BCC,0x35BD4,0x35C38,0x35C40,0x35CA4,0x35CAC,0x35D30,0x35D38,0x35DBC,0x35DC4,0x35E28,0x35E30,0x35EB4,0x35EBC,0x35F20,0x35F28,0x35F8C,0x35F94,0x36018,0x36020,0x36064,0x3606C,0x360D0,0x360D8,0x3705C,0x37064,0x370E8,0x370F0,0x371F4,0x371FC,0x37340,0x37348,0x376CC,0x376D4,0x37738,0x37740,0x3374C,0x37784,0x3778C,0x379D0,0x379D8,0x37ABC,0x37AC4,0x37B48,0x37B50,0x37BB4,0x37BBC,0x37C20,0x37C28,0x37C8C,0x37C94,0x37D18,0x37D20,0x37D64,0x37D6C,0x37E70,0x37E78,0x37EBC,0x37EC4,0x37F48,0x37F50]
 regionNames = ["US","EN","JP","KR"]
+regionFullNames = ["US","Europe","Japan","Korea"]
 gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
 gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
@@ -760,8 +774,8 @@ else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
-dolphinPath = ""
-dolphinSavePath = ""
+dolphinPath = LoadSetting("Paths","Dolphin","")
+dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 if(file.path != ""): PrepareFile()

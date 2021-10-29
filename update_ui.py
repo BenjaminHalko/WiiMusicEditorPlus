@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Update(object):
     def setupUi(self, Update):
         Update.setObjectName("Update")
+        Update.setWindowModality(QtCore.Qt.ApplicationModal)
         Update.resize(312, 115)
         Update.setStyleSheet("QToolTip\n"
 "{\n"

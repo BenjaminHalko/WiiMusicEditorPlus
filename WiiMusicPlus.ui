@@ -569,6 +569,7 @@ QComboBox
     border-style: solid;
     border: 1px solid #1e1e1e;
     border-radius: 5;
+	padding-left: 4px;
 }
 
 QComboBox:hover,QPushButton:hover
@@ -579,8 +580,6 @@ QComboBox:hover,QPushButton:hover
 
 QComboBox:on
 {
-    padding-top: 3px;
-    padding-left: 4px;
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);
     selection-background-color: #ffaa00;
 }
@@ -606,7 +605,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url(:/down_arrow.png);
+     image: url(:images/images/down_arrow.png);
 }
 
 QGroupBox:focus
@@ -788,7 +787,7 @@ QMainWindow::separator:hover
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(:/images/handle.png);
+     background: url(:images/images/handle.png);
 }
 
 QMenu::separator
@@ -914,7 +913,7 @@ QRadioButton:disabled
 
 QCheckBox::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:images/images/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
@@ -2537,7 +2536,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>839</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
@@ -43,10 +44,12 @@ def LoadMainFile(filter):
     file.setViewMode(QtWidgets.QFileDialog.Detail)
     file.setDirectory(lastFileDirectory)
     if file.exec_():
-        if(filter == "" and (not os.path.exists(file.selectedFiles()[0]+"/files") or not os.path.exists(file.selectedFiles()[0]+"/sys"))):
+        path = file.selectedFiles()[0]
+        if(filter == "" and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+        if(filter == "" and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
             ShowError("Not a valid Wii Music folder","Files and sys folder not found")
             return False
-        editor.file.path = file.selectedFiles()[0]
+        editor.file.path = path
         if(filter == ""): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
         else: lastFileDirectory = os.path.dirname(editor.file.path)
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
@@ -170,8 +173,8 @@ def Button_SE_Patch(self):
             Error(self.SE_SongToChange)
 
         if(allow):
-            PatchBrsar(self.SE_SongToChange.currentRow(),brseqInfo,brseqLength,self.SE_Midi_Tempo_Input.text(),
-            self.SE_Midi_Length_Input.text(),3+self.SE_Midi_TimeSignature_4.isChecked())
+            PatchBrsar(self.SE_SongToChange.currentRow(),brseqInfo,brseqLength,int(self.SE_Midi_Tempo_Input.text()),
+            int(self.SE_Midi_Length_Input.text()),3+self.SE_Midi_TimeSignature_4.isChecked())
     
     if(AllowType(LoadType.Carc)):
         if(self.SE_SongToChange.currentRow() == -1):
@@ -191,25 +194,6 @@ class TAB:
     SongEditor = 1
     StyleEditor = 2
 
-def GotoMainMenu(self):
-    self.MainWidget.setCurrentIndex(TAB.MainMenu)
-
-def LoadSongEditor(self):
-    if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
-        self.MainWidget.setCurrentIndex(TAB.SongEditor)
-        LoadSongs(self.SE_SongToChange)
-        self.SE_Midi.setEnabled(editor.file.type != LoadType.Carc)
-        self.SE_Midi.setCheckable(editor.file.type == LoadType.Rom)
-        self.SE_ChangeSongText.setEnabled(editor.file.type != LoadType.Brsar)
-    else:
-        ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
-
-def LoadStyleEditor(self):
-    ShowError("There is no cheese","Cheese not found")
-
-def MenuBar_CheckForUpdates(self):
-    updater = UpdateWindow(self,False)
-
 #Main Window
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -227,11 +211,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MB_LoadFile.triggered.connect(lambda: MenuBar_Load_Rom(self))
         self.MB_LoadFolder.triggered.connect(lambda: MenuBar_Load_RomFolder(self))
         self.MB_Settings.triggered.connect(MenuBar_Load_Settings)
-        self.MB_Updates.triggered.connect(lambda: MenuBar_CheckForUpdates(self))
+        self.MB_Updates.triggered.connect(self.MenuBar_CheckForUpdates)
+        self.MB_Dolphin.    triggered.connect(lambda: self.LoadDolphin(False))
+        self.MB_DolphinMenu.triggered.connect(lambda: self.LoadDolphin(True))
 
         #Main Menu Buttons
-        self.MP_SongEditor_Button.clicked.connect(lambda: LoadSongEditor(self))
-        self.MP_StyleEditor_Button.clicked.connect(lambda: LoadStyleEditor(self))
+        self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
+        self.MP_StyleEditor_Button.clicked.connect(self.LoadStyleEditor)
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(lambda: Button_SE_SongToChange(self))
@@ -241,12 +227,45 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Midi_Tempo_Input.textChanged.connect(lambda: UnError(self.SE_Midi_Tempo_Input))
         self.SE_Midi_Length_Input.textChanged.connect(lambda: UnError(self.SE_Midi_Length_Input))
         self.SE_Patch.clicked.connect(lambda: Button_SE_Patch(self))
-        self.SE_Back_Button.clicked.connect(lambda: GotoMainMenu(self))
+        self.SE_Back_Button.clicked.connect(self.GotoMainMenu)
+
+    def GotoMainMenu(self):
+        self.MainWidget.setCurrentIndex(TAB.MainMenu)
+
+    def LoadSongEditor(self):
+        if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
+            self.MainWidget.setCurrentIndex(TAB.SongEditor)
+            LoadSongs(self.SE_SongToChange)
+            self.SE_Midi.setEnabled(editor.file.type != LoadType.Carc)
+            self.SE_Midi.setCheckable(editor.file.type == LoadType.Rom)
+            self.SE_ChangeSongText.setEnabled(editor.file.type != LoadType.Brsar)
+        else:
+            ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
+
+    def LoadStyleEditor(self):
+        ShowError("There is no cheese","Cheese not found")
+
+    def MenuBar_CheckForUpdates(self):
+        updater = UpdateWindow(self,False)
+
+    def LoadDolphin(self,menu):
+        if(editor.file.type != LoadType.Rom):
+            ShowError("Unable to launch Dolphin","Loaded file must be a complete rom")
+        elif(editor.dolphinPath == ""):
+            ShowError("Unable to launch Dolphin","Dolphin path not specified\nGo to settings to add a Dolphin path")
+        else:
+            try:
+                if(menu): loadMenu = ""
+                else: loadMenu = "-b "
+                subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"')
+            except:
+                ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings")
 
 if __name__ == "__main__":
     app = QApplication([])
     win = Window()
     win.show()
-    version = CheckForUpdate()
-    if(version != "null"): updater = UpdateWindow(win,version)
+    if(LoadSetting("Settings","AutoUpdate",True)):
+        version = CheckForUpdate()
+        if(version != "null"): updater = UpdateWindow(win,version)
     sys.exit(app.exec())

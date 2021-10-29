@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="images">
+    <file>images/checkbox.png</file>
+    <file>images/down_arrow.png</file>
+    <file>images/handle.png</file>
     <file>images/Error.png</file>
     <file>images/Title.png</file>
   </qresource>

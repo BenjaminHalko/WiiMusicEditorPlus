@@ -1,5 +1,5 @@
 from os import chmod, path, mkdir, stat
-from editor import ProgramPath, GetBeta, currentSystem, ChooseFromOS
+from editor import ProgramPath, currentSystem, ChooseFromOS
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -51,7 +51,6 @@ class UpdateWindow(QDialog,Ui_Update):
         self.otherWindow = otherWindow
         self.setupUi(self)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
-        self.setWindowModality(Qt.ApplicationModal)
 
         if(check == False):
             check = CheckForUpdate()
@@ -117,6 +116,6 @@ def CheckForUpdate():
 def GetReleaseTag():
     data = get("https://api.github.com/repos/BenjaminHalko/WiiMusicEditorPlus/releases").json()
     i = 0
-    if(not GetBeta()):
+    if(False): #######################################BETA
         while (data[i]["prerelease"]): i += 1
     return data[i]["tag_name"]

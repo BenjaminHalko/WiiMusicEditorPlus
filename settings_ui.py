@@ -14,7 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
-        Settings.resize(476, 261)
+        Settings.setWindowModality(QtCore.Qt.ApplicationModal)
+        Settings.resize(476, 282)
         Settings.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -128,7 +129,7 @@ class Ui_Settings(object):
 "    border-style: solid;\n"
 "    border: 1px solid #1e1e1e;\n"
 "    border-radius: 5;\n"
-"    padding-left: 5px;\n"
+"    padding-left: 4px;\n"
 "}\n"
 "\n"
 "QComboBox:hover,QPushButton:hover\n"
@@ -164,7 +165,7 @@ class Ui_Settings(object):
 "\n"
 "QComboBox::down-arrow\n"
 "{\n"
-"     image: url(:/down_arrow.png);\n"
+"     image: url(:images/images/down_arrow.png);\n"
 "}\n"
 "\n"
 "QGroupBox:focus\n"
@@ -346,7 +347,7 @@ class Ui_Settings(object):
 "QToolBar::handle\n"
 "{\n"
 "     spacing: 3px; /* spacing between items in the tool bar */\n"
-"     background: url(:/images/handle.png);\n"
+"     background: url(:images/images/handle.png);\n"
 "}\n"
 "\n"
 "QMenu::separator\n"
@@ -472,7 +473,7 @@ class Ui_Settings(object):
 "\n"
 "QCheckBox::indicator:checked\n"
 "{\n"
-"    image:url(:/images/checkbox.png);\n"
+"    image:url(:images/images/checkbox.png);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
@@ -514,12 +515,13 @@ class Ui_Settings(object):
         self.DefaultRegion.addItem(spacerItem)
         self.verticalLayout_3.addLayout(self.DefaultRegion)
         self.SongScoreCheckbox = QtWidgets.QCheckBox(self.Tab_General)
+        self.SongScoreCheckbox.setEnabled(False)
         self.SongScoreCheckbox.setObjectName("SongScoreCheckbox")
         self.verticalLayout_3.addWidget(self.SongScoreCheckbox)
-        self.checkBox = QtWidgets.QCheckBox(self.Tab_General)
-        self.checkBox.setChecked(True)
-        self.checkBox.setObjectName("checkBox")
-        self.verticalLayout_3.addWidget(self.checkBox)
+        self.RapperFix = QtWidgets.QCheckBox(self.Tab_General)
+        self.RapperFix.setChecked(True)
+        self.RapperFix.setObjectName("RapperFix")
+        self.verticalLayout_3.addWidget(self.RapperFix)
         self.Updates = QtWidgets.QHBoxLayout()
         self.Updates.setObjectName("Updates")
         self.CheckForUpdates = QtWidgets.QCheckBox(self.Tab_General)
@@ -533,6 +535,7 @@ class Ui_Settings(object):
         self.Updates.addItem(spacerItem1)
         self.verticalLayout_3.addLayout(self.Updates)
         self.UnsafeMode = QtWidgets.QCheckBox(self.Tab_General)
+        self.UnsafeMode.setEnabled(False)
         self.UnsafeMode.setObjectName("UnsafeMode")
         self.verticalLayout_3.addWidget(self.UnsafeMode)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -612,6 +615,7 @@ class Ui_Settings(object):
         self.Dolphin_Geckocodes_Title.setObjectName("Dolphin_Geckocodes_Title")
         self.verticalLayout_2.addWidget(self.Dolphin_Geckocodes_Title)
         self.Dolphon_Geckocodes = QtWidgets.QCheckBox(self.Tab_Dolphin)
+        self.Dolphon_Geckocodes.setChecked(True)
         self.Dolphon_Geckocodes.setObjectName("Dolphon_Geckocodes")
         self.verticalLayout_2.addWidget(self.Dolphon_Geckocodes)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -632,7 +636,7 @@ class Ui_Settings(object):
         self.RegionBox.setItemText(2, _translate("Settings", "Japan"))
         self.RegionBox.setItemText(3, _translate("Settings", "Korea"))
         self.SongScoreCheckbox.setText(_translate("Settings", "Load Song and Score separately"))
-        self.checkBox.setText(_translate("Settings", "Add the Rapper Crash fix to Gecko codes (recommended)"))
+        self.RapperFix.setText(_translate("Settings", "Add the Rapper Crash fix to Gecko codes (recommended)"))
         self.CheckForUpdates.setText(_translate("Settings", "Check for Updates on Startup"))
         self.SwitchBeta.setText(_translate("Settings", "Switch to Beta"))
         self.UnsafeMode.setText(_translate("Settings", "Unsafe mode (Enables options that might crash the game)"))
@@ -647,3 +651,4 @@ class Ui_Settings(object):
         self.Dolphin_Geckocodes_Title.setText(_translate("Settings", "Gecko codes:"))
         self.Dolphon_Geckocodes.setText(_translate("Settings", "Copy Gecko codes to Dolphin save directory (recommended)"))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_Dolphin), _translate("Settings", "Dolphin"))
+import resources_rc

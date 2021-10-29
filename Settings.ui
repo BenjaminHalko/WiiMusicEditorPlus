@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>Settings</class>
  <widget class="QDialog" name="Settings">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>261</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +130,7 @@ QComboBox
     border-style: solid;
     border: 1px solid #1e1e1e;
     border-radius: 5;
-	padding-left: 5px;
+	padding-left: 4px;
 }
 
 QComboBox:hover,QPushButton:hover
@@ -163,7 +166,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url(:/down_arrow.png);
+     image: url(:images/images/down_arrow.png);
 }
 
 QGroupBox:focus
@@ -345,7 +348,7 @@ QMainWindow::separator:hover
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(:/images/handle.png);
+     background: url(:images/images/handle.png);
 }
 
 QMenu::separator
@@ -471,7 +474,7 @@ QRadioButton:disabled
 
 QCheckBox::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:images/images/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
@@ -556,13 +559,16 @@ QWidget[error=&quot;true&quot;]
        </item>
        <item>
         <widget class="QCheckBox" name="SongScoreCheckbox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Load Song and Score separately</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="RapperFix">
          <property name="text">
           <string>Add the Rapper Crash fix to Gecko codes (recommended)</string>
          </property>
@@ -607,6 +613,9 @@ QWidget[error=&quot;true&quot;]
        </item>
        <item>
         <widget class="QCheckBox" name="UnsafeMode">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Unsafe mode (Enables options that might crash the game)</string>
          </property>
@@ -771,6 +780,9 @@ background-color: #242424;
          <property name="text">
           <string>Copy Gecko codes to Dolphin save directory (recommended)</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -792,6 +804,8 @@ background-color: #242424;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
