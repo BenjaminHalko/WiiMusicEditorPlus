@@ -157,7 +157,7 @@ def List_SE_SongToChange(self):
 
 def Button_SE_Patch(self):
     allow = True
-    if(AllowType(LoadType.Brsar) and self.SE_Midi.isEnabled()): #Replace Song
+    if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()): #Replace Song
         #Check for Error
         if(self.SE_Midi_Tempo_Input.text() == ""):
             allow = False
@@ -187,6 +187,8 @@ def Button_SE_Patch(self):
                 extraText = ""
                 if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][self.SE_SongToChange.currentRow()]+")"
                 self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", Songs[self.SE_SongToChange.currentRow()].Name)+extraText)
+
+#Style Editor Buttons
 
 #Load Places
 class TAB:
@@ -243,7 +245,8 @@ class Window(QMainWindow, Ui_MainWindow):
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
     def LoadStyleEditor(self):
-        ShowError("There is no cheese","Cheese not found")
+        self.MainWidget.setCurrentIndex(TAB.StyleEditor)
+        LoadStyles(self.StE_StyleList)
 
     def MenuBar_CheckForUpdates(self):
         updater = UpdateWindow(self,False)

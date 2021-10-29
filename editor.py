@@ -639,7 +639,7 @@ def LoadMidi(midiPath):
 
 def GetSongNames():
 	global textFromTxt
-	textFromTxt = [[],[],[]]
+	textFromTxt = [[],[],[],[]]
 	DecodeTxt(GetMessagePath())
 	message = open(GetMessagePath()+'/message.d/new_music_message.txt','rb')
 	textlines = message.readlines()
@@ -667,6 +667,20 @@ def GetSongNames():
 						textToAdd = textToAdd[0:len(textToAdd)-2:1]+"\n"+(textlines[number][3:len(textlines[number])-2:1]).decode("utf-8")
 					textFromTxt[i].append(textToAdd)
 					break
+	TextOffset = "b200"
+	array = [3,1,4,2,7,10,11,9,8,6,5]
+	for i in range(11):
+		numberToChange = array[i]
+		offset = format(int(TextOffset,16)+numberToChange,'x').lower()
+		offset = ' ' * (4-len(offset))+offset+' @'
+		for num in range(len(textlines)):
+			if offset in str(textlines[num]):
+				textToAdd = (textlines[num][22:len(textlines[num])-2:1]).decode("utf-8")
+				for number in range(num+1,len(textlines)):
+					if bytes('@','utf-8') in textlines[number]: break
+					textToAdd = textToAdd[0:len(textToAdd)-2:1]+"\n"+(textlines[number][3:len(textlines[number])-2:1]).decode("utf-8")
+				textFromTxt[3].append(textToAdd)
+				break
 
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1,GctPath=-1):
 	Tempo = format(Tempo,"x")

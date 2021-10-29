@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>547</height>
+    <width>698</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="palette">
@@ -1467,7 +1467,7 @@ background-color: #242424;
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="MP_HLayout1">
+         <layout class="QHBoxLayout" name="MP_MainFeatures">
           <item>
            <widget class="QPushButton" name="MP_SongEditor_Button">
             <property name="minimumSize">
@@ -2005,43 +2005,53 @@ background-color: #242424;
        </layout>
       </widget>
       <widget class="QWidget" name="StyleEditor">
-       <layout class="QVBoxLayout" name="verticalLayout_33">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
-         <widget class="QLabel" name="SE_Title_2">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>44</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Continuum Medium</family>
-            <pointsize>26</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Style Editor</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="StE_Title">
+          <item>
+           <widget class="QLabel" name="StE_Title_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>44</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Continuum Medium</family>
+              <pointsize>26</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Style Editor</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QHBoxLayout" name="StE_MainLayout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_17">
+           <layout class="QVBoxLayout" name="StE_PartsAndFile">
             <item>
-             <widget class="QGroupBox" name="SE_Midi_2">
+             <widget class="QGroupBox" name="StE_Parts">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>200</height>
+                <height>300</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="title">
-               <string>Part Selector</string>
+               <string>Parts</string>
               </property>
               <property name="checkable">
                <bool>false</bool>
@@ -2085,32 +2095,16 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string>The Cheese Grater</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="StE_Part_Melody_Button">
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font/>
-                   </property>
-                   <property name="text">
-                    <string>Change</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="StE_Part_Melody_2">
+                <layout class="QHBoxLayout" name="StE_Part_Harmony">
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Label_2">
+                  <widget class="QLabel" name="StE_Part_Harmony_Label">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -2129,7 +2123,7 @@ background-color: #242424;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Instrument_2">
+                  <widget class="QLabel" name="StE_Part_Harmony_Instrument">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -2151,38 +2145,16 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string>12 Pounds of Avacados</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="StE_Part_Melody_Button_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font/>
-                   </property>
-                   <property name="text">
-                    <string>Change</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="StE_Part_Melody_4">
+                <layout class="QHBoxLayout" name="StE_Part_Chords">
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Label_4">
+                  <widget class="QLabel" name="StE_Part_Chords_Label">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -2201,7 +2173,7 @@ background-color: #242424;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Instrument_4">
+                  <widget class="QLabel" name="StE_Part_Chords_Instrument">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -2223,38 +2195,16 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string>Dave Tirelessly Yelling</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="StE_Part_Melody_Button_4">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font/>
-                   </property>
-                   <property name="text">
-                    <string>Change</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="StE_Part_Melody_3">
+                <layout class="QHBoxLayout" name="StE_Part_Bass">
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Label_3">
+                  <widget class="QLabel" name="StE_Part_Bass_Label">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -2273,7 +2223,7 @@ background-color: #242424;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Instrument_3">
+                  <widget class="QLabel" name="StE_Part_Bass_Instrument">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -2295,29 +2245,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string>Guitar</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="StE_Part_Melody_Button_3">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>75</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font/>
-                   </property>
-                   <property name="text">
-                    <string>Change</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -2327,28 +2255,216 @@ background-color: #242424;</string>
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="SE_ChangeSongText_2">
-              <property name="maximumSize">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
                <size>
-                <width>16777215</width>
-                <height>50</height>
+                <width>20</width>
+                <height>40</height>
                </size>
               </property>
-              <property name="contextMenuPolicy">
-               <enum>Qt::NoContextMenu</enum>
-              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="StE_Geckocode_Layout">
               <property name="title">
-               <string>Change Style Name</string>
+               <string>Geckocode File</string>
               </property>
-              <property name="checkable">
-               <bool>false</bool>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_12">
+              <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QLineEdit" name="SE_ChangeSongText_Name_Text_2">
+                <widget class="QLabel" name="StE_Geckocode_Path">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="acceptDrops">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+}
+
+QLabel[error=&quot;true&quot;]
+{
+padding: 1px;
+border: 1px solid;
+border-color: red;
+background-color: #242424;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>Load a Geckocode file</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="StE_Geckocode_Button_Layout">
+                 <item>
+                  <widget class="QPushButton" name="StE_Geckocode_Browse">
+                   <property name="font">
+                    <font/>
+                   </property>
+                   <property name="text">
+                    <string>Browse</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="StE_Geckocode_Create">
+                   <property name="text">
+                    <string>Create New</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="StE_PartsAndFile_Spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="StE_Patch">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Continuum Medium</family>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Patch!</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="StE_Intruments">
+            <property name="title">
+             <string>Instruments</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_32">
+             <item>
+              <widget class="QListWidget" name="StE_IntrumentList"/>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="StE_PartSelector_Layout">
+               <item>
+                <widget class="QLabel" name="StE_PartSelector_Label">
+                 <property name="text">
+                  <string>Part to Change:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="StE_PartSelector">
+                 <item>
+                  <property name="text">
+                   <string>Melody</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Harmony</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Chords</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Bass</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Percussion 1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Percussion 2</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <spacer name="StE_PartSelector_Spacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="StE_Styles">
+            <property name="title">
+             <string>Style to change</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <item>
+              <widget class="QListWidget" name="StE_StyleList"/>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="StE_ChangeStyleName_Layout">
+               <item>
+                <widget class="QLabel" name="StE_ChangeStyleName_Label">
+                 <property name="text">
+                  <string>Style Name:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="StE_ChangeStyleName">
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
@@ -2356,173 +2472,16 @@ background-color: #242424;</string>
                   </size>
                  </property>
                  <property name="text">
-                  <string>Funky Man Style</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="SE_SongToChangeBox_5">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Select Instrument (Melody)</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_32">
-             <item>
-              <widget class="QListWidget" name="listWidget_6">
-               <item>
-                <property name="text">
-                 <string>Hi</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>These</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Are Songs</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Yep They Sure Are</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>This one even has a :0</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>How cool is that</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Dont forget to</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Like and Subscribe</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>For More Epic</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>UI Pictures!</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="SE_SongToChangeBox_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Style to change</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_13">
-             <item>
-              <widget class="QListWidget" name="listWidget_2">
-               <item>
-                <property name="text">
-                 <string>Hi</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>These</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Are Songs</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Yep They Sure Are</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>This one even has a :0</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>How cool is that</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Dont forget to</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Like and Subscribe</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>For More Epic</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>UI Pictures!</string>
-                </property>
-               </item>
-              </widget>
              </item>
             </layout>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QPushButton" name="SE_Patch_2">
-          <property name="text">
-           <string>Patch!</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -2535,8 +2494,8 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>839</width>
-     <height>22</height>
+     <width>698</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
