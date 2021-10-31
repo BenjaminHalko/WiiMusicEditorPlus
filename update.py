@@ -9,6 +9,7 @@ from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 import stat as stats
+from sys import exit as sysexit
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -92,6 +93,7 @@ class UpdateWindow(QDialog,Ui_Update):
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
+        sysexit()
 
 def CheckForUpdate():
     if(path.exists(ProgramPath+"/Helper/Update/Version.txt")):
