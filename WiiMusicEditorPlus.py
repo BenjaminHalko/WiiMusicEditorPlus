@@ -396,4 +396,4 @@ if __name__ == "__main__":
     if(LoadSetting("Settings","AutoUpdate",True)):
         version = CheckForUpdate()
         if(version != "null"): updater = UpdateWindow(win,version)
-    app.exec()
+    sys.exit(app.exec())
