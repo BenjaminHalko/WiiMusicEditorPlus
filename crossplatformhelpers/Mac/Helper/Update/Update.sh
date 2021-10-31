@@ -1,5 +1,5 @@
 #!/bin/bash
-wait 1
+sleep 1
 rm ../../WiiMusicEditorPlus
 mv NewProgram ../../WiiMusicEditorPlus
 ./../../WiiMusicEditorPlus
