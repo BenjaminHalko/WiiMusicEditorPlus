@@ -516,7 +516,7 @@ class Ui_Error(object):
         self.verticalLayout.addWidget(self.hLine)
         self.ErrorMessage = QtWidgets.QLabel(Error)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(9)
         self.ErrorMessage.setFont(font)
         self.ErrorMessage.setObjectName("ErrorMessage")
         self.verticalLayout.addWidget(self.ErrorMessage)

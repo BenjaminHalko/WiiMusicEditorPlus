@@ -40,6 +40,7 @@ class SettingsWindow(QDialog,Ui_Settings):
     
     def Checkmark(self,checkmark,setting):
         SaveSetting("Settings",setting,(checkmark.checkState() == 2))
+        if(setting == "UnsafeMode"): editor.unsafeMode = (checkmark.checkState() == 2)
 
     def RegionChange(self):
         editor.regionSelected = self.RegionBox.currentIndex()

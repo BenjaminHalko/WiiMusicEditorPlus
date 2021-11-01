@@ -535,7 +535,7 @@ class Ui_Settings(object):
         self.Updates.addItem(spacerItem1)
         self.verticalLayout_3.addLayout(self.Updates)
         self.UnsafeMode = QtWidgets.QCheckBox(self.Tab_General)
-        self.UnsafeMode.setEnabled(False)
+        self.UnsafeMode.setEnabled(True)
         self.UnsafeMode.setObjectName("UnsafeMode")
         self.verticalLayout_3.addWidget(self.UnsafeMode)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)

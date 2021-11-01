@@ -614,7 +614,7 @@ QWidget[error=&quot;true&quot;]
        <item>
         <widget class="QCheckBox" name="UnsafeMode">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Unsafe mode (Enables options that might crash the game)</string>

@@ -541,7 +541,7 @@ QWidget[error=&quot;true&quot;]
     <widget class="QLabel" name="ErrorMessage">
      <property name="font">
       <font>
-       <pointsize>12</pointsize>
+       <pointsize>9</pointsize>
       </font>
      </property>
      <property name="text">

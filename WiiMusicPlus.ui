@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>545</height>
+    <width>948</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="palette">
@@ -451,6 +451,9 @@
      </colorrole>
     </disabled>
    </palette>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>Wii Music Editor Plus</string>
@@ -1377,7 +1380,7 @@ QWidget[error=&quot;true&quot;]
      </disabled>
     </palette>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_12">
     <item>
      <widget class="QStackedWidget" name="MainWidget">
       <property name="font">
@@ -1386,11 +1389,8 @@ QWidget[error=&quot;true&quot;]
         <pointsize>72</pointsize>
        </font>
       </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::NoContextMenu</enum>
-      </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="MainPage">
        <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2027,6 +2027,24 @@ background-color: #242424;
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="StE_Back_Button">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string> Back</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -2063,7 +2081,7 @@ background-color: #242424;
                   <widget class="QLabel" name="StE_Part_Melody_Label">
                    <property name="maximumSize">
                     <size>
-                     <width>47</width>
+                     <width>70</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2113,7 +2131,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>47</width>
+                     <width>70</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2163,7 +2181,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>47</width>
+                     <width>70</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2213,7 +2231,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>47</width>
+                     <width>70</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2251,92 +2269,112 @@ background-color: #242424;</string>
                  </item>
                 </layout>
                </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="StE_Geckocode_Layout">
-              <property name="title">
-               <string>Geckocode File</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QLabel" name="StE_Geckocode_Path">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>26</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>26</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="acceptDrops">
-                  <bool>true</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel
-{
-padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;
-}
-
-QLabel[error=&quot;true&quot;]
-{
-padding: 1px;
-border: 1px solid;
-border-color: red;
-background-color: #242424;
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>Load a Geckocode file</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Geckocode_Button_Layout">
+                <layout class="QHBoxLayout" name="StE_Part_Percussion1">
                  <item>
-                  <widget class="QPushButton" name="StE_Geckocode_Browse">
-                   <property name="font">
-                    <font/>
+                  <widget class="QLabel" name="StE_Part_Percussion1_Label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="text">
-                    <string>Browse</string>
+                    <string>Percussion 1:</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="StE_Geckocode_Create">
+                  <widget class="QLabel" name="StE_Part_Percussion1_Instrument">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
                    <property name="text">
-                    <string>Create New</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
                 </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="StE_Part_Percussion2">
+                 <item>
+                  <widget class="QLabel" name="StE_Part_Percussion2_Label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Percussion 2:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="StE_Part_Percussion2_Instrument">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>26</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QPushButton" name="StE_ResetStyle">
+                 <property name="text">
+                  <string>Reset to Default</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -2376,13 +2414,19 @@ background-color: #242424;
            </layout>
           </item>
           <item>
-           <widget class="QGroupBox" name="StE_Intruments">
+           <widget class="QGroupBox" name="StE_Instruments">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="title">
              <string>Instruments</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_32">
              <item>
-              <widget class="QListWidget" name="StE_IntrumentList"/>
+              <widget class="QListWidget" name="StE_InstrumentList"/>
              </item>
              <item>
               <layout class="QHBoxLayout" name="StE_PartSelector_Layout">
@@ -2447,6 +2491,12 @@ background-color: #242424;
           </item>
           <item>
            <widget class="QGroupBox" name="StE_Styles">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="title">
              <string>Style to change</string>
             </property>
@@ -2494,8 +2544,8 @@ background-color: #242424;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>698</width>
-     <height>21</height>
+     <width>948</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
