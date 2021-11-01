@@ -18,6 +18,8 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.RegionBox.setCurrentIndex(editor.regionSelected)
         self.RegionBox.currentIndexChanged.connect(self.RegionChange)
 
+        self.SwitchBeta.clicked.connect(self.Button_SwitchBeta)
+
         self.ConnectCheckmark(self.CheckForUpdates,"AutoUpdate",True)
         self.ConnectCheckmark(self.RapperFix,"RapperFix",True)
         self.ConnectCheckmark(self.UnsafeMode,"UnsafeMode",False)

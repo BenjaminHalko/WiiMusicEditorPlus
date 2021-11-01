@@ -1,5 +1,5 @@
 from os import chmod, path, mkdir, stat
-from editor import ProgramPath, currentSystem, ChooseFromOS
+from editor import LoadSetting, ProgramPath, SaveSetting, currentSystem, ChooseFromOS
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -53,10 +53,15 @@ class UpdateWindow(QDialog,Ui_Update):
         self.setupUi(self)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
 
+        self.switchBranch = False
         if(check == False):
             check = CheckForUpdate()
             if(check == "null"):
                 self.MainWidget.setCurrentIndex(2)
+        elif(check == -1):
+            self.switchBranch = True
+            self.MainWidget.setCurrentIndex(2)
+            check = GetReleaseTag(True)
 
         self.version = check
         self.NewUpdate_Update.clicked.connect(self.startupdate)
@@ -82,6 +87,9 @@ class UpdateWindow(QDialog,Ui_Update):
         file = open(ProgramPath+"/Helper/Update/Version.txt","w")
         file.write(self.version)
         file.close()
+        if(self.switchBranch):
+            currentBranch = LoadSetting("Settings","Beta",False)
+            SaveSetting("Settings","Beta",not currentBranch)
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
@@ -115,9 +123,12 @@ def CheckForUpdate():
         except (ConnectionError, Timeout):
             return "null"
         
-def GetReleaseTag():
+def GetReleaseTag(switchBranch=False):
     data = get("https://api.github.com/repos/BenjaminHalko/WiiMusicEditorPlus/releases").json()
     i = 0
-    if(False): #######################################BETA
-        while (data[i]["prerelease"]): i += 1
+    try:
+        if(LoadSetting("Settings","Beta",False) != switchBranch):
+            while (data[i]["prerelease"]): i += 1
+    except:
+        i = 0
     return data[i]["tag_name"]
