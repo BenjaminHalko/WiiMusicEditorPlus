@@ -706,7 +706,7 @@ def GetStyles():
 
 
 
-def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1,GctPath=-1):
+def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
 	Tempo = format(Tempo,"x")
 	Length = format(Length,"x")
 	LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+6,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
@@ -714,7 +714,7 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 	TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
 	if(Songs[SongSelected].SongType == SongTypeValue.Regular):
 		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength,BrsarPath)
-		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode,GctPath)
+		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 		if(Songs[SongSelected].Name == 'Do-Re-Mi'):
 			ReplaceSong(0x0343F0,0x034988,[18,19,113,155,156,157,158,159,160,161,162,175],[0,1,0,0,0,0,0,0,0,0,0],BrseqInfo,BrseqLength,BrsarPath)
 			ReplaceSong(0x0360D0,0x0364C8,[18,19,113,123],[0,1,0],BrseqInfo,BrseqLength,BrsarPath)
@@ -722,13 +722,13 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 		ReplaceSong(0x037D64,0x037DBC,[0,1,2,3,4,5,6,7],[0,1,1,1,1,1,1],BrseqInfo,BrseqLength,BrsarPath)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Maestro):
 		ReplaceSong(0x0370E8,0x037140,[Songs[SongSelected].MemOrder+2,7],[0],BrseqInfo,BrseqLength,BrsarPath)
-		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode,GctPath)
+		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Handbell):
 		ReplaceSong(0x037340,0x037438,[Songs[SongSelected].MemOrder*5+2,Songs[SongSelected].MemOrder*5+3,Songs[SongSelected].MemOrder*5+4,Songs[SongSelected].MemOrder*5+5,Songs[SongSelected].MemOrder*5+6,27],[0,0,0,0,0],BrseqInfo,BrseqLength,BrsarPath)
 		LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		LengthCode2 = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+4,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		MeasureCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+24,'x').lower()+' '+'00000000\n'
-		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode,GctPath)
+		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode)
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom

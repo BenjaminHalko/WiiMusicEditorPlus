@@ -19,7 +19,6 @@ from settings import SettingsWindow
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
 
-extraFile = ""
 brseqInfo = 0
 brseqLength = 0
 lastExtraFileDirectory = LoadSetting("Paths","LastExtraLoadedPath","")
@@ -39,7 +38,6 @@ def AllowType(type):
     return (editor.file.type == LoadType.Rom or editor.file.type == type)
 
 def LoadMainFile(filter):
-    global extraFile
     global lastFileDirectory
     file = QtWidgets.QFileDialog()
     if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
@@ -57,20 +55,6 @@ def LoadMainFile(filter):
         if(filter == ""): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
         else: lastFileDirectory = os.path.dirname(editor.file.path)
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
-        return True
-    return False
-
-def LoadExtraFile(filter):
-    global lastExtraFileDirectory
-    file = QtWidgets.QFileDialog() 
-    file.setFileMode(QtWidgets.QFileDialog.AnyFile)
-    file.setNameFilter(filter)
-    file.setViewMode(QtWidgets.QFileDialog.Detail)
-    file.setDirectory(lastExtraFileDirectory)
-    if file.exec_():
-        extraFile = file.selectedFiles()[0]
-        lastExtraFileDirectory = os.path.dirname(extraFile)
-        SaveSetting("Paths","LastExtraLoadedPath",lastExtraFileDirectory)
         return True
     return False
 
@@ -150,13 +134,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Midi_TimeSignature_4.toggled.connect(self.Button_SE_Midi_TimeSignature)
         self.SE_Midi_Length_Measures.toggled.connect(self.Button_SE_Midi_Length)
         self.SE_SongToChange.itemSelectionChanged.connect(self.List_SE_SongToChange)
-        self.SE_Midi_Tempo_Input.textEdited.connect(self.SE_Patchable)
-        self.SE_Midi_Length_Input.textEdited.connect(self.SE_Patchable)
+        self.SE_Midi_Tempo_Input.valueChanged.connect(self.SE_Patchable)
+        self.SE_Midi_Length_Input.valueChanged.connect(self.SE_Patchable)
         self.SE_Patch.clicked.connect(self.Button_SE_Patch)
         self.SE_Back_Button.clicked.connect(self.GotoMainMenu)
         self.SE_ChangeSongText_Name_Input.textEdited.connect(self.SE_Patchable)
         self.SE_ChangeSongText_Desc_Input.textChanged.connect(self.SE_Patchable)
         self.SE_ChangeSongText_Genre_Input.textEdited.connect(self.SE_Patchable)
+        self.SE_Midi.toggled.connect(self.SE_Patchable)
 
         #Style Editor Buttons
         self.StE_Back_Button.clicked.connect(self.GotoMainMenu)
@@ -165,6 +150,20 @@ class Window(QMainWindow, Ui_MainWindow):
         self.StE_StyleList.itemSelectionChanged.connect(self.List_StE_StyleList)
         self.StE_ResetStyle.clicked.connect(self.Button_StE_ResetStyle)
         self.StE_Patch.clicked.connect(self.Button_StE_Patch)
+
+    def LoadExtraFile(self,filter):
+        global lastExtraFileDirectory
+        file = QtWidgets.QFileDialog() 
+        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setNameFilter(filter)
+        file.setViewMode(QtWidgets.QFileDialog.Detail)
+        file.setDirectory(lastExtraFileDirectory)
+        if file.exec_():
+            self.extraFile = file.selectedFiles()[0]
+            lastExtraFileDirectory = os.path.dirname(self.extraFile)
+            SaveSetting("Paths","LastExtraLoadedPath",lastExtraFileDirectory)
+            return True
+        return False
 
     def CreateGeckoCode(self):
         global lastFileDirectory
@@ -194,6 +193,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def LoadSongEditor(self):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
             self.MainWidget.setCurrentIndex(TAB.SongEditor)
+            self.extraFile = ""
             LoadSongs(self.SE_SongToChange)
             self.SE_Midi.setEnabled(False)
             self.SE_Midi.setCheckable(False)
@@ -261,10 +261,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
     #Song Editor Buttons
     def SE_Patchable(self):
-        print("d")
         allow = True
         if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
-            if(extraFile == "") or (self.SE_Midi_Tempo_Input.text() == "") or (self.SE_Midi_Length_Input.text() == ""): allow = False
+            if(self.extraFile == ""): allow = False
         else:
             if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
@@ -274,11 +273,11 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_SE_SongToChange(self):
         global brseqInfo
         global brseqLength
-        if(LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
-            midiInfo = LoadMidi(extraFile)
-            UnError(self.SE_Midi_File_Label)
-            self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(extraFile)))
-            if(midiInfo[2] != 0): self.SE_Midi_Tempo_Input.setText(_translate("MainWindow", str(midiInfo[2])))
+        if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
+            midiInfo = LoadMidi(self.extraFile)
+            self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+            self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
+            self.SE_Midi_Length_Input.setValue(midiInfo[3])
             self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
             self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
             self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
@@ -292,22 +291,19 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.SE_Midi_Length_Beats.setChecked(True)
                 self.SE_Midi_Length_Measures.setAutoExclusive(True)
                 self.SE_Midi_Length_Beats.setAutoExclusive(True)
-            self.SE_Midi_Length_Input.setText(_translate("MainWindow", str(midiInfo[3])))
             brseqInfo = [midiInfo[0],midiInfo[0]]
             brseqLength = [midiInfo[1],midiInfo[1]]
+            self.SE_Patchable()
             
     def Button_SE_Midi_TimeSignature(self):
-        if(self.SE_Midi_Length_Input.text() != "" and  self.SE_Midi_Length_Measures.isChecked()):
-            self.SE_Midi_Length_Input.setText(_translate("MainWindow", str(round(int(self.SE_Midi_Length_Input.text())/(3+self.SE_Midi_TimeSignature_4.isChecked())*(4-self.SE_Midi_TimeSignature_4.isChecked())))))
+        if(self.SE_Midi_Length_Measures.isChecked()):
+            self.SE_Midi_Length_Input.setValue(round(int(self.SE_Midi_Length_Input.text())/(3+self.SE_Midi_TimeSignature_4.isChecked())*(4-self.SE_Midi_TimeSignature_4.isChecked())))
 
     def Button_SE_Midi_Length(self):
-        if(self.SE_Midi_Length_Input.text() != ""):
-            if(self.SE_Midi_Length_Measures.isChecked()): self.SE_Midi_Length_Input.setText(_translate("MainWindow", str(round(int(self.SE_Midi_Length_Input.text())/(3+self.SE_Midi_TimeSignature_4.isChecked())))))
-            else: self.SE_Midi_Length_Input.setText(_translate("MainWindow", str(round(int(self.SE_Midi_Length_Input.text())*(3+self.SE_Midi_TimeSignature_4.isChecked())))))
+        if(self.SE_Midi_Length_Measures.isChecked()): self.SE_Midi_Length_Input.setValue(round(int(self.SE_Midi_Length_Input.text())/(3+self.SE_Midi_TimeSignature_4.isChecked())))
+        else: self.SE_Midi_Length_Input.setValue(round(int(self.SE_Midi_Length_Input.text())*(3+self.SE_Midi_TimeSignature_4.isChecked())))
 
     def List_SE_SongToChange(self):
-        self.SE_Patch.setEnabled(False)
-        UnError(self.SE_SongToChange)
         if(AllowType(LoadType.Brsar)):
             if(not self.SE_Midi.isCheckable()):
                 self.SE_Midi.setCheckable(True)
@@ -317,39 +313,22 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
+        self.SE_Patchable() 
 
     def Button_SE_Patch(self):
-        allow = True
-        if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()): #Replace Song
-            #Check for Error
-            if(self.SE_Midi_Tempo_Input.text() == ""):
-                allow = False
-                Error(self.SE_Midi_Tempo_Input)
-            if(self.SE_Midi_Length_Input.text() == ""):
-                allow = False
-                Error(self.SE_Midi_Length_Input)
-            if(extraFile == ""):
-                allow = False
-                Error(self.SE_Midi_File_Label)
-            if(self.SE_SongToChange.currentRow() == -1):
-                allow = False
-                Error(self.SE_SongToChange)
-
-            if(allow):
-                PatchBrsar(self.SE_SongToChange.currentRow(),brseqInfo,brseqLength,int(self.SE_Midi_Tempo_Input.text()),
-                int(self.SE_Midi_Length_Input.text()),3+self.SE_Midi_TimeSignature_4.isChecked())
+        if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
+            PatchBrsar(self.SE_SongToChange.currentRow(),brseqInfo,brseqLength,self.SE_Midi_Tempo_Input.value(),
+            self.SE_Midi_Length_Input.value(),3+self.SE_Midi_TimeSignature_4.isChecked())
         
         if(AllowType(LoadType.Carc)):
-            if(self.SE_SongToChange.currentRow() == -1):
-                allow = False
-                Error(self.SE_SongToChange)
-            elif(self.SE_ChangeSongText_Name_Input.text() != editor.textFromTxt[0][self.SE_SongToChange.currentRow()] or
-                self.SE_ChangeSongText_Desc_Input.toPlainText() != editor.textFromTxt[1][self.SE_SongToChange.currentRow()] or
-                self.SE_ChangeSongText_Genre_Input.text() != editor.textFromTxt[2][self.SE_SongToChange.currentRow()]) and (allow):
-                    ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
-                    extraText = ""
-                    if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][self.SE_SongToChange.currentRow()]+")"
-                    self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", Songs[self.SE_SongToChange.currentRow()].Name)+extraText)
+            ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
+            extraText = ""
+            if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][self.SE_SongToChange.currentRow()]+")"
+            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", Songs[self.SE_SongToChange.currentRow()].Name)+extraText)
+            editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
+            editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
+            editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
+        self.SE_Patch.setEnabled(False)
 
     #Style Editor Buttons
     def Button_StE_PartSelector(self):
