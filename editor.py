@@ -687,21 +687,22 @@ def GetStyles():
 	global loadedStyles
 	for i in range(len(Styles)):
 		loadedStyles[i] = Styles[i].DefaultStyle
-	file = open(GetGeckoPath())
-	textlines = file.readlines()
-	file.close()
-	for i in range(len(textlines)):
-		if("Style Patch [WiiMusicEditor]" in textlines[i] and "Default Style Patch [WiiMusicEditor]" not in textlines[i]):
-			for j in range(len(Styles)):
-				if(Styles[j].Name == textlines[i][1:len(textlines[i])-30:1]):
-					loadedStyles[j] = [
-					min(int(textlines[i+2][6:8:1],16),len(Instruments)-1),
-					min(int(textlines[i+2][15:17:1],16),len(Instruments)-1),
-					min(int(textlines[i+3][6:8:1],16),len(Instruments)-1),
-					min(int(textlines[i+3][15:17:1],16),len(Instruments)-1),
-					min(int(textlines[i+4][6:8:1],16),len(Instruments)-1),
-					min(int(textlines[i+4][15:17:1],16),len(Instruments)-1)]
-					break
+	if(os.path.exists(GetGeckoPath())):
+		file = open(GetGeckoPath())
+		textlines = file.readlines()
+		file.close()
+		for i in range(len(textlines)):
+			if("Style Patch [WiiMusicEditor]" in textlines[i] and "Default Style Patch [WiiMusicEditor]" not in textlines[i]):
+				for j in range(len(Styles)):
+					if(Styles[j].Name == textlines[i][1:len(textlines[i])-30:1]):
+						loadedStyles[j] = [
+						min(int(textlines[i+2][6:8:1],16),len(Instruments)-1),
+						min(int(textlines[i+2][15:17:1],16),len(Instruments)-1),
+						min(int(textlines[i+3][6:8:1],16),len(Instruments)-1),
+						min(int(textlines[i+3][15:17:1],16),len(Instruments)-1),
+						min(int(textlines[i+4][6:8:1],16),len(Instruments)-1),
+						min(int(textlines[i+4][15:17:1],16),len(Instruments)-1)]
+						break
 
 
 

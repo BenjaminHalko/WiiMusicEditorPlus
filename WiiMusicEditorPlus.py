@@ -89,7 +89,7 @@ def LoadStyles(widgetID):
     for i in range(len(Styles)):
         item = QtWidgets.QListWidgetItem()
         extraText = ""
-        if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " [Replaced]" 
+        if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " ~[Replaced]~" 
         item.setText(_translate("MainWindow", Styles[i].Name+extraText))
         widgetID.addItem(item)
 
@@ -150,10 +150,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Midi_TimeSignature_4.toggled.connect(self.Button_SE_Midi_TimeSignature)
         self.SE_Midi_Length_Measures.toggled.connect(self.Button_SE_Midi_Length)
         self.SE_SongToChange.itemSelectionChanged.connect(self.List_SE_SongToChange)
-        self.SE_Midi_Tempo_Input.textChanged.connect(lambda: UnError(self.SE_Midi_Tempo_Input))
-        self.SE_Midi_Length_Input.textChanged.connect(lambda: UnError(self.SE_Midi_Length_Input))
+        self.SE_Midi_Tempo_Input.textEdited.connect(self.SE_Patchable)
+        self.SE_Midi_Length_Input.textEdited.connect(self.SE_Patchable)
         self.SE_Patch.clicked.connect(self.Button_SE_Patch)
         self.SE_Back_Button.clicked.connect(self.GotoMainMenu)
+        self.SE_ChangeSongText_Name_Input.textEdited.connect(self.SE_Patchable)
+        self.SE_ChangeSongText_Desc_Input.textChanged.connect(self.SE_Patchable)
+        self.SE_ChangeSongText_Genre_Input.textEdited.connect(self.SE_Patchable)
 
         #Style Editor Buttons
         self.StE_Back_Button.clicked.connect(self.GotoMainMenu)
@@ -192,9 +195,10 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
             self.MainWidget.setCurrentIndex(TAB.SongEditor)
             LoadSongs(self.SE_SongToChange)
-            self.SE_Midi.setEnabled(editor.file.type != LoadType.Carc)
-            self.SE_Midi.setCheckable(editor.file.type == LoadType.Rom)
-            self.SE_ChangeSongText.setEnabled(editor.file.type != LoadType.Brsar)
+            self.SE_Midi.setEnabled(False)
+            self.SE_Midi.setCheckable(False)
+            self.SE_ChangeSongText.setEnabled(False)
+            self.SE_Patch.setEnabled(False)
         else:
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
@@ -256,6 +260,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))   
 
     #Song Editor Buttons
+    def SE_Patchable(self):
+        print("d")
+        allow = True
+        if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
+            if(extraFile == "") or (self.SE_Midi_Tempo_Input.text() == "") or (self.SE_Midi_Length_Input.text() == ""): allow = False
+        else:
+            if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
+                self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
+                self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()]): allow = False
+        self.SE_Patch.setEnabled(allow)
 
     def Button_SE_SongToChange(self):
         global brseqInfo
@@ -292,8 +306,14 @@ class Window(QMainWindow, Ui_MainWindow):
             else: self.SE_Midi_Length_Input.setText(_translate("MainWindow", str(round(int(self.SE_Midi_Length_Input.text())*(3+self.SE_Midi_TimeSignature_4.isChecked())))))
 
     def List_SE_SongToChange(self):
+        self.SE_Patch.setEnabled(False)
         UnError(self.SE_SongToChange)
-        if(editor.file.type == LoadType.Carc or editor.file.type == LoadType.Rom):
+        if(AllowType(LoadType.Brsar)):
+            if(not self.SE_Midi.isCheckable()):
+                self.SE_Midi.setCheckable(True)
+                self.SE_Midi.setEnabled(True)
+        if(AllowType(LoadType.Carc)):
+            self.SE_ChangeSongText.setEnabled(True)
             self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
@@ -412,6 +432,10 @@ class Window(QMainWindow, Ui_MainWindow):
         if(self.StE_Instruments.isEnabled()):
             editor.loadedStyles[self.StE_StyleList.currentRow()] = self.styleSelected.copy()
             self.StE_Patch.setEnabled(False)
+            if(Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected):
+                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name))
+            else:
+                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name+" ~[Replaced]~"))
             patchInfo = Styles[self.StE_StyleList.currentRow()].MemOffset+" 00000018\n"
             for i in range(3):
                 if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
