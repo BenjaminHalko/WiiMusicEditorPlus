@@ -6,19 +6,22 @@ from settings_ui import Ui_Settings
 import editor
 from editor import SaveSetting, LoadSetting
 from errorhandler import ShowError
+from update import UpdateWindow
 
 _translate = QCoreApplication.translate
 
 class SettingsWindow(QDialog,Ui_Settings):
-    def __init__(self):
+    def __init__(self,otherWindow):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setupUi(self)
+        self.otherWindow = otherWindow
 
         self.RegionBox.setCurrentIndex(editor.regionSelected)
         self.RegionBox.currentIndexChanged.connect(self.RegionChange)
 
         self.SwitchBeta.clicked.connect(self.Button_SwitchBeta)
+        if(LoadSetting("Settings","Beta",False)): self.SwitchBeta.setText(_translate("MainWindow","Switch to Main"))
 
         self.ConnectCheckmark(self.CheckForUpdates,"AutoUpdate",True)
         self.ConnectCheckmark(self.RapperFix,"RapperFix",True)
@@ -35,6 +38,9 @@ class SettingsWindow(QDialog,Ui_Settings):
 
         self.show()
         self.exec()
+    
+    def Button_SwitchBeta(self):
+        UpdateWindow(self.otherWindow,-1)
 
     def ConnectCheckmark(self,checkmarkId,setting,default):
         checkmarkId.setCheckState(LoadSetting("Settings",setting,default)*2)

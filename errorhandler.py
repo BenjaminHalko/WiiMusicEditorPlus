@@ -3,13 +3,25 @@ from PyQt5.QtWidgets import QDialog
 from error_ui import Ui_Error
 
 class ShowError(QDialog,Ui_Error):
-    def __init__(self,error,message):
+    def __init__(self,error,message,geckocode=False):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setWindowModality(Qt.ApplicationModal)
         self.setupUi(self)
-        self.ErrorTitle.setText(QCoreApplication.translate("MainWindow",error))
-        self.ErrorMessage.setText(QCoreApplication.translate("MainWindow",message))
-        self.ErrorClose.clicked.connect(self.close)
+        if(not geckocode):
+            self.ErrorTitle.setText(QCoreApplication.translate("MainWindow",error))
+            self.ErrorMessage.setText(QCoreApplication.translate("MainWindow",message))
+            self.ErrorClose.clicked.connect(self.close)
+        else:
+            self.clicked = False
+            self.ErrorTitle_GC.setText(QCoreApplication.translate("MainWindow",error))
+            self.ErrorMessage_GC.setText(QCoreApplication.translate("MainWindow",message))
+            self.ErrorClose_GC.clicked.connect(self.close)
+            self.ErrorCreate_GC.clicked.connect(self.GeckoCodeCreate)
+            self.MainWidget.setCurrentIndex(1)
         self.show()
         self.exec()
+
+    def GeckoCodeCreate(self):
+        self.clicked = True
+        self.close()

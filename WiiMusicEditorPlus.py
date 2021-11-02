@@ -3,6 +3,7 @@ import subprocess
 import sys
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QThread
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from main_window_ui import Ui_MainWindow 
@@ -60,7 +61,6 @@ def LoadMainFile(filter):
     return False
 
 def LoadExtraFile(filter):
-    global extraFile
     global lastExtraFileDirectory
     file = QtWidgets.QFileDialog() 
     file.setFileMode(QtWidgets.QFileDialog.AnyFile)
@@ -95,18 +95,23 @@ def LoadStyles(widgetID):
 
 def LoadInstruments(widgetID,percussion,menu):
     widgetID.clear()
-    if(menu and editor.unsafeMode): menu = False
-    if(editor.unsafeMode or percussion == -1): array = range(0,len(Instruments)-1)
     if(percussion == False): array = range(0,40)
     elif(percussion == True ): array = range(40,len(Instruments)-1)
+    normal = array
+    if(editor.unsafeMode or percussion == -1): array = range(0,len(Instruments)-1)
     for i in array:
         item = QtWidgets.QListWidgetItem()
         item.setText(_translate("MainWindow", Instruments[i].Name))
-        if(menu and not Instruments[i].InMenu): item.setFlags(QtCore.Qt.ItemIsSelectable)
+        if(menu and not Instruments[i].InMenu):
+            if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
+            else: item.setFlags(QtCore.Qt.ItemIsSelectable)
+        if(i not in normal): item.setForeground(QColor("#cf1800"))
         widgetID.addItem(item)
     item = QtWidgets.QListWidgetItem()
     item.setText(_translate("MainWindow", Instruments[len(Instruments)-1].Name))
-    if(menu): item.setFlags(QtCore.Qt.ItemIsSelectable)
+    if(menu):
+        if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
+        else: item.setFlags(QtCore.Qt.ItemIsSelectable)
     widgetID.addItem(item)
 
 #Load Places
@@ -158,6 +163,28 @@ class Window(QMainWindow, Ui_MainWindow):
         self.StE_ResetStyle.clicked.connect(self.Button_StE_ResetStyle)
         self.StE_Patch.clicked.connect(self.Button_StE_Patch)
 
+    def CreateGeckoCode(self):
+        global lastFileDirectory
+        file = QtWidgets.QFileDialog() 
+        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        file.setNameFilter("Geckocodes (*.ini)")
+        file.setViewMode(QtWidgets.QFileDialog.Detail)
+        file.setDirectory(lastFileDirectory)
+        if file.exec_():
+            editor.file.path = file.selectedFiles()[0]
+            lastFileDirectory = os.path.dirname(editor.file.path)
+            SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
+            openfile = open(editor.file.path,"w")
+            openfile.write("")
+            openfile.close()
+            PrepareFile()
+            SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
+            self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
+            self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded File:'))
+            return True
+        return False
+
     def GotoMainMenu(self):
         self.MainWidget.setCurrentIndex(TAB.MainMenu)
 
@@ -172,19 +199,24 @@ class Window(QMainWindow, Ui_MainWindow):
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
     def LoadStyleEditor(self):
-        self.MainWidget.setCurrentIndex(TAB.StyleEditor)
-        GetStyles()
-        LoadStyles(self.StE_StyleList)
-        LoadInstruments(self.StE_InstrumentList,False,False)
-        self.StE_Instruments.setEnabled(False)
-        self.StE_ChangeStyleName.setEnabled(False)
-        self.StE_ChangeStyleName_Label.setEnabled(False)
-        self.StE_ResetStyle.setEnabled(False)
-        self.StE_Patch.setEnabled(False)
-        self.styleSelected = []
+        if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Gct or editor.file.type == LoadType.Carc):
+            self.MainWidget.setCurrentIndex(TAB.StyleEditor)
+            GetStyles()
+            LoadStyles(self.StE_StyleList)
+            LoadInstruments(self.StE_InstrumentList,False,False)
+            self.StE_Instruments.setEnabled(False)
+            self.StE_ChangeStyleName.setEnabled(False)
+            self.StE_ChangeStyleName_Label.setEnabled(False)
+            self.StE_ResetStyle.setEnabled(False)
+            self.StE_Patch.setEnabled(False)
+            self.styleSelected = []
+        else:
+            error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",True)
+            if(error.clicked):
+                if(self.CreateGeckoCode()): self.LoadStyleEditor()
         
     def MenuBar_CheckForUpdates(self):
-        updater = UpdateWindow(self,False)
+        UpdateWindow(self,False)
 
     def LoadDolphin(self,menu):
         if(editor.file.type != LoadType.Rom):
@@ -200,17 +232,17 @@ class Window(QMainWindow, Ui_MainWindow):
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings")
 
     #Menu Bar Buttons
-    def MenuBar_Load_Settings():
-        SettingsWindow()
+    def MenuBar_Load_Settings(self):
+        SettingsWindow(self)
 
     def MenuBar_Load_Rom(self):
-        if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.gct *.txt)
+        if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.gct *.ini)
         Wii Music Rom (*.wbfs *.iso)
         Sound Archive (*.brsar)
         Text File (*.carc)
         Main.dol (*.dol)
         Midi-Type File (*.midi *.mid *.brseq *.rseq)
-        Geckocode (*.gct *.txt)""")):
+        Geckocode (*.gct *.ini)""")):
             PrepareFile()
             SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
             self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
@@ -378,15 +410,17 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def Button_StE_Patch(self):
         if(self.StE_Instruments.isEnabled()):
-            patchInfo = Styles[self.StE_StyleList.currentRow()].MemOffset+" 00000018"
+            editor.loadedStyles[self.StE_StyleList.currentRow()] = self.styleSelected.copy()
+            self.StE_Patch.setEnabled(False)
+            patchInfo = Styles[self.StE_StyleList.currentRow()].MemOffset+" 00000018\n"
             for i in range(3):
                 if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
                 else: num1 = format(self.styleSelected[i*2],"x")
                 if(self.styleSelected[i*2+1] == len(Instruments)-1): num2 = "ffffffff"
                 else: num2 = format(self.styleSelected[i*2+1],"x")
-                patchInfo = patchInfo+"\n"+"0"*(8-len(num1))+num1+" "+"0"*(8-len(num2))+num2
+                patchInfo = patchInfo+"0"*(8-len(num1))+num1+" "+"0"*(8-len(num2))+num2+"\n"
 
-            AddPatch(Styles[self.StE_StyleList.currentRow()].Name,patchInfo)
+            AddPatch(Styles[self.StE_StyleList.currentRow()].Name+" Style Patch",patchInfo)
 
 if __name__ == "__main__":
     app = QApplication([])

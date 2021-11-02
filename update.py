@@ -9,7 +9,7 @@ from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 import stat as stats
-from sys import exit as sysexit
+from sys import exit as sys_exit
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -41,7 +41,7 @@ class Download(QThread):
         programExt = ChooseFromOS([".exe",".app",""])
             
         move(directory+"/downloaded/WiiMusicEditorPlus"+programExt,directory+"/downloaded/Helper/Update/NewProgram"+programExt)
-        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus"+programExt,r"Helper/Update/Version.txt",r"tmp"))
+        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus"+programExt,r"tmp"))
         rmtree(directory)
         UpdateThread.done.emit()
 
@@ -61,7 +61,8 @@ class UpdateWindow(QDialog,Ui_Update):
         elif(check == -1):
             self.switchBranch = True
             self.MainWidget.setCurrentIndex(2)
-            check = GetReleaseTag(True)
+            self.version = GetReleaseTag(True)
+            self.startupdate()
 
         self.version = check
         self.NewUpdate_Update.clicked.connect(self.startupdate)
@@ -84,12 +85,9 @@ class UpdateWindow(QDialog,Ui_Update):
         self.Update_Progress.setValue(value)
 
     def restart(self):
-        file = open(ProgramPath+"/Helper/Update/Version.txt","w")
-        file.write(self.version)
-        file.close()
         if(self.switchBranch):
             currentBranch = LoadSetting("Settings","Beta",False)
-            SaveSetting("Settings","Beta",not currentBranch)
+            SaveSetting("Settings","Beta",1-currentBranch)
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
@@ -101,7 +99,7 @@ class UpdateWindow(QDialog,Ui_Update):
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         self.otherWindow.close()
-        sysexit()
+        sys_exit()
 
 def CheckForUpdate():
     if(path.exists(ProgramPath+"/Helper/Update/Version.txt")):

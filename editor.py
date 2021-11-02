@@ -273,7 +273,7 @@ def GetGeckoPath():
 	if(os.path.isdir(file.path)):
 		return file.path+"/GeckoCodes.ini"
 	else:
-		return os.path.dirname(file.path)
+		return file.path
 
 #Other
 def Run(command):
@@ -737,7 +737,7 @@ def GetFileType():
 		elif(extension == ".carc"): return LoadType.Carc
 		elif(extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq"): return LoadType.Midi
 		elif(extension == ".dol"): return LoadType.Dol
-		elif(extension == ".gct" or extension == ".txt"): return LoadType.Gct
+		elif(extension == ".gct" or extension == ".ini"): return LoadType.Gct
 		elif(extension == ".wbfs" or extension == ".iso"): return LoadType.RomFile
 
 def PrepareFile():
