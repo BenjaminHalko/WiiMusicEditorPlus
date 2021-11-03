@@ -41,7 +41,7 @@ class Download(QThread):
         programExt = ChooseFromOS([".exe",".app",""])
             
         move(directory+"/downloaded/WiiMusicEditorPlus"+programExt,directory+"/downloaded/Helper/Update/NewProgram"+programExt)
-        sync(directory+"/downloaded",ProgramPath,"sync",purge=True,ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus"+programExt,r"tmp"))
+        sync(directory+"/downloaded",ProgramPath,"sync",ignore=(r"settings.ini",r"Helper/Backup",r"WiiMusicEditorPlus"+programExt,r"tmp"))
         rmtree(directory)
         UpdateThread.done.emit()
 
