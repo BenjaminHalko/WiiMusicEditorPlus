@@ -2,7 +2,6 @@ import os
 import subprocess
 import sys
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QThread
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -13,8 +12,6 @@ from editor import ChangeName, Instruments, ProgramPath, Songs, StyleTypeValue, 
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
-
-
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""

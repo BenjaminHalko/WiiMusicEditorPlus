@@ -1,0 +1,1 @@
+move "%~dp0dist\WiiMusicEditorPlus.exe" "%~dp0dist\WiiMusicEditorPlus\WiiMusicEditorPlus.exe"
