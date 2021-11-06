@@ -279,7 +279,8 @@ def GetGeckoPath():
 def Run(command):
     subprocess.run(command.replace("\\","/"),capture_output=True)
 
-def DecodeTxt(path):
+def DecodeTxt():
+	path = GetMessagePath()
 	try:
 		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
 		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" extract "'+path+'/message.carc"')
@@ -289,7 +290,8 @@ def DecodeTxt(path):
 	except Exception as e:
 		ShowError("Could not decode text file",str(e))
 
-def EncodeTxt(path):
+def EncodeTxt():
+	path = GetMessagePath()
 	try:
 		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
 		os.remove(path+"/message.d/new_music_message.txt")
@@ -374,8 +376,8 @@ def AddPatch(PatchName,PatchInfo):
 				os.remove(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
 			copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
 
-def ChangeName(SongToChange,newText,txtPath=-1):
-	if(txtPath==-1): txtPath = GetMessagePath()
+def ChangeName(SongToChange,newText):
+	txtPath = GetMessagePath()
 	if(type(newText) != str):
 		if(Songs[SongToChange].SongType == SongTypeValue.Regular):
 			TextOffset = ['c8','190','12c']
@@ -387,7 +389,7 @@ def ChangeName(SongToChange,newText,txtPath=-1):
 		textFromTxt[1][SongToChange] = newText[1]
 		textFromTxt[2][SongToChange] = newText[2]
 	else: TextOffset = ['b200']
-	DecodeTxt(txtPath)
+	DecodeTxt()
 	for typeNum in range(3):
 		message = open(txtPath+'/message.d/new_music_message.txt','rb')
 		textlines = message.readlines()
@@ -437,7 +439,7 @@ def ChangeName(SongToChange,newText,txtPath=-1):
 		message.writelines(textlines)
 		message.close()
 		if(type(newText) == str): break
-	EncodeTxt(txtPath)
+	EncodeTxt()
 
 def CreateGct(path):
 	patches = open(path)
@@ -641,7 +643,7 @@ def LoadMidi(midiPath):
 def GetSongNames():
 	global textFromTxt
 	textFromTxt = [[],[],[],[]]
-	DecodeTxt(GetMessagePath())
+	DecodeTxt()
 	message = open(GetMessagePath()+'/message.d/new_music_message.txt','rb')
 	textlines = message.readlines()
 	message.close()

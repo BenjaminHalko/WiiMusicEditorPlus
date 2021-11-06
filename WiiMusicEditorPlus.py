@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, Instruments, ProgramPath, Songs, StyleTypeValue, Styles, currentSystem, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch
+from editor import ChangeName, DecodeTxt, EncodeTxt, GetMessagePath, Instruments, ProgramPath, Songs, StyleTypeValue, Styles, currentSystem, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -125,6 +125,7 @@ class Window(QMainWindow, Ui_MainWindow):
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
         self.MP_StyleEditor_Button.clicked.connect(self.LoadStyleEditor)
+        self.MP_EditText_Button.clicked.connect(self.ShowAllText)
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(self.Button_SE_SongToChange)
@@ -184,6 +185,8 @@ class Window(QMainWindow, Ui_MainWindow):
             return True
         return False
 
+    #############Load Places
+
     def GotoMainMenu(self):
         self.MainWidget.setCurrentIndex(TAB.MainMenu)
 
@@ -208,14 +211,43 @@ class Window(QMainWindow, Ui_MainWindow):
             self.StE_Instruments.setEnabled(False)
             self.StE_ChangeStyleName.setEnabled(False)
             self.StE_ChangeStyleName_Label.setEnabled(False)
-            self.StE_ResetStyle.setEnabled(False)
+            self.StE_ResetStyle.setEnabed(False)
             self.StE_Patch.setEnabled(False)
             self.styleSelected = []
         else:
             error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadStyleEditor()
+
+    #############Single Functions
+    def ShowAllText(self):
+        DecodeTxt()
+        file = open(GetMessagePath()+'/message.d/new_music_message.txt','r+b')
+        textlines = file.readlines()
+        for num in range(len(textlines)):
+            if(textlines[num] == b'  b200 @015f /\r\n'):
+                textlines[num] = b'  b200 @015f [/,4b] = Default\r\n'
+                textlines[num+1] = b'  b201 @0160 [/,4b] = Rock\r\n'
+                textlines[num+2] = b'  b202 @0161 [/,4b] = March\r\n'
+                textlines[num+3] = b'  b203 @0162 [/,4b] = Jazz\r\n'
+                textlines[num+4] = b'  b204 @0163 [/,4b] = Latin\r\n'
+                textlines[num+5] = b'  b205 @0164 [/,4b] = Reggae\r\n'
+                textlines[num+6] = b'  b206 @0165 [/,4b] = Hawaiian\r\n'
+                textlines[num+7] = b'  b207 @0166 [/,4b] = Electronic\r\n'
+                textlines[num+8] = b'  b208 @0167 [/,4b] = Classical\r\n'
+                textlines[num+9] = b'  b209 @0168 [/,4b] = Tango\r\n'
+                textlines[num+10] = b'  b20a @0169 [/,4b] = Pop\r\n'
+                textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
+                break
+        file.writelines(textlines)
+        file.close()
+        subprocess.run('notepad "'+GetMessagePath()+'/message.d/new_music_message.txt"')
+        EncodeTxt()
+
         
+    
+    #############Menu Bar
+
     def MenuBar_CheckForUpdates(self):
         UpdateWindow(self,False)
 
