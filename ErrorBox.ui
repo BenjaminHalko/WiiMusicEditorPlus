@@ -554,6 +554,9 @@ QWidget[error=&quot;true&quot;]
          <property name="text">
           <string>ErrorText</string>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item>

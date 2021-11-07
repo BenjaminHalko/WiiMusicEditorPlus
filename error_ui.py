@@ -524,6 +524,7 @@ class Ui_Error(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         self.ErrorMessage.setFont(font)
+        self.ErrorMessage.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
         self.ErrorMessage.setObjectName("ErrorMessage")
         self.verticalLayout_2.addWidget(self.ErrorMessage)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
