@@ -277,7 +277,7 @@ def GetGeckoPath():
 
 #Other
 def Run(command):
-    subprocess.run(command.replace("\\","/"),capture_output=True)
+	subprocess.run(command.replace("\\","/"))
 
 def DecodeTxt():
 	path = GetMessagePath()
