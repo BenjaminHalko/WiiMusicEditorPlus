@@ -759,8 +759,8 @@ def ConvertRom():
 		else:
 			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]
 		file.type = LoadType.Rom
-	except:
-		ShowError("Could not extract rom","The program will likely crash")
+	except Exception as e:
+		ShowError("Could not extract rom",str(e))
 
 def LoadSetting(section,key,default):
 	ini = ConfigParser()
