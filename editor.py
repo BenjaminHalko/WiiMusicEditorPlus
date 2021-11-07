@@ -442,7 +442,7 @@ def ChangeName(SongToChange,newText):
 	EncodeTxt()
 
 def CreateGct(path):
-	patches = open(path)
+	patches = open(GetGeckoPath())
 	textlines = patches.readlines()
 	patches.close()
 	codes = '00D0C0DE00D0C0DE'
@@ -450,7 +450,7 @@ def CreateGct(path):
 		if(text[0].isalpha() or text[0].isnumeric()):
 			codes = codes + text.replace(' ','').strip()
 	codes = codes+'F000000000000000'
-	patch = open(ProgramPath+'/'+BasedOnRegion(gameIds)+'.gct','wb')
+	patch = open(path,'wb')
 	patch.write(bytes.fromhex(codes))
 	patch.close()
 
