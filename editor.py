@@ -10,6 +10,7 @@ from math import floor, ceil
 import mido
 from configparser import ConfigParser
 from getpass import getuser
+import stat as stats
 
 #Classes
 class SongClass:
@@ -274,6 +275,10 @@ def GetGeckoPath():
 		return file.path+"/GeckoCodes.ini"
 	else:
 		return file.path
+
+def GivePermission(file):
+	st = os.stat(file)
+	os.chmod(file,st.st_mode | stats.S_IEXEC)
 
 #Other
 def Run(command):
@@ -753,6 +758,7 @@ def PrepareFile():
 
 def ConvertRom():
 	try:
+		GivePermission(ProgramPath+'/Helper/Wiimms/wit')
 		Run('\"'+ProgramPath+'/Helper/Wiimms/wit\" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
 		if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
 			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
