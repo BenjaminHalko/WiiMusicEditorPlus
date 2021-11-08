@@ -288,8 +288,10 @@ def DecodeTxt():
 	path = GetMessagePath()
 	try:
 		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
+		GivePermission(ProgramPath+'/Helper/Wiimms/wszst')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" extract "'+path+'/message.carc"')
 		os.remove(path+"/message.d/wszst-setup.txt")
+		GivePermission(ProgramPath+'/Helper/Wiimms/wbmgt')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" decode "'+path+'/message.d/new_music_message.bmg"')
 		os.remove(path+"/message.d/new_music_message.bmg")
 	except Exception as e:
@@ -298,9 +300,11 @@ def DecodeTxt():
 def EncodeTxt():
 	path = GetMessagePath()
 	try:
+		GivePermission(ProgramPath+'/Helper/Wiimms/wbmgt')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
 		os.remove(path+"/message.d/new_music_message.txt")
 		os.remove(path+"/message.carc")
+		GivePermission(ProgramPath+'/Helper/Wiimms/wszst')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" create "'+path+'/message.d" --dest "'+path+'/message.carc"')
 		rmtree(path+'/message.d')
 	except Exception as e:
