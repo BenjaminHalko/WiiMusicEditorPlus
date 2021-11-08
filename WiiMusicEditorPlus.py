@@ -504,7 +504,7 @@ class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()
     def run(self):
         GivePermission(GetMessagePath()+'/message.d/new_music_message.txt')
-        subprocess.run(ChooseFromOS(["notepad","open -e","xdg-open"])+' "'+GetMessagePath()+'/message.d/new_music_message.txt"',shell=True)
+        subprocess.run(ChooseFromOS(["notepad","open -e","xdg-open"])+' "'+GetMessagePath()+'/message.d/new_music_message.txt"')
         self.done.emit()
 
 if __name__ == "__main__":
