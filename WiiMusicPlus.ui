@@ -1322,7 +1322,7 @@ background-color: #242424;
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="MP_SongEditor_Button_4">
+              <widget class="QPushButton" name="MP_DefaultStyle_Button">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1341,7 +1341,7 @@ background-color: #242424;
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="MP_SongEditor_Button_5">
+              <widget class="QPushButton" name="MP_RemoveSong_Button">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1362,9 +1362,28 @@ background-color: #242424;
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
+            <layout class="QHBoxLayout" name="MP_LessImportantFeatures">
              <item>
-              <widget class="QPushButton" name="MP_SongEditor_Button_3">
+              <widget class="QPushButton" name="MP_GeckocodeConvert_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Convert Geckocode to .gct</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_MainDolPatch_Button">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2644,7 +2663,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>863</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

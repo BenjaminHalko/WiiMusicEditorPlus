@@ -309,6 +309,7 @@ def EncodeTxt():
 		GivePermission(ProgramPath+'/Helper/Wiimms/wbmgt')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
 		os.remove(path+"/message.d/new_music_message.txt")
+		if(not os.path.exists(path+"/message.carc.backup")): copyfile(path+"/message.carc",path+"/message.carc.backup")
 		os.remove(path+"/message.carc")
 		GivePermission(ProgramPath+'/Helper/Wiimms/wszst')
 		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" create "'+path+'/message.d" --dest "'+path+'/message.carc"')
@@ -426,21 +427,7 @@ def ChangeName(SongToChange,newText):
 			offset = ' ' * (4-len(offset))+offset+'00 @'
 		else:
 			offset = ' ' * (4-len(offset))+offset+' @'
-		for num in range(len(textlines)):
-			if(textlines[num] == b'  b200 @015f /\r\n'):
-				textlines[num] = b'  b200 @015f [/,4b] = Default\r\n'
-				textlines[num+1] = b'  b201 @0160 [/,4b] = Rock\r\n'
-				textlines[num+2] = b'  b202 @0161 [/,4b] = March\r\n'
-				textlines[num+3] = b'  b203 @0162 [/,4b] = Jazz\r\n'
-				textlines[num+4] = b'  b204 @0163 [/,4b] = Latin\r\n'
-				textlines[num+5] = b'  b205 @0164 [/,4b] = Reggae\r\n'
-				textlines[num+6] = b'  b206 @0165 [/,4b] = Hawaiian\r\n'
-				textlines[num+7] = b'  b207 @0166 [/,4b] = Electronic\r\n'
-				textlines[num+8] = b'  b208 @0167 [/,4b] = Classical\r\n'
-				textlines[num+9] = b'  b209 @0168 [/,4b] = Tango\r\n'
-				textlines[num+10] = b'  b20a @0169 [/,4b] = Pop\r\n'
-				textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
-				break
+		FixMessageFile(textlines)
 		for num in range(len(textlines)):
 			if offset in str(textlines[num]):
 				while bytes('@','utf-8') not in textlines[num+1]:
@@ -474,6 +461,7 @@ def BasedOnRegion(array):
 	return array[regionSelected]
 
 def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqLengthArray,BrsarPath):
+	if(not os.path.exists(GetBrsarPath()+".backup")): copyfile(GetBrsarPath(),GetBrsarPath()+".backup")
 	if(BrsarPath == -1): BrsarPath = GetBrsarPath()
 	BrseqInfo = []
 	BrseqLength = []
@@ -721,8 +709,6 @@ def GetStyles():
 						min(int(textlines[i+4][15:17:1],16),len(Instruments)-1)]
 						break
 
-
-
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
 	Tempo = format(Tempo,"x")
 	Length = format(Length,"x")
@@ -746,6 +732,23 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 		LengthCode2 = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+4,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		MeasureCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+24,'x').lower()+' '+'00000000\n'
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode)
+
+def FixMessageFile(textlines):
+	for num in range(len(textlines)):
+		if(textlines[num] == b'  b200 @015f /\r\n'):
+			textlines[num] = b'  b200 @015f [/,4b] = Default\r\n'
+			textlines[num+1] = b'  b201 @0160 [/,4b] = Rock\r\n'
+			textlines[num+2] = b'  b202 @0161 [/,4b] = March\r\n'
+			textlines[num+3] = b'  b203 @0162 [/,4b] = Jazz\r\n'
+			textlines[num+4] = b'  b204 @0163 [/,4b] = Latin\r\n'
+			textlines[num+5] = b'  b205 @0164 [/,4b] = Reggae\r\n'
+			textlines[num+6] = b'  b206 @0165 [/,4b] = Hawaiian\r\n'
+			textlines[num+7] = b'  b207 @0166 [/,4b] = Electronic\r\n'
+			textlines[num+8] = b'  b208 @0167 [/,4b] = Classical\r\n'
+			textlines[num+9] = b'  b209 @0168 [/,4b] = Tango\r\n'
+			textlines[num+10] = b'  b20a @0169 [/,4b] = Pop\r\n'
+			textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
+			break
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom
