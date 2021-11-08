@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, DecodeTxt, EncodeTxt, GetMessagePath, GivePermission, Instruments, currentSystem, ProgramPath, Songs, StyleTypeValue, Styles, gameIds, regionNames, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch
+from editor import ChangeName, DecodeTxt, EncodeTxt, GetMessagePath, GivePermission, Instruments, currentSystem, ProgramPath, Songs, StyleTypeValue, Styles, gameIds, regionNames, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -503,11 +503,8 @@ class Window(QMainWindow, Ui_MainWindow):
 class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()
     def run(self):
-        if(currentSystem == "Windows"):
-            subprocess.run('notepad "'+GetMessagePath()+'/message.d/new_music_message.txt"')
-        else:
-            GivePermission(GetMessagePath()+'/message.d/new_music_message.txt')
-            subprocess.run('"'+GetMessagePath()+'/message.d/new_music_message.txt"')
+        GivePermission(GetMessagePath()+'/message.d/new_music_message.txt')
+        subprocess.run(ChooseFromOS(["notepad","open -e","xdg-open"])+' "'+GetMessagePath()+'/message.d/new_music_message.txt"',shell=True)
         self.done.emit()
 
 if __name__ == "__main__":
