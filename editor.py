@@ -285,7 +285,10 @@ def GivePermission(file):
 
 #Other
 def Run(command):
-	subprocess.run(command.replace("\\","/"),shell=(currentSystem == "Linux"))
+	if(currentSystem == "Linux"):
+		subprocess.run(command.replace("\\","/"),shell=True)
+	else:
+		subprocess.run(command.replace("\\","/"),capture_output=True)
 
 def DecodeTxt():
 	path = GetMessagePath()
