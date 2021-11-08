@@ -1,5 +1,5 @@
 #Mac
-pip3 install pyobjc-framework-Cocoa PyQt5 dirsync mido requests pyinstaller psutil
+pip3 install pyobjc-framework-Cocoa PyQt5 dirsync mido requests py2app psutil
 
 #Linux
 sudo apt install -y python3-pip build-essential zlib1g-dev
