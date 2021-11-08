@@ -277,8 +277,11 @@ def GetGeckoPath():
 		return file.path
 
 def GivePermission(file):
-	st = os.stat(file)
-	os.chmod(file,st.st_mode | stats.S_IEXEC)
+	try:
+		st = os.stat(file)
+		os.chmod(file,st.st_mode | stats.S_IEXEC)
+	except:
+		e = 0
 
 #Other
 def Run(command):
