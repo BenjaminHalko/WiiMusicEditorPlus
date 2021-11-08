@@ -826,10 +826,11 @@ gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 currentSystem = platform.system()
 if(currentSystem == "Darwin"): currentSystem = "Mac"
 
-if(sys.platform == "darwin"):
-	import Cocoa
-	ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
-elif getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
+#if(sys.platform == "darwin"):
+#	import Cocoa
+#	ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
+
+if getattr(sys, 'frozen', False): ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
 #Variables
