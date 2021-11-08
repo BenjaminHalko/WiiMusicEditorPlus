@@ -280,13 +280,13 @@ class Window(QMainWindow, Ui_MainWindow):
         SettingsWindow(self)
 
     def MenuBar_Load_Rom(self):
-        if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.gct *.ini)
+        if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.ini)
         Wii Music Rom (*.wbfs *.iso)
         Sound Archive (*.brsar)
         Text File (*.carc)
         Main.dol (*.dol)
         Midi-Type File (*.midi *.mid *.brseq *.rseq)
-        Geckocode (*.gct *.ini)""")):
+        Geckocode (*.ini)""")):
             PrepareFile()
             SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
             self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
