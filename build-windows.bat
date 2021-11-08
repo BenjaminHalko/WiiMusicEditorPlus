@@ -1,5 +1,5 @@
 @echo off
-pyinstaller -F -w --clean --noupx WiiMusicEditorPlus.py
+pyinstaller -F -w WiiMusicEditorPlus.py
 
 rmdir /s /q "dist/WiiMusicEditorPlus/Helper"
 xcopy /E /H /C /I "crossplatformhelpers/Windows/Helper" "dist/WiiMusicEditorPlus/Helper"

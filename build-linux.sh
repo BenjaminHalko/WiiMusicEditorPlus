@@ -1,8 +1,6 @@
 #!/bin/bash
 
-rm -r __pycache__
-echo "PyInstalling"
-pyinstaller -F -w --noconfirm --clean --noupx -n Program WiiMusicEditorPlus.py
+pyinstaller -F -w --noconfirm -n Program WiiMusicEditorPlus.py
 mkdir dist/WiiMusicEditorPlus
 mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 rm -r dist/WiiMusicEditorPlus/Helper

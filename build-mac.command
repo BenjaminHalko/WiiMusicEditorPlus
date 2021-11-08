@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "`dirname "$0"`"
-pyinstaller -F --noconfirm --clean --noupx -n Program WiiMusicEditorPlus.py
+pyinstaller -F --noconfirm -n Program WiiMusicEditorPlus.py
 mkdir dist/WiiMusicEditorPlus
 mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 echo "removing old helper"
