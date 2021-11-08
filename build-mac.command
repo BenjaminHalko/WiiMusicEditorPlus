@@ -1,11 +1,14 @@
 #!/bin/bash
 
 cd "`dirname "$0"`"
-py2applet WiiMusicEditorPlus.py
-rm -r WiiMusicEditorPlus
-mkdir WiiMusicEditorPlus
-cp -r crossplatformhelpers/Mac/Helper WiiMusicEditorPlus/Helper
-cp crossplatformhelpers/Version.txt WiiMusicEditorPlus/Helper/Update
-mv WiiMusicEditorPlus.app WiiMusicEditorPlus/
-tar -a -cf WiiMusicEditorPlus-Mac.zip WiiMusicEditorPlus
+pyinstaller -F --noconfirm --clean --noupx -n Program WiiMusicEditorPlus.py
+mkdir dist/WiiMusicEditorPlus
+mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
+echo "removing old helper"
+rm -r dist/WiiMusicEditorPlus/Helper
+echo "copying helper"
+cp -r crossplatformhelpers/Mac/Helper dist/WiiMusicEditorPlus/Helper
+cp crossplatformhelpers/Version.txt dist/WiiMusicEditorPlus/Helper/Update
+echo "creating .zip"
+tar -a -C dist -cf dist/WiiMusicEditorPlus-Mac.zip WiiMusicEditorPlus
 echo "done"
