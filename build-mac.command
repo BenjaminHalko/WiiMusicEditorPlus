@@ -9,7 +9,6 @@ rm -r dist/WiiMusicEditorPlus/Helper
 echo "copying helper"
 cp -r crossplatformhelpers/Mac/Helper dist/WiiMusicEditorPlus/Helper
 cp crossplatformhelpers/Version.txt dist/WiiMusicEditorPlus/Helper/Update
-mv dist/WiiMusicEditorPlusProgram dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 echo "creating .zip"
 tar -a -C dist -cf dist/WiiMusicEditorPlus-Mac.zip WiiMusicEditorPlus
 echo "done"
