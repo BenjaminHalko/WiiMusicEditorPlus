@@ -14,8 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Error(object):
     def setupUi(self, Error):
         Error.setObjectName("Error")
+        Error.setWindowModality(QtCore.Qt.ApplicationModal)
         Error.setEnabled(True)
-        Error.resize(281, 139)
+        Error.resize(281, 134)
         Error.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"

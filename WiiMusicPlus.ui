@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>863</width>
-    <height>558</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="palette">
@@ -1146,7 +1146,7 @@ QWidget[error=&quot;true&quot;]
      </disabled>
     </palette>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_17">
     <item>
      <widget class="QStackedWidget" name="MainWidget">
       <property name="font">
@@ -1301,7 +1301,7 @@ background-color: #242424;
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QHBoxLayout" name="MP_Advanced1">
              <item>
               <widget class="QPushButton" name="MP_EditText_Button">
                <property name="minimumSize">
@@ -1362,7 +1362,7 @@ background-color: #242424;
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="MP_LessImportantFeatures">
+            <layout class="QHBoxLayout" name="MP_Advanced2">
              <item>
               <widget class="QPushButton" name="MP_GeckocodeConvert_Button">
                <property name="minimumSize">
@@ -2025,6 +2025,85 @@ background-color: #242424;
              <item>
               <widget class="QListWidget" name="SE_SongToChange"/>
              </item>
+             <item>
+              <layout class="QHBoxLayout" name="SE_Style">
+               <item>
+                <widget class="QLabel" name="SE_StyleLabel">
+                 <property name="text">
+                  <string>Style: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="SE_StyleText">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="acceptDrops">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+}
+
+QLabel[error=&quot;true&quot;]
+{
+padding: 1px;
+border: 1px solid;
+border-color: red;
+background-color: #242424;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="SE_StyleButtons">
+               <item>
+                <widget class="QPushButton" name="SE_OpenStyleEditor">
+                 <property name="text">
+                  <string>Edit in Style Editor</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SE_OpenDefaultStyleEditor">
+                 <property name="text">
+                  <string>Change Default Style</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
             </layout>
            </widget>
           </item>
@@ -2650,6 +2729,98 @@ background-color: #242424;</string>
            </widget>
           </item>
          </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="DefaultStyleEditor">
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <layout class="QHBoxLayout" name="DS_Title">
+          <item>
+           <widget class="QLabel" name="DS_Title_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>44</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Continuum Medium</family>
+              <pointsize>26</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Default Style Editor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="DS_Back_Button">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string> Back</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="DS_Lists">
+          <item>
+           <widget class="QGroupBox" name="DS_SongBox">
+            <property name="title">
+             <string>Song List</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <item>
+              <widget class="QListWidget" name="DS_Songs"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="DS_StyleBox">
+            <property name="title">
+             <string>Style List</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QListWidget" name="DS_Styles"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="DS_Patch">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Continuum Medium</family>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patch!</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

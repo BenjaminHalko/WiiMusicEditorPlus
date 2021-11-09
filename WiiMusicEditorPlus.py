@@ -48,14 +48,15 @@ def LoadMainFile(filter):
     return False
 
 #Lists
-def LoadSongs(widgetID):
+def LoadSongs(widgetID,types=[]):
     widgetID.clear()
     for i in range(len(Songs)):
-        item = QtWidgets.QListWidgetItem()
-        extraText = ""
-        if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
-        item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
-        widgetID.addItem(item)
+        if(types == [] or Songs[i].SongType in types):
+            item = QtWidgets.QListWidgetItem()
+            extraText = ""
+            if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
+            item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
+            widgetID.addItem(item)
 
 def LoadStyles(widgetID):
     widgetID.clear()
@@ -92,6 +93,8 @@ class TAB:
     MainMenu = 0
     SongEditor = 1
     StyleEditor = 2
+    TextEditor = 3
+    DefaultStyleEditor = 4
 
 #Main Window
 class Window(QMainWindow, Ui_MainWindow):
@@ -119,6 +122,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
         self.MP_StyleEditor_Button.clicked.connect(self.LoadStyleEditor)
         self.MP_EditText_Button.clicked.connect(self.LoadTextEditor)
+        self.MP_DefaultStyle_Button.clicked.connect(self.LoadDefaultStyleEditor)
         self.MP_GeckocodeConvert_Button.clicked.connect(self.ConvertGeckocode)
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
 
@@ -148,6 +152,12 @@ class Window(QMainWindow, Ui_MainWindow):
         self.TE_Back_Button.clicked.connect(self.GotoMainMenu)
         self.TE_Patch.clicked.connect(self.Button_TE_Patch)
         self.TE_OpenExternal.clicked.connect(self.Button_TE_ExternalEditor)
+
+        #Default Style Editor
+        self.DS_Back_Button.clicked.connect(self.GotoMainMenu)
+        self.DS_Patch.clicked.connect(self.Button_DS_Patch)
+        self.DS_Songs.itemSelectionChanged.connect(self.List_DS_SongList)
+        self.DS_Styles.itemSelectionChanged.connect(self.List_DS_StyleList)
 
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
@@ -200,6 +210,10 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_Midi.setCheckable(False)
             self.SE_ChangeSongText.setEnabled(False)
             self.SE_Patch.setEnabled(False)
+            self.SE_StyleLabel.setEnabled(False)
+            self.SE_StyleText.setEnabled(False)
+            self.SE_OpenDefaultStyleEditor.setEnabled(False)
+            self.SE_OpenStyleEditor.setEnabled(False)
         else:
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
@@ -232,9 +246,22 @@ class Window(QMainWindow, Ui_MainWindow):
             file = open(GetMessagePath()+"/message.d/new_music_message.txt","rb")
             self.TE_Text.setPlainText(_translate("MainWindow",file.read().decode("utf-8")))
             file.close()
-            self.MainWidget.setCurrentIndex(3)
+            self.MainWidget.setCurrentIndex(TAB.TextEditor)
         else:
             ShowError("Unable to load text editor","Must load Wii Music Rom or Message File")
+
+    def LoadDefaultStyleEditor(self):
+        if(AllowType(LoadType.Gct)):
+            self.MainWidget.setCurrentIndex(TAB.DefaultStyleEditor)
+            GetStyles()
+            LoadSongs(self.DS_Songs,[SongTypeValue.Regular])
+            LoadStyles(self.DS_Styles)
+            self.DS_StyleBox.setEnabled(False)
+            self.DS_Patch.setEnabled(False)
+        else:
+            error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",True)
+            if(error.clicked):
+                if(self.CreateGeckoCode()): self.LoadDefaultStyleEditor()
 
     def ConvertGeckocode(self):
         if(AllowType(LoadType.Gct)):
@@ -353,7 +380,11 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
-        self.SE_Patchable() 
+        self.SE_Patchable()
+        self.SE_StyleLabel.setEnabled(True)
+        self.SE_StyleText.setEnabled(True)
+        self.SE_OpenDefaultStyleEditor.setEnabled(True)
+        self.SE_OpenStyleEditor.setEnabled(True)
 
     def Button_SE_Patch(self):
         if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
@@ -492,6 +523,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.TE_Back_Button.setEnabled(True)
         self.TE_OpenExternal.setEnabled(True)
         self.edit.deleteLater()
+
+    #############Default Style Editor
+    def Button_DS_Patch(self):
+        print("cheese")
+
+    def List_DS_SongList(self):
+        self.DS_StyleBox.setEnabled(True)
+
+    def List_DS_StyleList(self):
+        self.DS_Patch.setEnabled(True)
 
 class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()

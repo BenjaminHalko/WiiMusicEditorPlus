@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Error</class>
  <widget class="QDialog" name="Error">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -10,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>139</height>
+    <height>134</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -503,7 +506,7 @@ QWidget[error=&quot;true&quot;]
    <item>
     <widget class="QStackedWidget" name="MainWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="ErrorNormal">
       <layout class="QVBoxLayout" name="verticalLayout_2">
