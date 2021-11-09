@@ -6,8 +6,6 @@ pyinstaller -F -w --noconfirm WiiMusicEditorPlus.py
 rm dist/WiiMusicEditorPlus
 mkdir dist/WiiMusicEditorPlus
 mv dist/WiiMusicEditorPlus.app dist/WiiMusicEditorPlus/
-echo "removing old helper"
-rm -r dist/WiiMusicEditorPlus/Helper
 echo "copying helper"
 cp -r crossplatformhelpers/Mac/Helper dist/WiiMusicEditorPlus/Helper
 cp crossplatformhelpers/Version.txt dist/WiiMusicEditorPlus/Helper/Update
