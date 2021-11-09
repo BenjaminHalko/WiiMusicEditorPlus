@@ -3,7 +3,7 @@
 cd "`dirname "$0"`"
 pyinstaller -F -w --noconfirm WiiMusicEditorPlus.py
 mkdir dist/WiiMusicEditorPlus
-mv -r dist/WiiMusicEditorPlus.app dist/WiiMusicEditorPlus/
+mv dist/WiiMusicEditorPlus.app dist/WiiMusicEditorPlus/
 echo "removing old helper"
 rm -r dist/WiiMusicEditorPlus/Helper
 echo "copying helper"
