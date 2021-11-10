@@ -129,9 +129,12 @@ class Window(QMainWindow, Ui_MainWindow):
         for i in range(len(Songs)):
             if(types == [] or Songs[i].SongType in types):
                 item = QtWidgets.QListWidgetItem()
-                extraText = ""
-                if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
-                item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
+                text = Songs[i].Name
+                if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu):
+                    text = editor.textFromTxt[0][i]
+                    if(Songs[i].SongType == SongTypeValue.Maestro): text = text+" (Mii Maestro)"
+                    if(Songs[i].SongType == SongTypeValue.Handbell): text = text+" (Handbell Harmony)"
+                item.setText(_translate("MainWindow", text))
                 if(lockSongs and i != self.fromSongEditor): item.setFlags(QtCore.Qt.ItemIsSelectable)
                 widgetID.addItem(item)
         if(lockSongs): widgetID.setCurrentRow(self.fromSongEditor)
@@ -228,6 +231,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_OpenDefaultStyleEditor.setEnabled(False)
             self.SE_OpenStyleEditor.setEnabled(False)
             self.SE_Midi_File_Label.setText(_translate("MainWindow",""))
+            if(not AllowType(LoadType.Brsar)): self.SE_SongToChange.removeItemWidget(self.SE_SongToChange.takeItem(len(Songs)-1))
         else:
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
@@ -420,9 +424,12 @@ class Window(QMainWindow, Ui_MainWindow):
         
         if(AllowType(LoadType.Carc)):
             ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
-            extraText = ""
-            if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][self.SE_SongToChange.currentRow()]+")"
-            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", Songs[self.SE_SongToChange.currentRow()].Name)+extraText)
+            extraText = Songs[self.SE_SongToChange.currentRow()].Name
+            if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
+                text = editor.textFromTxt[0][self.SE_SongToChange.currentRow()]
+                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Maestro): text = text+" (Mii Maestro)"
+                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Handbell): text = text+" (Handbell Harmony)"
+            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", text))
             editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
             editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
             editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>863</width>
-    <height>558</height>
+    <height>557</height>
    </rect>
   </property>
   <property name="palette">
@@ -895,8 +895,17 @@ QRadioButton::indicator:checked
         fx: 0.5, fy: 0.5,
         radius: 1.0,
         stop: 0.25 #ffaa00,
-        stop: 0.3 #323232
-    );
+        stop: 0.3 #323232);
+}
+
+QRadioButton::indicator:checked:disabled
+{
+    background-color: qradialgradient(
+        cx: 0.5, cy: 0.5,
+        fx: 0.5, fy: 0.5,
+        radius: 1.0,
+        stop: 0.25 #323232,
+        stop: 0.3 #323232);
 }
 
 QCheckBox::indicator{
@@ -917,12 +926,6 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
-QRadioButton:disabled
-{
-    background-color: #404040;
-}
-
-
 QCheckBox::indicator:checked
 {
     image:url(:images/images/checkbox.png);
@@ -931,16 +934,6 @@ QCheckBox::indicator:checked
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
 }</string>
   </property>
   <property name="tabShape">
@@ -2841,7 +2834,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>863</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

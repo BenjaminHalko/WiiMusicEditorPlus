@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(863, 558)
+        MainWindow.resize(863, 557)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -598,8 +598,17 @@ class Ui_MainWindow(object):
 "        fx: 0.5, fy: 0.5,\n"
 "        radius: 1.0,\n"
 "        stop: 0.25 #ffaa00,\n"
-"        stop: 0.3 #323232\n"
-"    );\n"
+"        stop: 0.3 #323232);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:disabled\n"
+"{\n"
+"    background-color: qradialgradient(\n"
+"        cx: 0.5, cy: 0.5,\n"
+"        fx: 0.5, fy: 0.5,\n"
+"        radius: 1.0,\n"
+"        stop: 0.25 #323232,\n"
+"        stop: 0.3 #323232);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator{\n"
@@ -620,12 +629,6 @@ class Ui_MainWindow(object):
 "    border: 1px solid #ffaa00;\n"
 "}\n"
 "\n"
-"QRadioButton:disabled\n"
-"{\n"
-"    background-color: #404040;\n"
-"}\n"
-"\n"
-"\n"
 "QCheckBox::indicator:checked\n"
 "{\n"
 "    image:url(:images/images/checkbox.png);\n"
@@ -634,16 +637,6 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
 "{\n"
 "    border: 1px solid #444;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
 "}")
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -1483,7 +1476,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addWidget(self.MainWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 863, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 863, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
