@@ -14,10 +14,11 @@ import stat as stats
 
 #Classes
 class SongClass:
-	def __init__(self,SongType,Name,MemOrder,MemOffset = -1):
+	def __init__(self,SongType,Name,MemOrder,DefaultStyle="nope",MemOffset = -1):
 		self.SongType = SongType
 		self.Name = Name
 		self.MemOrder = MemOrder
+		self.DefaultStyle = DefaultStyle
 		self.MemOffset = MemOffset
 		if(self.MemOffset == -1): self.MemOffset = 0x025a0440+0xBC*self.MemOrder
 			
@@ -54,67 +55,67 @@ class LoadedFile:
 		self.type = type
 
 Songs = [
-SongClass(SongTypeValue.Regular,'A Little Night Music',6),
-SongClass(SongTypeValue.Regular,'American Patrol',11),
-SongClass(SongTypeValue.Regular,'Animal Crossing',48),
-SongClass(SongTypeValue.Regular,'Animal Crossing -- K.K. Blues',26),
-SongClass(SongTypeValue.Regular,'Bridal Chorus',1),
-SongClass(SongTypeValue.Regular,'Carmen',3),
-SongClass(SongTypeValue.Regular,'Chariots of Fire',35),
-SongClass(SongTypeValue.Regular,'Daydream Believer',33),
-SongClass(SongTypeValue.Regular,'Do-Re-Mi',9),
-SongClass(SongTypeValue.Regular,'Every Breath You Take',34),
-SongClass(SongTypeValue.Regular,'F-Zero -- Mute City Theme',49),
-SongClass(SongTypeValue.Regular,'Frère Jacques',22),
-SongClass(SongTypeValue.Regular,'From Santurtzi to Bilbao',27),
-SongClass(SongTypeValue.Regular,'From the New World',16),
-SongClass(SongTypeValue.Regular,'Happy Birthday to You',8),
-SongClass(SongTypeValue.Regular,'I\'ll Be There',40),
-SongClass(SongTypeValue.Regular,'I\'ve Never Been to Me',44),
-SongClass(SongTypeValue.Regular,'Jingle Bell Rock',41),
-SongClass(SongTypeValue.Regular,'La Bamba',17),
-SongClass(SongTypeValue.Regular,'La Cucaracha',29),
-SongClass(SongTypeValue.Regular,'Little Hans',25),
-SongClass(SongTypeValue.Regular,'Long, Long Ago',19),
-SongClass(SongTypeValue.Regular,'Material Girl',38),
-SongClass(SongTypeValue.Regular,'Minuet in G Major',7),
-SongClass(SongTypeValue.Regular,'My Grandfather\'s Clock',15),
-SongClass(SongTypeValue.Regular,'O Christmas Tree',24),
-SongClass(SongTypeValue.Regular,'Ode to Joy',0),
-SongClass(SongTypeValue.Regular,'Oh, My Darling Clementine',14),
-SongClass(SongTypeValue.Regular,'Over the Waves',30),
-SongClass(SongTypeValue.Regular,'Please Mr. Postman',37),
-SongClass(SongTypeValue.Regular,'Sakura Sakura',31),
-SongClass(SongTypeValue.Regular,'Scarborough Fair',18),
-SongClass(SongTypeValue.Regular,'September',36),
-SongClass(SongTypeValue.Regular,'Sukiyaki',32),
-SongClass(SongTypeValue.Regular,'Super Mario Bros.',45),
-SongClass(SongTypeValue.Regular,'Sur le pont d\'Avignon',21),
-SongClass(SongTypeValue.Regular,'Swan Lake',2),
-SongClass(SongTypeValue.Regular,'The Blue Danube',5),
-SongClass(SongTypeValue.Regular,'The Entertainer',10),
-SongClass(SongTypeValue.Regular,'The Flea Waltz',23),
-SongClass(SongTypeValue.Regular,'The Legend of Zelda',46),
-SongClass(SongTypeValue.Regular,'The Loco-Motion',39),
-SongClass(SongTypeValue.Regular,'Troika',28),
-SongClass(SongTypeValue.Regular,'Turkey in the Straw',12),
-SongClass(SongTypeValue.Regular,'Twinkle, Twinkle, Little Star',20),
-SongClass(SongTypeValue.Regular,'Wake Me Up Before You Go-Go',42),
-SongClass(SongTypeValue.Regular,'Wii Music',4),
-SongClass(SongTypeValue.Regular,'Wii Sports',47),
-SongClass(SongTypeValue.Regular,'Woman',43),
-SongClass(SongTypeValue.Regular,'Yankee Doodle',13),
-SongClass(SongTypeValue.Maestro,'Twinkle, Twinkle, Little Star (Mii Maestro)',2,'025a3e1c'),
-SongClass(SongTypeValue.Maestro,'Carmen (Mii Maestro)',0,'025a3d80'),
-SongClass(SongTypeValue.Maestro,'The Four Seasons -- Spring (Mii Maestro)',4,'025a3f54'),
-SongClass(SongTypeValue.Maestro,'Ode to Joy (Mii Maestro)',3,'025a3ff0'),
-SongClass(SongTypeValue.Maestro,'The Legend of Zelda (Mii Maestro)',1,'025a3eb8'),
-SongClass(SongTypeValue.Handbell,'O Christmas Tree (Handbell Harmony)',0,'02566D5A'),
-SongClass(SongTypeValue.Handbell,'Hum, Hum, Hum (Handbell Harmony)',2,'02566E0A'),
-SongClass(SongTypeValue.Handbell,'My Grandfather\'s Clock (Handbell Harmony)',3,'02566E62'),
-SongClass(SongTypeValue.Handbell,'Do-Re-Mi (Handbell Harmony)',1,'02566DB2'),
-SongClass(SongTypeValue.Handbell,'Sukiyaki (Handbell Harmony)',4,'02566EBA'),
-SongClass(SongTypeValue.Menu,'Menu Song',-1,['0259ACB0','0259ACD4','0259ACF8','0259AD1C','0259AD40'])]
+SongClass(SongTypeValue.Regular,'A Little Night Music',6,"21"),
+SongClass(SongTypeValue.Regular,'American Patrol',11,"03"),
+SongClass(SongTypeValue.Regular,'Animal Crossing',48,"1B"),
+SongClass(SongTypeValue.Regular,'Animal Crossing -- K.K. Blues',26,"23"),
+SongClass(SongTypeValue.Regular,'Bridal Chorus',1,"08"),
+SongClass(SongTypeValue.Regular,'Carmen',3,"0F"),
+SongClass(SongTypeValue.Regular,'Chariots of Fire',35,"13"),
+SongClass(SongTypeValue.Regular,'Daydream Believer',33,"00"),
+SongClass(SongTypeValue.Regular,'Do-Re-Mi',9,"01"),
+SongClass(SongTypeValue.Regular,'Every Breath You Take',34,"12"),
+SongClass(SongTypeValue.Regular,'F-Zero -- Mute City Theme',49,"01"),
+SongClass(SongTypeValue.Regular,'Frère Jacques',22,"04"),
+SongClass(SongTypeValue.Regular,'From Santurtzi to Bilbao',27,"20"),
+SongClass(SongTypeValue.Regular,'From the New World',16,"02"),
+SongClass(SongTypeValue.Regular,'Happy Birthday to You',8,"1E"),
+SongClass(SongTypeValue.Regular,'I\'ll Be There',40,"16"),
+SongClass(SongTypeValue.Regular,'I\'ve Never Been to Me',44,"18"),
+SongClass(SongTypeValue.Regular,'Jingle Bell Rock',41,"00"),
+SongClass(SongTypeValue.Regular,'La Bamba',17,"0A"),
+SongClass(SongTypeValue.Regular,'La Cucaracha',29,"1F"),
+SongClass(SongTypeValue.Regular,'Little Hans',25,"04"),
+SongClass(SongTypeValue.Regular,'Long, Long Ago',19,"08"),
+SongClass(SongTypeValue.Regular,'Material Girl',38,"15"),
+SongClass(SongTypeValue.Regular,'Minuet in G Major',7,"1C"),
+SongClass(SongTypeValue.Regular,'My Grandfather\'s Clock',15,"05"),
+SongClass(SongTypeValue.Regular,'O Christmas Tree',24,"10"),
+SongClass(SongTypeValue.Regular,'Ode to Joy',0,"02"),
+SongClass(SongTypeValue.Regular,'Oh, My Darling Clementine',14,"0D"),
+SongClass(SongTypeValue.Regular,'Over the Waves',30,"11"),
+SongClass(SongTypeValue.Regular,'Please Mr. Postman',37,"09"),
+SongClass(SongTypeValue.Regular,'Sakura Sakura',31,"06"),
+SongClass(SongTypeValue.Regular,'Scarborough Fair',18,"0E"),
+SongClass(SongTypeValue.Regular,'September',36,"14"),
+SongClass(SongTypeValue.Regular,'Sukiyaki',32,"0A"),
+SongClass(SongTypeValue.Regular,'Super Mario Bros.',45,"2C"),
+SongClass(SongTypeValue.Regular,'Sur le pont d\'Avignon',21,"09"),
+SongClass(SongTypeValue.Regular,'Swan Lake',2,"07"),
+SongClass(SongTypeValue.Regular,'The Blue Danube',5,"22"),
+SongClass(SongTypeValue.Regular,'The Entertainer',10,"1D"),
+SongClass(SongTypeValue.Regular,'The Flea Waltz',23,"03"),
+SongClass(SongTypeValue.Regular,'The Legend of Zelda',46,"19"),
+SongClass(SongTypeValue.Regular,'The Loco-Motion',39,"05"),
+SongClass(SongTypeValue.Regular,'Troika',28,"07"),
+SongClass(SongTypeValue.Regular,'Turkey in the Straw',12,"06"),
+SongClass(SongTypeValue.Regular,'Twinkle, Twinkle, Little Star',20,"0B"),
+SongClass(SongTypeValue.Regular,'Wake Me Up Before You Go-Go',42,"17"),
+SongClass(SongTypeValue.Regular,'Wii Music',4,"24"),
+SongClass(SongTypeValue.Regular,'Wii Sports',47,"1A"),
+SongClass(SongTypeValue.Regular,'Woman',43,"17"),
+SongClass(SongTypeValue.Regular,'Yankee Doodle',13,"0C"),
+SongClass(SongTypeValue.Maestro,'Twinkle, Twinkle, Little Star (Mii Maestro)',2,MemOffset='025a3e1c'),
+SongClass(SongTypeValue.Maestro,'Carmen (Mii Maestro)',0,MemOffset='025a3d80'),
+SongClass(SongTypeValue.Maestro,'The Four Seasons -- Spring (Mii Maestro)',4,MemOffset='025a3f54'),
+SongClass(SongTypeValue.Maestro,'Ode to Joy (Mii Maestro)',3,MemOffset='025a3ff0'),
+SongClass(SongTypeValue.Maestro,'The Legend of Zelda (Mii Maestro)',1,MemOffset='025a3eb8'),
+SongClass(SongTypeValue.Handbell,'O Christmas Tree (Handbell Harmony)',0,MemOffset='02566D5A'),
+SongClass(SongTypeValue.Handbell,'Hum, Hum, Hum (Handbell Harmony)',2,MemOffset='02566E0A'),
+SongClass(SongTypeValue.Handbell,'My Grandfather\'s Clock (Handbell Harmony)',3,MemOffset='02566E62'),
+SongClass(SongTypeValue.Handbell,'Do-Re-Mi (Handbell Harmony)',1,MemOffset='02566DB2'),
+SongClass(SongTypeValue.Handbell,'Sukiyaki (Handbell Harmony)',4,MemOffset='02566EBA'),
+SongClass(SongTypeValue.Menu,'Menu Song',-1,MemOffset=['0259ACB0','0259ACD4','0259ACF8','0259AD1C','0259AD40'])]
 
 noneInstrument = 67
 Styles = [
@@ -323,6 +324,24 @@ def GetRegion():
 			return i
 	ShowError("Could not determine region","Using fallback region: "+BasedOnRegion(regionFullNames))
 	return regionSelected
+
+def GetDefaultStyle(SongID,default):
+	style = Songs[SongID].DefaultStyle
+
+	if(not default and os.path.exists(GetGeckoPath())):
+		file = open(GetGeckoPath())
+		textlines = file.readlines()
+		file.close()
+		for i in range(len(textlines)):
+			if(textlines[i] == "$"+Songs[SongID].Name+" Default Style Patch [WiiMusicEditor]\n"):
+				style = textlines[i+1][15:17:1]
+
+	for i in range(len(Styles)):
+		if(Styles[i].StyleId == style):
+			return i
+
+	return -1
+			
 
 #Main Functions
 def AddPatch(PatchName,PatchInfo):

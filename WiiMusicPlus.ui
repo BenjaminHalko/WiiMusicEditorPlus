@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>863</width>
-    <height>545</height>
+    <height>558</height>
    </rect>
   </property>
   <property name="palette">
@@ -2798,6 +2798,13 @@ background-color: #242424;</string>
              <item>
               <widget class="QListWidget" name="DS_Styles"/>
              </item>
+             <item>
+              <widget class="QPushButton" name="DS_Reset">
+               <property name="text">
+                <string>Set to Default</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -2834,7 +2841,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>863</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, Instruments, currentSystem, ProgramPath, Songs, StyleTypeValue, Styles, gameIds, regionNames, SongTypeValue, LoadType, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS
+from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -158,6 +158,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DS_Patch.clicked.connect(self.Button_DS_Patch)
         self.DS_Songs.itemSelectionChanged.connect(self.List_DS_SongList)
         self.DS_Styles.itemSelectionChanged.connect(self.List_DS_StyleList)
+        self.DS_Reset.clicked.connect(self.Button_DS_Reset)
 
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
@@ -381,10 +382,12 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
             self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
         self.SE_Patchable()
-        self.SE_StyleLabel.setEnabled(True)
-        self.SE_StyleText.setEnabled(True)
-        self.SE_OpenDefaultStyleEditor.setEnabled(True)
-        self.SE_OpenStyleEditor.setEnabled(True)
+        if(AllowType(LoadType.Brsar)):
+            self.SE_StyleLabel.setEnabled(True)
+            self.SE_StyleText.setEnabled(True)
+            self.SE_OpenDefaultStyleEditor.setEnabled(True)
+            self.SE_OpenStyleEditor.setEnabled(True)
+            self.SE_StyleText.setText(_translate("MainWindow",Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name))
 
     def Button_SE_Patch(self):
         if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
@@ -526,13 +529,20 @@ class Window(QMainWindow, Ui_MainWindow):
 
     #############Default Style Editor
     def Button_DS_Patch(self):
-        print("cheese")
+        AddPatch(Songs[self.DS_Songs.currentRow()].Name+' Default Style Patch','0'+format(Songs[self.DS_Songs.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[self.DS_Styles.currentRow()].StyleId+'\n')
+        self.DS_Patch.setEnabled(False)
 
     def List_DS_SongList(self):
         self.DS_StyleBox.setEnabled(True)
-
+        self.DS_Styles.setCurrentRow(GetDefaultStyle(self.DS_Songs.currentRow(),False))
+    
     def List_DS_StyleList(self):
-        self.DS_Patch.setEnabled(True)
+        self.DS_Patch.setEnabled(self.DS_Styles.currentRow() != GetDefaultStyle(self.DS_Songs.currentRow(),False))
+        self.DS_Reset.setEnabled(self.DS_Styles.currentRow() != GetDefaultStyle(self.DS_Songs.currentRow(),True))
+
+    def Button_DS_Reset(self):
+        self.DS_Styles.setCurrentRow(GetDefaultStyle(self.DS_Songs.currentRow(),True))
+        self.DS_Reset.setEnabled(False)
 
 class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()
