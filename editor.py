@@ -638,12 +638,14 @@ def LoadMidi(midiPath):
 		prefix = pathlib.Path(midiPath).suffix
 		if(prefix == '.mid'): prefix = '.midi'
 		copyfile(midiPath,directory+'/z'+prefix)
+		ext = ""
+		if(currentSystem != "Windows"): ext = "mono "
 		if(os.path.isfile(directory+'/z.rseq')):
-			Run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" assemble "'+directory+'/z.rseq"')
+			Run(ext+'"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" assemble "'+directory+'/z.rseq"')
 		if(os.path.isfile(directory+'/z.brseq')):
-			Run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" to_midi "'+directory+'/z.brseq"')
+			Run(ext+'"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" to_midi "'+directory+'/z.brseq"')
 		else:
-			subprocess.run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" from_midi "'+directory+'/z.midi"')
+			Run(ext+'"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd.exe" from_midi "'+directory+'/z.midi"')
 
 		mid = mido.MidiFile(directory+"/z.midi")		
 		Tempo = 0

@@ -47,47 +47,6 @@ def LoadMainFile(filter):
         return True
     return False
 
-#Lists
-def LoadSongs(widgetID,types=[]):
-    widgetID.clear()
-    for i in range(len(Songs)):
-        if(types == [] or Songs[i].SongType in types):
-            item = QtWidgets.QListWidgetItem()
-            extraText = ""
-            if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
-            item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
-            widgetID.addItem(item)
-
-def LoadStyles(widgetID):
-    widgetID.clear()
-    for i in range(len(Styles)):
-        item = QtWidgets.QListWidgetItem()
-        extraText = ""
-        if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " ~[Replaced]~" 
-        item.setText(_translate("MainWindow", Styles[i].Name+extraText))
-        widgetID.addItem(item)
-
-def LoadInstruments(widgetID,percussion,menu):
-    widgetID.clear()
-    if(percussion == False): array = range(0,40)
-    elif(percussion == True ): array = range(40,len(Instruments)-1)
-    normal = array
-    if(editor.unsafeMode or percussion == -1): array = range(0,len(Instruments)-1)
-    for i in array:
-        item = QtWidgets.QListWidgetItem()
-        item.setText(_translate("MainWindow", Instruments[i].Name))
-        if(menu and not Instruments[i].InMenu):
-            if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
-            else: item.setFlags(QtCore.Qt.ItemIsSelectable)
-        if(i not in normal): item.setForeground(QColor("#cf1800"))
-        widgetID.addItem(item)
-    item = QtWidgets.QListWidgetItem()
-    item.setText(_translate("MainWindow", Instruments[len(Instruments)-1].Name))
-    if(menu):
-        if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
-        else: item.setFlags(QtCore.Qt.ItemIsSelectable)
-    widgetID.addItem(item)
-
 #Load Places
 class TAB:
     MainMenu = 0
@@ -104,6 +63,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         defaultStyle=self.styleSheet()
         self.externalEditorOpen = False
+        self.fromSongEditor = -1
 
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
@@ -139,6 +99,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_ChangeSongText_Desc_Input.textChanged.connect(self.SE_Patchable)
         self.SE_ChangeSongText_Genre_Input.textEdited.connect(self.SE_Patchable)
         self.SE_Midi.toggled.connect(self.SE_Patchable)
+        self.SE_OpenStyleEditor.clicked.connect(self.Button_SE_OpenStyleEditor)
+        self.SE_OpenDefaultStyleEditor.clicked.connect(self.Button_SE_OpenDefaultStyleEditor)
 
         #Style Editor Buttons
         self.StE_Back_Button.clicked.connect(self.GotoMainMenu)
@@ -147,6 +109,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.StE_StyleList.itemSelectionChanged.connect(self.List_StE_StyleList)
         self.StE_ResetStyle.clicked.connect(self.Button_StE_ResetStyle)
         self.StE_Patch.clicked.connect(self.Button_StE_Patch)
+        self.StE_ChangeStyleName.textEdited.connect(self.StE_Patchable)
 
         #Text Editor Buttons
         self.TE_Back_Button.clicked.connect(self.GotoMainMenu)
@@ -159,6 +122,51 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DS_Songs.itemSelectionChanged.connect(self.List_DS_SongList)
         self.DS_Styles.itemSelectionChanged.connect(self.List_DS_StyleList)
         self.DS_Reset.clicked.connect(self.Button_DS_Reset)
+
+    #Lists
+    def LoadSongs(self,widgetID,types=[],lockSongs=False):
+        widgetID.clear()
+        for i in range(len(Songs)):
+            if(types == [] or Songs[i].SongType in types):
+                item = QtWidgets.QListWidgetItem()
+                extraText = ""
+                if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu): extraText = " ("+editor.textFromTxt[0][i]+")"
+                item.setText(_translate("MainWindow", Songs[i].Name)+extraText)
+                if(lockSongs and i != self.fromSongEditor): item.setFlags(QtCore.Qt.ItemIsSelectable)
+                widgetID.addItem(item)
+        if(lockSongs): widgetID.setCurrentRow(self.fromSongEditor)
+
+    def LoadStyles(self,widgetID,lockSongs=False):
+        widgetID.clear()
+        for i in range(len(Styles)):
+            item = QtWidgets.QListWidgetItem()
+            extraText = ""
+            if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " ~[Replaced]~" 
+            item.setText(_translate("MainWindow", Styles[i].Name+extraText))
+            if(lockSongs and i != self.fromSongEditor): item.setFlags(QtCore.Qt.ItemIsSelectable)
+            widgetID.addItem(item)
+        if(lockSongs): widgetID.setCurrentRow(self.fromSongEditor)
+
+    def LoadInstruments(self,widgetID,percussion,menu):
+        widgetID.clear()
+        if(percussion == False): array = range(0,40)
+        elif(percussion == True ): array = range(40,len(Instruments)-1)
+        normal = array
+        if(editor.unsafeMode or percussion == -1): array = range(0,len(Instruments)-1)
+        for i in array:
+            item = QtWidgets.QListWidgetItem()
+            item.setText(_translate("MainWindow", Instruments[i].Name))
+            if(menu and not Instruments[i].InMenu):
+                if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
+                else: item.setFlags(QtCore.Qt.ItemIsSelectable)
+            if(i not in normal): item.setForeground(QColor("#cf1800"))
+            widgetID.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        item.setText(_translate("MainWindow", Instruments[len(Instruments)-1].Name))
+        if(menu):
+            if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
+            else: item.setFlags(QtCore.Qt.ItemIsSelectable)
+        widgetID.addItem(item)
 
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
@@ -200,13 +208,17 @@ class Window(QMainWindow, Ui_MainWindow):
     #############Load Places
 
     def GotoMainMenu(self):
-        self.MainWidget.setCurrentIndex(TAB.MainMenu)
+        if(self.fromSongEditor != -1):    
+            self.MainWidget.setCurrentIndex(TAB.SongEditor)       
+            self.fromSongEditor = -1
+        else:
+            self.MainWidget.setCurrentIndex(TAB.MainMenu)
 
     def LoadSongEditor(self):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
             self.MainWidget.setCurrentIndex(TAB.SongEditor)
             self.extraFile = ""
-            LoadSongs(self.SE_SongToChange)
+            self.LoadSongs(self.SE_SongToChange)
             self.SE_Midi.setEnabled(False)
             self.SE_Midi.setCheckable(False)
             self.SE_ChangeSongText.setEnabled(False)
@@ -215,6 +227,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_StyleText.setEnabled(False)
             self.SE_OpenDefaultStyleEditor.setEnabled(False)
             self.SE_OpenStyleEditor.setEnabled(False)
+            self.SE_Midi_File_Label.setText(_translate("MainWindow",""))
         else:
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
 
@@ -222,14 +235,15 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Gct or editor.file.type == LoadType.Carc):
             self.MainWidget.setCurrentIndex(TAB.StyleEditor)
             GetStyles()
-            LoadStyles(self.StE_StyleList)
-            LoadInstruments(self.StE_InstrumentList,False,False)
+            self.LoadStyles(self.StE_StyleList,self.fromSongEditor != -1)
+            self.LoadInstruments(self.StE_InstrumentList,False,False)
             self.StE_Instruments.setEnabled(False)
             self.StE_ChangeStyleName.setEnabled(False)
             self.StE_ChangeStyleName_Label.setEnabled(False)
             self.StE_ResetStyle.setEnabled(False)
             self.StE_Patch.setEnabled(False)
             self.styleSelected = []
+            if(self.fromSongEditor != -1): self.List_StE_StyleList()
         else:
             error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",True)
             if(error.clicked):
@@ -255,10 +269,11 @@ class Window(QMainWindow, Ui_MainWindow):
         if(AllowType(LoadType.Gct)):
             self.MainWidget.setCurrentIndex(TAB.DefaultStyleEditor)
             GetStyles()
-            LoadSongs(self.DS_Songs,[SongTypeValue.Regular])
-            LoadStyles(self.DS_Styles)
+            self.LoadSongs(self.DS_Songs,[SongTypeValue.Regular],self.fromSongEditor != -1)
+            self.LoadStyles(self.DS_Styles)
             self.DS_StyleBox.setEnabled(False)
             self.DS_Patch.setEnabled(False)
+            if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
             error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",True)
             if(error.clicked):
@@ -330,9 +345,9 @@ class Window(QMainWindow, Ui_MainWindow):
     #############Song Editor Buttons
     def SE_Patchable(self):
         allow = True
-        if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
+        if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
             if(self.extraFile == ""): allow = False
-        else:
+        elif(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
             if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()]): allow = False
@@ -377,17 +392,26 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.SE_Midi.setCheckable(True)
                 self.SE_Midi.setEnabled(True)
         if(AllowType(LoadType.Carc)):
-            self.SE_ChangeSongText.setEnabled(True)
-            self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
-            self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
-            self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
-        self.SE_Patchable()
+            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
+                self.SE_ChangeSongText.setEnabled(True)
+                self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
+                self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
+                self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
+            else:
+                self.SE_ChangeSongText.setEnabled(False)
+                self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", ""))
+                self.SE_ChangeSongText_Desc_Input.setPlainText(_translate("MainWindow", ""))
+                self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", ""))
+                self.SE_Midi.setCheckable(False)
+                self.SE_Midi.setEnabled(True)
         if(AllowType(LoadType.Brsar)):
-            self.SE_StyleLabel.setEnabled(True)
-            self.SE_StyleText.setEnabled(True)
-            self.SE_OpenDefaultStyleEditor.setEnabled(True)
-            self.SE_OpenStyleEditor.setEnabled(True)
-            self.SE_StyleText.setText(_translate("MainWindow",Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name))
+            self.SE_StyleLabel.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+            self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+            self.SE_OpenDefaultStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+            self.SE_OpenStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular): self.SE_StyleText.setText(_translate("MainWindow",""))
+            else: self.SE_StyleText.setText(_translate("MainWindow",Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name))
+        self.SE_Patchable()
 
     def Button_SE_Patch(self):
         if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
@@ -404,10 +428,23 @@ class Window(QMainWindow, Ui_MainWindow):
             editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
         self.SE_Patch.setEnabled(False)
 
+    def Button_SE_OpenStyleEditor(self):
+        self.fromSongEditor = GetDefaultStyle(self.SE_SongToChange.currentRow(),False)
+        self.MainWidget.setCurrentIndex(TAB.StyleEditor)
+        self.LoadStyleEditor()
+
+    def Button_SE_OpenDefaultStyleEditor(self):
+        self.fromSongEditor = self.SE_SongToChange.currentRow()
+        self.MainWidget.setCurrentIndex(TAB.DefaultStyleEditor)
+        self.LoadDefaultStyleEditor()
+
     #############Style Editor Buttons
+    def StE_Patchable(self):
+        self.StE_Patch.setEnabled((self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]) or (self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][self.StE_StyleList.currentRow()]))
+
     def Button_StE_PartSelector(self):
         self.StE_InstrumentList.setCurrentRow(-1)
-        LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
+        self.LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
         if(editor.unsafeMode): toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
         elif(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
             toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]-40
@@ -425,7 +462,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 songSelected = self.StE_InstrumentList.currentRow()
                 if(songSelected == 40): songSelected = len(Instruments)-1
             self.styleSelected[self.StE_PartSelector.currentIndex()] = songSelected
-            self.StE_Patch.setEnabled(self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()])
+            self.StE_Patchable()
             if(self.StE_PartSelector.currentIndex() == 0): self.StE_Part_Melody_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
             elif(self.StE_PartSelector.currentIndex() == 1): self.StE_Part_Harmony_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
             elif(self.StE_PartSelector.currentIndex() == 2): self.StE_Part_Chords_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
@@ -447,7 +484,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.StE_ChangeStyleName.setText(_translate("MainWindow",""))
         self.styleSelected = editor.loadedStyles[self.StE_StyleList.currentRow()].copy()
         self.StE_InstrumentList.setCurrentRow(-1)
-        LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
+        self.LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
         if(editor.unsafeMode): toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
         elif(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
             toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]-40
@@ -466,7 +503,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_StE_ResetStyle(self):
         self.styleSelected = Styles[self.StE_StyleList.currentRow()].DefaultStyle.copy()
         self.StE_ResetStyle.setEnabled(False)
-        self.StE_Patch.setEnabled((self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]))
+        self.StE_Patchable()
         self.StE_Part_Melody_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[0]].Name))
         self.StE_Part_Harmony_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[1]].Name))
         self.StE_Part_Chords_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[2]].Name))
@@ -482,9 +519,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.StE_InstrumentList.setCurrentRow(toHighlight)
 
     def Button_StE_Patch(self):
-        if(self.StE_Instruments.isEnabled()):
+        self.StE_Patch.setEnabled(False)
+        if(self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]):
             editor.loadedStyles[self.StE_StyleList.currentRow()] = self.styleSelected.copy()
-            self.StE_Patch.setEnabled(False)
             if(Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected):
                 self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name))
             else:
@@ -498,6 +535,10 @@ class Window(QMainWindow, Ui_MainWindow):
                 patchInfo = patchInfo+"0"*(8-len(num1))+num1+" "+"0"*(8-len(num2))+num2+"\n"
 
             AddPatch(Styles[self.StE_StyleList.currentRow()].Name+" Style Patch",patchInfo)
+
+        if(self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][self.StE_StyleList.currentRow()]):
+            ChangeName(self.StE_StyleList.currentRow(),self.StE_ChangeStyleName.text())
+            editor.textFromTxt[3][self.StE_StyleList.currentRow()] = self.StE_ChangeStyleName.text()
 
     #############Text Editor
     def Button_TE_Patch(self):
@@ -531,6 +572,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_DS_Patch(self):
         AddPatch(Songs[self.DS_Songs.currentRow()].Name+' Default Style Patch','0'+format(Songs[self.DS_Songs.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[self.DS_Styles.currentRow()].StyleId+'\n')
         self.DS_Patch.setEnabled(False)
+        if(self.fromSongEditor != -1): self.SE_StyleText.setText(_translate("MainWindow",Styles[self.DS_Styles.currentRow()].Name))
 
     def List_DS_SongList(self):
         self.DS_StyleBox.setEnabled(True)
