@@ -770,6 +770,7 @@ def FixMessageFile(textlines):
 			textlines[num+10] = b'  b20a @0169 [/,4b] = Pop\r\n'
 			textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
 			break
+	return textlines
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom
