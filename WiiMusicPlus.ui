@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>814</width>
+    <width>872</width>
     <height>570</height>
    </rect>
   </property>
@@ -1149,7 +1149,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="MainPage">
        <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2175,7 +2175,7 @@ background-color: #242424;
                   <widget class="QLabel" name="StE_Part_Melody_Label">
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2219,7 +2219,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2263,7 +2263,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2307,7 +2307,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2351,7 +2351,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2395,7 +2395,7 @@ background-color: #242424;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>70</width>
+                     <width>75</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -2791,7 +2791,7 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>814</width>
+     <width>872</width>
      <height>22</height>
     </rect>
    </property>
