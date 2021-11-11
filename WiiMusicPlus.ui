@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>863</width>
-    <height>557</height>
+    <height>953</height>
    </rect>
   </property>
   <property name="palette">
@@ -1564,11 +1564,11 @@ background-color: #242424;
               <property name="enabled">
                <bool>true</bool>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>190</height>
-               </size>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
@@ -1582,15 +1582,15 @@ background-color: #242424;
               <layout class="QVBoxLayout" name="verticalLayout_4">
                <item>
                 <widget class="QLabel" name="SE_Midi_File_Label">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>26</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
                    <height>26</height>
                   </size>
                  </property>
@@ -1723,12 +1723,6 @@ background-color: #242424;
                       </item>
                       <item>
                        <widget class="QRadioButton" name="SE_Midi_Length_Measures">
-                        <property name="maximumSize">
-                         <size>
-                          <width>69</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="focusPolicy">
                          <enum>Qt::TabFocus</enum>
                         </property>
@@ -1742,12 +1736,6 @@ background-color: #242424;
                       </item>
                       <item>
                        <widget class="QRadioButton" name="SE_Midi_Length_Beats">
-                        <property name="maximumSize">
-                         <size>
-                          <width>47</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="focusPolicy">
                          <enum>Qt::TabFocus</enum>
                         </property>
@@ -1846,11 +1834,11 @@ background-color: #242424;
               <property name="enabled">
                <bool>true</bool>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>181</height>
-               </size>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="contextMenuPolicy">
                <enum>Qt::NoContextMenu</enum>
@@ -2030,7 +2018,7 @@ background-color: #242424;
                <item>
                 <widget class="QLabel" name="SE_StyleText">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -2038,12 +2026,6 @@ background-color: #242424;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>26</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
                    <height>26</height>
                   </size>
                  </property>
@@ -2192,12 +2174,6 @@ background-color: #242424;
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Melody_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2242,12 +2218,6 @@ background-color: #242424;</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Harmony_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2292,12 +2262,6 @@ background-color: #242424;</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Chords_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2342,12 +2306,6 @@ background-color: #242424;</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Bass_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2392,12 +2350,6 @@ background-color: #242424;</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Percussion1_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2442,12 +2394,6 @@ background-color: #242424;</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="StE_Part_Percussion2_Instrument">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>26</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2834,7 +2780,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>863</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
