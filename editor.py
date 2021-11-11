@@ -446,7 +446,7 @@ def ChangeName(SongToChange,newText):
 			offset = ' ' * (4-len(offset))+offset+'00 @'
 		else:
 			offset = ' ' * (4-len(offset))+offset+' @'
-		FixMessageFile(textlines)
+		textlines = FixMessageFile(textlines)
 		for num in range(len(textlines)):
 			if offset in str(textlines[num]):
 				while bytes('@','utf-8') not in textlines[num+1]:

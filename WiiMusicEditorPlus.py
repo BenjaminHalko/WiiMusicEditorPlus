@@ -259,7 +259,7 @@ class Window(QMainWindow, Ui_MainWindow):
             file = open(GetMessagePath()+"/message.d/new_music_message.txt","r+b")
             textlines = file.readlines()
             originalTextlines = textlines.copy()
-            FixMessageFile(textlines)
+            textlines = FixMessageFile(textlines)
             if(textlines != originalTextlines): file.writelines(textlines)
             file.close()
             file = open(GetMessagePath()+"/message.d/new_music_message.txt","rb")
