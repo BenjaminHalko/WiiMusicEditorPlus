@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>814</width>
+    <width>833</width>
     <height>570</height>
    </rect>
   </property>
@@ -1824,7 +1824,14 @@ background-color: #242424;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QListWidget" name="SE_SongToChange"/>
+              <widget class="QListWidget" name="SE_SongToChange">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
              <item>
               <layout class="QHBoxLayout" name="SE_Style">
@@ -2599,7 +2606,7 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>814</width>
+     <width>833</width>
      <height>22</height>
     </rect>
    </property>
