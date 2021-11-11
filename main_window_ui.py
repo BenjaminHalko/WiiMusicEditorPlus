@@ -1099,7 +1099,7 @@ class Ui_MainWindow(object):
         self.SE_ChangeSongText_Desc_Label.setObjectName("SE_ChangeSongText_Desc_Label")
         self.verticalLayout_5.addWidget(self.SE_ChangeSongText_Desc_Label)
         self.SE_ChangeSongText_Desc_Input = QtWidgets.QPlainTextEdit(self.SE_ChangeSongText)
-        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QtCore.QSize(0, 71))
+        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QtCore.QSize(0, 75))
         self.SE_ChangeSongText_Desc_Input.setMaximumSize(QtCore.QSize(16777215, 71))
         self.SE_ChangeSongText_Desc_Input.setAcceptDrops(False)
         self.SE_ChangeSongText_Desc_Input.setPlainText("")

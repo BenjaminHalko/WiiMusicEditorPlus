@@ -1949,7 +1949,7 @@ background-color: #242424;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>71</height>
+                   <height>75</height>
                   </size>
                  </property>
                  <property name="maximumSize">
