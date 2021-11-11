@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>863</width>
+    <width>814</width>
     <height>953</height>
    </rect>
   </property>
@@ -1782,6 +1782,12 @@ background-color: #242424;
                       </property>
                       <item>
                        <widget class="QRadioButton" name="SE_Midi_TimeSignature_4">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="mouseTracking">
                          <bool>true</bool>
                         </property>
@@ -1798,6 +1804,12 @@ background-color: #242424;
                       </item>
                       <item>
                        <widget class="QRadioButton" name="SE_Midi_TimeSignature_3">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="focusPolicy">
                          <enum>Qt::TabFocus</enum>
                         </property>
@@ -2779,7 +2791,7 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>863</width>
+     <width>814</width>
      <height>22</height>
     </rect>
    </property>
