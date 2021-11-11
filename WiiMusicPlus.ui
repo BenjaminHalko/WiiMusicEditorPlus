@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>833</width>
+    <width>839</width>
     <height>570</height>
    </rect>
   </property>
@@ -1596,6 +1596,12 @@ background-color: #242424;
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>0</height>
+                         </size>
+                        </property>
                         <property name="mouseTracking">
                          <bool>true</bool>
                         </property>
@@ -1617,6 +1623,12 @@ background-color: #242424;
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>0</height>
+                         </size>
                         </property>
                         <property name="focusPolicy">
                          <enum>Qt::TabFocus</enum>
@@ -2606,7 +2618,7 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>833</width>
+     <width>839</width>
      <height>22</height>
     </rect>
    </property>

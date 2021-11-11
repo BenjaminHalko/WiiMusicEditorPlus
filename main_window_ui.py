@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(833, 570)
+        MainWindow.resize(839, 570)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -963,6 +963,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_TimeSignature_4.sizePolicy().hasHeightForWidth())
         self.SE_Midi_TimeSignature_4.setSizePolicy(sizePolicy)
+        self.SE_Midi_TimeSignature_4.setMinimumSize(QtCore.QSize(50, 0))
         self.SE_Midi_TimeSignature_4.setMouseTracking(True)
         self.SE_Midi_TimeSignature_4.setFocusPolicy(QtCore.Qt.TabFocus)
         self.SE_Midi_TimeSignature_4.setChecked(True)
@@ -974,6 +975,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_TimeSignature_3.sizePolicy().hasHeightForWidth())
         self.SE_Midi_TimeSignature_3.setSizePolicy(sizePolicy)
+        self.SE_Midi_TimeSignature_3.setMinimumSize(QtCore.QSize(50, 0))
         self.SE_Midi_TimeSignature_3.setFocusPolicy(QtCore.Qt.TabFocus)
         self.SE_Midi_TimeSignature_3.setObjectName("SE_Midi_TimeSignature_3")
         self.SE_Midi_TimeSignature_Layout.addWidget(self.SE_Midi_TimeSignature_3)
@@ -1431,7 +1433,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addWidget(self.MainWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 833, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 839, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
