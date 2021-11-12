@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from monoframework_ui import Ui_GetMonoFramework
 from requests import get
-from editor import ProgramPath, Run, currentSystem
+from editor import ProgramPath, GivePermission, currentSystem
 from os import remove
 from subprocess import PIPE, Popen
 
@@ -37,6 +37,7 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
     def Install(self):
         self.MainWidget.setCurrentIndex(2)
+        GivePermission(ProgramPath+'/MonoInstaller.pkg')
         Popen(ProgramPath+'/MonoInstaller.pkg')
 
     def CleanUp(self):
