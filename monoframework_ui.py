@@ -608,7 +608,7 @@ class Ui_GetMonoFramework(object):
         self.DownloadButton.setText(_translate("GetMonoFramework", "Download Mono"))
         self.GetMono_Title.setText(_translate("GetMonoFramework", "Downloading Mono..."))
         self.InstallMonoTitle.setText(_translate("GetMonoFramework", "Installing Mono..."))
-        self.label.setText(_translate("GetMonoFramework", "Follow the steps in the install then press \"Finished Install\""))
+        self.label.setText(_translate("GetMonoFramework", "Follow the steps in the installer then press \"Finished Install\""))
         self.MacDone.setText(_translate("GetMonoFramework", "Finished Install"))
         self.InstallMonoTitle_Linux.setText(_translate("GetMonoFramework", "Mono Framework Needed!"))
         self.LinuxSublabel.setText(_translate("GetMonoFramework", "Install \"mono-framework\" with your package manager"))

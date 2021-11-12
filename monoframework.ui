@@ -628,7 +628,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Follow the steps in the install then press &quot;Finished Install&quot;</string>
+          <string>Follow the steps in the installer then press &quot;Finished Install&quot;</string>
          </property>
         </widget>
        </item>

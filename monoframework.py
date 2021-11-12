@@ -4,6 +4,7 @@ from monoframework_ui import Ui_GetMonoFramework
 from requests import get
 from editor import ProgramPath, Run, currentSystem
 from os import remove
+from sys import exit as quit
 
 UpdateThread = "null"
 
@@ -40,7 +41,8 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
     def CleanUp(self):
         remove(ProgramPath+'/MonoInstaller.pkg')
-        self.close()
+        Run('open "'+ProgramPath+'/WiiMusicEditorPlus.app"')
+        quit()
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
