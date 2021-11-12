@@ -47,19 +47,6 @@ def LoadMainFile(filter):
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
         return True
     return False
-
-def LoadMidiFile(midiPath):
-    if(currentSystem != "Windows"):
-        try:
-            info = LoadMidi(midiPath)
-        except:
-            GetMonoFramework()
-            try:
-                info = LoadMidi(midiPath)
-            except:
-                ShowError("Mono Framework Failed to Install","The program will likely crash")
-    else: info = LoadMidi(midiPath)
-    return info
         
 
 #Load Places
@@ -223,6 +210,19 @@ class Window(QMainWindow, Ui_MainWindow):
             return True
         return False
 
+    def LoadMidiFile(self,midiPath):
+        if(currentSystem != "Windows"):
+            try:
+                info = LoadMidi(midiPath)
+            except:
+                GetMonoFramework(self)
+                try:
+                    info = LoadMidi(midiPath)
+                except:
+                    ShowError("Mono Framework Failed to Install","The program will likely crash")
+        else: info = LoadMidi(midiPath)
+        return info
+
     #############Load Places
 
     def GotoMainMenu(self):
@@ -376,7 +376,7 @@ class Window(QMainWindow, Ui_MainWindow):
         global brseqInfo
         global brseqLength
         if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
-            midiInfo = LoadMidiFile(self.extraFile)
+            midiInfo = self.LoadMidiFile(self.extraFile)
             self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
             self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
             self.SE_Midi_Length_Input.setValue(midiInfo[3])

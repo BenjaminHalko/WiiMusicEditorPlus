@@ -9,11 +9,12 @@ from sys import exit as quit
 UpdateThread = "null"
 
 class GetMonoFramework(QDialog,Ui_GetMonoFramework):
-    def __init__(self):
+    def __init__(self,otherWindow):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setWindowModality(Qt.ApplicationModal)
         self.setupUi(self)
+        self.otherWindow = otherWindow
 
         if(currentSystem != "Mac"): self.MainWidget.setCurrentIndex(3)
 
@@ -42,7 +43,8 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
     def CleanUp(self):
         remove(ProgramPath+'/MonoInstaller.pkg')
         Run('open "'+ProgramPath+'/WiiMusicEditorPlus.app"')
-        quit()
+        self.close()
+        self.otherWindow.close()
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
