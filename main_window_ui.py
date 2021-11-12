@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(839, 570)
+        MainWindow.resize(839, 601)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -641,6 +641,69 @@ class Ui_MainWindow(object):
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(64, 64, 64))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(64, 64, 64))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(64, 64, 64))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(50, 50, 50))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.centralwidget.setPalette(palette)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -673,7 +736,6 @@ class Ui_MainWindow(object):
         self.MP_LoadedFile_Label.setObjectName("MP_LoadedFile_Label")
         self.verticalLayout_9.addWidget(self.MP_LoadedFile_Label)
         self.MP_LoadedFile_Path = QtWidgets.QLabel(self.MainPage)
-        self.MP_LoadedFile_Path.setMinimumSize(QtCore.QSize(0, 26))
         self.MP_LoadedFile_Path.setMaximumSize(QtCore.QSize(16777215, 26))
         self.MP_LoadedFile_Path.setStyleSheet("QLabel\n"
 "{\n"
@@ -681,14 +743,8 @@ class Ui_MainWindow(object):
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
 "background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
 "}")
         self.MP_LoadedFile_Path.setObjectName("MP_LoadedFile_Path")
         self.verticalLayout_9.addWidget(self.MP_LoadedFile_Path)
@@ -855,7 +911,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_File_Label.sizePolicy().hasHeightForWidth())
         self.SE_Midi_File_Label.setSizePolicy(sizePolicy)
-        self.SE_Midi_File_Label.setMinimumSize(QtCore.QSize(0, 26))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.SE_Midi_File_Label.setFont(font)
@@ -866,14 +921,8 @@ class Ui_MainWindow(object):
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
 "background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
 "}")
         self.SE_Midi_File_Label.setObjectName("SE_Midi_File_Label")
         self.verticalLayout_4.addWidget(self.SE_Midi_File_Label)
@@ -1038,7 +1087,7 @@ class Ui_MainWindow(object):
         self.SE_ChangeSongText_Desc_Label.setObjectName("SE_ChangeSongText_Desc_Label")
         self.verticalLayout_5.addWidget(self.SE_ChangeSongText_Desc_Label)
         self.SE_ChangeSongText_Desc_Input = QtWidgets.QPlainTextEdit(self.SE_ChangeSongText)
-        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QtCore.QSize(0, 75))
+        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QtCore.QSize(0, 70))
         self.SE_ChangeSongText_Desc_Input.setMaximumSize(QtCore.QSize(16777215, 71))
         self.SE_ChangeSongText_Desc_Input.setAcceptDrops(False)
         self.SE_ChangeSongText_Desc_Input.setPlainText("")
@@ -1091,14 +1140,8 @@ class Ui_MainWindow(object):
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
 "background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
 "}")
         self.SE_StyleText.setText("")
         self.SE_StyleText.setObjectName("SE_StyleText")
@@ -1433,7 +1476,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addWidget(self.MainWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 839, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 839, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")

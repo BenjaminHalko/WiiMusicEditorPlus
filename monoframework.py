@@ -20,7 +20,7 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
         self.DownloadButton.clicked.connect(self.GetMono)
         self.linuxButton.clicked.connect(self.close)
-        self.MacDone.clicked.connect(self.close)
+        self.MacDone.clicked.connect(self.CleanUp)
 
         self.show()
         self.exec()
@@ -42,7 +42,7 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
     def CleanUp(self):
         remove(ProgramPath+'/MonoInstaller.pkg')
-        Run('open "'+ProgramPath+'/WiiMusicEditorPlus.app"')
+        Run('open "'+ProgramPath+'/WiiMusicEditorPlus"')
         self.close()
         self.otherWindow.close()
         sys_exit()

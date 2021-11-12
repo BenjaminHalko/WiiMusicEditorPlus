@@ -67,6 +67,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.externalEditorOpen = False
         self.fromSongEditor = -1
 
+        #temp
+        self.MP_RomEditing.setEnabled(False)
+        self.MP_MainDolPatch_Button.setEnabled(False)
+        self.MP_RemoveSong_Button.setEnabled(False)
+
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
             self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
