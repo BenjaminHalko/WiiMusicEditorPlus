@@ -850,7 +850,7 @@ if(currentSystem == "Darwin"): currentSystem = "Mac"
 
 
 if getattr(sys, 'frozen', False):
-	if(sys.platform == "darwin"):
+	if(sys.platform == "somethqiwethqr"):
 		import Cocoa
 		ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
 	else: ProgramPath = os.path.dirname(sys.executable)
