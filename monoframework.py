@@ -19,6 +19,7 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
         self.DownloadButton.clicked.connect(self.GetMono)
         self.linuxButton.clicked.connect(self.close)
+        self.MacDone.clicked.connect(self.close)
 
         self.show()
         self.exec()
@@ -36,8 +37,10 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
 
     def Install(self):
         self.MainWidget.setCurrentIndex(2)
-        Run('open "'+ProgramPath+'/MonoInstaller.pkg"')
-        #remove(ProgramPath+'/MonoInstaller.pkg')
+        Popen(ProgramPath+'/MonoInstaller.pkg')
+
+    def CleanUp(self):
+        remove(ProgramPath+'/MonoInstaller.pkg')
         self.close()
 
 class Progress():

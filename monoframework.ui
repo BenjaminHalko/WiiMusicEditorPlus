@@ -626,6 +626,13 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Follow the steps in the install then press &quot;Finished Install&quot;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="Spacer3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -637,6 +644,13 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="MacDone">
+         <property name="text">
+          <string>Finished Install</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
