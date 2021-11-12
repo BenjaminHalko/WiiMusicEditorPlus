@@ -37,7 +37,7 @@ class GetMonoFramework(QDialog,Ui_GetMonoFramework):
     def Install(self):
         self.MainWidget.setCurrentIndex(2)
         Run('open "'+ProgramPath+'/MonoInstaller.pkg"')
-        remove(ProgramPath+'/MonoInstaller.pkg')
+        #remove(ProgramPath+'/MonoInstaller.pkg')
         self.close()
 
 class Progress():

@@ -52,10 +52,12 @@ def LoadMidiFile(midiPath):
     if(currentSystem != "Windows"):
         try:
             info = LoadMidi(midiPath)
-            test = info[2]
         except:
             GetMonoFramework()
-            info = LoadMidi(midiPath)
+            try:
+                info = LoadMidi(midiPath)
+            except:
+                ShowError("Mono Framework Failed to Install","The program will likely crash")
     else: info = LoadMidi(midiPath)
     return info
         
