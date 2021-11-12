@@ -9,11 +9,12 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, StyleTypeValue, SongTypeValue, LoadType
+from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
 from riivolution import RiivolutionWindow
+from monoframework import GetMonoFramework
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -46,6 +47,15 @@ def LoadMainFile(filter):
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
         return True
     return False
+
+def LoadMidiFile(midiPath):
+    if(currentSystem != "Windows"):
+        try: LoadMidi(midiPath)
+        except:
+            GetMonoFramework()
+            LoadMidi(midiPath)
+    else: LoadMidi(midiPath)
+        
 
 #Load Places
 class TAB:
@@ -361,7 +371,7 @@ class Window(QMainWindow, Ui_MainWindow):
         global brseqInfo
         global brseqLength
         if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
-            midiInfo = LoadMidi(self.extraFile)
+            midiInfo = LoadMidiFile(self.extraFile)
             self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
             self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
             self.SE_Midi_Length_Input.setValue(midiInfo[3])
