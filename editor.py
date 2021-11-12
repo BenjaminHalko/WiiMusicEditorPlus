@@ -286,8 +286,10 @@ def GivePermission(file):
 
 #Other
 def Run(command):
-	if(currentSystem != "Windows"):
+	if(currentSystem == "Linux"):
 		subprocess.run(command.replace("\\","/"),shell=True)
+	elif(currentSystem == "Mac"):
+		subprocess.run(command.replace("\\","/"),shell=True,capture_output=True)
 	else:
 		subprocess.run(command.replace("\\","/"),capture_output=True)
 
