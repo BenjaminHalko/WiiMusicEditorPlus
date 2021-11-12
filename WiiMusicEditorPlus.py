@@ -50,11 +50,14 @@ def LoadMainFile(filter):
 
 def LoadMidiFile(midiPath):
     if(currentSystem != "Windows"):
-        try: LoadMidi(midiPath)
+        try:
+            info = LoadMidi(midiPath)
+            test = info[2]
         except:
             GetMonoFramework()
-            LoadMidi(midiPath)
-    else: LoadMidi(midiPath)
+            info = LoadMidi(midiPath)
+    else: info = LoadMidi(midiPath)
+    return info
         
 
 #Load Places
