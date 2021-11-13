@@ -219,13 +219,9 @@ class Window(QMainWindow, Ui_MainWindow):
         if(currentSystem != "Windows"):
             try:
                 info = LoadMidi(midiPath)
-            except Exception as e:
-                ShowError("hi",str(e))
+            except:
                 GetMonoFramework(self)
-                try:
-                    info = LoadMidi(midiPath)
-                except:
-                    ShowError("Mono Framework Failed to Install","The program will likely crash")
+                ShowError("Mono Framework Failed to Install","The program will likely crash")
 
         else: info = LoadMidi(midiPath)
         return info
