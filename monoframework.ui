@@ -654,7 +654,61 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="LinuxMono">
+     <widget class="QWidget" name="LinuxMno">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="InstallMonoTitle_Linux_2">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>44</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Continuum Medium</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Mono Framework Needed!</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="LinuxSublabel">
+         <property name="text">
+          <string>Attempting to install package &quot;mono-runtime&quot;
+with package manager: </string>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>27</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="LinuxMonoUnknown">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QLabel" name="InstallMonoTitle_Linux">
@@ -683,9 +737,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="LinuxSublabel">
+        <widget class="QLabel" name="LinuxSublabel3">
          <property name="text">
-          <string>Install &quot;mono-framework&quot; with your package manager</string>
+          <string>Install &quot;mono-runtime&quot; with your package manager</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>

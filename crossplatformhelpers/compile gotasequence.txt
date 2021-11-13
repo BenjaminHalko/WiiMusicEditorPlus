@@ -1,0 +1,3 @@
+mkbundle --simple -o GotaSequenceCmd --cross mono-6.8.0-osx-10.9-x64 --library /Library/Frameworks/Mono.framework/Versions/6.8.0/lib/libintl.8.dylib GotaSequenceCmd.exe
+
+mkbundle --simple -o GotaSequenceCmd --cross mono-6.8.0-osx-10.9-x64 GotaSequenceCmd.exe
