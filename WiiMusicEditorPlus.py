@@ -216,15 +216,24 @@ class Window(QMainWindow, Ui_MainWindow):
         return False
 
     def LoadMidiFile(self,midiPath):
-        if(currentSystem != "Windows"):
-            try:
-                info = LoadMidi(midiPath)
-            except:
-                GetMonoFramework(self)
-                ShowError("Mono Framework Failed to Install","The program will likely crash")
-
-        else: info = LoadMidi(midiPath)
-        return info
+        try:
+            info = LoadMidi(midiPath)
+            return info
+        except:
+            if(currentSystem != "Windows"):
+                try:
+                    Run("mono")
+                    ShowError("Could not load file","Midi files need at least 2 tracks to work properly")
+                except:
+                    GetMonoFramework(self)
+                    try:
+                        info = LoadMidi(midiPath)
+                        return info
+                    except:
+                        ShowError("Mono Framework Failed to Install","")
+            else:
+                ShowError("Could not load file","Midi files need at least 2 tracks to work properly")
+        return [False]
 
     #############Load Places
 
@@ -380,25 +389,26 @@ class Window(QMainWindow, Ui_MainWindow):
         global brseqLength
         if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
             midiInfo = self.LoadMidiFile(self.extraFile)
-            self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
-            self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
-            self.SE_Midi_Length_Input.setValue(midiInfo[3])
-            self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
-            self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
-            self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
-            self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
-            self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
-            self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
-            if(self.SE_Midi_Length_Measures.isChecked()):
-                self.SE_Midi_Length_Measures.setAutoExclusive(False)
-                self.SE_Midi_Length_Beats.setAutoExclusive(False)
-                self.SE_Midi_Length_Measures.setChecked(False)
-                self.SE_Midi_Length_Beats.setChecked(True)
-                self.SE_Midi_Length_Measures.setAutoExclusive(True)
-                self.SE_Midi_Length_Beats.setAutoExclusive(True)
-            brseqInfo = [midiInfo[0],midiInfo[0]]
-            brseqLength = [midiInfo[1],midiInfo[1]]
-            self.SE_Patchable()
+            if(midiInfo[0] != False):
+                self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+                self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
+                self.SE_Midi_Length_Input.setValue(midiInfo[3])
+                self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
+                self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
+                self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
+                self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
+                self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
+                self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
+                if(self.SE_Midi_Length_Measures.isChecked()):
+                    self.SE_Midi_Length_Measures.setAutoExclusive(False)
+                    self.SE_Midi_Length_Beats.setAutoExclusive(False)
+                    self.SE_Midi_Length_Measures.setChecked(False)
+                    self.SE_Midi_Length_Beats.setChecked(True)
+                    self.SE_Midi_Length_Measures.setAutoExclusive(True)
+                    self.SE_Midi_Length_Beats.setAutoExclusive(True)
+                brseqInfo = [midiInfo[0],midiInfo[0]]
+                brseqLength = [midiInfo[1],midiInfo[1]]
+                self.SE_Patchable()
             
     def Button_SE_Midi_TimeSignature(self):
         if(self.SE_Midi_Length_Measures.isChecked()):
