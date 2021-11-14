@@ -286,29 +286,29 @@ def GivePermission(file):
 			e = 0
 
 #Other
-def Run(command):
+def Run(command,tryPermissions=True):
+	if(type(command) == str): tryPermissions = False
 	try:
 		if(currentSystem == "Linux"):
-			subprocess.run(command,shell=True)
+			subprocess.run(command,shell=True,capture_output=True)
 		elif(currentSystem == "Mac"):
 			subprocess.run(command,shell=True,capture_output=True)
 		else:
-			try:
-				subprocess.run(command,capture_output=True)
-			except:
-				subprocess.run(command)
+			subprocess.run(command,capture_output=True)
 	except Exception as e:
-		ShowError("Could not execute command:","Command: "+command+"\nError: "+str(e))
+		if(tryPermissions):
+			GivePermission(command[0])
+			Run(command,False)
+		else:
+			ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
 def DecodeTxt():
 	path = GetMessagePath()
 	try:
 		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
-		GivePermission(ProgramPath+'/Helper/Wiimms/wszst')
-		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" extract "'+path+'/message.carc"')
+		Run([ProgramPath+'/Helper/Wiimms/wszst','extract',path+'/message.carc'])
 		os.remove(path+"/message.d/wszst-setup.txt")
-		GivePermission(ProgramPath+'/Helper/Wiimms/wbmgt')
-		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" decode "'+path+'/message.d/new_music_message.bmg"')
+		Run([ProgramPath+'/Helper/Wiimms/wbmgt','decode',path+'/message.d/new_music_message.bmg'])
 		os.remove(path+"/message.d/new_music_message.bmg")
 	except Exception as e:
 		ShowError("Could not decode text file",str(e))
@@ -316,13 +316,11 @@ def DecodeTxt():
 def EncodeTxt():
 	path = GetMessagePath()
 	try:
-		GivePermission(ProgramPath+'/Helper/Wiimms/wbmgt')
-		Run('"'+ProgramPath+'/Helper/Wiimms/wbmgt" encode "'+path+'/message.d/new_music_message.txt"')
+		Run([ProgramPath+'/Helper/Wiimms/wbmgt','encode',path+'/message.d/new_music_message.txt'])
 		os.remove(path+"/message.d/new_music_message.txt")
 		if(not os.path.exists(path+"/message.carc.backup")): copyfile(path+"/message.carc",path+"/message.carc.backup")
 		os.remove(path+"/message.carc")
-		GivePermission(ProgramPath+'/Helper/Wiimms/wszst')
-		Run('"'+ProgramPath+'/Helper/Wiimms/wszst" create "'+path+'/message.d" --dest "'+path+'/message.carc"')
+		Run([ProgramPath+'/Helper/Wiimms/wszst','create',path+'/message.d','--dest',path+'/message.carc'])
 		rmtree(path+'/message.d')
 	except Exception as e:
 		ShowError("Could not encode text file",str(e))
@@ -647,13 +645,12 @@ def LoadMidi(midiPath):
 		prefix = pathlib.Path(midiPath).suffix
 		if(prefix == '.mid'): prefix = '.midi'
 		copyfile(midiPath,directory+'/z'+prefix)
-		GivePermission(ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd')
 		if(os.path.isfile(directory+'/z.rseq')):
-			Run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd" assemble "'+directory+'/z.rseq"')
+			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','assemble',directory+'/z.rseq'])
 		if(os.path.isfile(directory+'/z.brseq')):
-			Run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd" to_midi "'+directory+'/z.brseq"')
+			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','to_midi',directory+'/z.brseq'])
 		else:
-			Run('"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd" from_midi "'+directory+'/z.midi"')
+			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','from_midi',directory+'/z.midi'])
 
 		mid = mido.MidiFile(directory+"/z.midi")		
 		Tempo = 0
@@ -801,8 +798,7 @@ def PrepareFile():
 
 def ConvertRom():
 	try:
-		GivePermission(ProgramPath+'/Helper/Wiimms/wit')
-		Run('"'+ProgramPath+'/Helper/Wiimms/wit" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
+		Run([ProgramPath+'/Helper/Wiimms/wit','cp','--fst',file.path,os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]])
 		if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
 			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
 		else:
