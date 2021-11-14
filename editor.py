@@ -289,7 +289,8 @@ def GivePermission(file):
 def Run(command):
 	try:
 		if(type(command) != str): GivePermission(command[0])
-		subprocess.run(command,shell=True,capture_output=True)
+		print("Running Command: "+command)
+		subprocess.run(command,capture_output=True)
 	except Exception as e:
 		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
