@@ -286,16 +286,12 @@ def GivePermission(file):
 			tryed = 0
 
 #Other
-def Run(command,tryPermissions=True):
-	if(type(command) == str): tryPermissions = False
+def Run(command):
 	try:
+		if(type(command) != str): GivePermission(command[0])
 		subprocess.run(command,shell=True,capture_output=True)
 	except Exception as e:
-		if(tryPermissions):
-			GivePermission(command[0])
-			Run(command,False)
-		else:
-			ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
+		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
 def DecodeTxt():
 	path = GetMessagePath()
