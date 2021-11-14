@@ -215,26 +215,6 @@ class Window(QMainWindow, Ui_MainWindow):
             return True
         return False
 
-    def LoadMidiFile(self,midiPath):
-        try:
-            info = LoadMidi(midiPath)
-            return info
-        except:
-            if(currentSystem != "Windows"):
-                try:
-                    Run("mono")
-                    ShowError("Could not load file","Midi files need at least 2 tracks to work properly")
-                except:
-                    GetMonoFramework(self)
-                    try:
-                        info = LoadMidi(midiPath)
-                        return info
-                    except:
-                        ShowError("Mono Framework Failed to Install","")
-            else:
-                ShowError("Could not load file","Midi files need at least 2 tracks to work properly")
-        return [False]
-
     #############Load Places
 
     def GotoMainMenu(self):
@@ -388,7 +368,7 @@ class Window(QMainWindow, Ui_MainWindow):
         global brseqInfo
         global brseqLength
         if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
-            midiInfo = self.LoadMidiFile(self.extraFile)
+            midiInfo = LoadMidi(self.extraFile)
             if(midiInfo[0] != False):
                 self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
                 self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
