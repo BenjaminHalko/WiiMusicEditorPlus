@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pyinstaller -F -w --noconfirm -n Program WiiMusicEditorPlus.py
+pyinstaller -F -w --noconfirm -n Program -i icon.ico WiiMusicEditorPlus.py
 mkdir dist/WiiMusicEditorPlus
 mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 rm -r dist/WiiMusicEditorPlus/Helper
