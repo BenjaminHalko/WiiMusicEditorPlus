@@ -641,7 +641,9 @@ def LoadMidi(midiPath):
 		if(prefix == '.mid'): prefix = '.midi'
 		copyfile(midiPath,directory+'/z'+prefix)
 		ext = ""
-		if(currentSystem != "Windows"): ext = "./"
+		if(currentSystem != "Windows"):
+			ext = "./"
+			GivePermission(ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd')
 		if(os.path.isfile(directory+'/z.rseq')):
 			Run(ext+'"'+ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd" assemble "'+directory+'/z.rseq"')
 		if(os.path.isfile(directory+'/z.brseq')):

@@ -14,7 +14,6 @@ from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
 from riivolution import RiivolutionWindow
-from monoframework import GetMonoFramework
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
