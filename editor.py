@@ -278,20 +278,27 @@ def GetGeckoPath():
 		return file.path
 
 def GivePermission(file):
-	try:
-		st = os.stat(file)
-		os.chmod(file,st.st_mode | stats.S_IEXEC)
-	except:
-		e = 0
+	if(currentSystem != "Windows"):
+		try:
+			st = os.stat(file)
+			os.chmod(file,st.st_mode | stats.S_IEXEC)
+		except:
+			e = 0
 
 #Other
 def Run(command):
-	if(currentSystem == "Linux"):
-		subprocess.run(command.replace("\\","/"),shell=True)
-	elif(currentSystem == "Mac"):
-		subprocess.run(command.replace("\\","/"),shell=True,capture_output=True)
-	else:
-		subprocess.run(command.replace("\\","/"),capture_output=True)
+	try:
+		if(currentSystem == "Linux"):
+			subprocess.run(command,shell=True)
+		elif(currentSystem == "Mac"):
+			subprocess.run(command,shell=True,capture_output=True)
+		else:
+			try:
+				subprocess.run(command,capture_output=True)
+			except:
+				subprocess.run(command)
+	except Exception as e:
+		ShowError("Could not execute command:","Command: "+command+"\nError: "+str(e))
 
 def DecodeTxt():
 	path = GetMessagePath()
@@ -795,7 +802,7 @@ def PrepareFile():
 def ConvertRom():
 	try:
 		GivePermission(ProgramPath+'/Helper/Wiimms/wit')
-		Run('\"'+ProgramPath+'/Helper/Wiimms/wit\" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
+		Run('"'+ProgramPath+'/Helper/Wiimms/wit" cp --fst \"'+file.path+'\" \"'+os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]+'\"')
 		if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
 			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
 		else:

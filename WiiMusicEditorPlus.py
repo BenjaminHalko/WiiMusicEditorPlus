@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, StyleTypeValue, SongTypeValue, LoadType
+from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -184,7 +184,7 @@ class Window(QMainWindow, Ui_MainWindow):
         file.setNameFilter(filter)
         file.setViewMode(QtWidgets.QFileDialog.Detail)
         file.setDirectory(lastExtraFileDirectory)
-        if file.exec_():
+        if file.exec_() and os.path.isfile(file.selectedFiles()[0]):
             self.extraFile = file.selectedFiles()[0]
             lastExtraFileDirectory = os.path.dirname(self.extraFile)
             SaveSetting("Paths","LastExtraLoadedPath",lastExtraFileDirectory)
