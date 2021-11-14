@@ -289,12 +289,7 @@ def GivePermission(file):
 def Run(command,tryPermissions=True):
 	if(type(command) == str): tryPermissions = False
 	try:
-		if(currentSystem == "Linux"):
-			subprocess.run(command,shell=True,capture_output=True)
-		elif(currentSystem == "Mac"):
-			subprocess.run(command,shell=True,capture_output=True)
-		else:
-			subprocess.run(command,capture_output=True)
+		subprocess.run(command,shell=True,capture_output=True)
 	except Exception as e:
 		if(tryPermissions):
 			GivePermission(command[0])
