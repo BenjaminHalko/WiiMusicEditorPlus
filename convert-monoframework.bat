@@ -1,1 +1,0 @@
-pyuic5 -o monoframework_ui.py monoframework.ui

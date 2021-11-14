@@ -8,4 +8,5 @@ cp -r crossplatformhelpers/Linux/Helper dist/WiiMusicEditorPlus/Helper
 cp crossplatformhelpers/Version.txt dist/WiiMusicEditorPlus/Helper/Update
 mv dist/WiiMusicEditorPlusProgram dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 cd dist
+rm WiiMusicEditorPlus-Linux.zip
 zip -r WiiMusicEditorPlus-Linux.zip WiiMusicEditorPlus
