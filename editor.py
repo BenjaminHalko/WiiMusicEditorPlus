@@ -289,7 +289,8 @@ def GivePermission(file):
 def Run(command):
 	try:
 		if(type(command) != str): GivePermission(command[0])
-		subprocess.run(command,capture_output=True)
+		if(currentSystem == "Windows"): subprocess.run(command)
+		else: subprocess.run(command,capture_output=True)
 	except Exception as e:
 		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
@@ -823,7 +824,7 @@ def SaveSetting(section,key,value):
 def GetDolphinSave():
 	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
 	if(os.path.exists(os.path.dirname(dolphinSavePath)+"/portable.txt")): return os.path.dirname(dolphinSavePath)+"/User"
-	return "C:/Users/"+getuser()+"/Documents/Dolphin Emulator"
+	return ChooseFromOS(["C:/Users/"+getuser()+"/Documents/Dolphin Emulator","~/Library/Application Support/Dolphin","~/.local/share/dolphin-emu"])
 		
 #OS Specific
 def ChooseFromOS(array):
@@ -849,7 +850,7 @@ else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 #Variables
 unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
-dolphinPath = LoadSetting("Paths","Dolphin","")
+dolphinPath = LoadSetting("Paths","Dolphin","dolphin-emu")
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""

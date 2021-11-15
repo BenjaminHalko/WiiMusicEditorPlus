@@ -23,6 +23,12 @@ brseqLength = 0
 lastExtraFileDirectory = LoadSetting("Paths","LastExtraLoadedPath","")
 lastFileDirectory = LoadSetting("Paths","LastLoadedPath","")
 
+def popen(cmd):
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    process = subprocess.Popen(cmd, startupinfo=startupinfo, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+    return process.stdout.read()
+
 def AllowType(type):
     return (editor.file.type == LoadType.Rom or editor.file.type == type)
 
@@ -324,9 +330,9 @@ class Window(QMainWindow, Ui_MainWindow):
             try:
                 if(menu): loadMenu = ""
                 else: loadMenu = "-b "
-                subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"')
-            except:
-                ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings")
+                subprocess.Popen(editor.dolphinPath)
+            except Exception as e:
+                ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
 
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
