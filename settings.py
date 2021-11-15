@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtWidgets
 from settings_ui import Ui_Settings
 import editor
-from editor import SaveSetting, LoadSetting
+from editor import SaveSetting, LoadSetting, ChooseFromOS, currentSystem
 from errorhandler import ShowError
 from update import UpdateWindow
 
@@ -56,9 +56,9 @@ class SettingsWindow(QDialog,Ui_Settings):
 
     def GetDolphin(self):
         file = QtWidgets.QFileDialog() 
-        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        file.setNameFilter("Dolphin (Dolphin.exe)")
-        file.setViewMode(QtWidgets.QFileDialog.Detail)
+        if(currentSystem == "Mac"): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin.app)","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
             self.DolphinPath_Label.setText(_translate("MainWindow",file.selectedFiles()[0]))
@@ -71,7 +71,6 @@ class SettingsWindow(QDialog,Ui_Settings):
     def GetDolphinSave(self):
         file = QtWidgets.QFileDialog() 
         file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        file.setViewMode(QtWidgets.QFileDialog.Detail)
         if file.exec_():
             if(path.isdir(file.selectedFiles()[0]+"/Wii") and path.isdir(file.selectedFiles()[0]+"/GameSettings")):
                 editor.dolphinSavePath = file.selectedFiles()[0]

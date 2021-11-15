@@ -1,5 +1,5 @@
 @echo off
-pyinstaller -F --icon=Icon/icon.ico WiiMusicEditorPlus.py
+pyinstaller -F -w --icon=Icon/icon.ico WiiMusicEditorPlus.py
 
 rmdir /s /q "dist/WiiMusicEditorPlus/Helper"
 xcopy /E /H /C /I "crossplatformhelpers\Windows\Helper" "dist\WiiMusicEditorPlus\Helper"
