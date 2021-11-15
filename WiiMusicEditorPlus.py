@@ -367,7 +367,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 else: loadMenu = "-b "
                 if(currentSystem == "Windows"):
                     env = os.environ
-                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = '"'+editor.dolphinPath+'/QtPlugins/platforms/"'
+                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
                     subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"',env=env)
                 else: subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"')
             except Exception as e:
