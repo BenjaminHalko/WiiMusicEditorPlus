@@ -2,6 +2,7 @@ import os
 import pathlib
 import subprocess
 import sys
+
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
@@ -364,7 +365,10 @@ class Window(QMainWindow, Ui_MainWindow):
             try:
                 if(menu): loadMenu = ""
                 else: loadMenu = "-b "
-                if(currentSystem == "Windows"): subprocess.Popen(editor.dolphinPath,**subprocess_args(False))
+                if(currentSystem == "Windows"):
+                    env = os.environ
+                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = '"'+editor.dolphinPath+'/QtPlugins/platforms/"'
+                    subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"',env=env)
                 else: subprocess.Popen('"'+editor.dolphinPath+'" '+loadMenu+'-e "'+editor.file.path+'/sys/main.dol"')
             except Exception as e:
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
