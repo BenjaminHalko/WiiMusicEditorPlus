@@ -852,7 +852,7 @@ unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
 if(currentSystem == "Linux" and not os.path.isfile(dolphinPath)):
-	subprocess.run("whereis dolphin-emu")
+	print(subprocess.check_output("whereis dolphin-emu",shell=True))
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
