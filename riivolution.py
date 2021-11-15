@@ -49,7 +49,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         editor.CreateGct(ModPath+'/Riivolution/codes/'+editor.BasedOnRegion(gameIds)+'.gct')
         copyfile(GetBrsarPath(),ModPath+'/'+ModName.replace(' ','')+'/rp_Music_sound.brsar')
         copyfile(GetMessagePath()+'/message.carc',ModPath+'/'+ModName.replace(' ','')+'/message.carc')
-        copyfile(ProgramPath+'/Helper/GctFiles/codehandler.bin',ModPath+'/Riivolution/codehandler.bin')
+        copyfile(ProgramPath+'/Helper/Extra/codehandler.bin',ModPath+'/Riivolution/codehandler.bin')
         linestowrite = [
         '<wiidisc version="1" root="">\n',
         '  <id game="R64" />\n',
