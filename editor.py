@@ -850,7 +850,9 @@ else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 #Variables
 unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
-dolphinPath = LoadSetting("Paths","Dolphin","dolphin-emu")
+dolphinPath = LoadSetting("Paths","Dolphin","")
+if(currentSystem == "Linux" and not os.path.isfile(dolphinPath)):
+	print(subprocess.check_output("whereis dolphin-emu"))
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
