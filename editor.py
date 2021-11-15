@@ -853,7 +853,7 @@ regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
 if(currentSystem == "Linux" and not os.path.isfile(dolphinPath)):
 	temp = subprocess.check_output("whereis dolphin-emu",shell=True).decode()
-	dolphinPath = temp[13:len(temp)-2:1]
+	dolphinPath = temp[13:len(temp)-1:1]
 	print(dolphinPath)
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
