@@ -824,7 +824,7 @@ def SaveSetting(section,key,value):
 def GetDolphinSave():
 	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
 	if(os.path.exists(os.path.dirname(dolphinSavePath)+"/portable.txt")): return os.path.dirname(dolphinSavePath)+"/User"
-	return ChooseFromOS(["C:/Users/"+getuser()+"/Documents/Dolphin Emulator","~/Library/Application Support/Dolphin","~/.local/share/dolphin-emu"])
+	return ChooseFromOS(["C:/Users/"+getuser()+"/Documents/Dolphin Emulator","/Users/"+getuser()+"/Library/Application Support/Dolphin","/home/"+getuser()+"/.local/share/dolphin-emu"])
 		
 #OS Specific
 def ChooseFromOS(array):
