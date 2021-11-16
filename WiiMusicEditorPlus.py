@@ -322,11 +322,11 @@ class Window(QMainWindow, Ui_MainWindow):
             ShowError("Unable to launch Dolphin","Dolphin path not specified\nGo to settings to add a Dolphin path")
         else:
             try:
-                if(menu): loadMenu = ""
-                else: loadMenu = "-b "
+                cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
+                if(not menu): cmd.insert(1,"-b")
                 env = os.environ
                 env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
-                subprocess.Popen([editor.dolphinPath,loadMenu,'-e',editor.file.path+'/sys/main.dol'],env=env)
+                subprocess.Popen(cmd,env=env)
             except Exception as e:
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
 
