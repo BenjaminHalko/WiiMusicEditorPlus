@@ -127,7 +127,7 @@ def GetReleaseTag(switchBranch=False):
     data = get("https://api.github.com/repos/BenjaminHalko/WiiMusicEditorPlus/releases").json()
     i = 0
     try:
-        if(LoadSetting("Settings","Beta",False) != switchBranch):
+        if(LoadSetting("Settings","Beta",False) == switchBranch):
             while (data[i]["prerelease"]): i += 1
     except:
         i = 0
