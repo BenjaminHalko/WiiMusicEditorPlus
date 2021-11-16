@@ -326,6 +326,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(not menu): cmd.insert(1,"-b")
                 env = os.environ
                 env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
+                GivePermission(editor.dolphinPath)
                 subprocess.Popen(cmd,env=env)
             except Exception as e:
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
