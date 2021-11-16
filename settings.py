@@ -57,7 +57,7 @@ class SettingsWindow(QDialog,Ui_Settings):
     def GetDolphin(self):
         file = QtWidgets.QFileDialog() 
         file.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin)","Dolphin (dolphin-emu)"]))
+        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
             self.DolphinPath_Label.setText(_translate("MainWindow",file.selectedFiles()[0]))
