@@ -56,9 +56,8 @@ class SettingsWindow(QDialog,Ui_Settings):
 
     def GetDolphin(self):
         file = QtWidgets.QFileDialog() 
-        if(currentSystem == "Mac"): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin.app)","Dolphin (dolphin-emu)"]))
+        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin)","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
             self.DolphinPath_Label.setText(_translate("MainWindow",file.selectedFiles()[0]))
