@@ -6,7 +6,7 @@ from settings_ui import Ui_Settings
 import editor
 from editor import SaveSetting, LoadSetting, ChooseFromOS, currentSystem
 from errorhandler import ShowError
-from update import UpdateWindow
+from update import UpdateWindow, CheckForUpdate
 
 _translate = QCoreApplication.translate
 
@@ -40,7 +40,13 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.exec()
     
     def Button_SwitchBeta(self):
-        UpdateWindow(self.otherWindow,-1)
+        SaveSetting("Settings","Beta",not LoadSetting("Settings","Beta",False))
+        if(LoadSetting("Settings","Beta",False)):
+            self.SwitchBeta.setText(_translate("MainWindow","Switch to Main"))
+        else:
+            self.SwitchBeta.setText(_translate("MainWindow","Switch to Beta"))
+        version = CheckForUpdate()
+        if(version != "null"): UpdateWindow([self.otherWindow,self],version)
 
     def ConnectCheckmark(self,checkmarkId,setting,default):
         checkmarkId.setCheckState(LoadSetting("Settings",setting,default)*2)

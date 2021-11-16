@@ -59,11 +59,6 @@ class UpdateWindow(QDialog,Ui_Update):
             check = CheckForUpdate()
             if(check == "null"):
                 self.MainWidget.setCurrentIndex(2)
-        elif(check == -1):
-            self.switchBranch = True
-            self.MainWidget.setCurrentIndex(2)
-            self.version = GetReleaseTag(True)
-            self.startupdate()
 
         self.version = check
         self.NewUpdate_Update.clicked.connect(self.startupdate)
@@ -86,9 +81,6 @@ class UpdateWindow(QDialog,Ui_Update):
         self.Update_Progress.setValue(value)
 
     def restart(self):
-        if(self.switchBranch):
-            currentBranch = LoadSetting("Settings","Beta",False)
-            SaveSetting("Settings","Beta",1-currentBranch)
         if(currentSystem == "Windows"):
             Popen(ProgramPath+'/Helper/Update/Update.bat')
         else:
@@ -100,7 +92,11 @@ class UpdateWindow(QDialog,Ui_Update):
             chmod(ProgramPath+'/Helper/Update/NewProgram'+programExt,st.st_mode | stats.S_IEXEC)
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
-        self.otherWindow.close()
+        if(self.otherWindow != list):
+            self.otherWindow.close()
+        else:
+            for window in self.otherWindow:
+                window.close()
         sys_exit()
 
 def CheckForUpdate():
@@ -123,11 +119,11 @@ def CheckForUpdate():
         except (ConnectionError, Timeout):
             return "null"
         
-def GetReleaseTag(switchBranch=False):
+def GetReleaseTag():
     data = get("https://api.github.com/repos/BenjaminHalko/WiiMusicEditorPlus/releases").json()
     i = 0
     try:
-        if(LoadSetting("Settings","Beta",False) == switchBranch):
+        if(not LoadSetting("Settings","Beta",False)):
             while (data[i]["prerelease"]): i += 1
     except:
         i = 0

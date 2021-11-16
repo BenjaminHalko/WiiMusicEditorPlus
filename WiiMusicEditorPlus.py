@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
 from main_window_ui import Ui_MainWindow 
@@ -612,10 +612,11 @@ class ExternalEditor(QtCore.QThread):
 
 if __name__ == "__main__":
     app = QApplication([])
+    app.setWindowIcon(QIcon(ProgramPath+"/Helper/Extra/icon.png"))
     win = Window()
     win.show()
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
     if(LoadSetting("Settings","AutoUpdate",True)):
         version = CheckForUpdate()
-        if(version != "null"): updater = UpdateWindow(win,version)
+        if(version != "null"): UpdateWindow(win,version)
     sys.exit(app.exec())
