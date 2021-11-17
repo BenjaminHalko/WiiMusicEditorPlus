@@ -277,6 +277,12 @@ def GetGeckoPath():
 	else:
 		return file.path
 
+def GetMainDolPath():
+	if(os.path.isdir(file.path)):
+		return file.path+"/sys/main.dol"
+	else:
+		return file.path
+
 def GivePermission(file):
 	if(currentSystem != "Windows"):
 		try:
@@ -769,6 +775,17 @@ def FixMessageFile(textlines):
 			textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
 			break
 	return textlines
+
+def PatchMainDol(dolPath="",geckoPath=""):
+	if(dolPath == ""):
+		dolPath = GetMainDolPath()
+		if(not os.path.exists(dolPath+".backup")): copyfile(dolPath,dolPath+".backup")
+		
+	if(geckoPath == ""): geckoPath = GetGeckoPath()
+
+	CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
+	Run([ProgramPath+'/Helper/Wiimms/wstrt','patch',dolPath,'--add-section',ProgramPath+"/"+BasedOnRegion(gameIds)+".gct",'--force'])
+	os.remove(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom

@@ -4,8 +4,9 @@ from PyQt5.QtCore import Qt, QCoreApplication
 import editor
 from os import path, mkdir, rename
 from shutil import copyfile, copytree
-from editor import GetBrsarPath, GetMessagePath, ProgramPath, gameIds, regionNames
+from editor import GetBrsarPath, GetMainDolPath, GetMessagePath, PatchMainDol, ProgramPath, gameIds, regionNames
 from psutil import disk_partitions
+from success import SuccessWindow
 
 class RiivolutionWindow(QDialog,Ui_Riivolution):
     def __init__(self):
@@ -46,10 +47,12 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         mkdir(ModPath+'/Riivolution')
         mkdir(ModPath+'/Riivolution/codes')
         mkdir(ModPath+'/'+ModName.replace(' ',''))
-        editor.CreateGct(ModPath+'/Riivolution/codes/'+editor.BasedOnRegion(gameIds)+'.gct')
         copyfile(GetBrsarPath(),ModPath+'/'+ModName.replace(' ','')+'/rp_Music_sound.brsar')
         copyfile(GetMessagePath()+'/message.carc',ModPath+'/'+ModName.replace(' ','')+'/message.carc')
+        copyfile(GetMainDolPath(),ModPath+'/'+ModName.replace(' ','')+'/main.dol')
         copyfile(ProgramPath+'/Helper/Extra/codehandler.bin',ModPath+'/Riivolution/codehandler.bin')
+        if(self.GeckocodeOptions.currentIndex() == 0): editor.CreateGct(ModPath+'/Riivolution/codes/'+editor.BasedOnRegion(gameIds)+'.gct')
+        elif(self.GeckocodeOptions.currentIndex() == 1): PatchMainDol(dolPath=ModPath+'/'+ModName.replace(' ','')+'/main.dol')
         linestowrite = [
         '<wiidisc version="1" root="">\n',
         '  <id game="R64" />\n',
@@ -65,14 +68,15 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         '  <patch id="TheMod">\n',
         '    <file disc="/Sound/MusicStatic/rp_Music_sound.brsar" external="/'+ModName.replace(' ','')+'/rp_Music_sound.brsar" offset="" />\n',
         '    <file disc="/'+editor.BasedOnRegion(regionNames)+'/Message/message.carc" external="/'+ModName.replace(' ','')+'/message.carc" offset="" />\n',
+        '    <file disc="sys/main.dol" external="/'+ModName.replace(' ','')+'/main.dol" offset="" />\n',
         '    <memory valuefile="codehandler.bin" offset="0x80001800" />\n',
         '    <memory value="8000" offset="0x00001CDE" />\n',
         '    <memory value="28B8" offset="0x00001CE2" />\n',
         '    <memory value="8000" offset="0x00001F5A" />\n',
         '    <memory value="28B8" offset="0x00001F5E" />\n',
-        '    <memory valuefile="/codes/'+editor.BasedOnRegion(gameIds)+'.gct" offset="0x800028B8" />\n',
         '  </patch>\n',
         '</wiidisc>\n']
+        if(self.GeckocodeOptions.currentIndex() == 0): linestowrite.insert(20,'    <memory valuefile="/codes/'+editor.BasedOnRegion(gameIds)+'.gct" offset="0x800028B8" />\n')
         xml = open(ModPath+'/Riivolution/'+ModName.replace(' ','')+'.xml','w')
         xml.writelines(linestowrite)
         xml.close()
@@ -80,4 +84,6 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
             mpoint = self.disks[self.SDSelector.currentIndex()-1].mountpoint
             copytree(ModPath+'/Riivolution',mpoint+'Riivolution')
             copytree(ModPath+'/'+ModName.replace(' ',''),mpoint+ModName.replace(' ',''))
+        self.Patch.setEnabled(False)
+        SuccessWindow("Creation Complete!")
         self.close()

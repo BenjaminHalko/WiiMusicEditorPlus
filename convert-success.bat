@@ -1,0 +1,1 @@
+pyuic5 -o success_ui.py Success.ui

@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Error</class>
- <widget class="QDialog" name="Error">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
-  <property name="enabled">
-   <bool>true</bool>
-  </property>
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
-    <height>139</height>
+    <width>283</width>
+    <height>88</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Wii Music Editor Plus - Error</string>
+   <string>Wii Music Editor Plus</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QToolTip
@@ -108,6 +102,15 @@ QLineEdit
     border-radius: 5;
 }
 
+QSpinBox
+{
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);
+    padding: 1px;
+    border-style: solid;
+    border: 1px solid #1e1e1e;
+    border-radius: 5;
+}
+
 QPushButton
 {
     color: white;
@@ -133,6 +136,7 @@ QComboBox
     border-style: solid;
     border: 1px solid #1e1e1e;
     border-radius: 5;
+	padding-left: 4px;
 }
 
 QComboBox:hover,QPushButton:hover
@@ -143,8 +147,6 @@ QComboBox:hover,QPushButton:hover
 
 QComboBox:on
 {
-    padding-top: 3px;
-    padding-left: 4px;
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);
     selection-background-color: #ffaa00;
 }
@@ -170,7 +172,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url(:/down_arrow.png);
+     image: url(:images/images/down_arrow.png);
 }
 
 QGroupBox:focus
@@ -352,7 +354,7 @@ QMainWindow::separator:hover
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(:/images/handle.png);
+     background: url(:images/images/handle.png);
 }
 
 QMenu::separator
@@ -448,8 +450,17 @@ QRadioButton::indicator:checked
         fx: 0.5, fy: 0.5,
         radius: 1.0,
         stop: 0.25 #ffaa00,
-        stop: 0.3 #323232
-    );
+        stop: 0.3 #323232);
+}
+
+QRadioButton::indicator:checked:disabled
+{
+    background-color: qradialgradient(
+        cx: 0.5, cy: 0.5,
+        fx: 0.5, fy: 0.5,
+        radius: 1.0,
+        stop: 0.25 #323232,
+        stop: 0.3 #323232);
 }
 
 QCheckBox::indicator{
@@ -470,210 +481,68 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
-QRadioButton:disabled
-{
-    background-color: #404040;
-}
-
-
 QCheckBox::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:images/images/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
 }</string>
-  </property>
-  <property name="sizeGripEnabled">
-   <bool>false</bool>
-  </property>
-  <property name="modal">
-   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QStackedWidget" name="MainWidget">
-     <property name="currentIndex">
-      <number>0</number>
+    <layout class="QHBoxLayout" name="Title">
+     <item>
+      <widget class="QLabel" name="CompleteSymbol">
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/checkmark.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="CompleteTitle">
+       <property name="font">
+        <font>
+         <family>Continuum Medium</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Completed!</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="CompleteSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QWidget" name="ErrorNormal">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QHBoxLayout" name="Title">
-         <item>
-          <widget class="QLabel" name="ErrorSymbol">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ErrorTitle">
-           <property name="font">
-            <font>
-             <family>Continuum Medium</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Error</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="hLine">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="ErrorMessage">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>ErrorText</string>
-         </property>
-         <property name="textInteractionFlags">
-          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ErrorSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ErrorClose">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Close</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="ErrorGct">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="Title_GC">
-         <item>
-          <widget class="QLabel" name="ErrorSymbol_GC">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ErrorTitle_GC">
-           <property name="font">
-            <font>
-             <family>Continuum Medium</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Error</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="hLine_GC">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="ErrorMessage_GC">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>ErrorText</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ErrorSpacer_GC">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="Buttons_GC">
-         <item>
-          <widget class="QPushButton" name="ErrorClose_GC">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Close</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ErrorCreate_GC">
-           <property name="text">
-            <string>Create Geckocode</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>1</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="CompleteClose">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Close</string>
+     </property>
     </widget>
    </item>
   </layout>

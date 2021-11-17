@@ -10,11 +10,12 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetDefaultStyle, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, StyleTypeValue, SongTypeValue, LoadType
+from editor import ChangeName, GetDefaultStyle, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
 from riivolution import RiivolutionWindow
+from success import SuccessWindow
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -68,7 +69,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
         #temp
         self.MP_RomEditing.setEnabled(False)
-        self.MP_MainDolPatch_Button.setEnabled(False)
         self.MP_RemoveSong_Button.setEnabled(False)
 
         if(editor.file.path != ""):
@@ -90,6 +90,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_EditText_Button.clicked.connect(self.LoadTextEditor)
         self.MP_DefaultStyle_Button.clicked.connect(self.LoadDefaultStyleEditor)
         self.MP_GeckocodeConvert_Button.clicked.connect(self.ConvertGeckocode)
+        self.MP_MainDolPatch_Button.clicked.connect(self.PatchMainDolWithGeckoCode)
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
 
         #Song Editor Buttons    
@@ -288,7 +289,7 @@ class Window(QMainWindow, Ui_MainWindow):
             error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadDefaultStyleEditor()
-
+            
     def ConvertGeckocode(self):
         if(AllowType(LoadType.Gct)):
             file = QFileDialog()
@@ -301,8 +302,14 @@ class Window(QMainWindow, Ui_MainWindow):
                 path = file.selectedFiles()[0]
                 if(pathlib.Path(path).suffix != ".gct"): file = file+".gct"
                 CreateGct(path)
+                SuccessWindow("Creation Complete!")
         else:
             ShowError("Unable to create .gct file","Must load Wii Music Rom or Geckocode")
+
+    def PatchMainDolWithGeckoCode(self):
+        if(editor.file.type == LoadType.Rom):
+            PatchMainDol()
+            SuccessWindow("Main.dol Patched!")
 
     def CreateRiivolutionPatch(self):
         if(editor.file.type == LoadType.Rom):

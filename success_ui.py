@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Riivolution.ui'
+# Form implementation generated from reading ui file 'Success.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Riivolution(object):
-    def setupUi(self, Riivolution):
-        Riivolution.setObjectName("Riivolution")
-        Riivolution.resize(398, 239)
-        Riivolution.setStyleSheet("QToolTip\n"
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(283, 88)
+        Dialog.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -451,8 +451,17 @@ class Ui_Riivolution(object):
 "        fx: 0.5, fy: 0.5,\n"
 "        radius: 1.0,\n"
 "        stop: 0.25 #ffaa00,\n"
-"        stop: 0.3 #323232\n"
-"    );\n"
+"        stop: 0.3 #323232);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:disabled\n"
+"{\n"
+"    background-color: qradialgradient(\n"
+"        cx: 0.5, cy: 0.5,\n"
+"        fx: 0.5, fy: 0.5,\n"
+"        radius: 1.0,\n"
+"        stop: 0.25 #323232,\n"
+"        stop: 0.3 #323232);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator{\n"
@@ -473,12 +482,6 @@ class Ui_Riivolution(object):
 "    border: 1px solid #ffaa00;\n"
 "}\n"
 "\n"
-"QRadioButton:disabled\n"
-"{\n"
-"    background-color: #404040;\n"
-"}\n"
-"\n"
-"\n"
 "QCheckBox::indicator:checked\n"
 "{\n"
 "    image:url(:images/images/checkbox.png);\n"
@@ -487,130 +490,37 @@ class Ui_Riivolution(object):
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
 "{\n"
 "    border: 1px solid #444;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Riivolution)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Title = QtWidgets.QLabel(Riivolution)
-        self.Title.setMaximumSize(QtCore.QSize(16777215, 44))
-        font = QtGui.QFont()
-        font.setFamily("Continuum Medium")
-        font.setPointSize(26)
-        self.Title.setFont(font)
+        self.Title = QtWidgets.QHBoxLayout()
         self.Title.setObjectName("Title")
-        self.verticalLayout.addWidget(self.Title)
-        self.ModNameLayout = QtWidgets.QHBoxLayout()
-        self.ModNameLayout.setObjectName("ModNameLayout")
-        self.ModNameLabel = QtWidgets.QLabel(Riivolution)
-        self.ModNameLabel.setMinimumSize(QtCore.QSize(57, 0))
-        self.ModNameLabel.setMaximumSize(QtCore.QSize(57, 16777215))
-        self.ModNameLabel.setObjectName("ModNameLabel")
-        self.ModNameLayout.addWidget(self.ModNameLabel)
-        self.ModName = QtWidgets.QLineEdit(Riivolution)
-        self.ModName.setObjectName("ModName")
-        self.ModNameLayout.addWidget(self.ModName)
-        self.verticalLayout.addLayout(self.ModNameLayout)
-        self.Save = QtWidgets.QHBoxLayout()
-        self.Save.setObjectName("Save")
-        self.SaveTitle = QtWidgets.QLabel(Riivolution)
-        self.SaveTitle.setMinimumSize(QtCore.QSize(57, 0))
-        self.SaveTitle.setMaximumSize(QtCore.QSize(57, 16777215))
-        self.SaveTitle.setObjectName("SaveTitle")
-        self.Save.addWidget(self.SaveTitle)
-        self.SaveLabel = QtWidgets.QLabel(Riivolution)
-        self.SaveLabel.setMinimumSize(QtCore.QSize(0, 26))
-        self.SaveLabel.setMaximumSize(QtCore.QSize(16777215, 26))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SaveLabel.setFont(font)
-        self.SaveLabel.setAcceptDrops(True)
-        self.SaveLabel.setStyleSheet("QLabel\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: #1e1e1e;\n"
-"background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
-"}")
-        self.SaveLabel.setText("")
-        self.SaveLabel.setObjectName("SaveLabel")
-        self.Save.addWidget(self.SaveLabel)
-        self.verticalLayout.addLayout(self.Save)
-        self.SDCard = QtWidgets.QHBoxLayout()
-        self.SDCard.setObjectName("SDCard")
-        self.SDCardTitle = QtWidgets.QLabel(Riivolution)
-        self.SDCardTitle.setMaximumSize(QtCore.QSize(138, 16777215))
-        self.SDCardTitle.setObjectName("SDCardTitle")
-        self.SDCard.addWidget(self.SDCardTitle)
-        self.SDSelector = QtWidgets.QComboBox(Riivolution)
-        self.SDSelector.setMinimumSize(QtCore.QSize(80, 0))
-        self.SDSelector.setObjectName("SDSelector")
-        self.SDSelector.addItem("")
-        self.SDCard.addWidget(self.SDSelector)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.SDCard.addItem(spacerItem)
-        self.verticalLayout.addLayout(self.SDCard)
-        self.Geckocodes = QtWidgets.QHBoxLayout()
-        self.Geckocodes.setObjectName("Geckocodes")
-        self.GeckocodeLabel = QtWidgets.QLabel(Riivolution)
-        self.GeckocodeLabel.setObjectName("GeckocodeLabel")
-        self.Geckocodes.addWidget(self.GeckocodeLabel)
-        self.GeckocodeOptions = QtWidgets.QComboBox(Riivolution)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.GeckocodeOptions.sizePolicy().hasHeightForWidth())
-        self.GeckocodeOptions.setSizePolicy(sizePolicy)
-        self.GeckocodeOptions.setMinimumSize(QtCore.QSize(110, 0))
-        self.GeckocodeOptions.setObjectName("GeckocodeOptions")
-        self.GeckocodeOptions.addItem("")
-        self.GeckocodeOptions.addItem("")
-        self.GeckocodeOptions.addItem("")
-        self.Geckocodes.addWidget(self.GeckocodeOptions)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.Geckocodes.addItem(spacerItem1)
-        self.verticalLayout.addLayout(self.Geckocodes)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem2)
-        self.Patch = QtWidgets.QPushButton(Riivolution)
-        self.Patch.setMinimumSize(QtCore.QSize(0, 45))
+        self.CompleteSymbol = QtWidgets.QLabel(Dialog)
+        self.CompleteSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
+        self.CompleteSymbol.setObjectName("CompleteSymbol")
+        self.Title.addWidget(self.CompleteSymbol)
+        self.CompleteTitle = QtWidgets.QLabel(Dialog)
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
-        font.setPointSize(20)
-        self.Patch.setFont(font)
-        self.Patch.setObjectName("Patch")
-        self.verticalLayout.addWidget(self.Patch)
+        font.setPointSize(16)
+        self.CompleteTitle.setFont(font)
+        self.CompleteTitle.setObjectName("CompleteTitle")
+        self.Title.addWidget(self.CompleteTitle)
+        self.verticalLayout.addLayout(self.Title)
+        spacerItem = QtWidgets.QSpacerItem(20, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.CompleteClose = QtWidgets.QPushButton(Dialog)
+        self.CompleteClose.setEnabled(True)
+        self.CompleteClose.setObjectName("CompleteClose")
+        self.verticalLayout.addWidget(self.CompleteClose)
 
-        self.retranslateUi(Riivolution)
-        QtCore.QMetaObject.connectSlotsByName(Riivolution)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, Riivolution):
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Riivolution.setWindowTitle(_translate("Riivolution", "Riivolution Creator"))
-        self.Title.setText(_translate("Riivolution", "Riivolution Creator"))
-        self.ModNameLabel.setText(_translate("Riivolution", "Mod Name: "))
-        self.SaveTitle.setText(_translate("Riivolution", "Saving to: "))
-        self.SDCardTitle.setText(_translate("Riivolution", "Copy to SD Card:"))
-        self.SDSelector.setItemText(0, _translate("Riivolution", "None"))
-        self.GeckocodeLabel.setText(_translate("Riivolution", "Geckocode Copy Method: "))
-        self.GeckocodeOptions.setItemText(0, _translate("Riivolution", "Patch Main.dol"))
-        self.GeckocodeOptions.setItemText(1, _translate("Riivolution", "Copy Codes"))
-        self.GeckocodeOptions.setItemText(2, _translate("Riivolution", "Do Nothing"))
-        self.Patch.setText(_translate("Riivolution", "Create!"))
+        Dialog.setWindowTitle(_translate("Dialog", "Wii Music Editor Plus"))
+        self.CompleteSymbol.setText(_translate("Dialog", "<html><head/><body><p><img src=\":/images/images/checkmark.png\"/></p></body></html>"))
+        self.CompleteTitle.setText(_translate("Dialog", "Completed!"))
+        self.CompleteClose.setText(_translate("Dialog", "Close"))
 import resources_rc
