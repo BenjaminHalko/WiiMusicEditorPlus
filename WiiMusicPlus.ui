@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>839</width>
-    <height>601</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="palette">
@@ -1424,63 +1424,109 @@ padding-bottom: 6px;
           <property name="title">
            <string>Rom Editing</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QVBoxLayout" name="verticalLayout_18">
            <item>
-            <widget class="QPushButton" name="MP_RevertChanges_Button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>48</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Continuum Medium</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Revert Changes</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="MP_RomEditing1">
+             <item>
+              <widget class="QPushButton" name="MP_RevertChanges_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Revert Changes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_ImportFiles_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Import files</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_ExportFiles_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Export files</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="MP_ImportExport_Button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>48</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Continuum Medium</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Export / Import Files</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="MP_ExtractPack_Button">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>48</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Continuum Medium</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Extract / Pack Rom</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="MP_RomEditing2">
+             <item>
+              <widget class="QPushButton" name="MP_PackWbfs_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Pack rom to .wbfs</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_PackIso_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Pack rom to .iso</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

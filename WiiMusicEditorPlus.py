@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetDefaultStyle, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, StyleTypeValue, SongTypeValue, LoadType
+from editor import ChangeName, GetDefaultStyle, GetGeckoPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -296,7 +296,6 @@ class Window(QMainWindow, Ui_MainWindow):
             file.setFileMode(QFileDialog.AnyFile)
             file.setAcceptMode(QFileDialog.AcceptSave)
             file.setNameFilter("Geckocodes (*.gct)")
-            file.setViewMode(QFileDialog.Detail)
             file.setDirectory(lastFileDirectory)
             if(file.exec()):
                 path = file.selectedFiles()[0]
@@ -308,8 +307,29 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def PatchMainDolWithGeckoCode(self):
         if(editor.file.type == LoadType.Rom):
-            PatchMainDol()
-            SuccessWindow("Main.dol Patched!")
+            file = QFileDialog()
+            file.setFileMode(QFileDialog.AnyFile)
+            file.setNameFilter("Geckocodes (*.ini *.gct)")
+            file.setDirectory(os.path.dirname(GetGeckoPath()))
+            if(file.exec()):
+                PatchMainDol(geckoPath=file.selectedFiles()[0])
+                SuccessWindow("Main.dol Patched!")
+        elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
+            file = QFileDialog()
+            file.setFileMode(QFileDialog.AnyFile)
+            if(editor.file.type == LoadType.Midi):
+                file.setNameFilter("Geckocodes (*.ini *.gct)")
+            else:
+                file.setNameFilter("Main.dol (*.dol)")
+            file.setDirectory(lastExtraFileDirectory)
+            if(file.exec()):
+                if(editor.file.type == LoadType.Midi):
+                    PatchMainDol(geckoPath=file.selectedFiles()[0])
+                else:
+                    PatchMainDol(dolPath=file.selectedFiles()[0])
+                SuccessWindow("Main.dol Patched!")
+        else:
+            ShowError("Unable to patch Main.dol","Must load Wii Music Rom, Main.dol, or Geckocode")
 
     def CreateRiivolutionPatch(self):
         if(editor.file.type == LoadType.Rom):

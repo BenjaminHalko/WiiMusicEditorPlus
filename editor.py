@@ -783,9 +783,11 @@ def PatchMainDol(dolPath="",geckoPath=""):
 		
 	if(geckoPath == ""): geckoPath = GetGeckoPath()
 
-	CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
-	Run([ProgramPath+'/Helper/Wiimms/wstrt','patch',dolPath,'--add-section',ProgramPath+"/"+BasedOnRegion(gameIds)+".gct",'--force'])
-	os.remove(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
+	if(pathlib.Path(geckoPath).suffix != ".gct"):
+		CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
+		geckoPath = ProgramPath+"/"+BasedOnRegion(gameIds)+".gct"
+	Run([ProgramPath+'/Helper/Wiimms/wstrt','patch',dolPath,'--add-section',geckoPath,'--force'])
+	if(pathlib.Path(geckoPath).suffix != ".gct"): os.remove(geckoPath)
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom
