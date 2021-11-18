@@ -1,9 +1,10 @@
 import os
 import pathlib
-from shutil import copyfile
+from shutil import copyfile, rmtree
 import subprocess
 import sys
 import zipfile
+import tempfile
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor, QIcon
@@ -92,8 +93,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_MainDolPatch_Button.clicked.connect(self.PatchMainDolWithGeckoCode)
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
 
-        self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
         self.MP_PackRom_Button.clicked.connect(self.PackRom)
+        self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
+        self.MP_ImportFiles_Button.clicked.connect(self.ImportFiles)
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(self.Button_SE_SongToChange)
@@ -345,6 +347,40 @@ class Window(QMainWindow, Ui_MainWindow):
             if(os.path.isfile(GetMessagePath()+"/message.carc.backup")): copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
             if(os.path.isfile(GetMainDolPath()+".backup")): copyfile(GetMainDolPath()+".backup",GetMainDolPath())
 
+    def PackRom(self):
+        PackRomWindow()
+
+    def ImportFiles(self):
+        file = QFileDialog()
+        file.setFileMode(QFileDialog.AnyFile)
+        file.setNameFilter("""All supported files (*.zip *.brsar *.carc *.dol *.ini)
+        Zipfile (*.zip)
+        Sound Archive (*.brsar)
+        Text File (*.carc)
+        Main.dol (*.dol)
+        Geckocodes (*.ini)""")
+        file.setDirectory(lastFileDirectory)
+        if(file.exec()):
+            try:
+                path = file.selectedFiles()[0]
+                if(pathlib.Path(path).suffix == "zip"):
+                    os.mkdir(ProgramPath+"/tmp")
+                    zipfile.ZipFile(path, 'r').extractall(ProgramPath+"/tmp")
+                    files = os.listdir(ProgramPath+"/tmp")
+                else:
+                    files = [path]
+                for newfile in files:
+                    if(pathlib.Path(newfile).suffix == ".brsar"): copyfile(newfile,GetBrsarPath())
+                    elif(pathlib.Path(newfile).suffix == ".carc"): copyfile(newfile,GetMessagePath()+"/message.carc")
+                    elif(pathlib.Path(newfile).suffix == ".dol"): copyfile(newfile,GetMainDolPath())
+                    elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
+                if(pathlib.Path(path).suffix == "zip"):
+                    rmtree(ProgramPath+"/tmp")
+                SuccessWindow("Files Successfully Imported!")                
+            except Exception as e:
+                ShowError("Unable to import files",str(e))
+
+
     def ExportFiles(self):
         file = QFileDialog()
         file.setFileMode(QFileDialog.AnyFile)
@@ -360,16 +396,12 @@ class Window(QMainWindow, Ui_MainWindow):
                 zipObj.write(GetMessagePath()+"/message.carc","message.carc")
                 zipObj.write(GetMainDolPath(),"main.dol")
                 zipObj.write(GetGeckoPath(),"Geckocodes.ini")
-                CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
-                zipObj.write(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct",BasedOnRegion(gameIds)+".gct")
-                os.remove(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
                 zipObj.close()
                 SuccessWindow("Files Exported")
             except Exception as e:
                 ShowError("Files not Exported",str(e))
 
-    def PackRom(self):
-        PackRomWindow()
+    
 
     #############Menu Bar
 
