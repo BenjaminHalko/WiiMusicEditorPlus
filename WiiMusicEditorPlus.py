@@ -18,6 +18,7 @@ from errorhandler import ShowError
 from settings import SettingsWindow
 from riivolution import RiivolutionWindow
 from success import SuccessWindow
+from packrom import PackRomWindow
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -92,8 +93,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
 
         self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
-        self.MP_PackWbfs_Button.clicked.connect(lambda: self.PackRom(True))
-        self.MP_PackIso_Button.clicked.connect(lambda: self.PackRom(False))
+        self.MP_PackRom_Button.clicked.connect(self.PackRom)
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(self.Button_SE_SongToChange)
@@ -368,26 +368,8 @@ class Window(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 ShowError("Files not Exported",str(e))
 
-    def PackRom(self,wbfs):
-        file = QFileDialog()
-        file.setFileMode(QFileDialog.AnyFile)
-        file.setAcceptMode(QFileDialog.AcceptSave)
-        if(wbfs): file.setNameFilter("Wbfs (*.wbfs)")
-        else: file.setNameFilter("Iso (*.iso)")
-        file.setDirectory(lastFileDirectory)
-        if(file.exec()):
-            try:
-                path = file.selectedFiles()[0]
-                if(wbfs): fileType = ".wbfs"
-                else: fileType = ".iso"
-                if(pathlib.Path(path).suffix != fileType): path = path+fileType
-                args = [ProgramPath+'/Helper/Wiimms/wit','cp',editor.file.path,path]
-                if(wbfs): args.append('--wbfs')
-                Run(args)
-                SuccessWindow("Rom Successfuly Packed!")
-            except Exception as e:
-                ShowError("Could not pack rom",str(e))
-
+    def PackRom(self):
+        PackRomWindow()
 
     #############Menu Bar
 

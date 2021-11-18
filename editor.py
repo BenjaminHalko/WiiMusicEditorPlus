@@ -783,11 +783,13 @@ def PatchMainDol(dolPath="",geckoPath=""):
 		
 	if(geckoPath == ""): geckoPath = GetGeckoPath()
 
+	gct = False
 	if(pathlib.Path(geckoPath).suffix != ".gct"):
 		CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
 		geckoPath = ProgramPath+"/"+BasedOnRegion(gameIds)+".gct"
+		gct = True
 	Run([ProgramPath+'/Helper/Wiimms/wstrt','patch',dolPath,'--add-section',geckoPath,'--force'])
-	if(pathlib.Path(geckoPath).suffix != ".gct"): os.remove(geckoPath)
+	if(gct): os.remove(geckoPath)
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom
@@ -876,10 +878,13 @@ unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
 if(currentSystem == "Linux" and not os.path.isfile(dolphinPath)):
-	temp = subprocess.check_output("whereis dolphin-emu",shell=True).decode()
-	if(os.path.exists(temp[13:len(temp)-1:1])):
-		dolphinPath = temp[13:len(temp)-1:1]
-		SaveSetting("Paths","Dolphin",dolphinPath)
+	try:
+		temp = subprocess.check_output("whereis dolphin-emu",shell=True).decode()
+		if(os.path.exists(temp[13:len(temp)-1:1])):
+			dolphinPath = temp[13:len(temp)-1:1]
+			SaveSetting("Paths","Dolphin",dolphinPath)
+	except:
+		dolphinPath = ""
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""

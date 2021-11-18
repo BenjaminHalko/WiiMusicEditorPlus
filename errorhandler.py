@@ -6,7 +6,6 @@ class ShowError(QDialog,Ui_Error):
     def __init__(self,error,message,geckocode=False):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
-        self.setWindowModality(Qt.ApplicationModal)
         self.setupUi(self)
         if(not geckocode):
             self.ErrorTitle.setText(QCoreApplication.translate("MainWindow",error))

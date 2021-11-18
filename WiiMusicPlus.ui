@@ -1447,6 +1447,29 @@ padding-bottom: 6px;
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="MP_PackRom_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Pack Rom Filesystem</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="MP_RomEditing2">
+             <item>
               <widget class="QPushButton" name="MP_ImportFiles_Button">
                <property name="minimumSize">
                 <size>
@@ -1481,48 +1504,6 @@ padding-bottom: 6px;
                </property>
                <property name="text">
                 <string>Export files</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="MP_RomEditing2">
-             <item>
-              <widget class="QPushButton" name="MP_PackWbfs_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Pack rom to .wbfs</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="MP_PackIso_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Pack rom to .iso</string>
                </property>
               </widget>
              </item>
