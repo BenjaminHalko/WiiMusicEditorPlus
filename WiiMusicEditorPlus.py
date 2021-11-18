@@ -1,7 +1,9 @@
 import os
 import pathlib
+from shutil import copyfile
 import subprocess
 import sys
+import zipfile
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor, QIcon
@@ -10,7 +12,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetDefaultStyle, GetGeckoPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, StyleTypeValue, SongTypeValue, LoadType
+from editor import ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -67,10 +69,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.externalEditorOpen = False
         self.fromSongEditor = -1
 
-        #temp
-        self.MP_RomEditing.setEnabled(False)
-        self.MP_RemoveSong_Button.setEnabled(False)
-
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
             self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
@@ -92,6 +90,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_GeckocodeConvert_Button.clicked.connect(self.ConvertGeckocode)
         self.MP_MainDolPatch_Button.clicked.connect(self.PatchMainDolWithGeckoCode)
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
+
+        self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
+        self.MP_PackWbfs_Button.clicked.connect(lambda: self.PackRom(True))
+        self.MP_PackIso_Button.clicked.connect(lambda: self.PackRom(False))
 
         #Song Editor Buttons    
         self.SE_Midi_File_Button.clicked.connect(self.Button_SE_SongToChange)
@@ -336,7 +338,57 @@ class Window(QMainWindow, Ui_MainWindow):
             RiivolutionWindow()
         else:
             ShowError("Unable to create Riivolution patch","Must load Wii Music Rom")
-    
+
+    def RevertChanges(self):
+        if(editor.file.type == LoadType.Rom):
+            if(os.path.isfile(GetBrsarPath()+".backup")): copyfile(GetBrsarPath()+".backup",GetBrsarPath())
+            if(os.path.isfile(GetMessagePath()+"/message.carc.backup")): copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
+            if(os.path.isfile(GetMainDolPath()+".backup")): copyfile(GetMainDolPath()+".backup",GetMainDolPath())
+
+    def ExportFiles(self):
+        file = QFileDialog()
+        file.setFileMode(QFileDialog.AnyFile)
+        file.setAcceptMode(QFileDialog.AcceptSave)
+        file.setNameFilter("Zipfile (*.zip)")
+        file.setDirectory(lastFileDirectory)
+        if(file.exec()):
+            try:
+                path = file.selectedFiles()[0]
+                if(pathlib.Path(path).suffix != ".zip"): path = path+".zip"
+                zipObj = zipfile.ZipFile(path, 'w')
+                zipObj.write(GetBrsarPath(),'rp_Music_sound.brsar')
+                zipObj.write(GetMessagePath()+"/message.carc","message.carc")
+                zipObj.write(GetMainDolPath(),"main.dol")
+                zipObj.write(GetGeckoPath(),"Geckocodes.ini")
+                CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
+                zipObj.write(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct",BasedOnRegion(gameIds)+".gct")
+                os.remove(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
+                zipObj.close()
+                SuccessWindow("Files Exported")
+            except Exception as e:
+                ShowError("Files not Exported",str(e))
+
+    def PackRom(self,wbfs):
+        file = QFileDialog()
+        file.setFileMode(QFileDialog.AnyFile)
+        file.setAcceptMode(QFileDialog.AcceptSave)
+        if(wbfs): file.setNameFilter("Wbfs (*.wbfs)")
+        else: file.setNameFilter("Iso (*.iso)")
+        file.setDirectory(lastFileDirectory)
+        if(file.exec()):
+            try:
+                path = file.selectedFiles()[0]
+                if(wbfs): fileType = ".wbfs"
+                else: fileType = ".iso"
+                if(pathlib.Path(path).suffix != fileType): path = path+fileType
+                args = [ProgramPath+'/Helper/Wiimms/wit','cp',editor.file.path,path]
+                if(wbfs): args.append('--wbfs')
+                Run(args)
+                SuccessWindow("Rom Successfuly Packed!")
+            except Exception as e:
+                ShowError("Could not pack rom",str(e))
+
+
     #############Menu Bar
 
     def MenuBar_CheckForUpdates(self):
