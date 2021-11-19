@@ -710,6 +710,9 @@ if __name__ == "__main__":
     win.show()
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
     if(LoadSetting("Settings","AutoUpdate",True)):
-        version = CheckForUpdate()
-        if(version != "null"): UpdateWindow(win,version)
+        try:
+            version = CheckForUpdate()
+            if(version != "null"): UpdateWindow(win,version)
+        except:
+            print("Could Not Update")
     sys.exit(app.exec())
