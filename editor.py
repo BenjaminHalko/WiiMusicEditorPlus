@@ -868,7 +868,7 @@ if(currentSystem == "Darwin"): currentSystem = "Mac"
 
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
-		ProgramPath = pathlib.PosixPath(pathlib.PosixPath(pathlib.PosixPath(os.path.dirname(sys.executable)).parent).parent).parent
+		ProgramPath = pathlib.PosixPath(pathlib.PosixPath(os.path.dirname(sys.executable)).parent).parent
 	else: ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
