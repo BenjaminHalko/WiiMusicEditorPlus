@@ -870,7 +870,7 @@ if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
 		import Cocoa
 		ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
-		print(ProgramPath)
+		ProgramPath = os.path.dirname(ProgramPath+"/../..")
 	else: ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
