@@ -869,8 +869,8 @@ if(currentSystem == "Darwin"): currentSystem = "Mac"
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
 		import Cocoa
-		ProgramPath = os.path.dirname(Cocoa.NSBundle.mainBundle().bundlePath())
-		ProgramPath = os.path.dirname(ProgramPath+"/../..")
+		from unipath import Path
+		ProgramPath = Path(Path(Path(os.path.dirname(sys.executable)).parent).parent).parent
 	else: ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
