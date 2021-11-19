@@ -866,9 +866,10 @@ gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 currentSystem = platform.system()
 if(currentSystem == "Darwin"): currentSystem = "Mac"
 
+
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
-		ProgramPath = pathlib.PosixPath(pathlib.PosixPath(os.path.dirname(sys.executable)).parent).parent
+		ProgramPath = pathlib.Path(os.path.dirname(sys.executable)).parent.parent
 	else: ProgramPath = os.path.dirname(sys.executable)
 else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
 
