@@ -1,0 +1,1 @@
+pyuic5 -o revertchanges_ui.py RevertChanges.ui

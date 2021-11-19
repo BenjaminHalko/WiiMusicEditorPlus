@@ -4,7 +4,6 @@ from shutil import copyfile, rmtree
 import subprocess
 import sys
 import zipfile
-import tempfile
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor, QIcon
@@ -20,6 +19,7 @@ from settings import SettingsWindow
 from riivolution import RiivolutionWindow
 from success import SuccessWindow
 from packrom import PackRomWindow
+from revertchanges import RevertChangesWindow
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -60,6 +60,7 @@ class TAB:
     StyleEditor = 2
     TextEditor = 3
     DefaultStyleEditor = 4
+    RemoveSongEditor = 5
 
 #Main Window
 class Window(QMainWindow, Ui_MainWindow):
@@ -89,10 +90,12 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_StyleEditor_Button.clicked.connect(self.LoadStyleEditor)
         self.MP_EditText_Button.clicked.connect(self.LoadTextEditor)
         self.MP_DefaultStyle_Button.clicked.connect(self.LoadDefaultStyleEditor)
+        self.MP_RemoveSong_Button.clicked.connect(self.LoadRemoveSongEditor)
         self.MP_GeckocodeConvert_Button.clicked.connect(self.ConvertGeckocode)
         self.MP_MainDolPatch_Button.clicked.connect(self.PatchMainDolWithGeckoCode)
         self.MP_Riivolution_Button.clicked.connect(self.CreateRiivolutionPatch)
 
+        self.MP_RevertChanges_Button.clicked.connect(self.RevertChanges)
         self.MP_PackRom_Button.clicked.connect(self.PackRom)
         self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
         self.MP_ImportFiles_Button.clicked.connect(self.ImportFiles)
@@ -133,6 +136,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DS_Songs.itemSelectionChanged.connect(self.List_DS_SongList)
         self.DS_Styles.itemSelectionChanged.connect(self.List_DS_StyleList)
         self.DS_Reset.clicked.connect(self.Button_DS_Reset)
+
+        #Remove Song Editor
+        self.RS_Back_Button.clicked.connect(self.GotoMainMenu)
 
     #Lists
     def LoadSongs(self,widgetID,types=[],lockSongs=False):
@@ -293,7 +299,17 @@ class Window(QMainWindow, Ui_MainWindow):
             error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadDefaultStyleEditor()
-            
+
+    def LoadRemoveSongEditor(self):
+        if(AllowType(LoadType.Dol)):
+            self.MainWidget.setCurrentIndex(TAB.RemoveSongEditor)
+            self.LoadSongs(self.RS_Songs,[SongTypeValue.Regular])
+            self.RS_Patch.setEnabled(False)
+            self.RS_RemoveCustomSongs.setEnabled(editor.file.type == LoadType.Rom)
+            if(self.fromSongEditor != -1): self.List_DS_SongList()
+        else:
+            ShowError("Unable to remove songs","Must load Wii Music Rom or Main.dol")
+
     def ConvertGeckocode(self):
         if(AllowType(LoadType.Gct)):
             file = QFileDialog()
@@ -343,63 +359,72 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def RevertChanges(self):
         if(editor.file.type == LoadType.Rom):
-            if(os.path.isfile(GetBrsarPath()+".backup")): copyfile(GetBrsarPath()+".backup",GetBrsarPath())
-            if(os.path.isfile(GetMessagePath()+"/message.carc.backup")): copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
-            if(os.path.isfile(GetMainDolPath()+".backup")): copyfile(GetMainDolPath()+".backup",GetMainDolPath())
+            RevertChangesWindow()
+        else:
+            ShowError("Unable to revert changes","Must load Wii Music Rom")
 
     def PackRom(self):
-        PackRomWindow()
+        if(editor.file.type == LoadType.Rom):
+            PackRomWindow()
+        else:
+            ShowError("Unable to pack rom","Must load Wii Music Rom")
 
     def ImportFiles(self):
-        file = QFileDialog()
-        file.setFileMode(QFileDialog.AnyFile)
-        file.setNameFilter("""All supported files (*.zip *.brsar *.carc *.dol *.ini)
-        Zipfile (*.zip)
-        Sound Archive (*.brsar)
-        Text File (*.carc)
-        Main.dol (*.dol)
-        Geckocodes (*.ini)""")
-        file.setDirectory(lastFileDirectory)
-        if(file.exec()):
-            try:
-                path = file.selectedFiles()[0]
-                if(pathlib.Path(path).suffix == "zip"):
-                    os.mkdir(ProgramPath+"/tmp")
-                    zipfile.ZipFile(path, 'r').extractall(ProgramPath+"/tmp")
-                    files = os.listdir(ProgramPath+"/tmp")
-                else:
-                    files = [path]
-                for newfile in files:
-                    if(pathlib.Path(newfile).suffix == ".brsar"): copyfile(newfile,GetBrsarPath())
-                    elif(pathlib.Path(newfile).suffix == ".carc"): copyfile(newfile,GetMessagePath()+"/message.carc")
-                    elif(pathlib.Path(newfile).suffix == ".dol"): copyfile(newfile,GetMainDolPath())
-                    elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
-                if(pathlib.Path(path).suffix == "zip"):
-                    rmtree(ProgramPath+"/tmp")
-                SuccessWindow("Files Successfully Imported!")                
-            except Exception as e:
-                ShowError("Unable to import files",str(e))
+        if(editor.file.type == LoadType.Rom):
+            file = QFileDialog()
+            file.setFileMode(QFileDialog.AnyFile)
+            file.setNameFilter("""All supported files (*.zip *.brsar *.carc *.dol *.ini)
+            Zipfile (*.zip)
+            Sound Archive (*.brsar)
+            Text File (*.carc)
+            Main.dol (*.dol)
+            Geckocodes (*.ini)""")
+            file.setDirectory(lastFileDirectory)
+            if(file.exec()):
+                try:
+                    path = file.selectedFiles()[0]
+                    if(pathlib.Path(path).suffix == "zip"):
+                        os.mkdir(ProgramPath+"/tmp")
+                        zipfile.ZipFile(path, 'r').extractall(ProgramPath+"/tmp")
+                        files = os.listdir(ProgramPath+"/tmp")
+                    else:
+                        files = [path]
+                    for newfile in files:
+                        if(pathlib.Path(newfile).suffix == ".brsar"): copyfile(newfile,GetBrsarPath())
+                        elif(pathlib.Path(newfile).suffix == ".carc"): copyfile(newfile,GetMessagePath()+"/message.carc")
+                        elif(pathlib.Path(newfile).suffix == ".dol"): copyfile(newfile,GetMainDolPath())
+                        elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
+                    if(pathlib.Path(path).suffix == "zip"):
+                        rmtree(ProgramPath+"/tmp")
+                    SuccessWindow("Files Successfully Imported!")                
+                except Exception as e:
+                    ShowError("Unable to import files",str(e))
+        else:
+            ShowError("Unable to import files","Must load Wii Music Rom")
 
 
     def ExportFiles(self):
-        file = QFileDialog()
-        file.setFileMode(QFileDialog.AnyFile)
-        file.setAcceptMode(QFileDialog.AcceptSave)
-        file.setNameFilter("Zipfile (*.zip)")
-        file.setDirectory(lastFileDirectory)
-        if(file.exec()):
-            try:
-                path = file.selectedFiles()[0]
-                if(pathlib.Path(path).suffix != ".zip"): path = path+".zip"
-                zipObj = zipfile.ZipFile(path, 'w')
-                zipObj.write(GetBrsarPath(),'rp_Music_sound.brsar')
-                zipObj.write(GetMessagePath()+"/message.carc","message.carc")
-                zipObj.write(GetMainDolPath(),"main.dol")
-                zipObj.write(GetGeckoPath(),"Geckocodes.ini")
-                zipObj.close()
-                SuccessWindow("Files Exported")
-            except Exception as e:
-                ShowError("Files not Exported",str(e))
+        if(editor.file.type == LoadType.Rom):
+            file = QFileDialog()
+            file.setFileMode(QFileDialog.AnyFile)
+            file.setAcceptMode(QFileDialog.AcceptSave)
+            file.setNameFilter("Zipfile (*.zip)")
+            file.setDirectory(lastFileDirectory)
+            if(file.exec()):
+                try:
+                    path = file.selectedFiles()[0]
+                    if(pathlib.Path(path).suffix != ".zip"): path = path+".zip"
+                    zipObj = zipfile.ZipFile(path, 'w')
+                    zipObj.write(GetBrsarPath(),'rp_Music_sound.brsar')
+                    zipObj.write(GetMessagePath()+"/message.carc","message.carc")
+                    zipObj.write(GetMainDolPath(),"main.dol")
+                    zipObj.write(GetGeckoPath(),"Geckocodes.ini")
+                    zipObj.close()
+                    SuccessWindow("Files Exported")
+                except Exception as e:
+                    ShowError("Files not Exported",str(e))
+        else:
+            ShowError("Unable to import files","Must load Wii Music Rom")
 
     
 
