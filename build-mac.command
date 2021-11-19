@@ -6,7 +6,7 @@ mv dist/Program/Program dist/Program/WiiMusicEditorPlus
 mkdir dist/WiiMusicEditorPlus
 mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 echo "creating app"
-/usr/local/bin/platypus -y -R -f 'dist/Program' -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/WiiMusicEditorPlus/WiiMusicEditorPlus'  'macscript.sh' dist/WiiMusicEditorPlus/WiiMusicEditorPlus.app
+/usr/local/bin/platypus -y -R ' -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/Program'  'macscript.sh' dist/WiiMusicEditorPlus/WiiMusicEditorPlus.app
 echo "copying helper"
 cp -r crossplatformhelpers/Mac/Helper dist/WiiMusicEditorPlus/Helper
 cp crossplatformhelpers/Version.txt dist/WiiMusicEditorPlus/Helper/Update
