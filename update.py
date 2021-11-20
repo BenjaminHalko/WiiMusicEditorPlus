@@ -41,7 +41,7 @@ class Download(QThread):
         programExt = ChooseFromOS([".exe",".app",""])
         move(directory+"/downloaded/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/downloaded/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
         sync(directory+"/downloaded/WiiMusicEditorPlus/Helper",ProgramPath+"/Helper","sync",ignore=(r"Helper/Backup"))
-        rmtree(directory)
+        #rmtree(directory)
         UpdateThread.done.emit()
 
 class UpdateWindow(QDialog,Ui_Update):
@@ -85,8 +85,9 @@ class UpdateWindow(QDialog,Ui_Update):
             st = stat(ProgramPath+'/Helper/Update/Update.sh')
             chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stats.S_IEXEC)
             programExt = ChooseFromOS([".exe",".app",""])
-            st = stat(ProgramPath+'/Helper/Update/NewProgram'+programExt)
-            chmod(ProgramPath+'/Helper/Update/NewProgram'+programExt,st.st_mode | stats.S_IEXEC)
+            if(currentSystem != "Mac"):
+                st = stat(ProgramPath+'/Helper/Update/NewProgram'+programExt)
+                chmod(ProgramPath+'/Helper/Update/NewProgram'+programExt,st.st_mode | stats.S_IEXEC)
             Popen(ProgramPath+'/Helper/Update/Update.sh')
         self.close()
         if(self.otherWindow != list):
