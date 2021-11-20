@@ -286,8 +286,7 @@ def GetMainDolPath():
 def GivePermission(file):
 	if(currentSystem != "Windows"):
 		try:
-			st = os.stat(file)
-			os.chmod(file,st.st_mode | stats.S_IEXEC)
+			os.chmod(file,0o777)
 		except:
 			tryed = 0
 

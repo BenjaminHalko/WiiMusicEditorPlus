@@ -1,5 +1,5 @@
 from os import chmod, path, mkdir, stat
-from editor import LoadSetting, ProgramPath, SaveSetting, currentSystem, ChooseFromOS
+from editor import LoadSetting, ProgramPath, currentSystem, ChooseFromOS, Run
 from shutil import move, rmtree
 from dirsync import sync
 from PyQt5.QtWidgets import QDialog
@@ -34,13 +34,16 @@ class Download(QThread):
 
         file.close()
 
-        zip = ZipFile(directory+"/downloaded.zip")
-        zip.extractall(directory+"/downloaded")
-        zip.close()
+        if(currentSystem != "Mac"):
+            zip = ZipFile(directory+"/downloaded.zip")
+            zip.extractall(directory)
+            zip.close()
+        else:
+            Run(["unzip",directory+"/downloaded.zip"])
 
         programExt = ChooseFromOS([".exe",".app",""])
-        move(directory+"/downloaded/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/downloaded/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
-        sync(directory+"/downloaded/WiiMusicEditorPlus/Helper",ProgramPath+"/Helper","sync",ignore=(r"Helper/Backup"))
+        move(directory+"/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
+        sync(directory+"/WiiMusicEditorPlus/Helper",ProgramPath+"/Helper","sync",ignore=(r"Helper/Backup"))
         rmtree(directory)
         UpdateThread.done.emit()
 
