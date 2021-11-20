@@ -740,4 +740,5 @@ if __name__ == "__main__":
             if(version != "null"): UpdateWindow(win,version)
         except:
             print("Could Not Update")
+    ShowError("hi",pathlib.Path(os.path.dirname(sys.executable)).parent.parent)
     sys.exit(app.exec())
