@@ -38,7 +38,7 @@ class Download(QThread):
         zip.extractall(directory+"/downloaded")
         zip.close()
 
-        programExt = ChooseFromOS(".exe",".app","")
+        programExt = ChooseFromOS([".exe",".app",""])
         move(directory+"/downloaded/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/downloaded/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
         sync(directory+"/downloaded/WiiMusicEditorPlus/Helper",ProgramPath+"/Helper","sync",ignore=(r"Helper/Backup"))
         rmtree(directory)
