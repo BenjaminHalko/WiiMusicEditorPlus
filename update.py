@@ -39,7 +39,7 @@ class Download(QThread):
             zip.extractall(directory)
             zip.close()
         else:
-            Run(["unzip",directory+"/downloaded.zip"])
+            Run(["unzip","-d",directory,directory+"/downloaded.zip"])
 
         programExt = ChooseFromOS([".exe",".app",""])
         move(directory+"/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
