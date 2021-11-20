@@ -741,7 +741,7 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     try:
-        ShowError("hi",pathlib.Path(os.path.dirname(sys.executable)).parent.parent)
+        ShowError("hi",pathlib.Path(pathlib.Path(os.path.dirname(sys.executable)).parent).parent)
     except Exception as e:
         ShowError("sad",str(e))
     sys.exit(app.exec())
