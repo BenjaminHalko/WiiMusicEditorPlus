@@ -295,9 +295,7 @@ def GivePermission(file):
 def Run(command):
 	try:
 		if(type(command) != str): GivePermission(command[0])
-		startupinfo = subprocess.STARTUPINFO()
-		startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-		subprocess.run(command,startupinfo=startupinfo,stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.PIPE)
+		subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.PIPE)
 	except Exception as e:
 		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
