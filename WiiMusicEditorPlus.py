@@ -41,12 +41,12 @@ def LoadMainFile(filter):
     file.setDirectory(lastFileDirectory)
     if file.exec_():
         path = file.selectedFiles()[0]
-        if(filter == "" and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
-        if(filter == "" and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
+        if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+        if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
             ShowError("Not a valid Wii Music folder","Files and sys folder not found")
             return False
         editor.file.path = path
-        if(filter == ""): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
+        if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
         else: lastFileDirectory = os.path.dirname(editor.file.path)
         SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
         return True
@@ -139,6 +139,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         #Remove Song Editor
         self.RS_Back_Button.clicked.connect(self.GotoMainMenu)
+        self.RS_RemoveCustomSongs.clicked.connect(self.Button_RS_RemoveCustomSongs)
+        self.RS_Deselect_Button.clicked.connect(self.Button_RS_DeselectAll)
+        self.RS_Patch.clicked.connect(self.Button_RS_Purge)
 
     #Lists
     def LoadSongs(self,widgetID,types=[],lockSongs=False):
@@ -304,7 +307,6 @@ class Window(QMainWindow, Ui_MainWindow):
         if(AllowType(LoadType.Dol)):
             self.MainWidget.setCurrentIndex(TAB.RemoveSongEditor)
             self.LoadSongs(self.RS_Songs,[SongTypeValue.Regular])
-            self.RS_Patch.setEnabled(False)
             self.RS_RemoveCustomSongs.setEnabled(editor.file.type == LoadType.Rom)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
@@ -720,6 +722,37 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_DS_Reset(self):
         self.DS_Styles.setCurrentRow(GetDefaultStyle(self.DS_Songs.currentRow(),True))
         self.DS_Reset.setEnabled(False)
+
+    #############Default Style Editor
+    def Button_RS_RemoveCustomSongs(self):
+        file = open(GetGeckoPath())
+        textlines = file.readlines()
+        file.close()
+        for i in range(self.RS_Songs.count()):
+            self.RS_Songs.item(i).setSelected(True)
+
+        for text in textlines:
+            if("Song Patch [WiiMusicEditor]"):
+                name = text[1:len(text)-29:1]
+                for i in range(self.RS_Songs.count()):
+                    if(Songs[i].Name == name):
+                        self.RS_Songs.item(i).setSelected(False)
+
+    def Button_RS_DeselectAll(self):
+        for i in range(self.RS_Songs.count()):
+            self.RS_Songs.item(i).setSelected(False)
+
+    def Button_RS_Purge(self):
+        try:
+            file = open(GetMainDolPath(), "r+b")
+            for i in range(self.RS_Songs.count()):
+                if(self.RS_Songs.item(i).isSelected()):
+                    file.seek(0x59C574+0xBC*Songs[i].MemOrder)
+                    file.write(bytes.fromhex('ffffffffffff'))
+            file.close()
+            SuccessWindow("Songs Successfully Destroyed!!!")
+        except Exception as e:
+            ShowError("Could not remove songs",str(e))
 
 class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()
