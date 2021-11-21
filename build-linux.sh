@@ -6,4 +6,4 @@ mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 mv dist/WiiMusicEditorPlusProgram dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 cd dist
 rm WiiMusicEditorPlus-Linux.zip
-zip -r WiiMusicEditorPlus-Linux.zip WiiMusicEditorPlus/WiiMusicEditorPlus WiiMusicEditorPlus/Helper
+zip -r WiiMusicEditorPlus-Linux.zip WiiMusicEditorPlus/WiiMusicEditorPlus

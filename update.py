@@ -87,7 +87,7 @@ class UpdateWindow(QDialog,Ui_Update):
             Popen([SavePath()+"/Windows.bat",FullPath])
         else:
             GivePermission(SavePath()+"/"+currentSystem+".sh")
-            GivePermission(SavePath()+'/WiiMusicEditorPlus'+ChooseFromOS([".exe",".app",""]))
+            GivePermission(SavePath()+'/WiiMusicEditorPlus/WiiMusicEditorPlus'+ChooseFromOS([".exe",".app",""]))
             Popen([SavePath()+"/"+currentSystem+".sh",FullPath])
         self.close()
         if(self.otherWindow != list):
