@@ -1,7 +1,5 @@
 /__pycache__/
 /build/
 /dist/
-log.txt
-settings.ini
 *.spec
 *.pyo
