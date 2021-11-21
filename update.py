@@ -36,6 +36,7 @@ class Download(QThread):
             zip = ZipFile(SavePath()+"/downloaded.zip")
             zip.extractall(SavePath())
             zip.close()
+            if(currentSystem == "Linux"): chmod(SavePath()+"WiiMusicEditorPlus/WiiMusicEditorPlus",0o436)
         else:
             Run(["unzip","-d",SavePath(),SavePath()+"/downloaded.zip"])
 
