@@ -1,6 +1,6 @@
 from os import chmod, path, remove, stat
 from shutil import rmtree
-from editor import LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath
+from editor import LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
@@ -36,7 +36,6 @@ class Download(QThread):
             zip = ZipFile(SavePath()+"/downloaded.zip")
             zip.extractall(SavePath())
             zip.close()
-            if(currentSystem == "Linux"): chmod(SavePath()+"WiiMusicEditorPlus/WiiMusicEditorPlus",0o436)
         else:
             Run(["unzip","-d",SavePath(),SavePath()+"/downloaded.zip"])
 
@@ -87,10 +86,8 @@ class UpdateWindow(QDialog,Ui_Update):
         if(currentSystem == "Windows"):
             Popen([SavePath()+"/Windows.bat",FullPath])
         else:
-            st = stat(SavePath()+"/"+currentSystem+".sh")
-            chmod(SavePath()+"/"+currentSystem+".sh",st.st_mode | stats.S_IEXEC)
-            programExt = ChooseFromOS([".exe",".app",""])
-            chmod(SavePath()+'/WiiMusicEditorPlus'+programExt,0o777)
+            GivePermission(SavePath()+"/"+currentSystem+".sh")
+            GivePermission(SavePath()+'/WiiMusicEditorPlus'+ChooseFromOS([".exe",".app",""]))
             Popen([SavePath()+"/"+currentSystem+".sh",FullPath])
         self.close()
         if(self.otherWindow != list):
