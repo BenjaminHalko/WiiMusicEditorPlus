@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, ProgramPath, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
+from editor import SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow
@@ -386,9 +386,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 try:
                     path = file.selectedFiles()[0]
                     if(pathlib.Path(path).suffix == "zip"):
-                        os.mkdir(ProgramPath+"/tmp")
-                        zipfile.ZipFile(path, 'r').extractall(ProgramPath+"/tmp")
-                        files = os.listdir(ProgramPath+"/tmp")
+                        os.mkdir(SavePath()+"/tmp")
+                        zipfile.ZipFile(path, 'r').extractall(SavePath()+"/tmp")
+                        files = os.listdir(SavePath()+"/tmp")
                     else:
                         files = [path]
                     for newfile in files:
@@ -397,7 +397,7 @@ class Window(QMainWindow, Ui_MainWindow):
                         elif(pathlib.Path(newfile).suffix == ".dol"): copyfile(newfile,GetMainDolPath())
                         elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
                     if(pathlib.Path(path).suffix == "zip"):
-                        rmtree(ProgramPath+"/tmp")
+                        rmtree(SavePath()+"/tmp")
                     SuccessWindow("Files Successfully Imported!")                
                 except Exception as e:
                     ShowError("Unable to import files",str(e))
@@ -763,8 +763,10 @@ class ExternalEditor(QtCore.QThread):
 
 if __name__ == "__main__":
     app = QApplication([])
-    app.setWindowIcon(QIcon(ProgramPath+"/Helper/Extra/icon.png"))
+    app.setWindowIcon(QIcon(HelperPath()+"/Extra/icon.png"))
     win = Window()
+    updateExt = ".sh"
+    if(currentSystem == "Windows"): updateExt = ".bat"
     win.show()
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
     if(LoadSetting("Settings","AutoUpdate",True)):
@@ -773,4 +775,5 @@ if __name__ == "__main__":
             if(version != "null"): UpdateWindow(win,version)
         except:
             print("Could Not Update")
+    ShowError("g",editor.FullPath)
     sys.exit(app.exec())

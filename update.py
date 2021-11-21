@@ -1,7 +1,6 @@
-from os import chmod, path, mkdir, stat
-from editor import LoadSetting, ProgramPath, currentSystem, ChooseFromOS, Run
-from shutil import move, rmtree
-from dirsync import sync
+from os import chmod, path, remove, stat
+from shutil import rmtree
+from editor import LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
@@ -21,9 +20,7 @@ class Download(QThread):
     version = "null"
 
     def run(self):
-        directory = ProgramPath+"/tmp"
-        if(not path.exists(directory)): mkdir(directory)
-        file = open(directory+"/downloaded.zip", "wb")
+        file = open(SavePath()+"/downloaded.zip", "wb")
         with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-"+currentSystem+".zip",stream=True) as response:
             total =  int(response.headers['content-length'])
             downloaded = 0
@@ -34,17 +31,15 @@ class Download(QThread):
 
         file.close()
 
+        if(path.isdir(SavePath()+"WiiMusicEditorPlus")): rmtree(SavePath()+"WiiMusicEditorPlus")
         if(currentSystem != "Mac"):
-            zip = ZipFile(directory+"/downloaded.zip")
-            zip.extractall(directory)
+            zip = ZipFile(SavePath()+"/downloaded.zip")
+            zip.extractall(SavePath())
             zip.close()
         else:
-            Run(["unzip","-d",directory,directory+"/downloaded.zip"])
+            Run(["unzip","-d",SavePath(),SavePath()+"/downloaded.zip"])
 
-        programExt = ChooseFromOS([".exe",".app",""])
-        move(directory+"/WiiMusicEditorPlus/WiiMusicEditorPlus"+programExt,directory+"/WiiMusicEditorPlus/Helper/Update/NewProgram"+programExt)
-        sync(directory+"/WiiMusicEditorPlus/Helper",ProgramPath+"/Helper","sync",ignore=(r"Helper/Backup"))
-        rmtree(directory)
+        remove(SavePath()+"/downloaded.zip")
         UpdateThread.done.emit()
 
 class UpdateWindow(QDialog,Ui_Update):
@@ -82,14 +77,20 @@ class UpdateWindow(QDialog,Ui_Update):
         self.Update_Progress.setValue(value)
 
     def restart(self):
+        updateExt = ".sh"
+        if(currentSystem == "Windows"): updateExt = ".bat"
+        file = open(SavePath()+"/"+currentSystem+updateExt,"wb")
+        file.write(get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/raw/main/Update/"+currentSystem+updateExt).content)
+        file.close()
+
         if(currentSystem == "Windows"):
-            Popen(ProgramPath+'/Helper/Update/Update.bat')
+            Popen([SavePath()+"/Windows.bat",FullPath])
         else:
-            st = stat(ProgramPath+'/Helper/Update/Update.sh')
-            chmod(ProgramPath+'/Helper/Update/Update.sh',st.st_mode | stats.S_IEXEC)
+            st = stat(SavePath()+"/"+currentSystem+".sh")
+            chmod(SavePath()+"/"+currentSystem+".sh",st.st_mode | stats.S_IEXEC)
             programExt = ChooseFromOS([".exe",".app",""])
-            chmod(ProgramPath+'/Helper/Update/NewProgram'+programExt,0o777)
-            Popen(ProgramPath+'/Helper/Update/Update.sh')
+            chmod(SavePath()+'/WiiMusicEditorPlus'+programExt,0o777)
+            Popen([SavePath()+"/"+currentSystem+".sh",FullPath])
         self.close()
         if(self.otherWindow != list):
             self.otherWindow.close()
@@ -99,24 +100,12 @@ class UpdateWindow(QDialog,Ui_Update):
         sys_exit()
 
 def CheckForUpdate():
-    if(path.exists(ProgramPath+"/Helper/Update/Version.txt")):
-        file = open(ProgramPath+"/Helper/Update/Version.txt")
-        version = file.read()
-        file.close()
-        try:
-            tag = GetReleaseTag()
-            if(tag != version): return tag
-            else: return "null"
-        except (ConnectionError, Timeout):
-            return "null"
-    else:
-        try:
-            file = open(ProgramPath+"/Helper/Update/Version.txt","w")
-            file.write(GetReleaseTag())
-            file.close()
-            return "null"
-        except (ConnectionError, Timeout):
-            return "null"
+    try:
+        tag = GetReleaseTag()
+        if(tag != version): return tag
+        else: return "null"
+    except (ConnectionError, Timeout):
+        return "null"
         
 def GetReleaseTag():
     data = get("https://api.github.com/repos/BenjaminHalko/WiiMusicEditorPlus/releases").json()

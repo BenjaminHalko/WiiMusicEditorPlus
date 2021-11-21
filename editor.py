@@ -302,9 +302,9 @@ def DecodeTxt():
 	path = GetMessagePath()
 	try:
 		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
-		Run([ProgramPath+'/Helper/Wiimms/wszst','extract',path+'/message.carc'])
+		Run([HelperPath()+'/Wiimms/wszst','extract',path+'/message.carc'])
 		os.remove(path+"/message.d/wszst-setup.txt")
-		Run([ProgramPath+'/Helper/Wiimms/wbmgt','decode',path+'/message.d/new_music_message.bmg'])
+		Run([HelperPath()+'/Wiimms/wbmgt','decode',path+'/message.d/new_music_message.bmg'])
 		os.remove(path+"/message.d/new_music_message.bmg")
 	except Exception as e:
 		ShowError("Could not decode text file",str(e))
@@ -312,11 +312,11 @@ def DecodeTxt():
 def EncodeTxt():
 	path = GetMessagePath()
 	try:
-		Run([ProgramPath+'/Helper/Wiimms/wbmgt','encode',path+'/message.d/new_music_message.txt'])
+		Run([HelperPath()+'/Wiimms/wbmgt','encode',path+'/message.d/new_music_message.txt'])
 		os.remove(path+"/message.d/new_music_message.txt")
 		if(not os.path.exists(path+"/message.carc.backup")): copyfile(path+"/message.carc",path+"/message.carc.backup")
 		os.remove(path+"/message.carc")
-		Run([ProgramPath+'/Helper/Wiimms/wszst','create',path+'/message.d','--dest',path+'/message.carc'])
+		Run([HelperPath()+'/Wiimms/wszst','create',path+'/message.d','--dest',path+'/message.carc'])
 		rmtree(path+'/message.d')
 	except Exception as e:
 		ShowError("Could not encode text file",str(e))
@@ -642,11 +642,11 @@ def LoadMidi(midiPath):
 		if(prefix == '.mid'): prefix = '.midi'
 		copyfile(midiPath,directory+'/z'+prefix)
 		if(os.path.isfile(directory+'/z.rseq')):
-			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','assemble',directory+'/z.rseq'])
+			Run([HelperPath()+'/SequenceCmd/GotaSequenceCmd','assemble',directory+'/z.rseq'])
 		if(os.path.isfile(directory+'/z.brseq')):
-			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','to_midi',directory+'/z.brseq'])
+			Run([HelperPath()+'/SequenceCmd/GotaSequenceCmd','to_midi',directory+'/z.brseq'])
 		else:
-			Run([ProgramPath+'/Helper/SequenceCmd/GotaSequenceCmd','from_midi',directory+'/z.midi'])
+			Run([HelperPath()+'/SequenceCmd/GotaSequenceCmd','from_midi',directory+'/z.midi'])
 
 		mid = mido.MidiFile(directory+"/z.midi")		
 		Tempo = 0
@@ -782,10 +782,10 @@ def PatchMainDol(dolPath="",geckoPath=""):
 
 	gct = False
 	if(pathlib.Path(geckoPath).suffix != ".gct"):
-		CreateGct(ProgramPath+"/"+BasedOnRegion(gameIds)+".gct")
-		geckoPath = ProgramPath+"/"+BasedOnRegion(gameIds)+".gct"
+		CreateGct(SavePath()+"/"+BasedOnRegion(gameIds)+".gct")
+		geckoPath = SavePath()+"/"+BasedOnRegion(gameIds)+".gct"
 		gct = True
-	Run([ProgramPath+'/Helper/Wiimms/wstrt','patch',dolPath,'--add-section',geckoPath,'--force'])
+	Run([HelperPath()+'/Wiimms/wstrt','patch',dolPath,'--add-section',geckoPath,'--force'])
 	if(gct): os.remove(geckoPath)
 
 def GetFileType():
@@ -809,7 +809,7 @@ def PrepareFile():
 
 def ConvertRom():
 	try:
-		Run([ProgramPath+'/Helper/Wiimms/wit','cp','--fst',file.path,os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]])
+		Run([HelperPath()+'/Wiimms/wit','cp','--fst',file.path,os.path.dirname(file.path)+"/"+os.path.splitext(os.path.basename(file.path))[0]])
 		if(os.path.isdir(os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA')):
 			file.path = os.path.dirname(file.path).replace('\\','/')+'/'+os.path.splitext(os.path.basename(file.path))[0]+'/DATA'
 		else:
@@ -820,7 +820,7 @@ def ConvertRom():
 
 def LoadSetting(section,key,default):
 	ini = ConfigParser()
-	ini.read(ProgramPath+'/settings.ini')
+	ini.read(SavePath()+'/settings.ini')
 	if(ini.has_option(section, key)):
 		if(type(default) == str):
 			return ini[section][key]
@@ -833,11 +833,11 @@ def LoadSetting(section,key,default):
 
 def SaveSetting(section,key,value):
 	ini = ConfigParser()
-	ini.read(ProgramPath+'/settings.ini')
+	ini.read(SavePath()+'/settings.ini')
 	if(not ini.has_section(section)):
 		ini.add_section(section)
 	ini.set(section,key,str(value))
-	with open(ProgramPath+'/settings.ini', 'w') as inifile:
+	with open(SavePath()+'/settings.ini', 'w') as inifile:
 		ini.write(inifile)
 
 def GetDolphinSave():
@@ -850,6 +850,18 @@ def ChooseFromOS(array):
 	if(currentSystem == "Windows"): return array[0]
 	elif(currentSystem == "Mac"): return array[1]
 	else: return array[2]
+
+def SavePath():
+	path = ChooseFromOS(["C:/Users/"+getuser()+"/AppData/Local/WiiMusicEditorPlus","/Users/"+getuser()+"/Library/Application Support/WiiMusicEditorPlus","/home/"+getuser()+"/.WiiMusicEditorPlus"])
+	if(not os.path.isdir(path)): os.mkdir(path)
+	return path
+
+def HelperPath():
+	if getattr(sys, 'frozen', False):
+		return sys._MEIPASS+"/Helper"
+	else:
+		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
+
 
 #Constants
 textFromTxt = []
@@ -866,10 +878,16 @@ if(currentSystem == "Darwin"): currentSystem = "Mac"
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
 		ProgramPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent.parent)
-	else: ProgramPath = os.path.dirname(sys.executable)
-else: ProgramPath = os.path.dirname(os.path.abspath(__file__))
+		FullPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent)
+	else:
+		ProgramPath = os.path.dirname(sys.executable)
+		FullPath = sys.executable
+else:
+	ProgramPath = os.path.dirname(os.path.abspath(__file__))
+	FullPath = "NULL"
 
 #Variables
+version = "0.5.0"
 unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
