@@ -1,6 +1,6 @@
 @echo off
 
 timeout 1
-del "%1WiiMusicEditorPlus.exe"
-move "%~dp0NewProgram.exe" "%1WiiMusicEditorPlus.exe"
-START "%1WiiMusicEditorPlus.exe"
+del %1
+move "%~dp0WiiMusicEditorPlus/WiiMusicEditorPlus.exe" %1
+START %1

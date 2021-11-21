@@ -1,6 +1,5 @@
 #!/bin/bash
 sleep 1
-rm "%1WiiMusicEditorPlus"
-mv NewProgram "%1WiiMusicEditorPlus"
-cd "%1"
-./WiiMusicEditorPlus
+rm "%1"
+mv WiiMusicEditorPlus/WiiMusicEditorPlus "%1"
+xdg-open "%1"
