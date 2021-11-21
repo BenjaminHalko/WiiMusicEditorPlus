@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./WiiMusicEditorPlus
+open WiiMusicEditorPlus
