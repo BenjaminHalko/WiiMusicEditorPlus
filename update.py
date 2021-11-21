@@ -79,6 +79,7 @@ class UpdateWindow(QDialog,Ui_Update):
     def restart(self):
         updateExt = ".sh"
         if(currentSystem == "Windows"): updateExt = ".bat"
+        if(path.exists(SavePath()+"/"+currentSystem+updateExt)): remove(SavePath()+"/"+currentSystem+updateExt)
         file = open(SavePath()+"/"+currentSystem+updateExt,"wb")
         file.write(get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/raw/main/Update/"+currentSystem+updateExt).content)
         file.close()
