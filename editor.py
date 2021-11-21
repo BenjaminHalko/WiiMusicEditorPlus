@@ -858,10 +858,7 @@ def SavePath():
 
 def HelperPath():
 	if getattr(sys, 'frozen', False):
-		if(currentSystem == "Mac"):
-			return FullPath+"/Contents/Resources/Helper"
-		else:
-			return sys._MEIPASS+"/Helper"
+		return sys._MEIPASS+"/Helper"
 	else:
 		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
 
