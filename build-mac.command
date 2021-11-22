@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "`dirname "$0"`"
-pyinstaller -F --noconfirm -n Program --add-data crossplatformhelpers/Linux/Helper:Helper --icon=Icon/icon.ico WiiMusicEditorPlus.py
+pyinstaller -F --noconfirm -n Program --add-data crossplatformhelpers/Mac/Helper:Helper --icon=Icon/icon.ico WiiMusicEditorPlus.py
 mkdir dist/WiiMusicEditorPlus
 mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
 echo "creating app"
