@@ -1,5 +1,4 @@
-from os import chmod, path, remove, stat
-from shutil import rmtree
+from os import path, remove
 from editor import LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
@@ -7,7 +6,6 @@ from update_ui import Ui_Update
 from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
-import stat as stats
 from sys import exit as sys_exit
 
 class Progress():

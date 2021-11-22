@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from packrom_ui import Ui_Dialog
 import editor
-from editor import GetMainDolPath, PatchMainDol, ProgramPath, Run
+from editor import GetMainDolPath, PatchMainDol, HelperPath, Run
 from errorhandler import ShowError
 from success import SuccessWindow
 from pathlib import Path
@@ -31,7 +31,7 @@ class PackRomWindow(QDialog,Ui_Dialog):
                 else: fileType = ".iso"
                 if(path.exists(filePath)): remove(filePath)
                 if(Path(filePath).suffix != fileType): filePath = filePath+fileType
-                args = [ProgramPath+'/Helper/Wiimms/wit','cp',editor.file.path,filePath]
+                args = [HelperPath()+'/Wiimms/wit','cp',editor.file.path,filePath]
                 if(self.RomTypeWbfs.isChecked()): args.append('--wbfs')
                 if(self.PatchMainDolCheckbox.isChecked()):
                     copyfile(GetMainDolPath(),GetMainDolPath()+".tmp")

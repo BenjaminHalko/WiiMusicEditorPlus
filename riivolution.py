@@ -2,9 +2,9 @@ from riivolution_ui import Ui_Riivolution
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import Qt, QCoreApplication
 import editor
-from os import path, mkdir, rename
+from os import path, mkdir
 from shutil import copyfile, copytree
-from editor import GetBrsarPath, GetMainDolPath, GetMessagePath, PatchMainDol, ProgramPath, gameIds, regionNames
+from editor import GetBrsarPath, GetMainDolPath, GetMessagePath, PatchMainDol, HelperPath, gameIds, regionNames
 from psutil import disk_partitions
 from success import SuccessWindow
 
@@ -50,7 +50,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         copyfile(GetBrsarPath(),ModPath+'/'+ModName.replace(' ','')+'/rp_Music_sound.brsar')
         copyfile(GetMessagePath()+'/message.carc',ModPath+'/'+ModName.replace(' ','')+'/message.carc')
         copyfile(GetMainDolPath(),ModPath+'/'+ModName.replace(' ','')+'/main.dol')
-        copyfile(ProgramPath+'/Helper/Extra/codehandler.bin',ModPath+'/Riivolution/codehandler.bin')
+        copyfile(HelperPath()+'/Extra/codehandler.bin',ModPath+'/Riivolution/codehandler.bin')
         if(self.GeckocodeOptions.currentIndex() == 0): editor.CreateGct(ModPath+'/Riivolution/codes/'+editor.BasedOnRegion(gameIds)+'.gct')
         elif(self.GeckocodeOptions.currentIndex() == 1): PatchMainDol(dolPath=ModPath+'/'+ModName.replace(' ','')+'/main.dol')
         linestowrite = [
