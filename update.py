@@ -1,5 +1,5 @@
 from os import path, remove
-from editor import LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
+from editor import HelperPath, LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
@@ -7,6 +7,7 @@ from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 from sys import exit as sys_exit
+from shutil import copyfile
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -76,17 +77,15 @@ class UpdateWindow(QDialog,Ui_Update):
     def restart(self):
         updateExt = ".sh"
         if(currentSystem == "Windows"): updateExt = ".bat"
-        if(path.exists(SavePath()+"/"+currentSystem+updateExt)): remove(SavePath()+"/"+currentSystem+updateExt)
-        file = open(SavePath()+"/"+currentSystem+updateExt,"wb")
-        file.write(get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/raw/main/Update/"+currentSystem+updateExt).content)
-        file.close()
+        if(path.exists(SavePath()+"update"+updateExt)): remove(SavePath()+"update"+updateExt)
+        copyfile(HelperPath()+"/Extra/update"+updateExt,SavePath()+"update"+updateExt)
 
         if(currentSystem == "Windows"):
-            Popen([SavePath()+"/Windows.bat",FullPath])
+            Popen([SavePath()+"/update.bat",FullPath])
         else:
-            GivePermission(SavePath()+"/"+currentSystem+".sh")
+            GivePermission(SavePath()+"/update.sh")
             GivePermission(SavePath()+'/WiiMusicEditorPlus'+ChooseFromOS([".exe",".app",""]))
-            Popen([SavePath()+"/"+currentSystem+".sh",FullPath])
+            Popen([SavePath()+"/update.sh",FullPath])
         self.close()
         if(self.otherWindow != list):
             self.otherWindow.close()
