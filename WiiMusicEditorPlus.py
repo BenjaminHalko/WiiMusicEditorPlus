@@ -773,8 +773,6 @@ if __name__ == "__main__":
     app = QApplication([])
     app.setWindowIcon(QIcon(HelperPath()+"/Extra/icon.png"))
     win = Window()
-    updateExt = ".sh"
-    if(currentSystem == "Windows"): updateExt = ".bat"
     win.show()
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
     if(LoadSetting("Settings","AutoUpdate",True)):
