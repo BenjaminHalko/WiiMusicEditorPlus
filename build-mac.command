@@ -1,12 +1,10 @@
 #!/bin/bash
 
 cd "`dirname "$0"`"
-pyinstaller -F --noconfirm -n Program --add-data crossplatformhelpers/Mac/Helper:Helper --icon=Icon/icon.ico WiiMusicEditorPlus.py
-mkdir dist/WiiMusicEditorPlus
-mv dist/Program dist/WiiMusicEditorPlus/WiiMusicEditorPlus
+pyinstaller -F --add-data crossplatformhelpers/Mac/Helper:Helper --icon=Icon/icon.ico WiiMusicEditorPlus.py
 echo "creating app"
-/usr/local/bin/platypus -y -B -R -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/WiiMusicEditorPlus/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus/WiiMusicEditorPlus.app
+/usr/local/bin/platypus -y -B -R -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
 echo "creating .zip"
 rm dist/WiiMusicEditorPlus-Mac.zip
-tar -a -C dist -cf dist/WiiMusicEditorPlus-Mac.zip WiiMusicEditorPlus/WiiMusicEditorPlus.app
+tar -a -C dist -cf dist/WiiMusicEditorPlus-Mac.zip WiiMusicEditorPlus.app
 echo "done"
