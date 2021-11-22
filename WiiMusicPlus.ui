@@ -2909,7 +2909,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>839</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2935,8 +2935,9 @@ background-color: #242424;</string>
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionDownload_Pre_made_songs"/>
-    <addaction name="actionOpen_Help_Manual"/>
+    <addaction name="MB_DownloadSongs"/>
+    <addaction name="separator"/>
+    <addaction name="MB_Help"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="MB_Options"/>
@@ -2982,14 +2983,19 @@ background-color: #242424;</string>
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionDownload_Pre_made_songs">
+  <action name="MB_DownloadSongs">
    <property name="text">
     <string>Download Pre-made songs</string>
    </property>
   </action>
-  <action name="actionOpen_Help_Manual">
+  <action name="MB_Help">
    <property name="text">
     <string>Open Help Manual</string>
+   </property>
+  </action>
+  <action name="MB_SaveFolder">
+   <property name="text">
+    <string>Open Save Folder</string>
    </property>
   </action>
  </widget>

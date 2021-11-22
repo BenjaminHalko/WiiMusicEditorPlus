@@ -75,7 +75,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
             self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
-        self.menuBar().setNativeMenuBar(False)
+        #self.menuBar().setNativeMenuBar(False)
 
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(self.MenuBar_Load_Rom)
@@ -84,6 +84,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MB_Updates.triggered.connect(self.MenuBar_CheckForUpdates)
         self.MB_Dolphin.triggered.connect(lambda: self.LoadDolphin(False))
         self.MB_DolphinMenu.triggered.connect(lambda: self.LoadDolphin(True))
+        self.MB_DownloadSongs.triggered.connect(self.DownloadSongs)
+        self.MB_Help.triggered.connect(self.OpenHelpManual)
 
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
@@ -451,6 +453,12 @@ class Window(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
 
+    def DownloadSongs(self):
+        print("nocheese")
+
+    def OpenHelpManual(self):
+        print("nohelpforyou")
+
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
         SettingsWindow(self)
@@ -775,5 +783,4 @@ if __name__ == "__main__":
             if(version != "null"): UpdateWindow(win,version)
         except:
             print("Could Not Update")
-    ShowError("g",editor.FullPath)
     sys.exit(app.exec())
