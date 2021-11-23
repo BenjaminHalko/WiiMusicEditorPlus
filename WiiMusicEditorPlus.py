@@ -75,7 +75,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
             self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
-        #self.menuBar().setNativeMenuBar(False)
+        self.menuBar().setNativeMenuBar(False)
 
         #Menu Bar Buttons
         self.MB_LoadFile.triggered.connect(self.MenuBar_Load_Rom)
@@ -590,11 +590,11 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_StE_PartSelector(self):
         self.StE_InstrumentList.setCurrentRow(-1)
         self.LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
-        if(editor.unsafeMode): toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
+        if(editor.unsafeMode): toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
         elif(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
-            toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]-40
+            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]-40
         else:
-            toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
+            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
             if(toHighlight == len(Instruments)-1): toHighlight = 40
         self.StE_InstrumentList.setCurrentRow(toHighlight)
 
