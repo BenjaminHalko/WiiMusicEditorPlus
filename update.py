@@ -30,6 +30,8 @@ class Download(QThread):
 
         file.close()
 
+        if(path.exists(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): remove(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
+
         if(currentSystem != "Mac"):
             zip = ZipFile(SavePath()+"/downloaded.zip")
             zip.extractall(SavePath())
@@ -77,8 +79,8 @@ class UpdateWindow(QDialog,Ui_Update):
     def restart(self):
         updateExt = ".sh"
         if(currentSystem == "Windows"): updateExt = ".bat"
-        if(path.exists(SavePath()+"update"+updateExt)): remove(SavePath()+"update"+updateExt)
-        copyfile(HelperPath()+"/Extra/update"+updateExt,SavePath()+"update"+updateExt)
+        if(path.exists(SavePath()+"/update"+updateExt)): remove(SavePath()+"/update"+updateExt)
+        copyfile(HelperPath()+"/Extra/update"+updateExt,SavePath()+"/update"+updateExt)
 
         if(currentSystem == "Windows"):
             Popen([SavePath()+"/update.bat",FullPath])
