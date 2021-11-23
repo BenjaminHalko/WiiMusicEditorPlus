@@ -1,5 +1,5 @@
 from os import path, remove
-from editor import HelperPath, LoadSetting, FullPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
+from editor import HelperPath, LoadSetting, FullPath, ProgramPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update
@@ -88,7 +88,7 @@ class UpdateWindow(QDialog,Ui_Update):
         else:
             GivePermission(SavePath()+"/update.sh")
             if(currentSystem == "Linux"): GivePermission(SavePath()+'/WiiMusicEditorPlus')
-            Popen([SavePath()+"/update.sh",FullPath])
+            Popen([SavePath()+"/update.sh",FullPath,ProgramPath])
         self.close()
         if(self.otherWindow != list):
             self.otherWindow.close()
