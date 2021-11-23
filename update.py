@@ -7,7 +7,7 @@ from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 from sys import exit as sys_exit
-from shutil import copyfile
+from shutil import copyfile, rmtree
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -30,7 +30,8 @@ class Download(QThread):
 
         file.close()
 
-        if(path.exists(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): remove(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
+        if(path.isfile(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): remove(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
+        elif(path.isdir(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): rmtree(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
 
         if(currentSystem != "Mac"):
             zip = ZipFile(SavePath()+"/downloaded.zip")
