@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>256</height>
+    <width>471</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -499,38 +499,88 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
      </property>
      <widget class="QWidget" name="HowToMakeSongs">
       <attribute name="title">
-       <string>How to Make Songs</string>
+       <string>General Song Making Notes</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;Rules of Song Making:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;No overlapping notes, unless they start at the same time in the case of a chord&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;Supported Midi Editors:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;For Beginners: &lt;/span&gt;&lt;a href=&quot;https://www.midieditor.org/index.php?category=download&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#ffaa00;&quot;&gt;Midi Editor&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;For Experts: &lt;/span&gt;&lt;a href=&quot;https://www.image-line.com/fl-studio-download/&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#ffaa00;&quot;&gt;FL Studio&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
           <bool>true</bool>
          </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>431</width>
+            <height>323</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Rules of Song Making:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;No overlapping notes, unless they start at the same time in the case of a chord&lt;/p&gt;&lt;p&gt;Tempo must be the same throughout the song&lt;/p&gt;&lt;p&gt;Time signature can't change&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Supported Midi Editors:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Make sure to use one of the supported midi editors. (If you want to use a different editor make sure to bring that midi into one of the editors and just hit save)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Beginners: &lt;/span&gt;&lt;a href=&quot;https://www.midieditor.org/index.php?category=download&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;Midi Editor&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Experts: &lt;/span&gt;&lt;a href=&quot;https://www.image-line.com/fl-studio-download/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;FL Studio&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="Documentation">
       <attribute name="title">
-       <string>Tab 2</string>
+       <string>How to make Handbell Harmony Songs</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>424</width>
+            <height>1004</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;How to make Handbell Harmony songs:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Some things to note:&lt;/p&gt;&lt;p&gt;Handbell Harmony songs are very tedious to replace, so don't expect them to work 100%&lt;/p&gt;&lt;p&gt;Hum, Hum, Hum seems to crash whenever you replace it.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;1: Create 16 seperate tracks (or 5 if you know how to edit RSEQ files) in a midi editor of your choice. I use FL Studio, but if you use this you will need to know how to edit RSEQ files.&lt;/p&gt;&lt;p&gt;1a: Only use the 1st, 13th, 14th, 15th and 16th track (again, if you plan on editing the rseq, just use 5 tracks)&lt;/p&gt;&lt;p&gt;2: For the first track, set the velocity of all notes to 127. This will be the part that the handbells play. And for the other tracks, just make up a backtrack for the song you're making.&lt;/p&gt;&lt;p&gt;3: Once you are finished with the song, export it and you should be able to immediately patch it with the editor.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(the rest of the steps is for RSEQ editing)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;4: Send the song into GotaSequenceCmd and use the &amp;quot;from_midi&amp;quot; tool and then the &amp;quot;disassemble&amp;quot; tool. You should have a RSEQ file of the midi you made&lt;/p&gt;&lt;p&gt;5: Open it in a text editor of your choice (I used to use regular old Notepad, but now I use Notepad+). Don't worry, you will only be deleting a couple of things from this file.&lt;/p&gt;&lt;p&gt;6: Highlight the `SMF_X_Track_0` section to `SMF_X_Track_2`. Then remove `opentrack 6, SMF_X_Track_X` and `opentrack 7, SMF_X_Track_X`&lt;/p&gt;&lt;p&gt;7: After you have deleted the following sections, you should be left with this:&lt;/p&gt;&lt;p&gt;`opentrack 1, SMF_X_Track_Y`&lt;/p&gt;&lt;p&gt;`opentrack 2, SMF_X_Track_Y`&lt;/p&gt;&lt;p&gt;`opentrack 3, SMF_X_Track_Y`&lt;/p&gt;&lt;p&gt;`opentrack 4, SMF_X_Track_Y`&lt;/p&gt;&lt;p&gt;`opentrack 5, SMF_X_Track_Y`&lt;/p&gt;&lt;p&gt;Change the Ys in the `SMF_X_Track_Y` to a sequence from 3 to 7. It should look like this:&lt;/p&gt;&lt;p&gt;`opentrack 1, SMF_X_Track_3`&lt;/p&gt;&lt;p&gt;`opentrack 2, SMF_X_Track_4`&lt;/p&gt;&lt;p&gt;`opentrack 3, SMF_X_Track_5`&lt;/p&gt;&lt;p&gt;`opentrack 4, SMF_X_Track_6`&lt;/p&gt;&lt;p&gt;`opentrack 5, SMF_X_Track_7`&lt;/p&gt;&lt;p&gt;8: Besides the first one, add a one to the beginning of the x digit in the `opentrack X,` . It should look like this:&lt;/p&gt;&lt;p&gt;`opentrack 1, SMF_X_Track_3`&lt;/p&gt;&lt;p&gt;`opentrack 12, SMF_X_Track_4`&lt;/p&gt;&lt;p&gt;`opentrack 13, SMF_X_Track_5`&lt;/p&gt;&lt;p&gt;`opentrack 14, SMF_X_Track_6`&lt;/p&gt;&lt;p&gt;`opentrack 15, SMF_X_Track_7`&lt;/p&gt;&lt;p&gt;9: Save the RSEQ, and use the editor to patch it into Wii Music.&lt;/p&gt;&lt;p&gt;And Voila! Custom Handbell Harmony songs!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
