@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>618</height>
+    <width>829</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="palette">
@@ -1596,23 +1596,25 @@ padding-bottom: 6px;
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
                <item>
-                <widget class="QLabel" name="SE_Midi_File_Label">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="acceptDrops">
-                  <bool>true</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="SE_Midi_File_Score_Label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLabel
 {
 padding: 1px;
 border: 1px solid;
@@ -1621,19 +1623,96 @@ background-color: #242424;
 padding-top: 6px;
 padding-bottom: 6px;
 }</string>
-                 </property>
-                 <property name="text">
-                  <string>Load a Midi-Type file</string>
-                 </property>
-                </widget>
+                   </property>
+                   <property name="text">
+                    <string>Load a Midi-Type file</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="SE_Midi_File_Score_Button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Browse</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="SE_Midi_File_Score_Title">
+                   <property name="text">
+                    <string>SCORE:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="SE_Midi_File_Song_Label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+padding-top: 6px;
+padding-bottom: 6px;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Load a Midi-Type file</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="SE_Midi_File_Song_Title">
+                   <property name="text">
+                    <string>SONG:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="SE_Midi_File_Song_Button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Browse</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QPushButton" name="SE_Midi_File_Button">
-                 <property name="font">
-                  <font/>
+                <widget class="QCheckBox" name="SE_Midi_File_Replace_Song">
+                 <property name="enabled">
+                  <bool>true</bool>
                  </property>
                  <property name="text">
-                  <string>Browse</string>
+                  <string>Replace SONG seperatly</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -2186,197 +2265,8 @@ padding-bottom: 6px;
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
                <item>
-                <layout class="QHBoxLayout" name="StE_Part_Melody">
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Label">
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Melody:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Melody_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Part_Harmony">
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Harmony_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Harmony:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Harmony_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Part_Chords">
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Chords_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Chords:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Chords_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Part_Bass">
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Bass_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Bass:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Bass_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Part_Percussion1">
-                 <item>
-                  <widget class="QLabel" name="StE_Part_Percussion1_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Perc 1:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
+                <layout class="QGridLayout" name="StE_Parts_List">
+                 <item row="4" column="1">
                   <widget class="QLabel" name="StE_Part_Percussion1_Instrument">
                    <property name="font">
                     <font>
@@ -2397,30 +2287,105 @@ background-color: #242424;</string>
                    </property>
                   </widget>
                  </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="StE_Part_Percussion2">
-                 <item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="StE_Part_Bass_Label">
+                   <property name="text">
+                    <string>Bass:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="StE_Part_Percussion1_Label">
+                   <property name="text">
+                    <string>Perc 1:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="StE_Part_Harmony_Label">
+                   <property name="text">
+                    <string>Harmony:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLabel" name="StE_Part_Bass_Instrument">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="StE_Part_Chords_Instrument">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="StE_Part_Harmony_Instrument">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="StE_Part_Chords_Label">
+                   <property name="text">
+                    <string>Chords:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
                   <widget class="QLabel" name="StE_Part_Percussion2_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
                    <property name="text">
                     <string>Perc 2:</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
+                 <item row="5" column="1">
                   <widget class="QLabel" name="StE_Part_Percussion2_Instrument">
                    <property name="font">
                     <font>
@@ -2438,6 +2403,40 @@ background-color: #242424;</string>
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="StE_Part_Melody_Instrument">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>true</bool>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="StE_Part_Melody_Label">
+                   <property name="text">
+                    <string>Melody:</string>
                    </property>
                   </widget>
                  </item>
@@ -2908,7 +2907,7 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>839</width>
+     <width>829</width>
      <height>21</height>
     </rect>
    </property>

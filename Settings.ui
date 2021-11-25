@@ -559,9 +559,6 @@ QWidget[error=&quot;true&quot;]
        </item>
        <item>
         <widget class="QCheckBox" name="SongScoreCheckbox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Load Song and Score separately</string>
          </property>

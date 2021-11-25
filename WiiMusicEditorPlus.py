@@ -15,7 +15,7 @@ import editor
 from editor import SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
-from settings import SettingsWindow
+from settings import SettingsWindow, CheckboxSeperateSongPatching
 from riivolution import RiivolutionWindow
 from success import SuccessWindow
 from packrom import PackRomWindow
@@ -24,8 +24,6 @@ from revertchanges import RevertChangesWindow
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
 
-brseqInfo = 0
-brseqLength = 0
 lastExtraFileDirectory = LoadSetting("Paths","LastExtraLoadedPath","")
 lastFileDirectory = LoadSetting("Paths","LastLoadedPath","")
 
@@ -103,12 +101,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_ImportFiles_Button.clicked.connect(self.ImportFiles)
 
         #Song Editor Buttons    
-        self.SE_Midi_File_Button.clicked.connect(self.Button_SE_SongToChange)
+        self.SE_Midi_File_Score_Button.clicked.connect(self.Button_SE_SongToChange)
+        self.SE_Midi_File_Song_Button.clicked.connect(lambda: self.Button_SE_SongToChange(True))
         self.SE_Midi_TimeSignature_4.toggled.connect(self.Button_SE_Midi_TimeSignature)
         self.SE_Midi_Length_Measures.toggled.connect(self.Button_SE_Midi_Length)
         self.SE_SongToChange.itemSelectionChanged.connect(self.List_SE_SongToChange)
         self.SE_Midi_Tempo_Input.valueChanged.connect(self.SE_Patchable)
         self.SE_Midi_Length_Input.valueChanged.connect(self.SE_Patchable)
+        self.SE_Midi_File_Replace_Song.toggled.connect(self.SE_Patchable)
         self.SE_Patch.clicked.connect(self.Button_SE_Patch)
         self.SE_Back_Button.clicked.connect(self.GotoMainMenu)
         self.SE_ChangeSongText_Name_Input.textEdited.connect(self.SE_Patchable)
@@ -252,7 +252,10 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_StyleText.setEnabled(False)
             self.SE_OpenDefaultStyleEditor.setEnabled(False)
             self.SE_OpenStyleEditor.setEnabled(False)
-            self.SE_Midi_File_Label.setText(_translate("MainWindow","Load a Midi-Type file"))
+            self.SE_Midi_File_Score_Label.setText(_translate("MainWindow","Load a Midi-Type file"))
+            self.SE_Midi_File_Song_Label.setText(_translate("MainWindow","Load a Midi-Type file"))
+            self.brseqInfo = [0,0]
+            self.brseqLength = [0,0]
             if(not AllowType(LoadType.Brsar)): self.SE_SongToChange.removeItemWidget(self.SE_SongToChange.takeItem(len(Songs)-1))
         else:
             ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
@@ -487,20 +490,21 @@ class Window(QMainWindow, Ui_MainWindow):
     def SE_Patchable(self):
         allow = True
         if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
-            if(self.extraFile == ""): allow = False
+            if(self.brseqInfo[0] == 0) or (self.brseqInfo[1] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings","LoadSongSeparately",False)): allow = False
         elif(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
             if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()]): allow = False
         self.SE_Patch.setEnabled(allow)
 
-    def Button_SE_SongToChange(self):
-        global brseqInfo
-        global brseqLength
+    def Button_SE_SongToChange(self,song=False):
         if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
             midiInfo = LoadMidi(self.extraFile)
             if(midiInfo[0] != False):
-                self.SE_Midi_File_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+                if(song):
+                    self.SE_Midi_File_Song_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+                else:
+                    self.SE_Midi_File_Score_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
                 self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
                 self.SE_Midi_Length_Input.setValue(midiInfo[3])
                 self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
@@ -516,8 +520,8 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.SE_Midi_Length_Beats.setChecked(True)
                     self.SE_Midi_Length_Measures.setAutoExclusive(True)
                     self.SE_Midi_Length_Beats.setAutoExclusive(True)
-                brseqInfo = [midiInfo[0],midiInfo[0]]
-                brseqLength = [midiInfo[1],midiInfo[1]]
+                self.brseqInfo[song] = midiInfo[0]
+                self.brseqLength[song] = midiInfo[1]
                 self.SE_Patchable()
             
     def Button_SE_Midi_TimeSignature(self):
@@ -557,7 +561,12 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def Button_SE_Patch(self):
         if(self.SE_Midi.isEnabled() and self.SE_Midi.isChecked()):
-            PatchBrsar(self.SE_SongToChange.currentRow(),brseqInfo,brseqLength,self.SE_Midi_Tempo_Input.value(),
+            tmpInfo = self.brseqInfo.copy()
+            tmpLength = self.brseqLength.copy()
+            if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
+                tmpInfo[1] = tmpInfo[0]
+                tmpLength[1] = tmpLength[0]
+            PatchBrsar(self.SE_SongToChange.currentRow(),tmpInfo,tmpLength,self.SE_Midi_Tempo_Input.value(),
             self.SE_Midi_Length_Input.value(),3+self.SE_Midi_TimeSignature_4.isChecked())
         
         if(AllowType(LoadType.Carc)):
@@ -781,4 +790,5 @@ if __name__ == "__main__":
             if(version != "null"): UpdateWindow(win,version)
         except:
             print("Could Not Update")
+    CheckboxSeperateSongPatching(win)
     sys.exit(app.exec())

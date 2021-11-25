@@ -515,7 +515,6 @@ class Ui_Settings(object):
         self.DefaultRegion.addItem(spacerItem)
         self.verticalLayout_3.addLayout(self.DefaultRegion)
         self.SongScoreCheckbox = QtWidgets.QCheckBox(self.Tab_General)
-        self.SongScoreCheckbox.setEnabled(False)
         self.SongScoreCheckbox.setObjectName("SongScoreCheckbox")
         self.verticalLayout_3.addWidget(self.SongScoreCheckbox)
         self.RapperFix = QtWidgets.QCheckBox(self.Tab_General)
