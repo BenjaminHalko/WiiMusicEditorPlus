@@ -38,7 +38,11 @@ class Download(QThread):
             zip.extractall(SavePath())
             zip.close()
         else:
-            Run(["unzip","-d",SavePath(),SavePath()+"/downloaded.zip"])
+            zip = ZipFile(SavePath()+"/downloaded.zip")
+            for file in zip.infolist():
+                zip.extract(file, SavePath())
+                GivePermission(path.join(SavePath(), file.filename))
+            zip.close()
 
         remove(SavePath()+"/downloaded.zip")
         UpdateThread.done.emit()
@@ -87,7 +91,7 @@ class UpdateWindow(QDialog,Ui_Update):
             Popen([SavePath()+"/update.bat",FullPath])
         else:
             GivePermission(SavePath()+"/update.sh")
-            GivePermission(SavePath()+'/WiiMusicEditorPlus'+ChooseFromOS([".exe",".app",""]))
+            if(currentSystem == "Linux"): GivePermission(SavePath()+'/WiiMusicEditorPlus')
             Popen([SavePath()+"/update.sh",FullPath])
         self.close()
         if(self.otherWindow != list):
