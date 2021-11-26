@@ -8,6 +8,7 @@ from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 from sys import exit as sys_exit
 from shutil import copyfile, rmtree
+from subprocess import call
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
@@ -41,7 +42,7 @@ class Download(QThread):
             zip = ZipFile(SavePath()+"/downloaded.zip")
             for file in zip.infolist():
                 zip.extract(file, SavePath())
-                GivePermission(path.join(SavePath(), file.filename))
+                call(["chmod","u+x",path.join(SavePath(), file.filename)])
             zip.close()
 
         remove(SavePath()+"/downloaded.zip")
