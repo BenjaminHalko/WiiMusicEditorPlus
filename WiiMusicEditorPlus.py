@@ -520,8 +520,6 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.SE_Midi_File_Song_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
                 else:
                     self.SE_Midi_File_Score_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
-                self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
-                self.SE_Midi_Length_Input.setValue(midiInfo[3])
                 self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
                 self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
                 self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
@@ -535,6 +533,8 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.SE_Midi_Length_Beats.setChecked(True)
                     self.SE_Midi_Length_Measures.setAutoExclusive(True)
                     self.SE_Midi_Length_Beats.setAutoExclusive(True)
+                self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
+                self.SE_Midi_Length_Input.setValue(midiInfo[3])
                 self.brseqInfo[song] = midiInfo[0]
                 self.brseqLength[song] = midiInfo[1]
                 self.SE_Patchable()
