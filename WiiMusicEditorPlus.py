@@ -4,6 +4,7 @@ from shutil import copyfile, rmtree
 import subprocess
 import sys
 import zipfile
+from configparser import ConfigParser
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor, QIcon
@@ -12,7 +13,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
+from editor import GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -447,6 +448,20 @@ class Window(QMainWindow, Ui_MainWindow):
             ShowError("Unable to launch Dolphin","Dolphin path not specified\nGo to settings to add a Dolphin path")
         else:
             try:
+                if(os.path.isfile(GetGeckoPath()) and LoadSetting("Settings","CopyCodes",True)):
+                    dir = GetDolphinSave()
+                    if(os.path.isdir(dir)):
+                        if(os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")):
+                            if(not os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")):
+                                copyfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini",dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")
+                            os.remove(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
+                        copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
+                if(LoadSetting("Settings","DolphinEnableCheats",True)):
+                    ini = ConfigParser()
+                    ini.read(GetDolphinSave()+"/Config/Dolphin.ini")
+                    ini.set("Core","EnableCheats","True")
+                    with open(GetDolphinSave()+"/Config/Dolphin.ini","w") as inifile:
+                        ini.write(inifile)
                 cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
                 if(not menu): cmd.insert(1,"-b")
                 env = os.environ

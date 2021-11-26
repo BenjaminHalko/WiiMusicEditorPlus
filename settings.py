@@ -29,6 +29,7 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.ConnectCheckmark(self.SongScoreCheckbox,"SongScore",False)
         self.ConnectCheckmark(self.Dolphon_Geckocodes,"CopyCodes",True)
         self.ConnectCheckmark(self.SongScoreCheckbox,"LoadSongSeparately",False)
+        self.ConnectCheckmark(self.DolphinEnableCheats,"DolphinEnableCheats",True)
 
         self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
         self.DolphinSave_Browse.clicked.connect(self.GetDolphinSave)

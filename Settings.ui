@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>282</height>
+    <height>304</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -775,7 +775,17 @@ background-color: #242424;
        <item>
         <widget class="QCheckBox" name="Dolphon_Geckocodes">
          <property name="text">
-          <string>Copy Gecko codes to Dolphin save directory (recommended)</string>
+          <string>Copy Gecko codes to Dolphin save directory</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="DolphinEnableCheats">
+         <property name="text">
+          <string>Force Enable Cheats when launching Dolphin</string>
          </property>
          <property name="checked">
           <bool>true</bool>

@@ -15,7 +15,7 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
         Settings.setWindowModality(QtCore.Qt.ApplicationModal)
-        Settings.resize(476, 282)
+        Settings.resize(476, 304)
         Settings.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -617,6 +617,10 @@ class Ui_Settings(object):
         self.Dolphon_Geckocodes.setChecked(True)
         self.Dolphon_Geckocodes.setObjectName("Dolphon_Geckocodes")
         self.verticalLayout_2.addWidget(self.Dolphon_Geckocodes)
+        self.DolphinEnableCheats = QtWidgets.QCheckBox(self.Tab_Dolphin)
+        self.DolphinEnableCheats.setChecked(True)
+        self.DolphinEnableCheats.setObjectName("DolphinEnableCheats")
+        self.verticalLayout_2.addWidget(self.DolphinEnableCheats)
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem3)
         self.MainWidget.addTab(self.Tab_Dolphin, "")
@@ -648,6 +652,7 @@ class Ui_Settings(object):
         self.DolphinSave_Browse.setText(_translate("Settings", "Browse"))
         self.DolphinSave_Default.setText(_translate("Settings", "Set as Default"))
         self.Dolphin_Geckocodes_Title.setText(_translate("Settings", "Gecko codes:"))
-        self.Dolphon_Geckocodes.setText(_translate("Settings", "Copy Gecko codes to Dolphin save directory (recommended)"))
+        self.Dolphon_Geckocodes.setText(_translate("Settings", "Copy Gecko codes to Dolphin save directory"))
+        self.DolphinEnableCheats.setText(_translate("Settings", "Force Enable Cheats when launching Dolphin"))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_Dolphin), _translate("Settings", "Dolphin"))
 import resources_rc
