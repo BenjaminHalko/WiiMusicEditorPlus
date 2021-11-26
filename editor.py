@@ -887,7 +887,7 @@ else:
 	FullPath = "NULL"
 
 #Variables
-version = "0.5.0"
+version = "0.7.0"
 unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
