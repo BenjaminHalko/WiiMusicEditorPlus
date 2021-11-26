@@ -806,5 +806,4 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     CheckboxSeperateSongPatching(win)
-    ShowError("g",ProgramPath)
     sys.exit(app.exec())
