@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>829</width>
-    <height>573</height>
+    <width>839</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="palette">
@@ -2039,7 +2039,7 @@ padding-bottom: 6px;
                 </widget>
                </item>
                <item>
-                <widget class="QPlainTextEdit" name="SE_ChangeSongText_Desc_Input">
+                <widget class="QTextEdit" name="SE_ChangeSongText_Desc_Input">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -2054,9 +2054,6 @@ padding-bottom: 6px;
                  </property>
                  <property name="acceptDrops">
                   <bool>false</bool>
-                 </property>
-                 <property name="plainText">
-                  <string/>
                  </property>
                 </widget>
                </item>
@@ -2907,8 +2904,8 @@ background-color: #242424;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>829</width>
-     <height>21</height>
+     <width>839</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

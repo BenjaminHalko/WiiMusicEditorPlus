@@ -5,6 +5,7 @@ import platform
 import subprocess
 import pathlib
 import tempfile
+import pretty_midi
 from shutil import copyfile, rmtree
 from math import floor, ceil
 import mido
@@ -454,10 +455,12 @@ def ChangeName(SongToChange,newText):
 			if offset in str(textlines[num]):
 				while bytes('@','utf-8') not in textlines[num+1]:
 					textlines.pop(num+1)
+
 				if(type(newText) == str):
-					textlines[num] = bytes(offset+str(textlines[num])[10:24:1]+newText+'\r\n','utf-8')
+					text = repr(newText).strip("'")
 				else:
-					textlines[num] = bytes(offset+str(textlines[num])[10:24:1]+newText[typeNum]+'\r\n','utf-8')
+					text = repr(newText[typeNum]).strip("'")
+				textlines[num] = bytes(offset+str(textlines[num])[10:24:1]+text+'\r\n','utf-8')
 				break
 		message = open(txtPath+'/message.d/new_music_message.txt','wb')
 		message.writelines(textlines)
@@ -636,11 +639,37 @@ def ReplaceWave(startOffset,replaceNumber,rwavInfo,rwavSize,BrsarPath):
 		brsar.write(data1+rwavInfo+data2)
 	brsar.close()
 
-def LoadMidi(midiPath):
+def NormalizeMidi(midiPath,savePath,defaultTempo):
+	midi_data = pretty_midi.PrettyMIDI(midiPath)
+	newMidi = pretty_midi.PrettyMIDI(initial_tempo=defaultTempo,resolution=2000)
+	name = ["Melody","Harmony","Chords","Bass"]
+	i = 0
+	for instrument in midi_data.instruments:
+		newInstrument = pretty_midi.Instrument(program=instrument.program,is_drum=instrument.is_drum,name=name[i])
+		i += 1
+		for note in instrument.notes:
+			newInstrument.notes.append(pretty_midi.Note(
+			velocity=note.velocity, pitch=note.pitch, start=note.start, end=note.end))
+		newMidi.instruments.append(newInstrument)
+	newMidi.write(savePath)
+	mid = mido.MidiFile(savePath)
+	mid.tracks[1] = mido.merge_tracks([mid.tracks[0],mid.tracks[1]])
+	mid.tracks.remove(mid.tracks[0])
+	for track in mid.tracks:
+		for i in range(len(track)):
+			if(track[i].type == "note_on" and track[i].velocity == 0):
+				track[i] = mido.Message("note_off",note=track[i].note,velocity=track[i].velocity,time=track[i].time,channel=track[i].channel)
+	mid.save(savePath)
+
+def LoadMidi(midiPath,defaultTempo = -1):
 	with tempfile.TemporaryDirectory() as directory:
 		prefix = pathlib.Path(midiPath).suffix
 		if(prefix == '.mid'): prefix = '.midi'
-		copyfile(midiPath,directory+'/z'+prefix)
+		if(defaultTempo == -1):
+			copyfile(midiPath,directory+'/z'+prefix)
+		else:
+			NormalizeMidi(midiPath,directory+'/z'+prefix,defaultTempo)
+
 		if(os.path.isfile(directory+'/z.rseq')):
 			Run([HelperPath()+'/SequenceCmd/GotaSequenceCmd','assemble',directory+'/z.rseq'])
 		if(os.path.isfile(directory+'/z.brseq')):
@@ -732,11 +761,13 @@ def GetStyles():
 						break
 
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
-	Tempo = format(Tempo,"x")
-	Length = format(Length,"x")
-	LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+6,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
-	TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
-	TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
+	AddPatch('Rapper Crash Fix','043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n')
+	if(Songs[SongSelected].SongType != SongTypeValue.Menu):
+		Tempo = format(Tempo,"x")
+		Length = format(Length,"x")
+		LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+6,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
+		TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
+		TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
 	if(Songs[SongSelected].SongType == SongTypeValue.Regular):
 		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength,BrsarPath)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
@@ -758,18 +789,18 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 def FixMessageFile(textlines):
 	for num in range(len(textlines)):
 		if(textlines[num] == b'  b200 @015f /\r\n'):
-			textlines[num] = b'  b200 @015f [/,4b] = Default\r\n'
-			textlines[num+1] = b'  b201 @0160 [/,4b] = Rock\r\n'
-			textlines[num+2] = b'  b202 @0161 [/,4b] = March\r\n'
-			textlines[num+3] = b'  b203 @0162 [/,4b] = Jazz\r\n'
-			textlines[num+4] = b'  b204 @0163 [/,4b] = Latin\r\n'
-			textlines[num+5] = b'  b205 @0164 [/,4b] = Reggae\r\n'
-			textlines[num+6] = b'  b206 @0165 [/,4b] = Hawaiian\r\n'
-			textlines[num+7] = b'  b207 @0166 [/,4b] = Electronic\r\n'
-			textlines[num+8] = b'  b208 @0167 [/,4b] = Classical\r\n'
-			textlines[num+9] = b'  b209 @0168 [/,4b] = Tango\r\n'
-			textlines[num+10] = b'  b20a @0169 [/,4b] = Pop\r\n'
-			textlines[num+11] = b'  b20b @016a [/,4b] = Japanese\r\n'
+			textlines[num] = b'  b200 @015f [/,4b] = '+BasedOnRegion(["Default","Default","オリジナル","오리지널"]).encode("utf-8")+b'\r\n'
+			textlines[num+1] = b'  b201 @0160 [/,4b] = '+BasedOnRegion(["Rock","Rock","ロック","록"]).encode("utf-8")+b'\r\n'
+			textlines[num+2] = b'  b202 @0161 [/,4b] = '+BasedOnRegion(["March","March","マーチ","행진곡"]).encode("utf-8")+b'\r\n'
+			textlines[num+3] = b'  b203 @0162 [/,4b] = '+BasedOnRegion(["Jazz","Jazz","ジャズ","재즈"]).encode("utf-8")+b'\r\n'
+			textlines[num+4] = b'  b204 @0163 [/,4b] = '+BasedOnRegion(["Latin","Latin","ラテン","라틴 음악"]).encode("utf-8")+b'\r\n'
+			textlines[num+5] = b'  b205 @0164 [/,4b] = '+BasedOnRegion(["Reggae","Reggae","レゲエ","레게"]).encode("utf-8")+b'\r\n'
+			textlines[num+6] = b'  b206 @0165 [/,4b] = '+BasedOnRegion(["Hawaiian","Hawaiian","ハワイ風","하와이 음악"]).encode("utf-8")+b'\r\n'
+			textlines[num+7] = b'  b207 @0166 [/,4b] = '+BasedOnRegion(["Electronic","Electronic","ダウンビート","전자 음악"]).encode("utf-8")+b'\r\n'
+			textlines[num+8] = b'  b208 @0167 [/,4b] = '+BasedOnRegion(["Classical","Classical","室内楽","실내악"]).encode("utf-8")+b'\r\n'
+			textlines[num+9] = b'  b209 @0168 [/,4b] = '+BasedOnRegion(["Tango","Tango","タンゴ","탱고"]).encode("utf-8")+b'\r\n'
+			textlines[num+10] = b'  b20a @0169 [/,4b] = '+BasedOnRegion(["Pop","Pop","ポップス","팝"]).encode("utf-8")+b'\r\n'
+			textlines[num+11] = b'  b20b @016a [/,4b] = '+BasedOnRegion(["Japanese","Japanese","和風","일본 음악"]).encode("utf-8")+b'\r\n'
 			break
 	return textlines
 

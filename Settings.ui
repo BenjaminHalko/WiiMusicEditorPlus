@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>476</width>
+    <width>484</width>
     <height>304</height>
    </rect>
   </property>
@@ -558,20 +558,36 @@ QWidget[error=&quot;true&quot;]
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="SongScoreCheckbox">
-         <property name="text">
-          <string>Load Song and Score separately</string>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Song Editor</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="RapperFix">
-         <property name="text">
-          <string>Add the Rapper Crash fix to Gecko codes (recommended)</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCheckBox" name="SongScoreCheckbox">
+            <property name="text">
+             <string>Load Song and Score separately</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="RapperFix">
+            <property name="text">
+             <string>Add the Rapper Crash fix to Gecko codes</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="Normalize">
+            <property name="text">
+             <string>Normalize Midi (Makes Midis more Wii Music friendly)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
