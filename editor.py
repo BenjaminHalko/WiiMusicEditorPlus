@@ -457,9 +457,9 @@ def ChangeName(SongToChange,newText):
 					textlines.pop(num+1)
 
 				if(type(newText) == str):
-					text = repr(newText).strip("'")
+					text = repr(newText).strip("'").replace(r"\'","'")
 				else:
-					text = repr(newText[typeNum]).strip("'")
+					text = repr(newText[typeNum]).strip("'").replace(r"\'","'")
 				textlines[num] = bytes(offset+str(textlines[num])[10:24:1]+text+'\r\n','utf-8')
 				break
 		message = open(txtPath+'/message.d/new_music_message.txt','wb')
