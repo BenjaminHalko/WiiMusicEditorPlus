@@ -295,7 +295,7 @@ def GivePermission(file):
 def Run(command):
 	try:
 		if(type(command) != str): GivePermission(command[0])
-		subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.PIPE)
+		subprocess.run(command,)
 	except Exception as e:
 		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
@@ -468,8 +468,9 @@ def ChangeName(SongToChange,newText):
 		if(type(newText) == str): break
 	EncodeTxt()
 
-def CreateGct(path):
-	patches = open(GetGeckoPath())
+def CreateGct(path,geckopath=-1):
+	if(geckopath == -1): geckopath = GetGeckoPath()
+	patches = open(geckopath)
 	textlines = patches.readlines()
 	patches.close()
 	codes = '00D0C0DE00D0C0DE'
@@ -813,11 +814,11 @@ def PatchMainDol(dolPath="",geckoPath=""):
 
 	gct = False
 	if(pathlib.Path(geckoPath).suffix != ".gct"):
-		CreateGct(SavePath()+"/"+BasedOnRegion(gameIds)+".gct")
+		CreateGct(SavePath()+"/"+BasedOnRegion(gameIds)+".gct",geckoPath)
 		geckoPath = SavePath()+"/"+BasedOnRegion(gameIds)+".gct"
 		gct = True
 	Run([HelperPath()+'/Wiimms/wstrt','patch',dolPath,'--add-section',geckoPath,'--force'])
-	if(gct): os.remove(geckoPath)
+	#if(gct): os.remove(geckoPath)
 
 def GetFileType():
 	if(os.path.isdir(file.path)): return LoadType.Rom

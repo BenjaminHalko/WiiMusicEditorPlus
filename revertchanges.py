@@ -3,8 +3,9 @@ from PyQt5.QtWidgets import QDialog
 from revertchanges_ui import Ui_Dialog
 from os import path
 from shutil import copyfile
-from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath
+from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames
 from success import SuccessWindow
+from errorhandler import ShowError
 
 class RevertChangesWindow(QDialog,Ui_Dialog):
     def __init__(self):
@@ -42,13 +43,18 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                 codes = open(GetGeckoPath(),'w')
                 codes.writelines(textlines)
                 codes.close()
-            if(path.isfile(GetBrsarPath()+".backup")):
+            try:
                 copyfile(GetBrsarPath()+".backup",GetBrsarPath())
+            except Exception as e:
+                ShowError("Could not revert songs",str(e))
         if(self.Text.isChecked()):
-            if(path.isfile(GetMessagePath()+"/message.carc.backup")):
+            try:
                 copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
+                GetSongNames()
+            except Exception as e:
+                ShowError("Could not revert message file",str(e))
         if(self.Styles.isChecked()):
-            if(path.isfile(GetGeckoPath())):
+            try:
                 codes = open(GetGeckoPath())
                 textlines = codes.readlines()
                 codes.close()
@@ -63,8 +69,12 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                 codes = open(GetGeckoPath(),'w')
                 codes.writelines(textlines)
                 codes.close()
+            except Exception as e:
+                ShowError("Could not revert styles",str(e))
         if(self.MainDol.isChecked()):
-            if(path.isfile(GetMainDolPath()+".backup")):
+            try:
                 copyfile(GetMainDolPath()+".backup",GetMainDolPath())
+            except Exception as e:
+                ShowError("Could not revert main.dol",str(e))
         self.close()
         SuccessWindow("Files Reverted!")
