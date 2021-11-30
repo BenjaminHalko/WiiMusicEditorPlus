@@ -257,6 +257,14 @@ class LoadType:
 	Gct = 5
 	RomFile = 6
 
+class RecordType:
+	Song = "SG"
+	Style = "ST"
+	Text = "TX"
+	DefaultStyle = "DS"
+	RemoveSong = "RS"
+	MainDol = "MD"
+
 #Functions
 
 #Get File
@@ -872,6 +880,20 @@ def SaveSetting(section,key,value):
 	with open(SavePath()+'/settings.ini', 'w') as inifile:
 		ini.write(inifile)
 
+def SaveRecording(action,name,values):
+	if(recordPath != ""):
+		if(type(values[0]) != list):
+			values = [values]
+		section = action+"-"+str(name)
+		ini = ConfigParser()
+		ini.read(recordPath)
+		if(ini.has_section(section)): ini.remove_section(section)
+		ini.add_section(section)
+		for value in values:
+			ini.set(section,value[0],str(value[1]))
+		with open(recordPath, 'w') as inifile:
+			ini.write(inifile)
+
 def GetDolphinSave():
 	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
 	if(os.path.exists(os.path.dirname(dolphinSavePath)+"/portable.txt")): return os.path.dirname(dolphinSavePath)+"/User"
@@ -932,6 +954,7 @@ if(currentSystem == "Linux" and not os.path.isfile(dolphinPath)):
 	except:
 		dolphinPath = ""
 dolphinSavePath = LoadSetting("Paths","DolphinSave","")
+recordPath = ""
 file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 if(file.path != ""):
