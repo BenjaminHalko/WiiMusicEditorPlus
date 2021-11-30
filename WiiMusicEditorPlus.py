@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import SaveRecording, GetDolphinSave, ProgramPath, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, currentSystem, gameIds, StyleTypeValue, SongTypeValue, LoadType
+from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -21,6 +21,7 @@ from riivolution import RiivolutionWindow
 from success import SuccessWindow
 from packrom import PackRomWindow
 from revertchanges import RevertChangesWindow
+from importchanges import ImportChangesWindow
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -98,8 +99,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.MP_RevertChanges_Button.clicked.connect(self.RevertChanges)
         self.MP_PackRom_Button.clicked.connect(self.PackRom)
-        self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
         self.MP_ImportFiles_Button.clicked.connect(self.ImportFiles)
+        self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
+        self.MP_ImportChanges_Button.clicked.connect(self.ImportChanges)
 
         #Song Editor Buttons    
         self.SE_Midi_File_Score_Button.clicked.connect(self.Button_SE_SongToChange)
@@ -342,6 +344,7 @@ class Window(QMainWindow, Ui_MainWindow):
             file.setDirectory(os.path.dirname(GetGeckoPath()))
             if(file.exec()):
                 PatchMainDol(geckoPath=file.selectedFiles()[0])
+                SaveRecording(RecordType.MainDol,"null",["geckopath",file.selectedFiles()[0]])
                 SuccessWindow("Main.dol Patched!")
         elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
             file = QFileDialog()
@@ -433,9 +436,18 @@ class Window(QMainWindow, Ui_MainWindow):
                 except Exception as e:
                     ShowError("Files not Exported",str(e))
         else:
-            ShowError("Unable to import files","Must load Wii Music Rom")
+            ShowError("Unable to export files","Must load Wii Music Rom")
 
-    
+    def ImportChanges(self):
+        if(editor.file.type == LoadType.Rom):
+            file = QFileDialog()
+            file.setFileMode(QFileDialog.AnyFile)
+            file.setNameFilter("Rom Change File (Changes.ini)")
+            file.setDirectory(lastFileDirectory)
+            if(file.exec()):
+                ImportChangesWindow(file.selectedFiles()[0])
+        else:
+            ShowError("Unable to import changes","Must load Wii Music Rom")
 
     #############Menu Bar
 
@@ -580,6 +592,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
             tmpInfo = self.brseqInfo.copy()
             tmpLength = self.brseqLength.copy()
+            tmpPath = self.brseqPath.copy()
             if(LoadSetting("Settings","NormalizeMidi",False)):
                 midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
                 if(midiInfo[0] != False):
@@ -589,6 +602,7 @@ class Window(QMainWindow, Ui_MainWindow):
             if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
                 tmpInfo[1] = tmpInfo[0]
                 tmpLength[1] = tmpLength[0]
+                tmpPath[1] = ""
             elif(LoadSetting("Settings","NormalizeMidi",False)):
                 midiInfo = LoadMidi(self.brseqPath[1],self.SE_Midi_Tempo_Input.value())
                 if(midiInfo[0] != False):
@@ -598,7 +612,12 @@ class Window(QMainWindow, Ui_MainWindow):
             if(self.SE_Midi_Length_Measures.isChecked()):
                 length *= 3+self.SE_Midi_TimeSignature_4.isChecked()
             PatchBrsar(self.SE_SongToChange.currentRow(),tmpInfo,tmpLength,self.SE_Midi_Tempo_Input.value(),length,3+self.SE_Midi_TimeSignature_4.isChecked())
-            SaveRecording("SG",
+            SaveRecording(RecordType.Song,self.SE_SongToChange.currentRow(),[
+                ["midisong",tmpPath[0]],
+                ["midiscore",tmpPath[1]],
+                ["tempo",self.SE_Midi_Tempo_Input.value()],
+                ["length",length],
+                ["timesignature",3+self.SE_Midi_TimeSignature_4.isChecked()]])
         
         if(AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu)):
             ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
@@ -611,6 +630,10 @@ class Window(QMainWindow, Ui_MainWindow):
             editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
             editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
             editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
+            SaveRecording(RecordType.TextSong,self.SE_SongToChange.currentRow(),[
+                ["name",self.SE_ChangeSongText_Name_Input.text()],
+                ["desc",self.SE_ChangeSongText_Desc_Input.toPlainText()],
+                ["genre",self.SE_ChangeSongText_Genre_Input.text()]])
         self.SE_Patch.setEnabled(False)
 
     def Button_SE_OpenStyleEditor(self):
@@ -711,19 +734,27 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name))
             else:
                 self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name+" ~[Replaced]~"))
-            patchInfo = Styles[self.StE_StyleList.currentRow()].MemOffset+" 00000018\n"
-            for i in range(3):
-                if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
-                else: num1 = format(self.styleSelected[i*2],"x")
-                if(self.styleSelected[i*2+1] == len(Instruments)-1): num2 = "ffffffff"
-                else: num2 = format(self.styleSelected[i*2+1],"x")
-                patchInfo = patchInfo+"0"*(8-len(num1))+num1+" "+"0"*(8-len(num2))+num2+"\n"
+                patchInfo = '0'+format(Styles[self.StE_StyleList.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets),"x")+" 00000018\n"
+                for i in range(3):
+                    if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
+                    else: num1 = format(self.styleSelected[i*2],"x")
+                    if(self.styleSelected[i*2+1] == len(Instruments)-1): num2 = "ffffffff"
+                    else: num2 = format(self.styleSelected[i*2+1],"x")
+                    patchInfo = patchInfo+"0"*(8-len(num1))+num1+" "+"0"*(8-len(num2))+num2+"\n"
 
-            AddPatch(Styles[self.StE_StyleList.currentRow()].Name+" Style Patch",patchInfo)
+                AddPatch(Styles[self.StE_StyleList.currentRow()].Name+" Style Patch",patchInfo)
+            SaveRecording(RecordType.Style,self.StE_StyleList.currentRow(),[
+                ["0",self.styleSelected[0]],
+                ["1",self.styleSelected[1]],
+                ["2",self.styleSelected[2]],
+                ["3",self.styleSelected[3]],
+                ["4",self.styleSelected[4]],
+                ["5",self.styleSelected[5]]])
 
         if(self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][self.StE_StyleList.currentRow()]):
             ChangeName(self.StE_StyleList.currentRow(),self.StE_ChangeStyleName.text())
             editor.textFromTxt[3][self.StE_StyleList.currentRow()] = self.StE_ChangeStyleName.text()
+            SaveRecording(RecordType.TextStyle,self.StE_StyleList.currentRow(),["name",self.StE_ChangeStyleName.text()])
 
     #############Text Editor
     def Button_TE_Patch(self):
@@ -758,6 +789,7 @@ class Window(QMainWindow, Ui_MainWindow):
         AddPatch(Songs[self.DS_Songs.currentRow()].Name+' Default Style Patch','0'+format(Songs[self.DS_Songs.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[self.DS_Styles.currentRow()].StyleId+'\n')
         self.DS_Patch.setEnabled(False)
         if(self.fromSongEditor != -1): self.SE_StyleText.setText(_translate("MainWindow",Styles[self.DS_Styles.currentRow()].Name))
+        SaveRecording(RecordType.DefaultStyle,self.DS_Songs.currentRow(),["style",self.DS_Styles.currentRow()])
 
     def List_DS_SongList(self):
         self.DS_StyleBox.setEnabled(True)
@@ -771,7 +803,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DS_Styles.setCurrentRow(GetDefaultStyle(self.DS_Songs.currentRow(),True))
         self.DS_Reset.setEnabled(False)
 
-    #############Default Style Editor
+    #############Remove Songs
     def Button_RS_RemoveCustomSongs(self):
         file = open(GetGeckoPath())
         textlines = file.readlines()
@@ -792,12 +824,15 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def Button_RS_Purge(self):
         try:
+            removesongs = []
             file = open(GetMainDolPath(), "r+b")
             for i in range(self.RS_Songs.count()):
                 if(self.RS_Songs.item(i).isSelected()):
                     file.seek(0x59C574+0xBC*Songs[i].MemOrder)
                     file.write(bytes.fromhex('ffffffffffff'))
+                    removesongs.append(i)
             file.close()
+            SaveRecording(RecordType.RemoveSong,"null",["songs",removesongs])
             SuccessWindow("Songs Successfully Destroyed!!!")
         except Exception as e:
             ShowError("Could not remove songs",str(e))

@@ -1507,6 +1507,25 @@ padding-bottom: 6px;
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="MP_ImportChanges_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Import Changes</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -2905,7 +2924,7 @@ background-color: #242424;</string>
      <x>0</x>
      <y>0</y>
      <width>839</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
