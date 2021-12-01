@@ -72,4 +72,4 @@ class ImportChangesWindow(QDialog,Ui_Dialog):
 
     def reportProgress(self,value,total):
         self.Progress.setValue(value/total*100)
-        self.Label.setText(QCoreApplication.translate("Import change "+str(value)+" out of "+str(total)))
+        self.Label.setText(QCoreApplication.translate("MainWindow","Import change "+str(value)+" out of "+str(total)))

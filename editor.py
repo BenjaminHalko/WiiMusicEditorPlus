@@ -120,10 +120,10 @@ SongClass(SongTypeValue.Menu,'Menu Song',-1,MemOffset=['0259ACB0','0259ACD4','02
 
 noneInstrument = 67
 Styles = [
-StyleClass(StyleTypeValue.Global,'Jazz','0659A65C','00',[28,2,0,16,42,45]),
-StyleClass(StyleTypeValue.Global,'Rock','0659A680','01',[14,14,36,15,41,47]),
-StyleClass(StyleTypeValue.Global,'Latin','0659A6A4','02',[27,28,1,15,43,46]),
-StyleClass(StyleTypeValue.Global,'March','0659A6C8','03',[27,27,27,31,59,58]),
+StyleClass(StyleTypeValue.Global,'Jazz',0x0659A65C,'00',[28,2,0,16,42,45]),
+StyleClass(StyleTypeValue.Global,'Rock',0x0659A680,'01',[14,14,36,15,41,47]),
+StyleClass(StyleTypeValue.Global,'Latin',0x0659A6A4,'02',[27,28,1,15,43,46]),
+StyleClass(StyleTypeValue.Global,'March',0x0659A6C8,'03',[27,27,27,31,59,58]),
 StyleClass(StyleTypeValue.Global,'Electronic',0x659A6EC,'04',[2,22,8,23,62,50]),
 StyleClass(StyleTypeValue.Global,'Pop',0x659A710,'05',[0,2,13,15,40,47]),
 StyleClass(StyleTypeValue.Global,'Japanese',0x659A734,'06',[29,noneInstrument,noneInstrument,20,56,51]),
