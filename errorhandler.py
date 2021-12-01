@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import QDialog
 from error_ui import Ui_Error
 
 class ShowError(QDialog,Ui_Error):
-    def __init__(self,error,message,geckocode=False):
-        super().__init__(None)
+    def __init__(self,error,message,geckocode=False,parent=None):
+        super().__init__(parent)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setupUi(self)
         if(not geckocode):

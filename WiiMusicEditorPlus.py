@@ -344,7 +344,7 @@ class Window(QMainWindow, Ui_MainWindow):
             file.setDirectory(os.path.dirname(GetGeckoPath()))
             if(file.exec()):
                 PatchMainDol(geckoPath=file.selectedFiles()[0])
-                SaveRecording(RecordType.MainDol,"null",["geckopath",file.selectedFiles()[0]])
+                SaveRecording(RecordType.MainDol,"null",["geckopath",str(file.selectedFiles()[0])])
                 SuccessWindow("Main.dol Patched!")
         elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
             file = QFileDialog()
@@ -857,5 +857,4 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     CheckboxSeperateSongPatching(win)
-    ChangeName(0,"thisisatest\nnewline")
     sys.exit(app.exec())
