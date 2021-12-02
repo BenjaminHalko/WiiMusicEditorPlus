@@ -57,7 +57,7 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                 for section in sections:
                     if(RecordType.Song in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert songs",str(e))
+                ShowError("Could not revert songs",str(e),self)
         if(self.Text.isChecked()):
             try:
                 copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
@@ -65,7 +65,7 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                 for section in sections:
                     if(RecordType.TextSong in section or RecordType.TextStyle in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert message file",str(e))
+                ShowError("Could not revert message file",str(e),self)
         if(self.Styles.isChecked()):
             try:
                 codes = open(GetGeckoPath())
@@ -85,14 +85,14 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                 for section in sections:
                     if(RecordType.Style in section or RecordType.DefaultStyle in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert styles",str(e))
+                ShowError("Could not revert styles",str(e),self)
         if(self.MainDol.isChecked()):
             try:
                 copyfile(GetMainDolPath()+".backup",GetMainDolPath())
                 for section in sections:
                     if(RecordType.RemoveSong in section or RecordType.MainDol in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert main.dol",str(e))
+                ShowError("Could not revert main.dol",str(e),self)
         if(path.isfile(editor.file.path+"/Changes.ini")):
             with open(editor.file.path+"/Changes.ini", 'w') as inifile:
                 ini.write(inifile)

@@ -94,5 +94,5 @@ class ImportChangesWindow(QDialog,Ui_Dialog):
         self.Label.setText(QCoreApplication.translate("MainWindow","Importing Change "+str(value)+" out of "+str(total)))
 
     def error(self,error,message):
-        ShowError(error,message,parent=self)
+        ShowError(error,message,self)
         self.importthread.waiting = False

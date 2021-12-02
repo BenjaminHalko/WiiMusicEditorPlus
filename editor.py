@@ -771,7 +771,7 @@ def GetStyles():
 						break
 
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
-	AddPatch('Rapper Crash Fix','043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n')
+	if(LoadSetting("Setting","RapperFix",True)): AddPatch('Rapper Crash Fix','043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n')
 	if(Songs[SongSelected].SongType != SongTypeValue.Menu):
 		Tempo = format(Tempo,"x")
 		Length = format(Length,"x")
@@ -942,7 +942,6 @@ else:
 	FullPath = "NULL"
 
 #Variables
-version = "0.7.0"
 unsafeMode = LoadSetting("Settings","UnsafeMode",False)
 regionSelected = LoadSetting("Settings","DefaultRegion",0)
 dolphinPath = LoadSetting("Paths","Dolphin","")
@@ -963,3 +962,5 @@ if(file.path != ""):
 	except:
 		file.path = ""
 from errorhandler import ShowError
+
+version = "0.8.0"

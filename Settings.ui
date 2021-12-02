@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>484</width>
-    <height>304</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -504,61 +504,70 @@ QWidget[error=&quot;true&quot;]
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <layout class="QHBoxLayout" name="DefaultRegion">
-         <item>
-          <widget class="QLabel" name="RegionLabel">
-           <property name="text">
-            <string>Fallback Region (Used if rom region can't be determinded):</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="RegionBox">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>20</height>
-            </size>
-           </property>
-           <item>
-            <property name="text">
-             <string>US</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Europe</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Japan</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Korea</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="RegionSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="Rom">
+         <property name="title">
+          <string>Rom Settings</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <layout class="QHBoxLayout" name="Region">
+            <item>
+             <widget class="QLabel" name="RegionLabel">
+              <property name="text">
+               <string>Fallback Region (Used if rom region can't be determinded):</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="RegionBox">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>20</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>US</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Europe</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Japan</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Korea</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer name="RegionSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="SongEditor">
          <property name="title">
           <string>Song Editor</string>
          </property>
@@ -591,47 +600,61 @@ QWidget[error=&quot;true&quot;]
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="Updates">
-         <item>
-          <widget class="QCheckBox" name="CheckForUpdates">
-           <property name="text">
-            <string>Check for Updates on Startup</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="SwitchBeta">
-           <property name="text">
-            <string>Switch to Beta</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="UpdateSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="Updates">
+         <property name="title">
+          <string>Updates</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QCheckBox" name="CheckForUpdates">
+            <property name="text">
+             <string>Check for Updates on Startup</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="SwitchBeta">
+            <property name="text">
+             <string>Switch to Beta</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="UpdateSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="UnsafeMode">
-         <property name="enabled">
-          <bool>true</bool>
+        <widget class="QGroupBox" name="Debug">
+         <property name="title">
+          <string>Debug Options</string>
          </property>
-         <property name="text">
-          <string>Unsafe mode (Enables options that might crash the game)</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QCheckBox" name="UnsafeMode">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Unsafe mode (Enables options that might crash the game)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -655,36 +678,35 @@ QWidget[error=&quot;true&quot;]
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="DolphinPath_Title">
-         <property name="text">
-          <string>Dolphin Path:</string>
+        <widget class="QGroupBox" name="DolphinPath_Title">
+         <property name="title">
+          <string>Dolphin Path</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="DolphinPath_Label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="acceptDrops">
-          <bool>true</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QLabel" name="DolphinPath_Label">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 padding: 1px;
 border: 1px solid;
@@ -699,50 +721,52 @@ border: 1px solid;
 border-color: red;
 background-color: #242424;
 }</string>
-         </property>
-         <property name="text">
-          <string>No Specified Path</string>
-         </property>
+            </property>
+            <property name="text">
+             <string>No Specified Path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="DolphinPath_Browse">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="DolphinPath_Browse">
-         <property name="text">
-          <string>Browse</string>
+        <widget class="QGroupBox" name="DolphinSave_Title">
+         <property name="title">
+          <string>Dolphin Save Path</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="DolphinSave_Title">
-         <property name="text">
-          <string>Dolphin Save Path:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="DolphinSave_Label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="acceptDrops">
-          <bool>true</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="DolphinSave_Label">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 padding: 1px;
 border: 1px solid;
@@ -757,55 +781,60 @@ border: 1px solid;
 border-color: red;
 background-color: #242424;
 }</string>
-         </property>
-         <property name="text">
-          <string>Default Path</string>
-         </property>
+            </property>
+            <property name="text">
+             <string>Default Path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="DolphinSave_Buttons">
+            <item>
+             <widget class="QPushButton" name="DolphinSave_Browse">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="DolphinSave_Default">
+              <property name="text">
+               <string>Set as Default</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="DolphinSave_Buttons">
-         <item>
-          <widget class="QPushButton" name="DolphinSave_Browse">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="DolphinSave_Default">
-           <property name="text">
-            <string>Set as Default</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="Dolphin_Geckocodes_Title">
-         <property name="text">
-          <string>Gecko codes:</string>
+        <widget class="QGroupBox" name="Dolphin_Geckocodes_Title">
+         <property name="title">
+          <string>Gecko Codes</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="Dolphon_Geckocodes">
-         <property name="text">
-          <string>Copy Gecko codes to Dolphin save directory</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="DolphinEnableCheats">
-         <property name="text">
-          <string>Force Enable Cheats when launching Dolphin</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QCheckBox" name="Dolphon_Geckocodes">
+            <property name="text">
+             <string>Copy Gecko codes to Dolphin save directory</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="DolphinEnableCheats">
+            <property name="text">
+             <string>Force Enable Cheats when launching Dolphin</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>

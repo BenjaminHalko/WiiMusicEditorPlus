@@ -7,6 +7,7 @@ import zipfile
 from configparser import ConfigParser
 
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
@@ -278,7 +279,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.styleSelected = []
             if(self.fromSongEditor != -1): self.List_StE_StyleList()
         else:
-            error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",True)
+            error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",geckocode=True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadStyleEditor()
 
@@ -308,7 +309,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.DS_Patch.setEnabled(False)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
-            error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",True)
+            error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",geckocode=True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadDefaultStyleEditor()
 
@@ -847,6 +848,8 @@ class ExternalEditor(QtCore.QThread):
 if __name__ == "__main__":
     app = QApplication([])
     app.setWindowIcon(QIcon(HelperPath()+"/Extra/icon.png"))
+    QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contb.ttf")
+    QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contm.ttf")
     win = Window()
     win.show()
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
