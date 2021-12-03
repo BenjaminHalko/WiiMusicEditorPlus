@@ -4,3 +4,4 @@
 cd dist
 rm WiiMusicEditorPlus-Linux.zip
 zip -r WiiMusicEditorPlus-Linux.zip WiiMusicEditorPlus
+
