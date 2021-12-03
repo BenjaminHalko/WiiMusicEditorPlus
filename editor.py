@@ -881,7 +881,7 @@ def SaveSetting(section,key,value):
 	with open(SavePath()+'/settings.ini', 'w') as inifile:
 		ini.write(inifile)
 
-def SaveRecording(action,name,values):
+def SaveRecording(action,name,values,remove=False):
 	if(file.type == LoadType.Rom):
 		if(type(values[0]) != list):
 			values = [values]
@@ -889,9 +889,10 @@ def SaveRecording(action,name,values):
 		ini = ConfigParser()
 		ini.read(file.path+"/Changes.ini")
 		if(ini.has_section(section)): ini.remove_section(section)
-		ini.add_section(section)
-		for value in values:
-			ini.set(section,value[0],str(value[1]))
+		if(not remove):
+			ini.add_section(section)
+			for value in values:
+				ini.set(section,value[0],str(value[1]))
 		with open(file.path+"/Changes.ini", 'w') as inifile:
 			ini.write(inifile)
 

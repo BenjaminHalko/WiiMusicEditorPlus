@@ -1484,7 +1484,7 @@ padding-bottom: 6px;
                 </font>
                </property>
                <property name="text">
-                <string>Import files</string>
+                <string>Import Files</string>
                </property>
               </widget>
              </item>
@@ -1503,7 +1503,7 @@ padding-bottom: 6px;
                 </font>
                </property>
                <property name="text">
-                <string>Export files</string>
+                <string>Export Files</string>
                </property>
               </widget>
              </item>

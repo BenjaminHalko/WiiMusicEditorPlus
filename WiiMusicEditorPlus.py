@@ -33,27 +33,6 @@ lastFileDirectory = LoadSetting("Paths","LastLoadedPath","")
 def AllowType(type):
     return (editor.file.type == LoadType.Rom or editor.file.type == type)
 
-def LoadMainFile(filter):
-    global lastFileDirectory
-    file = QtWidgets.QFileDialog()
-    if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-    else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
-    file.setNameFilter(filter)
-    file.setDirectory(lastFileDirectory)
-    if file.exec_():
-        path = file.selectedFiles()[0]
-        if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
-        if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
-            ShowError("Not a valid Wii Music folder","Files and sys folder not found")
-            return False
-        editor.file.path = path
-        if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
-        else: lastFileDirectory = os.path.dirname(editor.file.path)
-        SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
-        return True
-    return False
-        
-
 #Load Places
 class TAB:
     MainMenu = 0
@@ -196,6 +175,26 @@ class Window(QMainWindow, Ui_MainWindow):
             if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
             else: item.setFlags(QtCore.Qt.ItemIsSelectable)
         widgetID.addItem(item)
+
+    def LoadMainFile(self,filter):
+        global lastFileDirectory
+        file = QtWidgets.QFileDialog()
+        if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
+        else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setNameFilter(filter)
+        file.setDirectory(lastFileDirectory)
+        if file.exec_():
+            path = file.selectedFiles()[0]
+            if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+            if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
+                ShowError("Not a valid Wii Music folder","Files and sys folder not found")
+                return False
+            editor.file.path = path
+            if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
+            else: lastFileDirectory = os.path.dirname(editor.file.path)
+            SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
+            return True
+        return False
 
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
@@ -496,20 +495,20 @@ class Window(QMainWindow, Ui_MainWindow):
         SettingsWindow(self)
 
     def MenuBar_Load_Rom(self):
-        if(LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *midi *.mid *.brseq *.rseq *.ini)
+        if(self.LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *.ini)
         Wii Music Rom (*.wbfs *.iso)
         Sound Archive (*.brsar)
         Text File (*.carc)
         Main.dol (*.dol)
-        Midi-Type File (*.midi *.mid *.brseq *.rseq)
         Geckocode (*.ini)""")):
             PrepareFile()
             SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
             self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
             self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded File:'))
+            self.GotoMainMenu()
 
     def MenuBar_Load_RomFolder(self):
-        LoadMainFile("")
+        self.LoadMainFile("")
         PrepareFile()
         SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
         self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
@@ -620,7 +619,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 ["length",length],
                 ["timesignature",3+self.SE_Midi_TimeSignature_4.isChecked()]])
         
-        if(AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu)):
+        if(AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu)) and not ((self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
+                self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
+                self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()])):
             ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
             text = Songs[self.SE_SongToChange.currentRow()].Name
             if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
@@ -750,7 +751,8 @@ class Window(QMainWindow, Ui_MainWindow):
                 ["2",self.styleSelected[2]],
                 ["3",self.styleSelected[3]],
                 ["4",self.styleSelected[4]],
-                ["5",self.styleSelected[5]]])
+                ["5",self.styleSelected[5]]],
+                Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected)
 
         if(self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][self.StE_StyleList.currentRow()]):
             ChangeName(self.StE_StyleList.currentRow(),self.StE_ChangeStyleName.text())
@@ -790,7 +792,7 @@ class Window(QMainWindow, Ui_MainWindow):
         AddPatch(Songs[self.DS_Songs.currentRow()].Name+' Default Style Patch','0'+format(Songs[self.DS_Songs.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[self.DS_Styles.currentRow()].StyleId+'\n')
         self.DS_Patch.setEnabled(False)
         if(self.fromSongEditor != -1): self.SE_StyleText.setText(_translate("MainWindow",Styles[self.DS_Styles.currentRow()].Name))
-        SaveRecording(RecordType.DefaultStyle,self.DS_Songs.currentRow(),["style",self.DS_Styles.currentRow()])
+        SaveRecording(RecordType.DefaultStyle,self.DS_Songs.currentRow(),["style",self.DS_Styles.currentRow()],self.DS_Styles.currentRow() == GetDefaultStyle(self.DS_Songs.currentRow(),True))
 
     def List_DS_SongList(self):
         self.DS_StyleBox.setEnabled(True)
