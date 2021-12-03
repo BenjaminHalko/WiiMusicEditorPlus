@@ -1,9 +1,9 @@
 #Mac
-pip3 install PyQt5 dirsync mido requests pyinstaller psutil pretty_midi
+pip3 install PyQt5 mido requests pyinstaller psutil pretty_midi
 
 #Linux
 sudo apt install -y python3-pip build-essential zlib1g-dev
-pip3 install PyQt5==5.12.2 dirsync mido requests pyinstaller psutil pretty_midi
+pip3 install PyQt5==5.12.2 mido requests pyinstaller psutil pretty_midi
 
 #Windows
-pip install PyQt5 dirsync mido requests pyinstaller psutil pretty_midi
+pip install PyQt5 mido requests pyinstaller psutil pretty_midi
