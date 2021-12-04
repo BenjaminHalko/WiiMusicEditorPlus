@@ -15,7 +15,7 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
         Settings.setWindowModality(QtCore.Qt.ApplicationModal)
-        Settings.resize(484, 328)
+        Settings.resize(484, 380)
         Settings.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -518,6 +518,10 @@ class Ui_Settings(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.Region.addItem(spacerItem)
         self.verticalLayout_8.addLayout(self.Region)
+        self.RevertChanges = QtWidgets.QCheckBox(self.Rom)
+        self.RevertChanges.setChecked(True)
+        self.RevertChanges.setObjectName("RevertChanges")
+        self.verticalLayout_8.addWidget(self.RevertChanges)
         self.verticalLayout_3.addWidget(self.Rom)
         self.SongEditor = QtWidgets.QGroupBox(self.Tab_General)
         self.SongEditor.setObjectName("SongEditor")
@@ -665,6 +669,7 @@ class Ui_Settings(object):
         self.RegionBox.setItemText(1, _translate("Settings", "Europe"))
         self.RegionBox.setItemText(2, _translate("Settings", "Japan"))
         self.RegionBox.setItemText(3, _translate("Settings", "Korea"))
+        self.RevertChanges.setText(_translate("Settings", "Remove changes from Changes.ini when reverting changes"))
         self.SongEditor.setTitle(_translate("Settings", "Song Editor"))
         self.SongScoreCheckbox.setText(_translate("Settings", "Load Song and Score separately"))
         self.RapperFix.setText(_translate("Settings", "Add the Rapper Crash fix to Gecko codes"))

@@ -193,6 +193,7 @@ class Window(QMainWindow, Ui_MainWindow):
             if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
             else: lastFileDirectory = os.path.dirname(editor.file.path)
             SaveSetting("Paths","LastLoadedPath",lastFileDirectory)
+            self.GotoMainMenu()
             return True
         return False
 
@@ -442,7 +443,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
             file.setFileMode(QFileDialog.AnyFile)
-            file.setNameFilter("Rom Change File (Changes.ini)")
+            file.setNameFilter("Rom Change File (*.ini)")
             file.setDirectory(lastFileDirectory)
             if(file.exec()):
                 ImportChangesWindow(file.selectedFiles()[0])

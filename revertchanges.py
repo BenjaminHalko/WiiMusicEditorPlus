@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDialog
 from revertchanges_ui import Ui_Dialog
 from os import path
 from shutil import copyfile
-from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames
+from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames, LoadSetting
 from success import SuccessWindow
 from errorhandler import ShowError
 import editor
@@ -31,7 +31,7 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
         
     def Revert(self):
         sections = []
-        if(path.isfile(editor.file.path+"/Changes.ini")):
+        if(path.isfile(editor.file.path+"/Changes.ini") and LoadSetting("Settings","RemoveChangesFromChangesINI",True)):
             ini = ConfigParser()
             ini.read(editor.file.path+"/Changes.ini")
             sections = ini.sections()
@@ -93,7 +93,7 @@ class RevertChangesWindow(QDialog,Ui_Dialog):
                     if(RecordType.RemoveSong in section or RecordType.MainDol in section): ini.remove_section(section)
             except Exception as e:
                 ShowError("Could not revert main.dol",str(e),self)
-        if(path.isfile(editor.file.path+"/Changes.ini")):
+        if(path.isfile(editor.file.path+"/Changes.ini") and LoadSetting("Settings","RemoveChangesFromChangesINI",True)):
             with open(editor.file.path+"/Changes.ini", 'w') as inifile:
                 ini.write(inifile)
         self.close()

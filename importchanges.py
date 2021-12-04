@@ -15,12 +15,10 @@ class Import(QThread):
         ini = ConfigParser()
         ini.read(self.recordfile)
         sections = ini.sections()
-        i = 0
         self.waiting = False
         for section in sections:
             try:
-                i += 1
-                self.progress.emit(i,len(sections))
+                self.progress.emit(sections.index(section),len(sections))
                 action,name = section.split("-")
                 if(action == RecordType.Song):
                     brseqInfo = [0,0]
@@ -62,9 +60,12 @@ class Import(QThread):
                         file.seek(0x59C574+0xBC*Songs[int(song.replace("[","").replace("]",""))].MemOrder)
                         file.write(bytes.fromhex('ffffffffffff'))
                     file.close()
+                elif(action == RecordType.DefaultStyle):
+                    AddPatch(Songs[int(name)].Name+' Default Style Patch','0'+format(Songs[int(name)].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[ini.get("style")].StyleId+'\n')
             except Exception as e:
                 self.error.emit("Could not import change "+section,str(e))
                 self.waiting = True
+                print("f")
                 while self.waiting: w = 0
         self.done.emit()
 

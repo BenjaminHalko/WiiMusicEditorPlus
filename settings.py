@@ -31,6 +31,7 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.ConnectCheckmark(self.SongScoreCheckbox,"LoadSongSeparately",False)
         self.ConnectCheckmark(self.DolphinEnableCheats,"DolphinEnableCheats",True)
         self.ConnectCheckmark(self.Normalize,"NormalizeMidi",False)
+        self.ConnectCheckmark(self.RevertChanges,"RemoveChangesFromChangesINI",True)
 
         self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
         self.DolphinSave_Browse.clicked.connect(self.GetDolphinSave)

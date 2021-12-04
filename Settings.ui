@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>484</width>
-    <height>328</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -562,6 +562,16 @@ QWidget[error=&quot;true&quot;]
              </spacer>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="RevertChanges">
+            <property name="text">
+             <string>Remove changes from Changes.ini when reverting changes</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
