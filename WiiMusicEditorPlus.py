@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -737,7 +737,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name))
             else:
                 self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name+" ~[Replaced]~"))
-                patchInfo = '0'+format(Styles[self.StE_StyleList.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets),"x")+" 00000018\n"
+                patchInfo = '0'+format(Styles[self.StE_StyleList.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsetsStyles),"x")+" 00000018\n"
                 for i in range(3):
                     if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
                     else: num1 = format(self.styleSelected[i*2],"x")

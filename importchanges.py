@@ -1,4 +1,4 @@
-from editor import LoadSetting, RecordType, GetMainDolPath, Songs, LoadMidi, PatchBrsar, Styles, AddPatch, ChangeName, BasedOnRegion, gctRegionOffsets, Instruments, PatchMainDol
+from editor import LoadSetting, RecordType, GetMainDolPath, Songs, LoadMidi, PatchBrsar, Styles, AddPatch, ChangeName, BasedOnRegion, gctRegionOffsets, Instruments, PatchMainDol, gctRegionOffsetsStyles
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, QCoreApplication, Qt
 from importchanges_ui import Ui_Dialog
@@ -40,7 +40,7 @@ class Import(QThread):
                     
                     PatchBrsar(int(name),brseqInfo,brseqLength,int(ini.get(section,"tempo")),int(ini.get(section,"length")),int(ini.get(section,"timesignature")))
                 elif(action == RecordType.Style):
-                    patchInfo = '0'+format(Styles[int(name)].MemOffset+BasedOnRegion(gctRegionOffsets),"x")+" 00000018\n"
+                    patchInfo = '0'+format(Styles[int(name)].MemOffset+BasedOnRegion(gctRegionOffsetsStyles),"x")+" 00000018\n"
                     for i in range(3):
                         if(int(ini.get(section,str(i*2))) == len(Instruments)-1): num1 = "ffffffff"
                         else: num1 = format(int(ini.get(section,str(i*2))),"x")
@@ -61,7 +61,7 @@ class Import(QThread):
                         file.write(bytes.fromhex('ffffffffffff'))
                     file.close()
                 elif(action == RecordType.DefaultStyle):
-                    AddPatch(Songs[int(name)].Name+' Default Style Patch','0'+format(Songs[int(name)].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[ini.get("style")].StyleId+'\n')
+                    AddPatch(Songs[int(name)].Name+' Default Style Patch','0'+format(Songs[int(name)].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[int(ini.get(section,"style"))].StyleId+'\n')
             except Exception as e:
                 self.error.emit("Could not import change "+section,str(e))
                 self.waiting = True

@@ -772,7 +772,12 @@ def GetStyles():
 						break
 
 def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
-	if(LoadSetting("Setting","RapperFix",True)): AddPatch('Rapper Crash Fix','043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n')
+	if(LoadSetting("Setting","RapperFix",True)):
+		AddPatch('Rapper Crash Fix',BasedOnRegion([
+			'043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n',
+			'043B0CCF 881C0090\n043B0CD3 7C090000\n043B0BC3 4081FFBC\n043B0CD7 881C00D6\n',
+			'043AE47F 881C0090\n043AE483 7C090000\n043AE487 4081FFBC\n043AE48B 881C00D6\n',
+			'0429CE7B 881C0090\n0429CE7F 7C090000\n0429CE83 4081FFBC\n0429CE87 881C00D6\n']))
 	if(Songs[SongSelected].SongType != SongTypeValue.Menu):
 		Tempo = format(Tempo,"x")
 		Length = format(Length,"x")
@@ -929,6 +934,7 @@ regionFullNames = ["US","Europe","Japan","Korea"]
 gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
 gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
+gctRegionOffsetsStyles = [0,0x200,-0x3420,-0x25320]
 currentSystem = platform.system()
 if(currentSystem == "Darwin"): currentSystem = "Mac"
 
