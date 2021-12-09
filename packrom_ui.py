@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        Dialog.resize(371, 175)
-        Dialog.setStyleSheet("QToolTip\n"
+class Ui_Packrom(object):
+    def setupUi(self, Packrom):
+        Packrom.setObjectName("Packrom")
+        Packrom.setWindowModality(QtCore.Qt.ApplicationModal)
+        Packrom.resize(371, 178)
+        Packrom.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -492,9 +492,9 @@ class Ui_Dialog(object):
 "{\n"
 "    border: 1px solid #444;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Packrom)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Title = QtWidgets.QLabel(Dialog)
+        self.Title = QtWidgets.QLabel(Packrom)
         self.Title.setMaximumSize(QtCore.QSize(16777215, 44))
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
@@ -502,33 +502,33 @@ class Ui_Dialog(object):
         self.Title.setFont(font)
         self.Title.setObjectName("Title")
         self.verticalLayout.addWidget(self.Title)
-        self.TitleLine = QtWidgets.QFrame(Dialog)
+        self.TitleLine = QtWidgets.QFrame(Packrom)
         self.TitleLine.setFrameShape(QtWidgets.QFrame.HLine)
         self.TitleLine.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.TitleLine.setObjectName("TitleLine")
         self.verticalLayout.addWidget(self.TitleLine)
         self.RomTypeLayout = QtWidgets.QHBoxLayout()
         self.RomTypeLayout.setObjectName("RomTypeLayout")
-        self.RomTypeLabel = QtWidgets.QLabel(Dialog)
+        self.RomTypeLabel = QtWidgets.QLabel(Packrom)
         self.RomTypeLabel.setObjectName("RomTypeLabel")
         self.RomTypeLayout.addWidget(self.RomTypeLabel)
-        self.RomTypeWbfs = QtWidgets.QRadioButton(Dialog)
+        self.RomTypeWbfs = QtWidgets.QRadioButton(Packrom)
         self.RomTypeWbfs.setChecked(True)
         self.RomTypeWbfs.setObjectName("RomTypeWbfs")
         self.RomTypeLayout.addWidget(self.RomTypeWbfs)
-        self.RomTypeIso = QtWidgets.QRadioButton(Dialog)
+        self.RomTypeIso = QtWidgets.QRadioButton(Packrom)
         self.RomTypeIso.setObjectName("RomTypeIso")
         self.RomTypeLayout.addWidget(self.RomTypeIso)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.RomTypeLayout.addItem(spacerItem)
         self.verticalLayout.addLayout(self.RomTypeLayout)
-        self.PatchMainDolCheckbox = QtWidgets.QCheckBox(Dialog)
+        self.PatchMainDolCheckbox = QtWidgets.QCheckBox(Packrom)
         self.PatchMainDolCheckbox.setChecked(True)
         self.PatchMainDolCheckbox.setObjectName("PatchMainDolCheckbox")
         self.verticalLayout.addWidget(self.PatchMainDolCheckbox)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
-        self.CreateRom = QtWidgets.QPushButton(Dialog)
+        self.CreateRom = QtWidgets.QPushButton(Packrom)
         self.CreateRom.setMinimumSize(QtCore.QSize(0, 45))
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
@@ -537,16 +537,16 @@ class Ui_Dialog(object):
         self.CreateRom.setObjectName("CreateRom")
         self.verticalLayout.addWidget(self.CreateRom)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Packrom)
+        QtCore.QMetaObject.connectSlotsByName(Packrom)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, Packrom):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Pack Rom Filesystem"))
-        self.Title.setText(_translate("Dialog", "Pack Rom Filesystem"))
-        self.RomTypeLabel.setText(_translate("Dialog", "Rom Type:"))
-        self.RomTypeWbfs.setText(_translate("Dialog", ".wbfs"))
-        self.RomTypeIso.setText(_translate("Dialog", ".iso"))
-        self.PatchMainDolCheckbox.setText(_translate("Dialog", "Patch Main.dol with Geckocodes"))
-        self.CreateRom.setText(_translate("Dialog", "Patch!"))
+        Packrom.setWindowTitle(_translate("Packrom", "Pack Rom Filesystem"))
+        self.Title.setText(_translate("Packrom", "Pack Rom Filesystem"))
+        self.RomTypeLabel.setText(_translate("Packrom", "Rom Type:"))
+        self.RomTypeWbfs.setText(_translate("Packrom", ".wbfs"))
+        self.RomTypeIso.setText(_translate("Packrom", ".iso"))
+        self.PatchMainDolCheckbox.setText(_translate("Packrom", "Patch Main.dol with Geckocodes"))
+        self.CreateRom.setText(_translate("Packrom", "Patch!"))
 import resources_rc

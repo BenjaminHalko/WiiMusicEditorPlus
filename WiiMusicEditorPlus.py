@@ -1,6 +1,6 @@
 import os
 import pathlib
-from shutil import copyfile, rmtree
+from shutil import copyfile, copytree, rmtree
 import subprocess
 import sys
 import zipfile
@@ -14,21 +14,23 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
-from riivolution import RiivolutionWindow
-from success import SuccessWindow
-from packrom import PackRomWindow
-from revertchanges import RevertChangesWindow
-from importchanges import ImportChangesWindow
+from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
 
 lastExtraFileDirectory = LoadSetting("Paths","LastExtraLoadedPath","")
 lastFileDirectory = LoadSetting("Paths","LastLoadedPath","")
+
+if(editor.file.path != ""):
+	try:
+		PrepareFile()
+	except:
+		editor.file.path = ""
 
 def AllowType(type):
     return (editor.file.type == LoadType.Rom or editor.file.type == type)
@@ -65,6 +67,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MB_Dolphin.triggered.connect(lambda: self.LoadDolphin(False))
         self.MB_DolphinMenu.triggered.connect(lambda: self.LoadDolphin(True))
         self.MB_DownloadSongs.triggered.connect(self.DownloadSongs)
+        self.MB_SaveFile.triggered.connect(self.MenuBar_Save_File)
         self.MB_Help.triggered.connect(self.OpenHelpManual)
 
         #Main Menu Buttons
@@ -485,12 +488,6 @@ class Window(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
 
-    def DownloadSongs(self):
-        print("nocheese")
-
-    def OpenHelpManual(self):
-        print("nohelpforyou")
-
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
         SettingsWindow(self)
@@ -514,6 +511,21 @@ class Window(QMainWindow, Ui_MainWindow):
         SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
         self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
         self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))   
+
+    def MenuBar_Save_File(self):
+        try:
+            if(ConfirmDialog("Are you sure you want to overwrite your save file?")):
+                rmtree(GetDolphinSave()+"/Wii/title/00010000/"+BasedOnRegion(savePathIds)+"/data")
+                copytree(HelperPath()+"/WiiMusicSave",GetDolphinSave()+"/Wii/title/00010000/"+BasedOnRegion(savePathIds)+"/data")
+                SuccessWindow("Save file copied!")
+        except Exception as e:
+            ShowError("Unable to copy save file",str(e))
+
+    def DownloadSongs(self):
+        print('f')
+
+    def OpenHelpManual(self):
+        print("nohelpforyou")
 
     #############Song Editor Buttons
     def SE_Patchable(self):

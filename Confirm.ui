@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Import</class>
- <widget class="QDialog" name="Import">
+ <class>Confirm</class>
+ <widget class="QDialog" name="Confirm">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>303</width>
-    <height>74</height>
+    <width>262</width>
+    <height>72</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Import Changes</string>
+   <string>Wii Music Editor Plus</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QToolTip
@@ -496,9 +496,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="Label">
+    <widget class="QLabel" name="text">
      <property name="text">
-      <string>Import Change 0 out of 0</string>
+      <string>Words</string>
      </property>
     </widget>
    </item>
@@ -516,11 +516,22 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
     </spacer>
    </item>
    <item>
-    <widget class="QProgressBar" name="Progress">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="noButton">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="yesButton">
+       <property name="text">
+        <string>Ok</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

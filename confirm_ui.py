@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'RevertChanges.ui'
+# Form implementation generated from reading ui file 'Confirm.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Revert(object):
-    def setupUi(self, Revert):
-        Revert.setObjectName("Revert")
-        Revert.setWindowModality(QtCore.Qt.ApplicationModal)
-        Revert.resize(256, 208)
-        Revert.setStyleSheet("QToolTip\n"
+class Ui_Confirm(object):
+    def setupUi(self, Confirm):
+        Confirm.setObjectName("Confirm")
+        Confirm.setWindowModality(QtCore.Qt.ApplicationModal)
+        Confirm.resize(262, 72)
+        Confirm.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -492,70 +492,29 @@ class Ui_Revert(object):
 "{\n"
 "    border: 1px solid #444;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Revert)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Confirm)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Title = QtWidgets.QLabel(Revert)
-        self.Title.setMaximumSize(QtCore.QSize(16777215, 44))
-        font = QtGui.QFont()
-        font.setFamily("Continuum Medium")
-        font.setPointSize(26)
-        self.Title.setFont(font)
-        self.Title.setObjectName("Title")
-        self.verticalLayout.addWidget(self.Title)
-        self.line = QtWidgets.QFrame(Revert)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.verticalLayout.addWidget(self.line)
-        self.Checkboxes1 = QtWidgets.QHBoxLayout()
-        self.Checkboxes1.setObjectName("Checkboxes1")
-        self.Songs = QtWidgets.QCheckBox(Revert)
-        self.Songs.setObjectName("Songs")
-        self.Checkboxes1.addWidget(self.Songs)
-        self.Styles = QtWidgets.QCheckBox(Revert)
-        self.Styles.setObjectName("Styles")
-        self.Checkboxes1.addWidget(self.Styles)
-        self.verticalLayout.addLayout(self.Checkboxes1)
-        self.Checkboxes2 = QtWidgets.QHBoxLayout()
-        self.Checkboxes2.setObjectName("Checkboxes2")
-        self.Text = QtWidgets.QCheckBox(Revert)
-        self.Text.setObjectName("Text")
-        self.Checkboxes2.addWidget(self.Text)
-        self.MainDol = QtWidgets.QCheckBox(Revert)
-        self.MainDol.setObjectName("MainDol")
-        self.Checkboxes2.addWidget(self.MainDol)
-        self.verticalLayout.addLayout(self.Checkboxes2)
-        self.Buttons = QtWidgets.QHBoxLayout()
-        self.Buttons.setObjectName("Buttons")
-        self.SelectButton = QtWidgets.QPushButton(Revert)
-        self.SelectButton.setObjectName("SelectButton")
-        self.Buttons.addWidget(self.SelectButton)
-        self.DeselectButton = QtWidgets.QPushButton(Revert)
-        self.DeselectButton.setObjectName("DeselectButton")
-        self.Buttons.addWidget(self.DeselectButton)
-        self.verticalLayout.addLayout(self.Buttons)
+        self.text = QtWidgets.QLabel(Confirm)
+        self.text.setObjectName("text")
+        self.verticalLayout.addWidget(self.text)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.PatchButton = QtWidgets.QPushButton(Revert)
-        self.PatchButton.setMinimumSize(QtCore.QSize(0, 45))
-        font = QtGui.QFont()
-        font.setFamily("Continuum Medium")
-        font.setPointSize(20)
-        self.PatchButton.setFont(font)
-        self.PatchButton.setObjectName("PatchButton")
-        self.verticalLayout.addWidget(self.PatchButton)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.noButton = QtWidgets.QPushButton(Confirm)
+        self.noButton.setObjectName("noButton")
+        self.horizontalLayout.addWidget(self.noButton)
+        self.yesButton = QtWidgets.QPushButton(Confirm)
+        self.yesButton.setObjectName("yesButton")
+        self.horizontalLayout.addWidget(self.yesButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.retranslateUi(Revert)
-        QtCore.QMetaObject.connectSlotsByName(Revert)
+        self.retranslateUi(Confirm)
+        QtCore.QMetaObject.connectSlotsByName(Confirm)
 
-    def retranslateUi(self, Revert):
+    def retranslateUi(self, Confirm):
         _translate = QtCore.QCoreApplication.translate
-        Revert.setWindowTitle(_translate("Revert", "Revert Changes"))
-        self.Title.setText(_translate("Revert", "Revert Changes"))
-        self.Songs.setText(_translate("Revert", "Songs"))
-        self.Styles.setText(_translate("Revert", "Styles"))
-        self.Text.setText(_translate("Revert", "Text"))
-        self.MainDol.setText(_translate("Revert", "Main.dol"))
-        self.SelectButton.setText(_translate("Revert", "Select All"))
-        self.DeselectButton.setText(_translate("Revert", "Deselect All"))
-        self.PatchButton.setText(_translate("Revert", "Revert!"))
+        Confirm.setWindowTitle(_translate("Confirm", "Wii Music Editor Plus"))
+        self.text.setText(_translate("Confirm", "Words"))
+        self.noButton.setText(_translate("Confirm", "Cancel"))
+        self.yesButton.setText(_translate("Confirm", "Ok"))

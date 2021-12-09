@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        Dialog.resize(303, 68)
-        Dialog.setStyleSheet("QToolTip\n"
+class Ui_Import(object):
+    def setupUi(self, Import):
+        Import.setObjectName("Import")
+        Import.setWindowModality(QtCore.Qt.ApplicationModal)
+        Import.resize(303, 74)
+        Import.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -492,22 +492,22 @@ class Ui_Dialog(object):
 "{\n"
 "    border: 1px solid #444;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Import)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Label = QtWidgets.QLabel(Dialog)
+        self.Label = QtWidgets.QLabel(Import)
         self.Label.setObjectName("Label")
         self.verticalLayout.addWidget(self.Label)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.Progress = QtWidgets.QProgressBar(Dialog)
+        self.Progress = QtWidgets.QProgressBar(Import)
         self.Progress.setProperty("value", 0)
         self.Progress.setObjectName("Progress")
         self.verticalLayout.addWidget(self.Progress)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Import)
+        QtCore.QMetaObject.connectSlotsByName(Import)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, Import):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Import Changes"))
-        self.Label.setText(_translate("Dialog", "Import Change 0 out of 0"))
+        Import.setWindowTitle(_translate("Import", "Import Changes"))
+        self.Label.setText(_translate("Import", "Import Change 0 out of 0"))

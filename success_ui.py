@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(283, 88)
-        Dialog.setStyleSheet("QToolTip\n"
+class Ui_Success(object):
+    def setupUi(self, Success):
+        Success.setObjectName("Success")
+        Success.resize(283, 88)
+        Success.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -491,15 +491,15 @@ class Ui_Dialog(object):
 "{\n"
 "    border: 1px solid #444;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Success)
         self.verticalLayout.setObjectName("verticalLayout")
         self.Title = QtWidgets.QHBoxLayout()
         self.Title.setObjectName("Title")
-        self.CompleteSymbol = QtWidgets.QLabel(Dialog)
+        self.CompleteSymbol = QtWidgets.QLabel(Success)
         self.CompleteSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
         self.CompleteSymbol.setObjectName("CompleteSymbol")
         self.Title.addWidget(self.CompleteSymbol)
-        self.CompleteTitle = QtWidgets.QLabel(Dialog)
+        self.CompleteTitle = QtWidgets.QLabel(Success)
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
         font.setPointSize(16)
@@ -509,18 +509,18 @@ class Ui_Dialog(object):
         self.verticalLayout.addLayout(self.Title)
         spacerItem = QtWidgets.QSpacerItem(20, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.CompleteClose = QtWidgets.QPushButton(Dialog)
+        self.CompleteClose = QtWidgets.QPushButton(Success)
         self.CompleteClose.setEnabled(True)
         self.CompleteClose.setObjectName("CompleteClose")
         self.verticalLayout.addWidget(self.CompleteClose)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Success)
+        QtCore.QMetaObject.connectSlotsByName(Success)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, Success):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Wii Music Editor Plus"))
-        self.CompleteSymbol.setText(_translate("Dialog", "<html><head/><body><p><img src=\":/images/images/checkmark.png\"/></p></body></html>"))
-        self.CompleteTitle.setText(_translate("Dialog", "Completed!"))
-        self.CompleteClose.setText(_translate("Dialog", "Close"))
+        Success.setWindowTitle(_translate("Success", "Wii Music Editor Plus"))
+        self.CompleteSymbol.setText(_translate("Success", "<html><head/><body><p><img src=\":/images/images/checkmark.png\"/></p></body></html>"))
+        self.CompleteTitle.setText(_translate("Success", "Completed!"))
+        self.CompleteClose.setText(_translate("Success", "Close"))
 import resources_rc
