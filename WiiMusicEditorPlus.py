@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -43,6 +43,7 @@ class TAB:
     TextEditor = 3
     DefaultStyleEditor = 4
     RemoveSongEditor = 5
+    SoundEditor = 6
 
 #Main Window
 class Window(QMainWindow, Ui_MainWindow):
@@ -75,6 +76,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_StyleEditor_Button.clicked.connect(self.LoadStyleEditor)
         self.MP_EditText_Button.clicked.connect(self.LoadTextEditor)
         self.MP_DefaultStyle_Button.clicked.connect(self.LoadDefaultStyleEditor)
+        self.MP_ReplaceSound_Button.clicked.connect(self.LoadSoundEditor)
         self.MP_RemoveSong_Button.clicked.connect(self.LoadRemoveSongEditor)
         self.MP_GeckocodeConvert_Button.clicked.connect(self.ConvertGeckocode)
         self.MP_MainDolPatch_Button.clicked.connect(self.PatchMainDolWithGeckoCode)
@@ -130,6 +132,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.RS_RemoveCustomSongs.clicked.connect(self.Button_RS_RemoveCustomSongs)
         self.RS_Deselect_Button.clicked.connect(self.Button_RS_DeselectAll)
         self.RS_Patch.clicked.connect(self.Button_RS_Purge)
+
+        #Sound Editor
+        self.SOE_Back_Button.clicked.connect(self.GotoMainMenu)
+        self.SOE_Sounds.itemSelectionChanged.connect(self.List_SOE_Sounds)
+        self.SOE_SelectAll.clicked.connect(self.Button_SOE_SelectAll)
+        self.SOE_SoundType.itemPressed.connect(self.SOE_Patchable)
+        self.SOE_File_Browse.clicked.connect(self.Button_SOE_Browse)
+        self.SOE_Patch.clicked.connect(self.Button_SOE_Patch)
 
     #Lists
     def LoadSongs(self,widgetID,types=[],lockSongs=False):
@@ -324,6 +334,24 @@ class Window(QMainWindow, Ui_MainWindow):
             if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
             ShowError("Unable to remove songs","Must load Wii Music Rom or Main.dol")
+
+    def LoadSoundEditor(self):
+        if(AllowType(LoadType.Brsar)):
+            self.MainWidget.setCurrentIndex(TAB.SoundEditor)
+            self.SOE_Sounds.clear()
+            for i in range(40):
+                item = QtWidgets.QListWidgetItem()
+                item.setText(Instruments[i].Name)
+                self.SOE_Sounds.addItem(item)
+            item = QtWidgets.QListWidgetItem()
+            item.setText("Sebastion Tute")
+            self.SOE_Sounds.addItem(item)
+            self.extraFile = ""
+            self.SOE_Patch.setEnabled(False)
+            self.SOE_SoundTypeBox.setEnabled(False)
+            self.SOE_File_Label.setText(_translate("MainWindow","Load .rwav File"))
+        else:
+            ShowError("Unable to load sound editor","Must load Wii Music Rom or Brsar")
 
     def ConvertGeckocode(self):
         if(AllowType(LoadType.Gct)):
@@ -852,6 +880,54 @@ class Window(QMainWindow, Ui_MainWindow):
             SuccessWindow("Songs Successfully Destroyed!!!")
         except Exception as e:
             ShowError("Could not remove songs",str(e))
+
+    #############Sound Editor
+    def SOE_Patchable(self):
+        self.SOE_Patch.setEnabled(self.extraFile != "" and len(self.SOE_SoundType.selectedItems()) != 0)
+
+    def List_SOE_Sounds(self):
+        self.SOE_SoundTypeBox.setEnabled(True)
+        self.SOE_SoundType.clear()
+        if(self.SOE_Sounds.currentRow() == 40):
+            for i in range(142):
+                item = QtWidgets.QListWidgetItem()
+                item.setText(str(i))
+                self.SOE_SoundType.addItem(item)
+        else:
+            for i in Instruments[self.SOE_Sounds.currentRow()].NumberOfSounds:
+                item = QtWidgets.QListWidgetItem()
+                item.setText(i)
+                self.SOE_SoundType.addItem(item)
+
+    def Button_SOE_SelectAll(self):
+        for i in range(self.SOE_SoundType.count()):
+            self.SOE_SoundType.item(i).setSelected(True)
+        self.SOE_Patchable()
+
+    def Button_SOE_Browse(self):
+        if(self.LoadExtraFile("rwav (*.rwav)")):
+            self.SOE_Patchable()
+            self.SOE_File_Label.setText(_translate("MainWindow",os.path.basename(self.extraFile)))
+
+    def Button_SOE_Patch(self):
+        file = open(self.extraFile,"rb")
+        rwavInfo = file.read()
+        file.close()
+        rwavSize = os.stat(self.extraFile).st_size
+        index = 0x33654
+        if(self.SOE_Sounds.currentRow() == 40): index = 0x37B50
+        selected = []
+        for i in range(self.SOE_SoundType.count()):
+                if(self.SOE_SoundType.item(i).isSelected()): selected.append(i)
+
+        templist = []
+        templist.extend(range(self.SOE_SoundType.count()))
+
+        if(self.SOE_Sounds.currentRow() == 40 and selected == templist):
+            ReplaceWave(index,-1,rwavInfo,rwavSize)
+        else:
+            ReplaceWave(index,selected,rwavInfo,rwavSize)
+        self.SOE_Patch.setEnabled(False)
 
 class ExternalEditor(QtCore.QThread):
     done = QtCore.pyqtSignal()

@@ -1093,12 +1093,6 @@ padding-bottom: 6px;
             <layout class="QHBoxLayout" name="MP_Advanced1">
              <item>
               <widget class="QPushButton" name="MP_EditText_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -1112,12 +1106,6 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_DefaultStyle_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -1130,13 +1118,20 @@ padding-bottom: 6px;
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="MP_RemoveSong_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
+              <widget class="QPushButton" name="MP_ReplaceSound_Button">
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
                </property>
+               <property name="text">
+                <string>Replace Sounds</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_RemoveSong_Button">
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -1154,12 +1149,6 @@ padding-bottom: 6px;
             <layout class="QHBoxLayout" name="MP_Advanced2">
              <item>
               <widget class="QPushButton" name="MP_GeckocodeConvert_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -1173,12 +1162,6 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_MainDolPatch_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -1192,12 +1175,6 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_Riivolution_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
@@ -2717,6 +2694,170 @@ background-color: #242424;</string>
           </property>
           <property name="text">
            <string>Purge Songs!!!</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="SoundEditor">
+       <layout class="QVBoxLayout" name="verticalLayout_44">
+        <item>
+         <layout class="QHBoxLayout" name="SOE_Title">
+          <item>
+           <widget class="QLabel" name="SOE_Title_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>44</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Continuum Medium</family>
+              <pointsize>26</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Sound Editor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="SOE_Back_Button">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string> Back</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="SOE_Lists">
+          <item>
+           <widget class="QGroupBox" name="SOE_SoundBox">
+            <property name="title">
+             <string>Sound List</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_42">
+             <item>
+              <widget class="QListWidget" name="SOE_Sounds"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="SOE_RightLayout">
+            <item>
+             <widget class="QGroupBox" name="SOE_File">
+              <property name="title">
+               <string>File</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QLabel" name="SOE_File_Label">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="acceptDrops">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+padding-top: 6px;
+padding-bottom: 6px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>Load a Rwav-Type file</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SOE_File_Browse">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="SOE_SoundTypeBox">
+              <property name="title">
+               <string>Sound Types</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_43">
+               <item>
+                <widget class="QListWidget" name="SOE_SoundType">
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::ExtendedSelection</enum>
+                 </property>
+                 <property name="movement">
+                  <enum>QListView::Static</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SOE_SelectAll">
+                 <property name="text">
+                  <string>Select All</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="SOE_Patch">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Continuum Medium</family>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patch!</string>
           </property>
          </widget>
         </item>
