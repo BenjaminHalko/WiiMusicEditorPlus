@@ -11,6 +11,8 @@ from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
+app = QApplication([])
+
 from main_window_ui import Ui_MainWindow 
 
 import editor
@@ -937,7 +939,6 @@ class ExternalEditor(QtCore.QThread):
         self.done.emit()
 
 if __name__ == "__main__":
-    app = QApplication([])
     app.setWindowIcon(QIcon(HelperPath()+"/Extra/icon.png"))
     QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contb.ttf")
     QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contm.ttf")
