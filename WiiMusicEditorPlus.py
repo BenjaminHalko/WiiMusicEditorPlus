@@ -919,16 +919,14 @@ class Window(QMainWindow, Ui_MainWindow):
         index = 0x33654
         if(self.SOE_Sounds.currentRow() == 40): index = 0x37B50
         selected = []
+        offset = 0
+        if(self.SOE_Sounds.currentRow() != 0):
+            for i in range(self.SOE_Sounds.currentRow()):
+                offset += len(Instruments[i].NumberOfSounds)
         for i in range(self.SOE_SoundType.count()):
-                if(self.SOE_SoundType.item(i).isSelected()): selected.append(i)
-
-        templist = []
-        templist.extend(range(self.SOE_SoundType.count()))
-
-        if(self.SOE_Sounds.currentRow() == 40 and selected == templist):
-            ReplaceWave(index,-1,rwavInfo,rwavSize)
-        else:
-            ReplaceWave(index,selected,rwavInfo,rwavSize)
+                if(self.SOE_SoundType.item(i).isSelected()): selected.append(i+offset)
+                
+        ReplaceWave(index,selected,rwavInfo,rwavSize)
         self.SOE_Patch.setEnabled(False)
 
 class ExternalEditor(QtCore.QThread):

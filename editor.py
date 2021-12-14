@@ -598,6 +598,7 @@ def ReplaceWave(startOffset,replaceNumber,rwavInfo,rwavSize):
 	table = rwarSpot+int.from_bytes(brsar.read(4),'big')
 	brsar.seek(table+8)
 	numberOfRwavs = int.from_bytes(brsar.read(4),'big')
+	if(numberOfRwavs == len(replaceNumber)): replaceNumber = -1
 	if(replaceNumber == -1):
 		for i in range(numberOfRwavs):
 			brsar.seek(table+0x10+0xC*i)
@@ -630,15 +631,15 @@ def ReplaceWave(startOffset,replaceNumber,rwavInfo,rwavSize):
 			brsar.write(rwavSize.to_bytes(4, 'big'))
 			brsar.seek(0)
 			data1 = brsar.read(dataSection+dataSpot)
-			brsar.seek(dataSection+dataSpot+rwavSize*numberOfRwavs-rwavSize+dataSize)
+			brsar.seek(dataSection+dataSpot+dataSize)
 			data2 = brsar.read()
 			brsar.seek(0)
-			brsar.write(data1+rwavInfo*numberOfRwavs+data2)
+			brsar.write(data1+rwavInfo+data2)
 			brsar.truncate()
-			for i in range(i+1,numberOfRwavs):
-				brsar.seek(table+0x10+0xC*i)
+			for j in range(i+1,numberOfRwavs):
+				brsar.seek(table+0x10+0xC*j)
 				offset = int.from_bytes(brsar.read(4),'big')
-				brsar.seek(table+0x10+0xC*i)
+				brsar.seek(table+0x10+0xC*j)
 				brsar.write((offset+rwavSize-dataSize).to_bytes(4, 'big'))
 			
 	for offset in [8,startOffset+4,rwarSpot+8]:
@@ -970,4 +971,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "0.9.0"
+version = "0.9.1"
