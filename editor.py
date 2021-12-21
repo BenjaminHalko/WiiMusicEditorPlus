@@ -499,9 +499,9 @@ def BasedOnRegion(array):
 	global regionSelected
 	return array[regionSelected]
 
-def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqLengthArray,BrsarPath):
+def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqLengthArray):
 	if(not os.path.exists(GetBrsarPath()+".backup")): copyfile(GetBrsarPath(),GetBrsarPath()+".backup")
-	if(BrsarPath == -1): BrsarPath = GetBrsarPath()
+	BrsarPath = GetBrsarPath()
 	BrseqInfo = []
 	BrseqLength = []
 	for i in range(len(BrseqOrdering)):
@@ -776,7 +776,7 @@ def GetStyles():
 						min(int(textlines[i+4][15:17:1],16),len(Instruments)-1)]
 						break
 
-def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,BrsarPath=-1):
+def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature):
 	if(LoadSetting("Setting","RapperFix",True)):
 		AddPatch('Rapper Crash Fix',BasedOnRegion([
 			'043B0BBB 881C0090\n043B0BBF 7C090000\n043B0BC3 4081FFBC\n043B0BC7 881C00D6\n',
@@ -790,22 +790,40 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature,Brs
 		TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
 		TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
 	if(Songs[SongSelected].SongType == SongTypeValue.Regular):
-		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength,BrsarPath)
+		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 		if(Songs[SongSelected].Name == 'Do-Re-Mi'):
-			ReplaceSong(0x0343F0,0x034988,[18,19,113,155,156,157,158,159,160,161,162,175],[0,1,0,0,0,0,0,0,0,0,0],BrseqInfo,BrseqLength,BrsarPath)
-			ReplaceSong(0x0360D0,0x0364C8,[18,19,113,123],[0,1,0],BrseqInfo,BrseqLength,BrsarPath)
+			ReplaceSong(0x0343F0,0x034988,[18,19,113,155,156,157,158,159,160,161,162,175],[0,1,0,0,0,0,0,0,0,0,0],BrseqInfo,BrseqLength)
+			ReplaceSong(0x0360D0,0x0364C8,[18,19,113,123],[0,1,0],BrseqInfo,BrseqLength)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Menu):
-		ReplaceSong(0x037D64,0x037DBC,[0,1,2,3,4,5,6,7],[0,1,1,1,1,1,1],BrseqInfo,BrseqLength,BrsarPath)
+		ReplaceSong(0x037D64,0x037DBC,[0,1,2,3,4,5,6,7],[0,1,1,1,1,1,1],BrseqInfo,BrseqLength)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Maestro):
-		ReplaceSong(0x0370E8,0x037140,[Songs[SongSelected].MemOrder+2,7],[0],BrseqInfo,BrseqLength,BrsarPath)
+		ReplaceSong(0x0370E8,0x037140,[Songs[SongSelected].MemOrder+2,7],[0],BrseqInfo,BrseqLength)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Handbell):
-		ReplaceSong(0x037340,0x037438,[Songs[SongSelected].MemOrder*5+2,Songs[SongSelected].MemOrder*5+3,Songs[SongSelected].MemOrder*5+4,Songs[SongSelected].MemOrder*5+5,Songs[SongSelected].MemOrder*5+6,27],[0,0,0,0,0],BrseqInfo,BrseqLength,BrsarPath)
+		ReplaceSong(0x037340,0x037438,[Songs[SongSelected].MemOrder*5+2,Songs[SongSelected].MemOrder*5+3,Songs[SongSelected].MemOrder*5+4,Songs[SongSelected].MemOrder*5+5,Songs[SongSelected].MemOrder*5+6,27],[0,0,0,0,0],BrseqInfo,BrseqLength)
 		LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		LengthCode2 = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+4,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		MeasureCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+24,'x').lower()+' '+'00000000\n'
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode)
+
+def BrseqAdding(positionOffset,listOffset,BrseqInfo,BrseqLength):
+	brsar = open(GetBrsarPath(),"r+b")
+	brsar.seek(positionOffset+0x18)
+	num = int.from_bytes(brsar.read(4),"big")
+	brsar.seek(positionOffset+0x18)
+	brsar.write((num+1).to_bytes(4,"big"))
+	brsar.seek(listOffset+24*(num-1))
+	amount = int.from_bytes(brsar.read(4),"big")+int.from_bytes(brsar.read(4),"big")
+	brsar.seek(listOffset+24*(num-1)-4)
+	number = int.from_bytes(brsar.read(4),"big")+1
+	brsar.seek(0)
+	data1 = brsar.read(listOffset+24*num)
+	data2 = brsar.read()
+	brsar.close()
+	brsar = open(GetBrsarPath(),"wb")
+	brsar.write(data1+number.to_bytes(4,"big")+amount.to_bytes(4,"big")+bytes(16)+data2)
+	brsar.close()
 
 def FixMessageFile(textlines):
 	for num in range(len(textlines)):
@@ -971,4 +989,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "0.9.1"
+version = "0.9.2"

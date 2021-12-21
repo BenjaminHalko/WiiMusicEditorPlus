@@ -561,7 +561,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def SE_Patchable(self):
         allow = True
         if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
-            if(self.brseqInfo[0] == 0) or (self.brseqInfo[1] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings","LoadSongSeparately",False)): allow = False
+            if(self.brseqInfo[1] == 0) or (self.brseqInfo[0] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings","LoadSongSeparately",False)): allow = False
         elif(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
             if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
@@ -576,24 +576,24 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.SE_Midi_File_Song_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
                 else:
                     self.SE_Midi_File_Score_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
-                self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
-                self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
-                self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
-                self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
-                self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
-                self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
-                if(self.SE_Midi_Length_Measures.isChecked()):
-                    self.SE_Midi_Length_Measures.setAutoExclusive(False)
-                    self.SE_Midi_Length_Beats.setAutoExclusive(False)
-                    self.SE_Midi_Length_Measures.setChecked(False)
-                    self.SE_Midi_Length_Beats.setChecked(True)
-                    self.SE_Midi_Length_Measures.setAutoExclusive(True)
-                    self.SE_Midi_Length_Beats.setAutoExclusive(True)
-                self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
-                self.SE_Midi_Length_Input.setValue(midiInfo[3])
-                self.brseqInfo[song] = midiInfo[0]
-                self.brseqLength[song] = midiInfo[1]
-                self.brseqPath[song] = self.extraFile
+                    self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
+                    self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
+                    self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
+                    self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
+                    self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
+                    self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
+                    if(self.SE_Midi_Length_Measures.isChecked()):
+                        self.SE_Midi_Length_Measures.setAutoExclusive(False)
+                        self.SE_Midi_Length_Beats.setAutoExclusive(False)
+                        self.SE_Midi_Length_Measures.setChecked(False)
+                        self.SE_Midi_Length_Beats.setChecked(True)
+                        self.SE_Midi_Length_Measures.setAutoExclusive(True)
+                        self.SE_Midi_Length_Beats.setAutoExclusive(True)
+                    self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
+                    self.SE_Midi_Length_Input.setValue(midiInfo[3])
+                self.brseqInfo[1-song] = midiInfo[0]
+                self.brseqLength[1-song] = midiInfo[1]
+                self.brseqPath[1-song] = self.extraFile
                 self.SE_Patchable()
             
     def Button_SE_Midi_TimeSignature(self):
@@ -637,20 +637,20 @@ class Window(QMainWindow, Ui_MainWindow):
             tmpLength = self.brseqLength.copy()
             tmpPath = self.brseqPath.copy()
             if(LoadSetting("Settings","NormalizeMidi",False)):
-                midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
-                if(midiInfo[0] != False):
-                    tmpInfo[0] = midiInfo[0]
-                    tmpLength[0] = midiInfo[1]
-            
-            if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
-                tmpInfo[1] = tmpInfo[0]
-                tmpLength[1] = tmpLength[0]
-                tmpPath[1] = ""
-            elif(LoadSetting("Settings","NormalizeMidi",False)):
                 midiInfo = LoadMidi(self.brseqPath[1],self.SE_Midi_Tempo_Input.value())
                 if(midiInfo[0] != False):
                     tmpInfo[1] = midiInfo[0]
                     tmpLength[1] = midiInfo[1]
+            
+            if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
+                tmpInfo[0] = tmpInfo[1]
+                tmpLength[0] = tmpLength[1]
+                tmpPath[0] = ""
+            elif(LoadSetting("Settings","NormalizeMidi",False)):
+                midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
+                if(midiInfo[0] != False):
+                    tmpInfo[0] = midiInfo[0]
+                    tmpLength[0] = midiInfo[1]
             length = self.SE_Midi_Length_Input.value()
             if(self.SE_Midi_Length_Measures.isChecked()):
                 length *= 3+self.SE_Midi_TimeSignature_4.isChecked()
