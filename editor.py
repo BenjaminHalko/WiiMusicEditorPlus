@@ -750,7 +750,7 @@ def PlayRwav(startOffset,replaceNumber):
 			args.append(SavePath()+"/tmp/sound"+str(i)+".rwav")
 		if(currentSystem == "Mac"):
 			command = "vgmstream-cli"
-			for i in range(1,len(args)): command += " "+args[i]
+			for i in range(3,len(args)): command += ' "'+args[i]+'"'
 			subprocess.run(command,shell=True)
 		else: Run(args)
 	except Exception as e:
