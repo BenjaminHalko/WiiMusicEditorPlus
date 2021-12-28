@@ -916,7 +916,7 @@ class Window(QMainWindow, Ui_MainWindow):
             playlist.close()
             subprocess.Popen(SavePath()+"/tmp/playlist.m3u",shell=True)
         else:
-            subprocess.Popen(SavePath()+"/tmp/sound"+str(selected[0])+".rwav.wav",shell=True)
+            subprocess.Popen('"'+SavePath()+"/tmp/sound"+str(selected[0])+'.rwav.wav"',shell=True)
             
 
     def List_SOE_Sounds(self):
