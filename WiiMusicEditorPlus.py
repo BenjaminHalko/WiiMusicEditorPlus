@@ -16,7 +16,7 @@ app = QApplication([])
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, SoundClass, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, SoundClass, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -912,7 +912,10 @@ class Window(QMainWindow, Ui_MainWindow):
         if(len(selected) > 1):
             playlist = open(SavePath()+"/tmp/playlist.m3u","w")
             for i in selected:
-                playlist.write(SavePath().replace("/","\\")+"\\tmp\\sound"+str(i)+".rwav.wav\n")
+                if(currentSystem == "Windows"):
+                    playlist.write(SavePath().replace("/","\\")+"\\tmp\\sound"+str(i)+".rwav.wav\n")
+                else:
+                    playlist.write(SavePath()+"/tmp/sound"+str(i)+".rwav.wav\n")
             playlist.close()
             subprocess.Popen(ChooseFromOS(["","open ","xdg-open "])+'"'+SavePath()+'/tmp/playlist.m3u"',shell=True)
         else:
