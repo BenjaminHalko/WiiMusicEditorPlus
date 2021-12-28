@@ -32,11 +32,29 @@ class StyleClass:
 		self.DefaultStyle = DefaultStyle
 
 class InstrumentClass:
-	def __init__(self,Name,Number,InMenu,NumberOfSounds):
+	def __init__(self,Name,Number,InMenu,NumberOfSounds=[]):
 		self.Name = Name
 		self.Number = Number
 		self.InMenu = InMenu
 		self.NumberOfSounds = NumberOfSounds
+
+class SoundClass:
+	def __init__(self,Name,*args):
+		self.Name = Name
+		self.typeNames = []
+		self.typeValues = []
+		for arg in args:
+			if(type(arg) == int):
+				self.typeNames.append(str(arg))
+				self.typeValues.append(arg)
+			elif(type(arg[1]) == str):
+				self.typeNames.append(arg[1])
+				self.typeValues.append(arg[0])
+			else:
+				for i in range(arg[0],arg[1]):
+					if(len(arg) == 3): self.typeNames.append(str(i)+" ("+arg[2]+")")
+					else: self.typeNames.append(str(i))
+					self.typeValues.append(i)
 
 class SongTypeValue:
 	Regular = 0
@@ -106,17 +124,17 @@ SongClass(SongTypeValue.Regular,'Wii Music',4,"24"),
 SongClass(SongTypeValue.Regular,'Wii Sports',47,"1A"),
 SongClass(SongTypeValue.Regular,'Woman',43,"17"),
 SongClass(SongTypeValue.Regular,'Yankee Doodle',13,"0C"),
-SongClass(SongTypeValue.Maestro,'Twinkle, Twinkle, Little Star (Mii Maestro)',2,MemOffset='025a3e1c'),
-SongClass(SongTypeValue.Maestro,'Carmen (Mii Maestro)',0,MemOffset='025a3d80'),
-SongClass(SongTypeValue.Maestro,'The Four Seasons -- Spring (Mii Maestro)',4,MemOffset='025a3f54'),
-SongClass(SongTypeValue.Maestro,'Ode to Joy (Mii Maestro)',3,MemOffset='025a3ff0'),
-SongClass(SongTypeValue.Maestro,'The Legend of Zelda (Mii Maestro)',1,MemOffset='025a3eb8'),
-SongClass(SongTypeValue.Handbell,'O Christmas Tree (Handbell Harmony)',0,MemOffset='02566D5A'),
-SongClass(SongTypeValue.Handbell,'Hum, Hum, Hum (Handbell Harmony)',2,MemOffset='02566E0A'),
-SongClass(SongTypeValue.Handbell,'My Grandfather\'s Clock (Handbell Harmony)',3,MemOffset='02566E62'),
-SongClass(SongTypeValue.Handbell,'Do-Re-Mi (Handbell Harmony)',1,MemOffset='02566DB2'),
-SongClass(SongTypeValue.Handbell,'Sukiyaki (Handbell Harmony)',4,MemOffset='02566EBA'),
-SongClass(SongTypeValue.Menu,'Menu Song',-1,MemOffset=['0259ACB0','0259ACD4','0259ACF8','0259AD1C','0259AD40'])]
+SongClass(SongTypeValue.Maestro,'Twinkle, Twinkle, Little Star (Mii Maestro)',2,MemOffset=0x25a3e1c),
+SongClass(SongTypeValue.Maestro,'Carmen (Mii Maestro)',0,MemOffset=0x25a3d80),
+SongClass(SongTypeValue.Maestro,'The Four Seasons -- Spring (Mii Maestro)',4,MemOffset=0x25a3f54),
+SongClass(SongTypeValue.Maestro,'Ode to Joy (Mii Maestro)',3,MemOffset=0x25a3ff0),
+SongClass(SongTypeValue.Maestro,'The Legend of Zelda (Mii Maestro)',1,MemOffset=0x25a3eb8),
+SongClass(SongTypeValue.Handbell,'O Christmas Tree (Handbell Harmony)',0,MemOffset=0x2566D5A),
+SongClass(SongTypeValue.Handbell,'Hum, Hum, Hum (Handbell Harmony)',2,MemOffset=0x2566E0A),
+SongClass(SongTypeValue.Handbell,'My Grandfather\'s Clock (Handbell Harmony)',3,MemOffset=0x2566E62),
+SongClass(SongTypeValue.Handbell,'Do-Re-Mi (Handbell Harmony)',1,MemOffset=0x2566DB2),
+SongClass(SongTypeValue.Handbell,'Sukiyaki (Handbell Harmony)',4,MemOffset=0x2566EBA),
+SongClass(SongTypeValue.Menu,'Menu Song',-1,MemOffset=[0x259ACB0,0x259ACD4,0x259ACF8,0x259AD1C,0x259AD40])]
 
 noneInstrument = 67
 Styles = [
@@ -219,34 +237,66 @@ InstrumentClass('Galactic horn',36,False,["G2","C4","C5"]),
 InstrumentClass('Nes',37,False,["Mario Jump","C3","F3","Bb3","G4","C5","C6"]),
 InstrumentClass('Singer',38,True,["C4 (Wii)","G4 (Wii)","C5 (Wii)","G5 (Wii)","C4 (Do)","F#4 (Do)","D5 (Do)","F#5 (Do)","C4 (Ba)","G4 (Ba)","C5 (Ba)","G5 (Ba)"]),
 InstrumentClass('Bass Singer',39,True,["D3 (Wii)","G3 (Wii)","C4 (Wii)","G4 (Wii)","C3 (Do)","G3 (Do)","C4 (Do)","G4 (Do)","D3 (Ba)","A3 (Ba)","D4 (Ba)","G4 (Ba)"]),
-InstrumentClass('Basic Drums',40,True,[]),
-InstrumentClass('Rock Drums',41,False,[]),
-InstrumentClass('Jazz Drums',42,False,[]),
-InstrumentClass('Latin Drums',43,False,[]),
-InstrumentClass('Ballad Drums',44,False,[]),
-InstrumentClass('Congas',45,False,[]),
-InstrumentClass('Maracas',46,False,[]),
-InstrumentClass('Tambourine',47,False,[]),
-InstrumentClass('Cuica',48,False,[]),
-InstrumentClass('Cowbell',49,False,[]),
-InstrumentClass('Clap',50,False,[]),
-InstrumentClass('Bells',51,False,[]),
-InstrumentClass('Castanets',52,False,[]),
-InstrumentClass('Guiro',53,False,[]),
-InstrumentClass('Timpales',54,False,[]),
-InstrumentClass('Djembe',55,False,[]),
-InstrumentClass('Taiko Drum',56,True,[]),
-InstrumentClass('Cheerleader',57,False,[]),
-InstrumentClass('Snare Drum',58,True,[]),
-InstrumentClass('Bass Drum',59,False,[]),
-InstrumentClass('Galactic Drums',60,False,[]),
-InstrumentClass('Galactic Congas',61,False,[]),
-InstrumentClass('DJ Turntables',62,True,[]),
-InstrumentClass('Kung Fu Person',63,False,[]),
-InstrumentClass('Reggae Drums',64,False,[]),
-InstrumentClass('Whistle',65,False,[]),
-InstrumentClass('Beatbox',66,True,[]),
-InstrumentClass('None',-1,False,[])]
+InstrumentClass('Basic Drums',40,True),
+InstrumentClass('Rock Drums',41,False),
+InstrumentClass('Jazz Drums',42,False),
+InstrumentClass('Latin Drums',43,False),
+InstrumentClass('Ballad Drums',44,False),
+InstrumentClass('Congas',45,False),
+InstrumentClass('Maracas',46,False),
+InstrumentClass('Tambourine',47,False),
+InstrumentClass('Cuica',48,False),
+InstrumentClass('Cowbell',49,False),
+InstrumentClass('Clap',50,False),
+InstrumentClass('Bells',51,False),
+InstrumentClass('Castanets',52,False),
+InstrumentClass('Guiro',53,False),
+InstrumentClass('Timpales',54,False),
+InstrumentClass('Djembe',55,False),
+InstrumentClass('Taiko Drum',56,True),
+InstrumentClass('Cheerleader',57,False),
+InstrumentClass('Snare Drum',58,True),
+InstrumentClass('Bass Drum',59,False),
+InstrumentClass('Galactic Drums',60,False),
+InstrumentClass('Galactic Congas',61,False),
+InstrumentClass('DJ Turntables',62,True),
+InstrumentClass('Black Belt',63,False),
+InstrumentClass('Reggae Drums',64,False),
+InstrumentClass('Whistle',65,False),
+InstrumentClass('Beatbox',66,True),
+InstrumentClass('None',-1,False)]
+
+extraSounds = [
+SoundClass("Basic Drum",[297,300]),
+SoundClass("Rock Drums",[302,306]),
+SoundClass("Jazz Drums",[307,311]),
+SoundClass("Latin Drums",[312,315]),
+SoundClass("Ballad Drums",[316,319]),
+SoundClass("Cymbal for Basic, Jazz, Latin, Reggae, and Ballad Drums",301),
+SoundClass("Bass for Basic, Latin, and Ballad Drums",296),
+SoundClass("Congas",[320,324]),
+SoundClass("Maracas",[325,330],[430,"Female Variant"]),
+SoundClass("Tambourine",[331,335]),
+SoundClass("Cuica",[336,340]),
+SoundClass("Cowbell",[341,343]),
+SoundClass("Hand Clap",[344,346]),
+SoundClass("Bells",[347,349]),
+SoundClass("Castanets",[350,353],[431,"Male Variant"]),
+SoundClass("Guiro",[354,358]),
+SoundClass("Timbales",[359,362]),
+SoundClass("Djembe",[363,367]),
+SoundClass("Taiko Drums",[368,370],[432,"Female Varient"]),
+SoundClass("Cheerleader",[371,376,"Female"],[424,429,"Male"]),
+SoundClass("Snare Drum",[377,380]),
+SoundClass("Bass Drum",[381,383]),
+SoundClass("Galactic Drums",[384,388]),
+SoundClass("Galactic Congas",[389,393]),
+SoundClass("DJ Turntables",[280,295]),
+SoundClass("Black Belt",[394,399,"Male"],[418,423,"Female"]),
+SoundClass("Reggae Drums",[400,404]),
+SoundClass("Whistle",[405,408]),
+SoundClass("Beat Boxer",[409,414]),
+SoundClass("Drum Mode",[433,444])]
 
 class LoadType:
 	Rom = 0
@@ -499,7 +549,25 @@ def BasedOnRegion(array):
 	global regionSelected
 	return array[regionSelected]
 
-def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqLengthArray):
+def SizeIncreaseBrsar(file,sizeDifference,startoffset):
+	groupTableOffset = infoSpot+0x8+getData(file,infoSpot+groupTableMarker)
+	file.seek(groupTableOffset)
+	numberOfGroups = int.from_bytes(file.read(4),"big")
+
+	for i in range(numberOfGroups-1):
+		offset = infoSpot+0x18+getData(file,groupTableOffset+0x8*(i+1))
+		if(offset > startoffset):
+			file.seek(offset)
+			size = file.read(4)
+			file.seek(offset)
+			file.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+			offset += 8
+			file.seek(offset)
+			size = file.read(4)
+			file.seek(offset)
+			file.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big')) 
+
+def ReplaceSong(positionNum,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqLengthArray):
 	if(not os.path.exists(GetBrsarPath()+".backup")): copyfile(GetBrsarPath(),GetBrsarPath()+".backup")
 	BrsarPath = GetBrsarPath()
 	BrseqInfo = []
@@ -509,6 +577,9 @@ def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqIn
 		BrseqLength.append(BrseqLengthArray[BrseqOrdering[i]])
 	sizeDifference = 0
 	brsar = open(BrsarPath, "rb")
+	positionOffset = dataPath(brsar,inO,grO,0x8*(positionNum+1))+0x10
+	listOffset = BrsarGetList(brsar,positionOffset)
+	replacementArray.append(getData(brsar,dataPath(brsar,inO,grO,8*(positionNum+1))+0x28))
 	brsar.seek(positionOffset)
 	currentSpot = int.from_bytes(brsar.read(4),'big')
 	if(listOffset != -1):
@@ -548,12 +619,9 @@ def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqIn
 				sizeDifference += BrseqLength[replacementArray.index(num)]-int.from_bytes(brsar.read(4),"big")
 				brsar.seek(listOffset+4+24*num)
 				brsar.write(BrseqLength[replacementArray.index(num)].to_bytes(4, 'big'))
-		for offset in rseqList:
-			if(offset > positionOffset):
-				brsar.seek(offset)
-				size = brsar.read(4)
-				brsar.seek(offset)
-				brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		
+		SizeIncreaseBrsar(brsar,sizeDifference,positionOffset)
+
 		for offset in [8,positionOffset+4]:
 			brsar.seek(offset)
 			size = brsar.read(4)
@@ -573,12 +641,9 @@ def ReplaceSong(positionOffset,listOffset,replacementArray,BrseqOrdering,BrseqIn
 		brsar = open(BrsarPath, "r+b")
 		brsar.seek(positionOffset+4)
 		sizeDifference = BrseqLength-int.from_bytes(brsar.read(4),"big")
-		for offset in rseqList:
-			if(offset > positionOffset):
-				brsar.seek(offset)
-				size = brsar.read(4)
-				brsar.seek(offset)
-				brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+		SizeIncreaseBrsar(brsar,sizeDifference,positionOffset)
+
 		for offset in [8,positionOffset+4]:
 			brsar.seek(offset)
 			size = brsar.read(4)
@@ -654,6 +719,42 @@ def ReplaceWave(startOffset,replaceNumber,rwavInfo,rwavSize):
 			brsar.seek(offset)
 			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 	brsar.close()
+
+def PlayRwav(startOffset,replaceNumber):
+	if(os.path.isdir(SavePath()+"/tmp")):
+		try:
+			rmtree(SavePath()+"/tmp")
+		except Exception:
+			tried = True
+	
+	if(not os.path.isdir(SavePath()+"/tmp")): os.mkdir(SavePath()+"/tmp")
+	brsar = open(GetBrsarPath(), "r+b")
+	brsar.seek(startOffset)
+	rwarSpot = int.from_bytes(brsar.read(4),'big')
+	brsar.seek(rwarSpot+0x18)
+	dataSection = rwarSpot+int.from_bytes(brsar.read(4),'big')
+	brsar.seek(rwarSpot+0x10)
+	table = rwarSpot+int.from_bytes(brsar.read(4),'big')
+	for i in replaceNumber:
+		brsar.seek(table+0x10+0xC*i)
+		dataSpot = int.from_bytes(brsar.read(4),'big')
+		dataSize = int.from_bytes(brsar.read(4),'big')
+		brsar.seek(dataSection+dataSpot)
+		wav = open(SavePath()+"/tmp/sound"+str(i)+".rwav","wb")
+		wav.write(brsar.read(dataSize))
+		wav.close()
+	brsar.close()
+	try:
+		args = [HelperPath()+"/SoundConverter/vgmstream","-o","?f.wav"]
+		if(currentSystem == "Mac"): args[0] = "vgmstream-cli"
+		for i in replaceNumber:
+			args.append(SavePath()+"/tmp/sound"+str(i)+".rwav")
+		Run(args)
+	except Exception as e:
+		error = ""
+		if(currentSystem == "Mac"): error = "Install vgmstream using 'brew install vgmstream'\n"
+		error += str(e)
+		ShowError("Could not play audio",error)
 
 def NormalizeMidi(midiPath,savePath,defaultTempo):
 	midi_data = pretty_midi.PrettyMIDI(midiPath)
@@ -790,40 +891,417 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature):
 		TempoCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+10,'x').lower()+' '+'0'*(8-len(Tempo))+Tempo+'\n'
 		TimeCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' 00000'+str(TimeSignature)+'00\n'
 	if(Songs[SongSelected].SongType == SongTypeValue.Regular):
-		ReplaceSong(0x033744,0x033A84,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1,100],[0,1],BrseqInfo,BrseqLength)
+		ReplaceSong(2,[Songs[SongSelected].MemOrder*2,Songs[SongSelected].MemOrder*2+1],[0,1],BrseqInfo,BrseqLength)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 		if(Songs[SongSelected].Name == 'Do-Re-Mi'):
-			ReplaceSong(0x0343F0,0x034988,[18,19,113,155,156,157,158,159,160,161,162,175],[0,1,0,0,0,0,0,0,0,0,0],BrseqInfo,BrseqLength)
-			ReplaceSong(0x0360D0,0x0364C8,[18,19,113,123],[0,1,0],BrseqInfo,BrseqLength)
+			ReplaceSong(3,[18,19,113,155,156,157,158,159,160,161,162],[0,1,0,0,0,0,0,0,0,0,0],BrseqInfo,BrseqLength)
+			ReplaceSong(19,[18,19,113],[0,1,0],BrseqInfo,BrseqLength)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Menu):
-		ReplaceSong(0x037D64,0x037DBC,[0,1,2,3,4,5,6,7],[0,1,1,1,1,1,1],BrseqInfo,BrseqLength)
+		ReplaceSong(34,[0,1,2,3,4,5,6],[0,1,1,1,1,1,1],BrseqInfo,BrseqLength)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Maestro):
-		ReplaceSong(0x0370E8,0x037140,[Songs[SongSelected].MemOrder+2,7],[0],BrseqInfo,BrseqLength)
+		ReplaceSong(21,[Songs[SongSelected].MemOrder+2],[0],BrseqInfo,BrseqLength)
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+TempoCode+TimeCode)
 	elif(Songs[SongSelected].SongType == SongTypeValue.Handbell):
-		ReplaceSong(0x037340,0x037438,[Songs[SongSelected].MemOrder*5+2,Songs[SongSelected].MemOrder*5+3,Songs[SongSelected].MemOrder*5+4,Songs[SongSelected].MemOrder*5+5,Songs[SongSelected].MemOrder*5+6,27],[0,0,0,0,0],BrseqInfo,BrseqLength)
+		ReplaceSong(23,[Songs[SongSelected].MemOrder*5+2,Songs[SongSelected].MemOrder*5+3,Songs[SongSelected].MemOrder*5+4,Songs[SongSelected].MemOrder*5+5,Songs[SongSelected].MemOrder*5+6],[0,0,0,0,0],BrseqInfo,BrseqLength)
 		LengthCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets),'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		LengthCode2 = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+4,'x').lower()+' '+'0'*(8-len(Length))+Length+'\n'
 		MeasureCode = '0'+format(Songs[SongSelected].MemOffset+BasedOnRegion(gctRegionOffsets)+24,'x').lower()+' '+'00000000\n'
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode)
 
-def BrseqAdding(positionOffset,listOffset,BrseqInfo,BrseqLength):
+def BrsarGetList(file,positionOffset):
+	return infoSpot+0x10+getData(file,positionOffset+0x14)+getData(file,positionOffset+0x18)*8
+
+def GetTableOffset(file,num):
+	return dataPath(file,inO,grO,0x8*(num+1))
+
+def printh(num): print(format(num,"x"))
+
+def BrseqAddingName(text):
 	brsar = open(GetBrsarPath(),"r+b")
+	sizeDifference = 4*len(text)
+	for t in text:
+		sizeDifference += len(t.encode("utf-8"))
+	number = getData(brsar,dataPath(brsar,syO,0x8))
+	brsar.seek(dataPath(brsar,syO,0x8))
+	brsar.write((number+len(text)).to_bytes(4, 'big'))
+	previousAmount = dataPath(brsar,syO,0x0C)
+
+	#Other Name Offsets
+	for i in range(number):
+		offset = dataPath(brsar,syO,0x8)+4*(i+1)
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+4*len(text)).to_bytes(4, 'big'))
+
+	#group table 335A8 33500
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+		offset = dataPath(brsar,inO,grO,(i+1)*8)
+		for j in [0x10,0x18]:
+			brsar.seek(offset+j)
+			size = brsar.read(4)
+			brsar.seek(offset+j)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#file length, size of info, offset to file
+	for offset in [0x8,0x14,0x18,0x20,dataPathPoint(brsar,syO,0x4),dataPathPoint(brsar,syO,0x0C),dataPathPoint(brsar,syO,0x10),dataPathPoint(brsar,syO,0x14),dataPathPoint(brsar,syO,0x18)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+	
+	data1Point = dataPath(brsar,syO,0x8)+4*(number+1)
+	data2Point = dataPathPoint(brsar,syO,previousAmount)-dataPath(brsar,syO,0x8)-4*(number+1)
+	brsar.seek(0)
+	dataToWrite = brsar.read(data1Point)
+	for i in range(len(text)):
+		dataToWrite += previousAmount.to_bytes(4,"big")
+		previousAmount += len(text[i].encode("utf-8"))
+	dataToWrite += brsar.read(data2Point)
+	for i in text:
+		dataToWrite += i.encode("utf-8")
+	dataToWrite += brsar.read()
+	brsar.close()
+	brsar = open(GetBrsarPath(),"wb")
+	brsar.write(dataToWrite)
+	brsar.close()
+	return number
+
+def BrseqAddingSounddata(nameNumber,collectNumber):
+	slotsToAdd = 1
+	brsar = open(GetBrsarPath(),"r+b")
+	number = getData(brsar,dataPath(brsar,inO,sdO))
+	sizeDifference = 0x54*slotsToAdd
+	brsar.seek(dataPath(brsar,inO,sdO))
+	brsar.write((number+slotsToAdd).to_bytes(4, 'big'))
+
+	#Sound Data list 17A30
+	for i in range(number):
+		offset = dataPath(brsar,inO,sdO)+(i+1)*8
+		suboffset = dataPath(brsar,inO,sdO,(i+1)*8)
+		for j in [suboffset+0x10,suboffset+0x1C,offset]:
+			brsar.seek(j)
+			size = brsar.read(4)
+			brsar.seek(j)
+			brsar.write((int.from_bytes(size,"big")+0x8*slotsToAdd).to_bytes(4, 'big'))
+
+	#Soundbank, Player Info
+	for offsettype in [sbO,piO]:
+		for i in range(getData(brsar,dataPath(brsar,inO,offsettype))):
+			offset = dataPath(brsar,inO,offsettype)+(i+1)*8
+			brsar.seek(offset)
+			size = brsar.read(4)
+			brsar.seek(offset)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#2DAFC - Collection
+	for i in range(getData(brsar,dataPath(brsar,inO,ctO))):
+		offset = dataPath(brsar,inO,ctO,(i+1)*8,0x18)
+		for j in range(getData(brsar,offset)):
+			brsar.seek(offset+(j+1)*8)
+			size = brsar.read(4)
+			brsar.seek(offset+(j+1)*8)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO,(i+1)*8)+0x18
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#group table 335A8 33500
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+		offset = dataPath(brsar,inO,grO,(i+1)*8)
+		for j in [0x10,0x18,0x24]:
+			brsar.seek(offset+j)
+			size = brsar.read(4)
+			brsar.seek(offset+j)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		for j in range(getData(brsar,offset+0x28)):
+			brsar.seek(offset+0x30+j*8)
+			size = brsar.read(4)
+			brsar.seek(offset+0x30+j*8)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,grO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#file length, size of info, offset to file
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x14),dataPathPoint(brsar,inO,0x1C),dataPathPoint(brsar,inO,0x24),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#Add New Offsets
+	#sounddata = 01B7+i 38+i 0000000301000000 (start + 0x40) 64780100010001010000 (start + 0x2C) 0000000000000000000000000000000000300000000 (0000C00F song/000000FF score) 7800000000000000000000000180000000
+	soundDataOffset = dataPath(brsar,inO,sdO,number*8)+0x4C-8*slotsToAdd
+	soundDataOffsetTable = dataPath(brsar,inO,sdO)+number*8+4
+	lastOffset = getData(brsar,soundDataOffsetTable-4)
+
+	brsar.seek(0)
+	dataToWrite = brsar.read(soundDataOffsetTable)
+	for i in range(slotsToAdd):
+		dataToWrite += (0x01000000).to_bytes(4,"big")+(lastOffset+0x4C*(i+1)).to_bytes(4,"big")
+	dataToWrite += brsar.read(soundDataOffset-soundDataOffsetTable)
+	for i in range(slotsToAdd):
+		dataToWrite += (nameNumber+number+i).to_bytes(4,"big")+(collectNumber+number+i).to_bytes(4,"big")+(0x301000000).to_bytes(8,"big")+(soundDataOffset+0x40).to_bytes(4,"big")+(0x64780100010001010000).to_bytes(10,"big")+(soundDataOffset+0x2C).to_bytes(4,"big")+(0x3000000000000).to_bytes(22,"big")+(0xC00F).to_bytes(2,"big")+(0x7800000000000000000000000180000000).to_bytes(18,"big")
+	dataToWrite += brsar.read()
+	brsar.close()
+	brsar = open(GetBrsarPath(),"wb")
+	brsar.write(dataToWrite)
+	brsar.close()
+
+def BrseqAddingCollection():
+	slotsToAdd = 1
+	brsar = open(GetBrsarPath(),"r+b")
+	positionNum = getData(brsar,dataPath(brsar,inO,ctO))
+	sizeDifference = 0x58*slotsToAdd
+	brsar.seek(dataPath(brsar,inO,ctO))
+	brsar.write((positionNum+slotsToAdd).to_bytes(4, 'big'))
+	positionOffset = dataPath(brsar,inO,ctO,8*positionNum)
+
+	#collectionshift
+	for i in range(getData(brsar,dataPath(brsar,inO,ctO))-slotsToAdd):
+		offset = dataPath(brsar,inO,ctO,(i+1)*8,0x18)
+		for j in range(getData(brsar,offset)):
+			brsar.seek(offset+(j+1)*8)
+			size = brsar.read(4)
+			brsar.seek(offset+(j+1)*8)
+			brsar.write((int.from_bytes(size,"big")+8*slotsToAdd).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO,(i+1)*8)+0x18
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+8*slotsToAdd).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+8*slotsToAdd).to_bytes(4, 'big'))
+
+	#group table 335A8 33500
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+		offset = dataPath(brsar,inO,grO,(i+1)*8)
+		for j in [0x10,0x18,0x24]:
+			brsar.seek(offset+j)
+			size = brsar.read(4)
+			brsar.seek(offset+j)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		for j in range(getData(brsar,offset+0x28)):
+			brsar.seek(offset+0x30+j*8)
+			size = brsar.read(4)
+			brsar.seek(offset+0x30+j*8)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,grO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#file length, size of info, offset to file
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#collection index group: randomlengthnumber(4bytes) FFFFFFFF(8bytes) 01000000(12bytes) postitionoffset+0x18(4bytes) 0301000000(8bytes) postitionoffset+0x38(4bytes) 01000000(4bytes) postitionoffset+0x40(4bytes) 01000000(4bytes) postitionoffset+0x48(4bytes) 02(4bytes) 63+number(4bytes) 03(4bytes) 63+number(4bytes) 13(4bytes) 63+number(4bytes)
+	newOffset = getData(brsar,dataPath(brsar,inO,ctO)+8*(positionNum-1)+4)
+	
+	data1Point = dataPath(brsar,inO,ctO)+8*(positionNum)
+	brsar.seek(0)
+	dataToWrite = brsar.read(data1Point)
+	dataToWrite += (0x01000000).to_bytes(4,"big")+(newOffset+0x40).to_bytes(4,"big")
+	dataToWrite += brsar.read(positionOffset-data1Point)
+	dataToWrite += (0x1970).to_bytes(4,"big")+(0xFFFFFFFF).to_bytes(8,"big")+(0x01000000).to_bytes(12,"big")+(positionOffset+0x18).to_bytes(4,"big")+(0x0301000000).to_bytes(8,"big")+(positionOffset+0x38).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x40).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x48).to_bytes(4,"big")+(0x02).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x03).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x13).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")
+	dataToWrite += brsar.read()
+	brsar.close()
+	brsar = open(GetBrsarPath(),"wb")
+	brsar.write(dataToWrite)
+	brsar.close()
+	return positionNum
+
+def BrseqAdding(positionNum):
+	slotsToAdd = 2
+	brsar = open(GetBrsarPath(),"r+b")
+	positionOffset = GetTableOffset(brsar,positionNum)+0x10
+	listOffset = BrsarGetList(brsar,positionOffset)
 	brsar.seek(positionOffset+0x18)
 	num = int.from_bytes(brsar.read(4),"big")
 	brsar.seek(positionOffset+0x18)
-	brsar.write((num+1).to_bytes(4,"big"))
+	#number of tracks
+	brsar.write((num+slotsToAdd).to_bytes(4,"big"))
+
 	brsar.seek(listOffset+24*(num-1))
 	amount = int.from_bytes(brsar.read(4),"big")+int.from_bytes(brsar.read(4),"big")
 	brsar.seek(listOffset+24*(num-1)-4)
 	number = int.from_bytes(brsar.read(4),"big")+1
+	lastTableOffset = getData(brsar,listOffset-8)+8*slotsToAdd
+
+	sizeDifference = 0x20*slotsToAdd
+
+	numberOfGroups = getData(brsar,dataPath(brsar,inO,grO))
+
+	#total, info size, file offset, sound count table, info size, offset to rseq, offset to rwar 
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x34),dataPathPoint(brsar,inO,0x4)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+	
+	#for every group entry after the changed group
+	for i in range(numberOfGroups-1):
+		offset = dataPath(brsar,inO,grO,0x8*(i+1))
+		if(i > positionNum):
+			location = dataPathPoint(brsar,inO,grO,0x8*(i+1))
+			brsar.seek(location)
+			size = brsar.read(4)
+			brsar.seek(location)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+		#offset to rseq, offset to rwar, offset to subsection 2
+		offsetList = [0x10,0x18]
+		if(i > positionNum): offsetList.append(0x24)
+		for j in offsetList:
+			brsar.seek(offset+j)
+			size = brsar.read(4)
+			brsar.seek(offset+j)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+		#offsets in the big table
+		if(i >= positionNum):
+			numbers = getData(brsar,offset+0x28)
+			if(i == positionNum): numbers -= slotsToAdd
+			for j in range(numbers):
+				offsetToChoose = sizeDifference
+				if(i == positionNum): offsetToChoose = 8*slotsToAdd
+				newOffset = getData(brsar,offset+0x30+8*j)+offsetToChoose
+				brsar.seek(offset+0x30+8*j)
+				#printh(offset)
+				brsar.write(newOffset.to_bytes(4,"big"))
+
+	#add expanding parts
 	brsar.seek(0)
-	data1 = brsar.read(listOffset+24*num)
-	data2 = brsar.read()
+	data1 = brsar.read(listOffset-4)
+	data2 = brsar.read(24*num)
+	data3 = brsar.read()
 	brsar.close()
 	brsar = open(GetBrsarPath(),"wb")
-	brsar.write(data1+number.to_bytes(4,"big")+amount.to_bytes(4,"big")+bytes(16)+data2)
+	dataToWrite = data1
+	for i in range(slotsToAdd):
+		dataToWrite += b"\01\00\00\00"+(lastTableOffset+0x18*(i+1)).to_bytes(4,"big")
+	dataToWrite += data2
+	for i in range(slotsToAdd):
+		dataToWrite += (number+i).to_bytes(4,"big")+amount.to_bytes(4,"big")+bytes(16)
+	dataToWrite += data3
+	brsar.write(dataToWrite)
 	brsar.close()
+
+def BrseqAddingBank(name,collect):
+	slotsToAdd = 2
+	brsar = open(GetBrsarPath(),"r+b")
+	positionNum = getData(brsar,dataPath(brsar,inO,sbO))
+	sizeDifference = 0x58*slotsToAdd
+	brsar.seek(dataPath(brsar,inO,sbO))
+	brsar.write((positionNum+slotsToAdd).to_bytes(4, 'big'))
+	positionOffset = dataPath(brsar,inO,sbO,8*positionNum)
+
+	for i in range(positionNum):
+		offset = dataPath(brsar,inO,sbO,8*(i+1))
+		printh(offset)
+
+	#Player Info
+	for i in range(getData(brsar,dataPath(brsar,inO,piO))):
+		offset = dataPath(brsar,inO,piO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#2DAFC - Collection
+	for i in range(getData(brsar,dataPath(brsar,inO,ctO))):
+		offset = dataPath(brsar,inO,ctO,(i+1)*8,0x18)
+		for j in range(getData(brsar,offset)):
+			brsar.seek(offset+(j+1)*8)
+			size = brsar.read(4)
+			brsar.seek(offset+(j+1)*8)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO,(i+1)*8)+0x18
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,ctO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#group table 335A8 33500
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+		offset = dataPath(brsar,inO,grO,(i+1)*8)
+		for j in [0x10,0x18,0x24]:
+			brsar.seek(offset+j)
+			size = brsar.read(4)
+			brsar.seek(offset+j)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		for j in range(getData(brsar,offset+0x28)):
+			brsar.seek(offset+0x30+j*8)
+			size = brsar.read(4)
+			brsar.seek(offset+0x30+j*8)
+			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		offset = dataPath(brsar,inO,grO)+(i+1)*8
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#file length, size of info, offset to file
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x1C),dataPathPoint(brsar,inO,0x24),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+
+	#bank info:
+	newOffset = getData(brsar,dataPath(brsar,inO,sbO)+8*(positionNum-1)+4)
+	
+	data1Point = dataPath(brsar,inO,ctO)+8*(positionNum)
+	brsar.seek(0)
+	dataToWrite = brsar.read(data1Point)
+	dataToWrite += (0x01000000).to_bytes(4,"big")+(newOffset+0x40).to_bytes(4,"big")
+	dataToWrite += brsar.read(positionOffset-data1Point)
+	dataToWrite += (0x1970).to_bytes(4,"big")+(0xFFFFFFFF).to_bytes(8,"big")+(0x01000000).to_bytes(12,"big")+(positionOffset+0x18).to_bytes(4,"big")+(0x0301000000).to_bytes(8,"big")+(positionOffset+0x38).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x40).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x48).to_bytes(4,"big")+(0x02).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x03).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x13).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")
+	dataToWrite += brsar.read()
+	brsar.close()
+	brsar = open(GetBrsarPath(),"wb")
+	brsar.write(dataToWrite)
+	brsar.close()
+
+def dataPath(file,*argv):
+	file.seek(argv[0])
+	root = int.from_bytes(file.read(4),"big")
+	file.seek(root+argv[1])
+	if(len(argv) > 2):
+		for i in range(2,len(argv)):
+			file.seek(root+argv[i]+8+int.from_bytes(file.read(4),"big"))
+	return root+int.from_bytes(file.read(4),"big")+8
+
+def dataPathPoint(file,*argv):
+	file.seek(argv[0])
+	root = int.from_bytes(file.read(4),"big")
+	file.seek(root+argv[1])
+	if(len(argv) > 2):
+		for i in range(2,len(argv)):
+			file.seek(root+argv[i]+8+int.from_bytes(file.read(4),"big"))
+	return file.tell()
 
 def FixMessageFile(textlines):
 	for num in range(len(textlines)):
@@ -947,11 +1425,29 @@ def HelperPath():
 	else:
 		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
 
+def getData(file,point):
+	file.seek(point)
+	return int.from_bytes(file.read(4),"big")
 
-#Constants
+#Brsar Helper
+infoSpot = 0x15560
+groupTableMarker = 0x2C
+soundCountMarker = 0x34
+
+syO = 0x10
+inO = 0x18
+sdO = 0x0C
+sbO = 0x14
+piO = 0x1C
+ctO = 0x24
+grO = 0x2C
+
+
+#Other Constants
 textFromTxt = []
 loadedStyles = [[]]*len(Styles)
 rseqList = [0x3364C,0x336B8,0x33744,0x343F0,0x343F8,0x359FC,0x35A04,0x35A68,0x35A70,0x35AD4,0x35ADC,0x35B40,0x35B48,0x35BCC,0x35BD4,0x35C38,0x35C40,0x35CA4,0x35CAC,0x35D30,0x35D38,0x35DBC,0x35DC4,0x35E28,0x35E30,0x35EB4,0x35EBC,0x35F20,0x35F28,0x35F8C,0x35F94,0x36018,0x36020,0x36064,0x3606C,0x360D0,0x360D8,0x3705C,0x37064,0x370E8,0x370F0,0x371F4,0x371FC,0x37340,0x37348,0x376CC,0x376D4,0x37738,0x37740,0x3374C,0x37784,0x3778C,0x379D0,0x379D8,0x37ABC,0x37AC4,0x37B48,0x37B50,0x37BB4,0x37BBC,0x37C20,0x37C28,0x37C8C,0x37C94,0x37D18,0x37D20,0x37D64,0x37D6C,0x37E70,0x37E78,0x37EBC,0x37EC4,0x37F48,0x37F50]
+rseqInfoList = [0x8,0x1C,0x20]
 regionNames = ["US","EN","JP","KR"]
 regionFullNames = ["US","Europe","Japan","Korea"]
 gameIds = ["R64E01","R64P01","R64J01","R64K01"]
@@ -989,4 +1485,16 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "0.9.2"
+version = "0.9.3"
+
+#2DAFC - collection table
+#2EA60 - collection entry 20
+
+
+#midiInfo = LoadMidi(r"D:\Benjaminz\Projects\Custom Wii Music\Pre-Made-Songs-for-Wii-Music\Undertale\DeathByGlamour.brseq")
+#copyfile(GetBrsarPath()+".backup",GetBrsarPath())
+#name = BrseqAddingName(["RP_SSN_NEWTUNE_SONG","RP_SSN_NEWTUNE_SCORE"])
+#collect = BrseqAddingCollection()
+#BrseqAddingSounddata(0,collect)
+#BrseqAdding(2)
+#ReplaceSong(2,[0x64,0x65],[0,0],[midiInfo[0]],[midiInfo[1]])

@@ -7,7 +7,7 @@ import zipfile
 from configparser import ConfigParser
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.Qt import QFontDatabase
+from PyQt5.Qt import QFontDatabase, QSound
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
@@ -16,7 +16,7 @@ app = QApplication([])
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, Instruments, SoundClass, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -142,6 +142,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SOE_SoundType.itemPressed.connect(self.SOE_Patchable)
         self.SOE_File_Browse.clicked.connect(self.Button_SOE_Browse)
         self.SOE_Patch.clicked.connect(self.Button_SOE_Patch)
+        self.SOE_PlayAudio.clicked.connect(self.Button_SOE_PlayAudio)
 
     #Lists
     def LoadSongs(self,widgetID,types=[],lockSongs=False):
@@ -344,6 +345,10 @@ class Window(QMainWindow, Ui_MainWindow):
             for i in range(40):
                 item = QtWidgets.QListWidgetItem()
                 item.setText(Instruments[i].Name)
+                self.SOE_Sounds.addItem(item)
+            for sound in extraSounds:
+                item = QtWidgets.QListWidgetItem()
+                item.setText(sound.Name)
                 self.SOE_Sounds.addItem(item)
             item = QtWidgets.QListWidgetItem()
             item.setText("Sebastion Tute")
@@ -886,17 +891,50 @@ class Window(QMainWindow, Ui_MainWindow):
     #############Sound Editor
     def SOE_Patchable(self):
         self.SOE_Patch.setEnabled(self.extraFile != "" and len(self.SOE_SoundType.selectedItems()) != 0)
+        self.SOE_PlayAudio.setEnabled(len(self.SOE_SoundType.selectedItems()) != 0)
+
+    def Button_SOE_PlayAudio(self):
+        selected = []
+        offset = 0
+        index = 0x33654
+        if(self.SOE_Sounds.currentRow() == 40+len(extraSounds)): index = 0x37B50
+        elif(self.SOE_Sounds.currentRow() < 40):
+            for i in range(self.SOE_Sounds.currentRow()):
+                offset += len(Instruments[i].NumberOfSounds)
+
+        if(self.SOE_Sounds.currentRow() == 40+len(extraSounds)) or (self.SOE_Sounds.currentRow() < 40):
+            for i in range(self.SOE_SoundType.count()):
+                if(self.SOE_SoundType.item(i).isSelected()): selected.append(i+offset)
+        else:
+            for i in range(self.SOE_SoundType.count()):
+                if(self.SOE_SoundType.item(i).isSelected()): selected.append(extraSounds[self.SOE_Sounds.currentRow()-40].typeValues[i])
+        PlayRwav(index,selected)
+        if(len(selected) > 1):
+            playlist = open(SavePath()+"/tmp/playlist.m3u","w")
+            for i in selected:
+                playlist.write(SavePath().replace("/","\\")+"\\tmp\\sound"+str(i)+".rwav.wav\n")
+            playlist.close()
+            subprocess.Popen(SavePath()+"/tmp/playlist.m3u",shell=True)
+        else:
+            subprocess.Popen(SavePath()+"/tmp/sound"+str(selected[0])+".rwav.wav",shell=True)
+            
 
     def List_SOE_Sounds(self):
+        self.SOE_PlayAudio.setEnabled(False)
         self.SOE_SoundTypeBox.setEnabled(True)
         self.SOE_SoundType.clear()
-        if(self.SOE_Sounds.currentRow() == 40):
+        if(self.SOE_Sounds.currentRow() == 40+len(extraSounds)):
             for i in range(142):
                 item = QtWidgets.QListWidgetItem()
                 item.setText(str(i))
                 self.SOE_SoundType.addItem(item)
-        else:
+        elif(self.SOE_Sounds.currentRow() < 40):
             for i in Instruments[self.SOE_Sounds.currentRow()].NumberOfSounds:
+                item = QtWidgets.QListWidgetItem()
+                item.setText(i)
+                self.SOE_SoundType.addItem(item)
+        else:
+            for i in extraSounds[self.SOE_Sounds.currentRow()-40].typeNames:
                 item = QtWidgets.QListWidgetItem()
                 item.setText(i)
                 self.SOE_SoundType.addItem(item)
@@ -917,14 +955,19 @@ class Window(QMainWindow, Ui_MainWindow):
         file.close()
         rwavSize = os.stat(self.extraFile).st_size
         index = 0x33654
-        if(self.SOE_Sounds.currentRow() == 40): index = 0x37B50
         selected = []
         offset = 0
-        if(self.SOE_Sounds.currentRow() != 0):
+        if(self.SOE_Sounds.currentRow() == 40+len(extraSounds)): index = 0x37B50
+        elif(self.SOE_Sounds.currentRow() < 40):
             for i in range(self.SOE_Sounds.currentRow()):
                 offset += len(Instruments[i].NumberOfSounds)
-        for i in range(self.SOE_SoundType.count()):
+
+        if(self.SOE_Sounds.currentRow() == 40+len(extraSounds)) or (self.SOE_Sounds.currentRow() < 40):
+            for i in range(self.SOE_SoundType.count()):
                 if(self.SOE_SoundType.item(i).isSelected()): selected.append(i+offset)
+        else:
+            for i in range(self.SOE_SoundType.count()):
+                if(self.SOE_SoundType.item(i).isSelected()): selected.append(extraSounds[self.SOE_Sounds.currentRow()-40].typeValues[i])
                 
         ReplaceWave(index,selected,rwavInfo,rwavSize)
         self.SOE_Patch.setEnabled(False)
