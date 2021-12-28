@@ -914,7 +914,7 @@ class Window(QMainWindow, Ui_MainWindow):
             for i in selected:
                 playlist.write(SavePath().replace("/","\\")+"\\tmp\\sound"+str(i)+".rwav.wav\n")
             playlist.close()
-            subprocess.Popen(SavePath()+"/tmp/playlist.m3u",shell=True)
+            subprocess.Popen('"'+SavePath()+'/tmp/playlist.m3u"',shell=True)
         else:
             subprocess.Popen('"'+SavePath()+"/tmp/sound"+str(selected[0])+'.rwav.wav"',shell=True)
             
