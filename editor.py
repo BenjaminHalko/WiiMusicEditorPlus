@@ -746,10 +746,13 @@ def PlayRwav(startOffset,replaceNumber):
 	brsar.close()
 	try:
 		args = [HelperPath()+"/SoundConverter/vgmstream","-o","?f.wav"]
-		if(currentSystem == "Mac"): args[0] = "vgmstream-cli"
 		for i in replaceNumber:
 			args.append(SavePath()+"/tmp/sound"+str(i)+".rwav")
-		Run(args)
+		if(currentSystem == "Mac"):
+			command = "vgmstream-cli"
+			for i in range(1,len(args)): command += " "+args[i]
+			subprocess.run(command,shell=True)
+		else: Run(args)
 	except Exception as e:
 		error = ""
 		if(currentSystem == "Mac"): error = "Install vgmstream using 'brew install vgmstream'\n"
