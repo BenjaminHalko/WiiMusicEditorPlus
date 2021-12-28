@@ -7,7 +7,7 @@ import zipfile
 from configparser import ConfigParser
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.Qt import QFontDatabase, QSound
+from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
