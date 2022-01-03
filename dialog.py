@@ -1,12 +1,15 @@
-from os import path, mkdir, remove
+from genericpath import exists
+from os import path, mkdir, remove, rename
 from shutil import copyfile, move, copytree
-from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames, LoadSetting
+from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames, LoadSetting, SavePath, ProgramPath
 import editor
 from editor import RecordType, LoadSetting, RecordType, GetMainDolPath, Songs, LoadMidi, PatchBrsar, Styles, AddPatch, ChangeName, BasedOnRegion, gctRegionOffsets, Instruments, PatchMainDol, gctRegionOffsetsStyles, HelperPath, Run, regionNames, gameIds
 from configparser import ConfigParser
 from errorhandler import ShowError
 from psutil import disk_partitions
 from pathlib import Path
+from requests import get
+from zipfile import ZipFile
 
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtCore import QThread, pyqtSignal, QCoreApplication, Qt
@@ -351,3 +354,18 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         SuccessWindow("Creation Complete!")
         self.close()
 
+class DownloadSongThread(QThread):
+    progress = pyqtSignal(str)
+    done = pyqtSignal()
+
+    def run(self):
+        file = open(SavePath()+"/downloaded.zip", "wb")
+        file.write(get("https://github.com/BenjaminHalko/Pre-Made-Songs-for-Wii-Music/archive/refs/heads/main.zip").content)
+        file.close()
+        zip = ZipFile(SavePath()+"/downloaded.zip")
+        for zip_info in zip.infolist():
+            if zip_info.filename[-1] == '/':
+                continue
+            zip_info.filename = zip_info.filename.replace("Pre-Made-Songs-for-Wii-Music-main/","")
+            zip.extract(zip_info,ProgramPath+"/Pre-Made Songs for Wii Music")
+        self.done.emit()

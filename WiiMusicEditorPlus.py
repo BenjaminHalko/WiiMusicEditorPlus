@@ -5,6 +5,7 @@ import subprocess
 import sys
 import zipfile
 from configparser import ConfigParser
+import webbrowser
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.Qt import QFontDatabase
@@ -20,7 +21,7 @@ from editor import PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePat
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
-from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog
+from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog, DownloadSongThread
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -71,7 +72,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MB_DolphinMenu.triggered.connect(lambda: self.LoadDolphin(True))
         self.MB_DownloadSongs.triggered.connect(self.DownloadSongs)
         self.MB_SaveFile.triggered.connect(self.MenuBar_Save_File)
-        self.MB_Help.triggered.connect(self.OpenHelpManual)
+        self.MB_Help.triggered.connect(lambda: webbrowser.open("https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"))
+        self.MB_Donate.triggered.connect(lambda: webbrowser.open("https://ko-fi.com/benjaminhalko"))
 
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
@@ -90,7 +92,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MP_ExportFiles_Button.clicked.connect(self.ExportFiles)
         self.MP_ImportChanges_Button.clicked.connect(self.ImportChanges)
 
-        #Song Editor Buttons    
+        #Song Editor Buttons
         self.SE_Midi_File_Score_Button.clicked.connect(self.Button_SE_SongToChange)
         self.SE_Midi_File_Song_Button.clicked.connect(lambda: self.Button_SE_SongToChange(True))
         self.SE_Midi_TimeSignature_4.toggled.connect(self.Button_SE_Midi_TimeSignature)
@@ -557,10 +559,9 @@ class Window(QMainWindow, Ui_MainWindow):
             ShowError("Unable to copy save file",str(e))
 
     def DownloadSongs(self):
-        print('f')
-
-    def OpenHelpManual(self):
-        print("nohelpforyou")
+        self.importthread = DownloadSongThread()
+        self.importthread.done.connect(lambda: SuccessWindow("Songs Saved to: Program Path/Pre-Made Songs for Wii Music"))
+        self.importthread.start()
 
     #############Song Editor Buttons
     def SE_Patchable(self):

@@ -550,12 +550,12 @@ def BasedOnRegion(array):
 	return array[regionSelected]
 
 def SizeIncreaseBrsar(file,sizeDifference,startoffset):
-	groupTableOffset = infoSpot+0x8+getData(file,infoSpot+groupTableMarker)
+	groupTableOffset = dataPath(file,inO,grO)
 	file.seek(groupTableOffset)
 	numberOfGroups = int.from_bytes(file.read(4),"big")
 
 	for i in range(numberOfGroups-1):
-		offset = infoSpot+0x18+getData(file,groupTableOffset+0x8*(i+1))
+		offset = dataPath(file,inO,grO,0x8*(i+1))+0x10
 		if(offset > startoffset):
 			file.seek(offset)
 			size = file.read(4)
@@ -912,7 +912,7 @@ def PatchBrsar(SongSelected,BrseqInfo,BrseqLength,Tempo,Length,TimeSignature):
 		AddPatch(Songs[SongSelected].Name+' Song Patch',LengthCode+LengthCode2+MeasureCode)
 
 def BrsarGetList(file,positionOffset):
-	return infoSpot+0x10+getData(file,positionOffset+0x14)+getData(file,positionOffset+0x18)*8
+	return getData(file,inO)+0x10+getData(file,positionOffset+0x14)+getData(file,positionOffset+0x18)*8
 
 def GetTableOffset(file,num):
 	return dataPath(file,inO,grO,0x8*(num+1))
@@ -922,12 +922,24 @@ def printh(num): print(format(num,"x"))
 def BrseqAddingName(text):
 	brsar = open(GetBrsarPath(),"r+b")
 	sizeDifference = 4*len(text)
-	for t in text:
-		sizeDifference += len(t.encode("utf-8"))
+	for i in range(len(text)):
+		text[i] = text[i].encode("utf-8")
+		if(i != len(text)-1): text[i] += bytes(1)
+		sizeDifference += len(text[i])
+
+	offset = dataPath(brsar,syO,0x0C)-1
+	brsar.seek(offset)
+	extra = 0
+	while(int.from_bytes(brsar.read(1),"big") == 0):
+		extra += 1
+		brsar.seek(offset-extra)
+	positionOffset = offset+1
+	text[len(text)-1] += bytes(4-((sizeDifference-extra) % 4)-1)
+	sizeDifference += 4-((sizeDifference-extra) % 4)-1
+
 	number = getData(brsar,dataPath(brsar,syO,0x8))
 	brsar.seek(dataPath(brsar,syO,0x8))
 	brsar.write((number+len(text)).to_bytes(4, 'big'))
-	previousAmount = dataPath(brsar,syO,0x0C)
 
 	#Other Name Offsets
 	for i in range(number):
@@ -938,7 +950,7 @@ def BrseqAddingName(text):
 		brsar.write((int.from_bytes(size,"big")+4*len(text)).to_bytes(4, 'big'))
 
 	#group table 335A8 33500
-	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))):
 		offset = dataPath(brsar,inO,grO,(i+1)*8)
 		for j in [0x10,0x18]:
 			brsar.seek(offset+j)
@@ -953,16 +965,17 @@ def BrseqAddingName(text):
 		brsar.seek(offset)
 		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 	
-	data1Point = dataPath(brsar,syO,0x8)+4*(number+1)
-	data2Point = dataPathPoint(brsar,syO,previousAmount)-dataPath(brsar,syO,0x8)-4*(number+1)
+	data1Point = dataPath(brsar,syO,0x08)+4*(number+1)
+	data2Point = positionOffset-data1Point
 	brsar.seek(0)
 	dataToWrite = brsar.read(data1Point)
 	for i in range(len(text)):
-		dataToWrite += previousAmount.to_bytes(4,"big")
-		previousAmount += len(text[i].encode("utf-8"))
-	dataToWrite += brsar.read(data2Point)
+		dataToWrite += positionOffset.to_bytes(4,"big")
+		positionOffset += len(text[i])
+	dataToWrite += brsar.read(data2Point-extra+1)
+	brsar.seek(data1Point+data2Point)
 	for i in text:
-		dataToWrite += i.encode("utf-8")
+		dataToWrite += i
 	dataToWrite += brsar.read()
 	brsar.close()
 	brsar = open(GetBrsarPath(),"wb")
@@ -971,7 +984,7 @@ def BrseqAddingName(text):
 	return number
 
 def BrseqAddingSounddata(nameNumber,collectNumber):
-	slotsToAdd = 1
+	slotsToAdd = 2
 	brsar = open(GetBrsarPath(),"r+b")
 	number = getData(brsar,dataPath(brsar,inO,sdO))
 	sizeDifference = 0x54*slotsToAdd
@@ -1017,7 +1030,7 @@ def BrseqAddingSounddata(nameNumber,collectNumber):
 		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 
 	#group table 335A8 33500
-	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))):
 		offset = dataPath(brsar,inO,grO,(i+1)*8)
 		for j in [0x10,0x18,0x24]:
 			brsar.seek(offset+j)
@@ -1036,7 +1049,7 @@ def BrseqAddingSounddata(nameNumber,collectNumber):
 		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 
 	#file length, size of info, offset to file
-	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x14),dataPathPoint(brsar,inO,0x1C),dataPathPoint(brsar,inO,0x24),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34)]:
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x14),dataPathPoint(brsar,inO,0x1C),dataPathPoint(brsar,inO,0x24),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34),dataPathPoint(brsar,inO,scO,0x2)]:
 		brsar.seek(offset)
 		size = brsar.read(4)
 		brsar.seek(offset)
@@ -1054,24 +1067,30 @@ def BrseqAddingSounddata(nameNumber,collectNumber):
 		dataToWrite += (0x01000000).to_bytes(4,"big")+(lastOffset+0x4C*(i+1)).to_bytes(4,"big")
 	dataToWrite += brsar.read(soundDataOffset-soundDataOffsetTable)
 	for i in range(slotsToAdd):
-		dataToWrite += (nameNumber+number+i).to_bytes(4,"big")+(collectNumber+number+i).to_bytes(4,"big")+(0x301000000).to_bytes(8,"big")+(soundDataOffset+0x40).to_bytes(4,"big")+(0x64780100010001010000).to_bytes(10,"big")+(soundDataOffset+0x2C).to_bytes(4,"big")+(0x3000000000000).to_bytes(22,"big")+(0xC00F).to_bytes(2,"big")+(0x7800000000000000000000000180000000).to_bytes(18,"big")
+		dataToWrite += (nameNumber+i).to_bytes(4,"big")+(collectNumber+i).to_bytes(4,"big")+(0x301000000).to_bytes(8,"big")+(lastOffset+0x4C*(i+1)+0x40).to_bytes(4,"big")+(0x6478010001010000).to_bytes(8,"big")+(lastOffset+0x4C*(i+1)+0x2C).to_bytes(4,"big")+(0x3000000000000).to_bytes(22,"big")
+		if(i % 2 == 0): dataToWrite += (0xC00F).to_bytes(2,"big")
+		else: dataToWrite += (0x00FF).to_bytes(2,"big")
+		dataToWrite += (0x7800000000000000000000000180000000000000).to_bytes(20,"big")
 	dataToWrite += brsar.read()
 	brsar.close()
 	brsar = open(GetBrsarPath(),"wb")
 	brsar.write(dataToWrite)
 	brsar.close()
 
-def BrseqAddingCollection():
-	slotsToAdd = 1
+	return number
+
+def BrseqAddingCollection(group,sizes):
+	slotsToAdd = 2
 	brsar = open(GetBrsarPath(),"r+b")
 	positionNum = getData(brsar,dataPath(brsar,inO,ctO))
-	sizeDifference = 0x58*slotsToAdd
+	sizeDifference = 0x38*slotsToAdd
 	brsar.seek(dataPath(brsar,inO,ctO))
 	brsar.write((positionNum+slotsToAdd).to_bytes(4, 'big'))
-	positionOffset = dataPath(brsar,inO,ctO,8*positionNum)
-
+	positionOffset = dataPath(brsar,inO,grO)
+	pos = getData(brsar,dataPathPoint(brsar,inO,grO))+0x10
+	
 	#collectionshift
-	for i in range(getData(brsar,dataPath(brsar,inO,ctO))-slotsToAdd):
+	for i in range(positionNum):
 		offset = dataPath(brsar,inO,ctO,(i+1)*8,0x18)
 		for j in range(getData(brsar,offset)):
 			brsar.seek(offset+(j+1)*8)
@@ -1090,7 +1109,7 @@ def BrseqAddingCollection():
 		brsar.write((int.from_bytes(size,"big")+8*slotsToAdd).to_bytes(4, 'big'))
 
 	#group table 335A8 33500
-	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
+	for i in range(getData(brsar,dataPath(brsar,inO,grO))):
 		offset = dataPath(brsar,inO,grO,(i+1)*8)
 		for j in [0x10,0x18,0x24]:
 			brsar.seek(offset+j)
@@ -1115,15 +1134,17 @@ def BrseqAddingCollection():
 		brsar.seek(offset)
 		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 
-	#collection index group: randomlengthnumber(4bytes) FFFFFFFF(8bytes) 01000000(12bytes) postitionoffset+0x18(4bytes) 0301000000(8bytes) postitionoffset+0x38(4bytes) 01000000(4bytes) postitionoffset+0x40(4bytes) 01000000(4bytes) postitionoffset+0x48(4bytes) 02(4bytes) 63+number(4bytes) 03(4bytes) 63+number(4bytes) 13(4bytes) 63+number(4bytes)
-	newOffset = getData(brsar,dataPath(brsar,inO,ctO)+8*(positionNum-1)+4)
-	
-	data1Point = dataPath(brsar,inO,ctO)+8*(positionNum)
+	#collection index group: randomlengthnumber(4bytes) FFFFFFFF(8bytes) 01000000(12bytes) postitionoffset+0x1C(4bytes) 0301000000(8bytes) postitionoffset+0x38(4bytes) 01000000(4bytes) postitionoffset+0x40(4bytes) 01000000(4bytes) postitionoffset+0x48(4bytes) 02(4bytes) 63+number(4bytes) 03(4bytes) 63+number(4bytes) 13(4bytes) 63+number(4bytes)
+	data1Point = dataPath(brsar,inO,ctO)+8*positionNum+4
 	brsar.seek(0)
 	dataToWrite = brsar.read(data1Point)
-	dataToWrite += (0x01000000).to_bytes(4,"big")+(newOffset+0x40).to_bytes(4,"big")
+	for i in range(slotsToAdd):
+		dataToWrite += (0x01000000).to_bytes(4,"big")+(pos+i*0x30).to_bytes(4,"big")
 	dataToWrite += brsar.read(positionOffset-data1Point)
-	dataToWrite += (0x1970).to_bytes(4,"big")+(0xFFFFFFFF).to_bytes(8,"big")+(0x01000000).to_bytes(12,"big")+(positionOffset+0x18).to_bytes(4,"big")+(0x0301000000).to_bytes(8,"big")+(positionOffset+0x38).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x40).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x48).to_bytes(4,"big")+(0x02).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x03).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x13).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")
+	for i in range(slotsToAdd):
+		dataToWrite += sizes[i].to_bytes(4,"big")+(0xFFFFFFFF).to_bytes(8,"big")+(0x01000000).to_bytes(12,"big")+(pos+i*0x30+0x1C).to_bytes(4,"big")
+		#the collection pos entry could maybe reperesent putting the song in different tables for space saving purposes
+		dataToWrite += (0x0101000000).to_bytes(8,"big")+(pos+i*0x30+0x28).to_bytes(4,"big")+(0x02).to_bytes(4,"big")+(group+i).to_bytes(4,"big")
 	dataToWrite += brsar.read()
 	brsar.close()
 	brsar = open(GetBrsarPath(),"wb")
@@ -1131,7 +1152,7 @@ def BrseqAddingCollection():
 	brsar.close()
 	return positionNum
 
-def BrseqAdding(positionNum):
+def BrseqAddingTable(positionNum):
 	slotsToAdd = 2
 	brsar = open(GetBrsarPath(),"r+b")
 	positionOffset = GetTableOffset(brsar,positionNum)+0x10
@@ -1145,22 +1166,15 @@ def BrseqAdding(positionNum):
 	brsar.seek(listOffset+24*(num-1))
 	amount = int.from_bytes(brsar.read(4),"big")+int.from_bytes(brsar.read(4),"big")
 	brsar.seek(listOffset+24*(num-1)-4)
-	number = int.from_bytes(brsar.read(4),"big")+1
+	number = int.from_bytes(brsar.read(4),"big")+slotsToAdd
 	lastTableOffset = getData(brsar,listOffset-8)+8*slotsToAdd
 
 	sizeDifference = 0x20*slotsToAdd
 
 	numberOfGroups = getData(brsar,dataPath(brsar,inO,grO))
-
-	#total, info size, file offset, sound count table, info size, offset to rseq, offset to rwar 
-	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x34),dataPathPoint(brsar,inO,0x4)]:
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 	
 	#for every group entry after the changed group
-	for i in range(numberOfGroups-1):
+	for i in range(numberOfGroups):
 		offset = dataPath(brsar,inO,grO,0x8*(i+1))
 		if(i > positionNum):
 			location = dataPathPoint(brsar,inO,grO,0x8*(i+1))
@@ -1189,6 +1203,13 @@ def BrseqAdding(positionNum):
 				brsar.seek(offset+0x30+8*j)
 				#printh(offset)
 				brsar.write(newOffset.to_bytes(4,"big"))
+	
+	#total, info size, file offset, sound count table, info size
+	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x34),dataPathPoint(brsar,inO,0x4)]:
+		brsar.seek(offset)
+		size = brsar.read(4)
+		brsar.seek(offset)
+		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 
 	#add expanding parts
 	brsar.seek(0)
@@ -1207,86 +1228,67 @@ def BrseqAdding(positionNum):
 	brsar.write(dataToWrite)
 	brsar.close()
 
-def BrseqAddingBank(name,collect):
-	slotsToAdd = 2
-	brsar = open(GetBrsarPath(),"r+b")
-	positionNum = getData(brsar,dataPath(brsar,inO,sbO))
-	sizeDifference = 0x58*slotsToAdd
-	brsar.seek(dataPath(brsar,inO,sbO))
-	brsar.write((positionNum+slotsToAdd).to_bytes(4, 'big'))
-	positionOffset = dataPath(brsar,inO,sbO,8*positionNum)
+	return num
 
-	for i in range(positionNum):
-		offset = dataPath(brsar,inO,sbO,8*(i+1))
-		printh(offset)
+def BrseqAddingDol(number,midiInfo,brseqNumber):
+	#59C520
+	dol = open(GetMainDolPath(),"r+b")
+	sizeDifference = 0xBC
+	positionOffset = 0x59C520+0xBC*50#0x005AB200
 
-	#Player Info
-	for i in range(getData(brsar,dataPath(brsar,inO,piO))):
-		offset = dataPath(brsar,inO,piO)+(i+1)*8
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+	if(False):
+		#offset
+		for i in range(18):
+			dol.seek(4*i)
+			size = int.from_bytes(dol.read(4),"big")
+			if(size > 0x59C56E):
+				dol.seek(4*i)
+				dol.write((size+sizeDifference).to_bytes(4,"big"))
 
-	#2DAFC - Collection
-	for i in range(getData(brsar,dataPath(brsar,inO,ctO))):
-		offset = dataPath(brsar,inO,ctO,(i+1)*8,0x18)
-		for j in range(getData(brsar,offset)):
-			brsar.seek(offset+(j+1)*8)
-			size = brsar.read(4)
-			brsar.seek(offset+(j+1)*8)
-			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
-		offset = dataPath(brsar,inO,ctO,(i+1)*8)+0x18
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
-		offset = dataPath(brsar,inO,ctO)+(i+1)*8
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+		#size
+		dol.seek(0xC0)
+		size = int.from_bytes(dol.read(4),"big")
+		dol.seek(0xC0)
+		dol.write((size+sizeDifference).to_bytes(4,"big"))
 
-	#group table 335A8 33500
-	for i in range(getData(brsar,dataPath(brsar,inO,grO))-1):
-		offset = dataPath(brsar,inO,grO,(i+1)*8)
-		for j in [0x10,0x18,0x24]:
-			brsar.seek(offset+j)
-			size = brsar.read(4)
-			brsar.seek(offset+j)
-			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
-		for j in range(getData(brsar,offset+0x28)):
-			brsar.seek(offset+0x30+j*8)
-			size = brsar.read(4)
-			brsar.seek(offset+0x30+j*8)
-			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
-		offset = dataPath(brsar,inO,grO)+(i+1)*8
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+	#stuff: number + something
+	dol.seek(0)
+	data = dol.read(positionOffset)
 
-	#file length, size of info, offset to file
-	for offset in [0x8,0x1C,0x20,dataPathPoint(brsar,inO,0x4),dataPathPoint(brsar,inO,0x1C),dataPathPoint(brsar,inO,0x24),dataPathPoint(brsar,inO,0x2C),dataPathPoint(brsar,inO,0x34)]:
-		brsar.seek(offset)
-		size = brsar.read(4)
-		brsar.seek(offset)
-		brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
+	data += (number+0xC8).to_bytes(4,"big")
 
-	#bank info:
-	newOffset = getData(brsar,dataPath(brsar,inO,sbO)+8*(positionNum-1)+4)
-	
-	data1Point = dataPath(brsar,inO,ctO)+8*(positionNum)
-	brsar.seek(0)
-	dataToWrite = brsar.read(data1Point)
-	dataToWrite += (0x01000000).to_bytes(4,"big")+(newOffset+0x40).to_bytes(4,"big")
-	dataToWrite += brsar.read(positionOffset-data1Point)
-	dataToWrite += (0x1970).to_bytes(4,"big")+(0xFFFFFFFF).to_bytes(8,"big")+(0x01000000).to_bytes(12,"big")+(positionOffset+0x18).to_bytes(4,"big")+(0x0301000000).to_bytes(8,"big")+(positionOffset+0x38).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x40).to_bytes(4,"big")+(0x01000000).to_bytes(4,"big")+(positionOffset+0x48).to_bytes(4,"big")+(0x02).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x03).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")+(0x13).to_bytes(4,"big")+(0x63+1).to_bytes(4,"big")
-	dataToWrite += brsar.read()
-	brsar.close()
-	brsar = open(GetBrsarPath(),"wb")
-	brsar.write(dataToWrite)
-	brsar.close()
+	mem = 0x805211CC+0x32*50
+
+	data += mem.to_bytes(4,"big")
+	data += (mem-0x15E9).to_bytes(4,"big")
+	data += (mem-0x15D8).to_bytes(4,"big")
+	data += (mem+0x10).to_bytes(4,"big")
+	data += (mem+0x22).to_bytes(4,"big")
+	data += (mem-0x15C9).to_bytes(4,"big")
+	data += (mem-0x15BB).to_bytes(4,"big")
+
+	data += midiInfo[4].to_bytes(1,"big")+bytes(3)
+	data += midiInfo[2].to_bytes(4,"big")
+	data += midiInfo[3].to_bytes(4,"big")
+	data += (0xC0).to_bytes(4,"big") #?
+	data += (0x00010000).to_bytes(4,"big")
+	data += int("3F 37 4B C7 3F 5D F3 B6 3F 80 00 00 3F 93 33 33 3F A6 66 66".replace(" ",""),16).to_bytes(0x14,"big") #?
+	data += bytes(4)
+	data += brseqNumber.to_bytes(4,"big")
+	data += (brseqNumber+1).to_bytes(4,"big")
+	data += (0x00010102).to_bytes(4,"big") #?
+	data += (0x01010000).to_bytes(4,"big")
+	data += int("00 00 00 08 00 00 00 1C 00 00 00 2C 00 00 00 3C 00 00 00 50 00 00 00 60".replace(" ",""),16).to_bytes(0x18,"big") #?
+	data += (0x03E7).to_bytes(4,"big")
+	data += int("00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 01 00 00 00 02 00 00 00 00 00 00 00 02 00 00 00 02 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 00 00 08 FF FF FF FF 00 00 00 74".replace(" ",""),16).to_bytes(0x44,"big") #?
+
+	dol.seek(positionOffset+0xBC)
+	data += dol.read()
+	dol.close()
+
+	dol = open(GetMainDolPath(),"wb")
+	dol.write(data)
+	dol.close()
 
 def dataPath(file,*argv):
 	file.seek(argv[0])
@@ -1433,10 +1435,6 @@ def getData(file,point):
 	return int.from_bytes(file.read(4),"big")
 
 #Brsar Helper
-infoSpot = 0x15560
-groupTableMarker = 0x2C
-soundCountMarker = 0x34
-
 syO = 0x10
 inO = 0x18
 sdO = 0x0C
@@ -1444,6 +1442,7 @@ sbO = 0x14
 piO = 0x1C
 ctO = 0x24
 grO = 0x2C
+scO = 0x34
 
 
 #Other Constants
@@ -1489,15 +1488,3 @@ if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
 version = "0.9.3"
-
-#2DAFC - collection table
-#2EA60 - collection entry 20
-
-
-#midiInfo = LoadMidi(r"D:\Benjaminz\Projects\Custom Wii Music\Pre-Made-Songs-for-Wii-Music\Undertale\DeathByGlamour.brseq")
-#copyfile(GetBrsarPath()+".backup",GetBrsarPath())
-#name = BrseqAddingName(["RP_SSN_NEWTUNE_SONG","RP_SSN_NEWTUNE_SCORE"])
-#collect = BrseqAddingCollection()
-#BrseqAddingSounddata(0,collect)
-#BrseqAdding(2)
-#ReplaceSong(2,[0x64,0x65],[0,0],[midiInfo[0]],[midiInfo[1]])
