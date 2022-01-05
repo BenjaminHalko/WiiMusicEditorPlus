@@ -8,7 +8,7 @@ from configparser import ConfigParser
 import webbrowser
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QLocale, QTranslator
+from PyQt5.QtCore import QLocale, QTranslator, QProcess
 from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
@@ -518,17 +518,12 @@ class Window(QMainWindow, Ui_MainWindow):
                     ini.set("Core","EnableCheats","True")
                     with open(GetDolphinSave()+"/Config/Dolphin.ini","w") as inifile:
                         ini.write(inifile)
-                cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
-                
-                if(not menu): cmd.insert(1,"-b")
-                env = os.environ
-                if(currentSystem == "Mac"):
-                    cmd[0] += "/Contents/MacOS/Dolphin"
-                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/Contents/MacOS/platforms/'
-                    env["QT_DEBUG_PLUGINS"] = "1"
-                elif(currentSystem == "Windows"):
-                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
-                subprocess.Popen(cmd,env=env)
+                cmd = ['-e',editor.file.path+'/sys/main.dol']
+                if(not menu): cmd.insert(0,"-b")
+                dolphin = QProcess()
+                name = editor.dolphinPath
+                if(currentSystem == "Mac"): name += "/Contents/MacOS/Dolphin"
+                dolphin.startDetached(name,cmd)
             except Exception as e:
                 ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
 
