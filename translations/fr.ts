@@ -1068,47 +1068,47 @@ Wii Music Editor Plus!</source>
 <context>
     <name>FirstSetupWindow</name>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>English</source>
         <translation>Anglais</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>French</source>
         <translation>français</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Spanish</source>
         <translation>Espagnol</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Germen</source>
         <translation>Allemand</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Italian</source>
         <translation>italien</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Japanese</source>
         <translation>Japonais</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Korean</source>
         <translation>coréen</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="95"/>
+        <location filename="../firstsetup.py" line="96"/>
         <source>Not a valid Wii Music folder</source>
         <translation>Pas un dossier Wii Music valide</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="95"/>
+        <location filename="../firstsetup.py" line="96"/>
         <source>Files and sys folder not found</source>
         <translation>Fichiers et dossier sys introuvables</translation>
     </message>
@@ -1142,457 +1142,457 @@ Wii Music Editor Plus!</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../main_window_ui.py" line="1732"/>
+        <location filename="../main_window_ui.py" line="1729"/>
         <source>Currently Loaded File:</source>
         <translation>Fichier actuellement chargé :</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1733"/>
+        <location filename="../main_window_ui.py" line="1730"/>
         <source>No File Loaded</source>
         <translation>Aucun fichier chargé</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1750"/>
+        <location filename="../main_window_ui.py" line="1747"/>
         <source>Song Editor</source>
         <translation>Éditeur de chanson</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1774"/>
+        <location filename="../main_window_ui.py" line="1771"/>
         <source>Style Editor</source>
         <translation>Éditeur de styles</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1736"/>
+        <location filename="../main_window_ui.py" line="1733"/>
         <source>Advanced Features</source>
         <translation>Fonctionnalités avancées</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1737"/>
+        <location filename="../main_window_ui.py" line="1734"/>
         <source>Change All Text</source>
         <translation>Changer tout le texte</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1738"/>
+        <location filename="../main_window_ui.py" line="1735"/>
         <source>Change Default Styles</source>
         <translation>Modifier les styles par défaut</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1739"/>
+        <location filename="../main_window_ui.py" line="1736"/>
         <source>Replace Sounds</source>
         <translation>Remplacer les sons</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1740"/>
+        <location filename="../main_window_ui.py" line="1737"/>
         <source>Remove Song</source>
         <translation>Supprimer la chanson</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1741"/>
+        <location filename="../main_window_ui.py" line="1738"/>
         <source>Convert Geckocode to .gct</source>
         <translation>Convertir Geckocode en .gct</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1742"/>
+        <location filename="../main_window_ui.py" line="1739"/>
         <source>Patch Main.dol with Geckocode</source>
         <translation>Patch Main.dol avec Geckocode</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1743"/>
+        <location filename="../main_window_ui.py" line="1740"/>
         <source>Create Riivolution Patch</source>
         <translation>Créer un patch Riivolution</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1744"/>
+        <location filename="../main_window_ui.py" line="1741"/>
         <source>Rom Editing</source>
         <translation>Édition Rom</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1745"/>
+        <location filename="../main_window_ui.py" line="1742"/>
         <source>Revert Changes</source>
         <translation>Rétablir les changements</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1746"/>
+        <location filename="../main_window_ui.py" line="1743"/>
         <source>Pack Rom Filesystem</source>
         <translation>Pack système de fichiers Rom</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1747"/>
+        <location filename="../main_window_ui.py" line="1744"/>
         <source>Import Files</source>
         <translation>Importer des fichiers</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1748"/>
+        <location filename="../main_window_ui.py" line="1745"/>
         <source>Export Files</source>
         <translation>Exporter des fichiers</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1749"/>
+        <location filename="../main_window_ui.py" line="1746"/>
         <source>Import Changes</source>
         <translation>Importer les modifications</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1812"/>
+        <location filename="../main_window_ui.py" line="1809"/>
         <source>Back</source>
         <translation>Retour</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1752"/>
+        <location filename="../main_window_ui.py" line="1749"/>
         <source>Replace Song</source>
         <translation>Remplacer la chanson</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1756"/>
+        <location filename="../main_window_ui.py" line="1753"/>
         <source>Load a Midi-Type file</source>
         <translation>Charger un fichier de type Midi</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1816"/>
+        <location filename="../main_window_ui.py" line="1813"/>
         <source>Browse</source>
         <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1755"/>
+        <location filename="../main_window_ui.py" line="1752"/>
         <source>SCORE:</source>
         <translation>BUT:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1757"/>
+        <location filename="../main_window_ui.py" line="1754"/>
         <source>SONG:</source>
         <translation>CHANSON:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1759"/>
+        <location filename="../main_window_ui.py" line="1756"/>
         <source>Replace SONG seperatly</source>
         <translation>Remplacez SONG séparément</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1760"/>
+        <location filename="../main_window_ui.py" line="1757"/>
         <source>Tempo:</source>
         <translation>Tempo:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1761"/>
+        <location filename="../main_window_ui.py" line="1758"/>
         <source>Length:</source>
         <translation>Longueur:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1762"/>
+        <location filename="../main_window_ui.py" line="1759"/>
         <source>Measures</source>
         <translation>Les mesures</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1763"/>
+        <location filename="../main_window_ui.py" line="1760"/>
         <source>Beats</source>
         <translation>Beats</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1764"/>
+        <location filename="../main_window_ui.py" line="1761"/>
         <source>Time Signature:</source>
         <translation>Signature temporelle:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1765"/>
+        <location filename="../main_window_ui.py" line="1762"/>
         <source>Change Song Text</source>
         <translation>Changer le texte de la chanson</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1766"/>
+        <location filename="../main_window_ui.py" line="1763"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1767"/>
+        <location filename="../main_window_ui.py" line="1764"/>
         <source>Genre:</source>
         <translation>Genre:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1768"/>
+        <location filename="../main_window_ui.py" line="1765"/>
         <source>Description:</source>
         <translation>La description:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1820"/>
+        <location filename="../main_window_ui.py" line="1817"/>
         <source>Patch!</source>
         <translation>Pièce!</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1770"/>
+        <location filename="../main_window_ui.py" line="1767"/>
         <source>Song to change</source>
         <translation>Chanson à changer</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1771"/>
+        <location filename="../main_window_ui.py" line="1768"/>
         <source>Style:</source>
         <translation>Style:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1772"/>
+        <location filename="../main_window_ui.py" line="1769"/>
         <source>Edit in Style Editor</source>
         <translation>Modifier dans l&apos;éditeur de style</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1773"/>
+        <location filename="../main_window_ui.py" line="1770"/>
         <source>Change Default Style</source>
         <translation>Modifier le style par défaut</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1776"/>
+        <location filename="../main_window_ui.py" line="1773"/>
         <source>Parts</source>
         <translation>les pièces</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1777"/>
+        <location filename="../main_window_ui.py" line="1774"/>
         <source>Bass:</source>
         <translation>Basse:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1778"/>
+        <location filename="../main_window_ui.py" line="1775"/>
         <source>Perc 1:</source>
         <translation>Perc 1 :</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1779"/>
+        <location filename="../main_window_ui.py" line="1776"/>
         <source>Harmony:</source>
         <translation>Harmonie:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1780"/>
+        <location filename="../main_window_ui.py" line="1777"/>
         <source>Chords:</source>
         <translation>Accords :</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1781"/>
+        <location filename="../main_window_ui.py" line="1778"/>
         <source>Perc 2:</source>
         <translation>Perc 2:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1782"/>
+        <location filename="../main_window_ui.py" line="1779"/>
         <source>Melody:</source>
         <translation>Mélodie:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1783"/>
+        <location filename="../main_window_ui.py" line="1780"/>
         <source>Reset to Default</source>
         <translation>Réinitialiser par défaut</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1785"/>
+        <location filename="../main_window_ui.py" line="1782"/>
         <source>Instruments</source>
         <translation>Instruments</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1786"/>
+        <location filename="../main_window_ui.py" line="1783"/>
         <source>Part to Change:</source>
         <translation>Pièce à changer :</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1787"/>
+        <location filename="../main_window_ui.py" line="1784"/>
         <source>Melody</source>
         <translation>Mélodie</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1788"/>
+        <location filename="../main_window_ui.py" line="1785"/>
         <source>Harmony</source>
         <translation>Harmonie</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1789"/>
+        <location filename="../main_window_ui.py" line="1786"/>
         <source>Chords</source>
         <translation>Accords</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1790"/>
+        <location filename="../main_window_ui.py" line="1787"/>
         <source>Bass</source>
         <translation>Basse</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1791"/>
+        <location filename="../main_window_ui.py" line="1788"/>
         <source>Percussion 1</source>
         <translation>Percussions 1</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1792"/>
+        <location filename="../main_window_ui.py" line="1789"/>
         <source>Percussion 2</source>
         <translation>Percussions 2</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1793"/>
+        <location filename="../main_window_ui.py" line="1790"/>
         <source>Style to change</source>
         <translation>Style à changer</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1794"/>
+        <location filename="../main_window_ui.py" line="1791"/>
         <source>Style Name:</source>
         <translation>Nom du style:</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1795"/>
+        <location filename="../main_window_ui.py" line="1792"/>
         <source>Text Editor</source>
         <translation>Éditeur de texte</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1797"/>
+        <location filename="../main_window_ui.py" line="1794"/>
         <source>Open in External Editor</source>
         <translation>Ouvrir dans l&apos;éditeur externe</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1799"/>
+        <location filename="../main_window_ui.py" line="1796"/>
         <source>Default Style Editor</source>
         <translation>Éditeur de style par défaut</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1807"/>
+        <location filename="../main_window_ui.py" line="1804"/>
         <source>Song List</source>
         <translation>Liste des chansons</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1802"/>
+        <location filename="../main_window_ui.py" line="1799"/>
         <source>Style List</source>
         <translation>Liste des styles</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1803"/>
+        <location filename="../main_window_ui.py" line="1800"/>
         <source>Set to Default</source>
         <translation>Définir par défaut</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1805"/>
+        <location filename="../main_window_ui.py" line="1802"/>
         <source>Remove Songs</source>
         <translation>Supprimer des morceaux</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1808"/>
+        <location filename="../main_window_ui.py" line="1805"/>
         <source>Remove All Non-Custom Songs</source>
         <translation>Supprimer toutes les chansons non personnalisées</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1809"/>
+        <location filename="../main_window_ui.py" line="1806"/>
         <source>Deselect All</source>
         <translation>Tout déselectionner</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1810"/>
+        <location filename="../main_window_ui.py" line="1807"/>
         <source>Purge Songs!!!</source>
         <translation>Purger les chansons !!!</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1811"/>
+        <location filename="../main_window_ui.py" line="1808"/>
         <source>Sound Editor</source>
         <translation>Éditeur de son</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1813"/>
+        <location filename="../main_window_ui.py" line="1810"/>
         <source>Sound List</source>
         <translation>Liste des sons</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1821"/>
+        <location filename="../main_window_ui.py" line="1818"/>
         <source>File</source>
         <translation>Déposer</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1815"/>
+        <location filename="../main_window_ui.py" line="1812"/>
         <source>Load a Rwav-Type file</source>
         <translation>Charger un fichier Rwav-Type</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1817"/>
+        <location filename="../main_window_ui.py" line="1814"/>
         <source>Sound Types</source>
         <translation>Types de sons</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1818"/>
+        <location filename="../main_window_ui.py" line="1815"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1819"/>
+        <location filename="../main_window_ui.py" line="1816"/>
         <source>Play Audio</source>
         <translation>Lire le son</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1822"/>
+        <location filename="../main_window_ui.py" line="1819"/>
         <source>Options</source>
         <translation>Options</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1823"/>
+        <location filename="../main_window_ui.py" line="1820"/>
         <source>Help</source>
         <translation>Aider</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1824"/>
+        <location filename="../main_window_ui.py" line="1821"/>
         <source>Load Wii Music File</source>
         <translation>Charger un fichier de musique Wii</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1825"/>
+        <location filename="../main_window_ui.py" line="1822"/>
         <source>Load Wii Music Folder</source>
         <translation>Charger le dossier de musique Wii</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1826"/>
+        <location filename="../main_window_ui.py" line="1823"/>
         <source>Run Dolphin</source>
         <translation>Courir le dauphin</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1827"/>
+        <location filename="../main_window_ui.py" line="1824"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1829"/>
+        <location filename="../main_window_ui.py" line="1826"/>
         <source>Run Dolphin (Menu)</source>
         <translation>Courir Dauphin (Menu)</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1830"/>
+        <location filename="../main_window_ui.py" line="1827"/>
         <source>F6</source>
         <translation>F6</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1831"/>
+        <location filename="../main_window_ui.py" line="1828"/>
         <source>Check for Updates</source>
         <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1832"/>
+        <location filename="../main_window_ui.py" line="1829"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1833"/>
+        <location filename="../main_window_ui.py" line="1830"/>
         <source>Download Pre-made Songs</source>
         <translation>Télécharger des chansons prédéfinies</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1834"/>
+        <location filename="../main_window_ui.py" line="1831"/>
         <source>Open Wiki</source>
         <translation>Ouvrir le wiki</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1835"/>
+        <location filename="../main_window_ui.py" line="1832"/>
         <source>Open Save Folder</source>
         <translation>Ouvrir le dossier de sauvegarde</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1836"/>
+        <location filename="../main_window_ui.py" line="1833"/>
         <source>Add 100% Save File to Dolphin</source>
         <translation>Ajouter 100% Enregistrer le fichier à Dolphin</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1837"/>
+        <location filename="../main_window_ui.py" line="1834"/>
         <source>Game Documentation</source>
         <translation>Documentation du jeu</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1838"/>
+        <location filename="../main_window_ui.py" line="1835"/>
         <source>About</source>
         <translation>Sur</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1839"/>
+        <location filename="../main_window_ui.py" line="1836"/>
         <source>Donate</source>
         <translation>Faire un don</translation>
     </message>
@@ -1941,17 +1941,17 @@ Wii Music Editor Plus!</source>
         <translation>Passer en version bêta</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="118"/>
+        <location filename="../settings.py" line="119"/>
         <source>Default Path</source>
         <translation>Chemin par défaut</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="131"/>
+        <location filename="../settings.py" line="132"/>
         <source>Not a Dolphin Save Directory</source>
         <translation>Pas un répertoire de sauvegarde Dolphin</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="131"/>
+        <location filename="../settings.py" line="132"/>
         <source>Wii and GameSettings folder not found</source>
         <translation>Dossier Wii et GameSettings introuvable</translation>
     </message>
@@ -2290,12 +2290,12 @@ Wii Music Editor Plus!</source>
         <translation>Impossible de supprimer les chansons</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1003"/>
+        <location filename="../WiiMusicEditorPlus.py" line="1002"/>
         <source>One or more errors have occurred</source>
         <translation>Une ou plusieurs erreurs se sont produites</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1003"/>
+        <location filename="../WiiMusicEditorPlus.py" line="1002"/>
         <source>Could not load file</source>
         <translation>Impossible de charger le fichier</translation>
     </message>

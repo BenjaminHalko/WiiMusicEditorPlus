@@ -3107,7 +3107,6 @@ padding-bottom: 6px;
     <addaction name="MB_Help"/>
     <addaction name="separator"/>
     <addaction name="MB_Donate"/>
-    <addaction name="MB_About"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="MB_Options"/>

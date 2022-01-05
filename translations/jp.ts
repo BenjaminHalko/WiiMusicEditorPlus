@@ -1068,47 +1068,47 @@ Wiiミュージックエディタープラス！</translation>
 <context>
     <name>FirstSetupWindow</name>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>English</source>
         <translation>英語</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>French</source>
         <translation>フランス語</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Spanish</source>
         <translation>スペイン語</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Germen</source>
         <translation>ゲルメン</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Italian</source>
         <translation>イタリア語</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Japanese</source>
         <translation>日本</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="66"/>
+        <location filename="../firstsetup.py" line="67"/>
         <source>Korean</source>
         <translation>韓国語</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="95"/>
+        <location filename="../firstsetup.py" line="96"/>
         <source>Not a valid Wii Music folder</source>
         <translation>有効なWiiミュージックフォルダではありません</translation>
     </message>
     <message>
-        <location filename="../firstsetup.py" line="95"/>
+        <location filename="../firstsetup.py" line="96"/>
         <source>Files and sys folder not found</source>
         <translation>ファイルとsysフォルダーが見つかりません</translation>
     </message>
@@ -1142,457 +1142,457 @@ Wiiミュージックエディタープラス！</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../main_window_ui.py" line="1732"/>
+        <location filename="../main_window_ui.py" line="1729"/>
         <source>Currently Loaded File:</source>
         <translation>現在ロードされているファイル：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1733"/>
+        <location filename="../main_window_ui.py" line="1730"/>
         <source>No File Loaded</source>
         <translation>ファイルがロードされていません</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1750"/>
+        <location filename="../main_window_ui.py" line="1747"/>
         <source>Song Editor</source>
         <translation>ソングエディター</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1774"/>
+        <location filename="../main_window_ui.py" line="1771"/>
         <source>Style Editor</source>
         <translation>スタイルエディター</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1736"/>
+        <location filename="../main_window_ui.py" line="1733"/>
         <source>Advanced Features</source>
         <translation>高度な機能</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1737"/>
+        <location filename="../main_window_ui.py" line="1734"/>
         <source>Change All Text</source>
         <translation>すべてのテキストを変更</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1738"/>
+        <location filename="../main_window_ui.py" line="1735"/>
         <source>Change Default Styles</source>
         <translation>デフォルトのスタイルを変更する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1739"/>
+        <location filename="../main_window_ui.py" line="1736"/>
         <source>Replace Sounds</source>
         <translation>サウンドを置き換える</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1740"/>
+        <location filename="../main_window_ui.py" line="1737"/>
         <source>Remove Song</source>
         <translation>曲を削除</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1741"/>
+        <location filename="../main_window_ui.py" line="1738"/>
         <source>Convert Geckocode to .gct</source>
         <translation>Geckocodeを.gctに変換します</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1742"/>
+        <location filename="../main_window_ui.py" line="1739"/>
         <source>Patch Main.dol with Geckocode</source>
         <translation>Main.dolにGeckocodeをパッチする</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1743"/>
+        <location filename="../main_window_ui.py" line="1740"/>
         <source>Create Riivolution Patch</source>
         <translation>Riivolutionパッチを作成する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1744"/>
+        <location filename="../main_window_ui.py" line="1741"/>
         <source>Rom Editing</source>
         <translation>ROM編集</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1745"/>
+        <location filename="../main_window_ui.py" line="1742"/>
         <source>Revert Changes</source>
         <translation>変更を元に戻す</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1746"/>
+        <location filename="../main_window_ui.py" line="1743"/>
         <source>Pack Rom Filesystem</source>
         <translation>パックRomファイルシステム</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1747"/>
+        <location filename="../main_window_ui.py" line="1744"/>
         <source>Import Files</source>
         <translation>ファイルのインポート</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1748"/>
+        <location filename="../main_window_ui.py" line="1745"/>
         <source>Export Files</source>
         <translation>ファイルのエクスポート</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1749"/>
+        <location filename="../main_window_ui.py" line="1746"/>
         <source>Import Changes</source>
         <translation>変更をインポートする</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1812"/>
+        <location filename="../main_window_ui.py" line="1809"/>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1752"/>
+        <location filename="../main_window_ui.py" line="1749"/>
         <source>Replace Song</source>
         <translation>曲を置き換える</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1756"/>
+        <location filename="../main_window_ui.py" line="1753"/>
         <source>Load a Midi-Type file</source>
         <translation>MIDIタイプのファイルをロードする</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1816"/>
+        <location filename="../main_window_ui.py" line="1813"/>
         <source>Browse</source>
         <translation>ブラウズ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1755"/>
+        <location filename="../main_window_ui.py" line="1752"/>
         <source>SCORE:</source>
         <translation>スコア：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1757"/>
+        <location filename="../main_window_ui.py" line="1754"/>
         <source>SONG:</source>
         <translation>歌：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1759"/>
+        <location filename="../main_window_ui.py" line="1756"/>
         <source>Replace SONG seperatly</source>
         <translation>SONGを個別に交換してください</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1760"/>
+        <location filename="../main_window_ui.py" line="1757"/>
         <source>Tempo:</source>
         <translation>テンポ：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1761"/>
+        <location filename="../main_window_ui.py" line="1758"/>
         <source>Length:</source>
         <translation>長さ：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1762"/>
+        <location filename="../main_window_ui.py" line="1759"/>
         <source>Measures</source>
         <translation>対策</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1763"/>
+        <location filename="../main_window_ui.py" line="1760"/>
         <source>Beats</source>
         <translation>Beats</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1764"/>
+        <location filename="../main_window_ui.py" line="1761"/>
         <source>Time Signature:</source>
         <translation>拍子記号：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1765"/>
+        <location filename="../main_window_ui.py" line="1762"/>
         <source>Change Song Text</source>
         <translation>曲のテキストを変更する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1766"/>
+        <location filename="../main_window_ui.py" line="1763"/>
         <source>Name:</source>
         <translation>名前：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1767"/>
+        <location filename="../main_window_ui.py" line="1764"/>
         <source>Genre:</source>
         <translation>ジャンル：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1768"/>
+        <location filename="../main_window_ui.py" line="1765"/>
         <source>Description:</source>
         <translation>説明：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1820"/>
+        <location filename="../main_window_ui.py" line="1817"/>
         <source>Patch!</source>
         <translation>パッチ！</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1770"/>
+        <location filename="../main_window_ui.py" line="1767"/>
         <source>Song to change</source>
         <translation>変更する曲</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1771"/>
+        <location filename="../main_window_ui.py" line="1768"/>
         <source>Style:</source>
         <translation>スタイル：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1772"/>
+        <location filename="../main_window_ui.py" line="1769"/>
         <source>Edit in Style Editor</source>
         <translation>スタイルエディタで編集</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1773"/>
+        <location filename="../main_window_ui.py" line="1770"/>
         <source>Change Default Style</source>
         <translation>デフォルトスタイルの変更</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1776"/>
+        <location filename="../main_window_ui.py" line="1773"/>
         <source>Parts</source>
         <translation>部品</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1777"/>
+        <location filename="../main_window_ui.py" line="1774"/>
         <source>Bass:</source>
         <translation>ベース：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1778"/>
+        <location filename="../main_window_ui.py" line="1775"/>
         <source>Perc 1:</source>
         <translation>Perc 1：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1779"/>
+        <location filename="../main_window_ui.py" line="1776"/>
         <source>Harmony:</source>
         <translation>調和：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1780"/>
+        <location filename="../main_window_ui.py" line="1777"/>
         <source>Chords:</source>
         <translation>コード：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1781"/>
+        <location filename="../main_window_ui.py" line="1778"/>
         <source>Perc 2:</source>
         <translation>Perc 2：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1782"/>
+        <location filename="../main_window_ui.py" line="1779"/>
         <source>Melody:</source>
         <translation>メロディー：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1783"/>
+        <location filename="../main_window_ui.py" line="1780"/>
         <source>Reset to Default</source>
         <translation>デフォルトにリセット</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1785"/>
+        <location filename="../main_window_ui.py" line="1782"/>
         <source>Instruments</source>
         <translation>楽器</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1786"/>
+        <location filename="../main_window_ui.py" line="1783"/>
         <source>Part to Change:</source>
         <translation>変更する部分：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1787"/>
+        <location filename="../main_window_ui.py" line="1784"/>
         <source>Melody</source>
         <translation>メロディー</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1788"/>
+        <location filename="../main_window_ui.py" line="1785"/>
         <source>Harmony</source>
         <translation>調和</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1789"/>
+        <location filename="../main_window_ui.py" line="1786"/>
         <source>Chords</source>
         <translation>和音</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1790"/>
+        <location filename="../main_window_ui.py" line="1787"/>
         <source>Bass</source>
         <translation>ベース</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1791"/>
+        <location filename="../main_window_ui.py" line="1788"/>
         <source>Percussion 1</source>
         <translation>パーカッション1</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1792"/>
+        <location filename="../main_window_ui.py" line="1789"/>
         <source>Percussion 2</source>
         <translation>パーカッション2</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1793"/>
+        <location filename="../main_window_ui.py" line="1790"/>
         <source>Style to change</source>
         <translation>変更するスタイル</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1794"/>
+        <location filename="../main_window_ui.py" line="1791"/>
         <source>Style Name:</source>
         <translation>スタイル名：</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1795"/>
+        <location filename="../main_window_ui.py" line="1792"/>
         <source>Text Editor</source>
         <translation>テキストエディタ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1797"/>
+        <location filename="../main_window_ui.py" line="1794"/>
         <source>Open in External Editor</source>
         <translation>外部エディタで開く</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1799"/>
+        <location filename="../main_window_ui.py" line="1796"/>
         <source>Default Style Editor</source>
         <translation>デフォルトのスタイルエディタ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1807"/>
+        <location filename="../main_window_ui.py" line="1804"/>
         <source>Song List</source>
         <translation>曲リスト</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1802"/>
+        <location filename="../main_window_ui.py" line="1799"/>
         <source>Style List</source>
         <translation>スタイルリスト</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1803"/>
+        <location filename="../main_window_ui.py" line="1800"/>
         <source>Set to Default</source>
         <translation>デフォルトに設定</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1805"/>
+        <location filename="../main_window_ui.py" line="1802"/>
         <source>Remove Songs</source>
         <translation>曲を削除する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1808"/>
+        <location filename="../main_window_ui.py" line="1805"/>
         <source>Remove All Non-Custom Songs</source>
         <translation>カスタム以外の曲をすべて削除する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1809"/>
+        <location filename="../main_window_ui.py" line="1806"/>
         <source>Deselect All</source>
         <translation>すべての選択を解除</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1810"/>
+        <location filename="../main_window_ui.py" line="1807"/>
         <source>Purge Songs!!!</source>
         <translation>曲をパージ!!!</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1811"/>
+        <location filename="../main_window_ui.py" line="1808"/>
         <source>Sound Editor</source>
         <translation>サウンドエディタ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1813"/>
+        <location filename="../main_window_ui.py" line="1810"/>
         <source>Sound List</source>
         <translation>サウンドリスト</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1821"/>
+        <location filename="../main_window_ui.py" line="1818"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1815"/>
+        <location filename="../main_window_ui.py" line="1812"/>
         <source>Load a Rwav-Type file</source>
         <translation>Rwavタイプのファイルをロードします</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1817"/>
+        <location filename="../main_window_ui.py" line="1814"/>
         <source>Sound Types</source>
         <translation>サウンドタイプ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1818"/>
+        <location filename="../main_window_ui.py" line="1815"/>
         <source>Select All</source>
         <translation>すべて選択</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1819"/>
+        <location filename="../main_window_ui.py" line="1816"/>
         <source>Play Audio</source>
         <translation>オーディオを再生</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1822"/>
+        <location filename="../main_window_ui.py" line="1819"/>
         <source>Options</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1823"/>
+        <location filename="../main_window_ui.py" line="1820"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1824"/>
+        <location filename="../main_window_ui.py" line="1821"/>
         <source>Load Wii Music File</source>
         <translation>Wiiミュージックファイルをロードする</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1825"/>
+        <location filename="../main_window_ui.py" line="1822"/>
         <source>Load Wii Music Folder</source>
         <translation>Wiiミュージックフォルダを読み込む</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1826"/>
+        <location filename="../main_window_ui.py" line="1823"/>
         <source>Run Dolphin</source>
         <translation>イルカを実行します</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1827"/>
+        <location filename="../main_window_ui.py" line="1824"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1829"/>
+        <location filename="../main_window_ui.py" line="1826"/>
         <source>Run Dolphin (Menu)</source>
         <translation>イルカを実行する（メニュー）</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1830"/>
+        <location filename="../main_window_ui.py" line="1827"/>
         <source>F6</source>
         <translation>F6</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1831"/>
+        <location filename="../main_window_ui.py" line="1828"/>
         <source>Check for Updates</source>
         <translation>アップデートを確認する</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1832"/>
+        <location filename="../main_window_ui.py" line="1829"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1833"/>
+        <location filename="../main_window_ui.py" line="1830"/>
         <source>Download Pre-made Songs</source>
         <translation>既製の曲をダウンロードする</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1834"/>
+        <location filename="../main_window_ui.py" line="1831"/>
         <source>Open Wiki</source>
         <translation>Wikiを開く</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1835"/>
+        <location filename="../main_window_ui.py" line="1832"/>
         <source>Open Save Folder</source>
         <translation>保存フォルダを開く</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1836"/>
+        <location filename="../main_window_ui.py" line="1833"/>
         <source>Add 100% Save File to Dolphin</source>
         <translation>Dolphinに100％保存ファイルを追加</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1837"/>
+        <location filename="../main_window_ui.py" line="1834"/>
         <source>Game Documentation</source>
         <translation>ゲームのドキュメント</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1838"/>
+        <location filename="../main_window_ui.py" line="1835"/>
         <source>About</source>
         <translation>約</translation>
     </message>
     <message>
-        <location filename="../main_window_ui.py" line="1839"/>
+        <location filename="../main_window_ui.py" line="1836"/>
         <source>Donate</source>
         <translation>寄付</translation>
     </message>
@@ -1941,17 +1941,17 @@ Wiiミュージックエディタープラス！</translation>
         <translation>ベータ版に切り替える</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="118"/>
+        <location filename="../settings.py" line="119"/>
         <source>Default Path</source>
         <translation>デフォルトパス</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="131"/>
+        <location filename="../settings.py" line="132"/>
         <source>Not a Dolphin Save Directory</source>
         <translation>イルカの保存ディレクトリではありません</translation>
     </message>
     <message>
-        <location filename="../settings.py" line="131"/>
+        <location filename="../settings.py" line="132"/>
         <source>Wii and GameSettings folder not found</source>
         <translation>WiiとGameSettingsフォルダーが見つかりません</translation>
     </message>
@@ -2290,12 +2290,12 @@ Wiiミュージックエディタープラス！</translation>
         <translation>曲を削除できませんでした</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1003"/>
+        <location filename="../WiiMusicEditorPlus.py" line="1002"/>
         <source>One or more errors have occurred</source>
         <translation>1つ以上のエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1003"/>
+        <location filename="../WiiMusicEditorPlus.py" line="1002"/>
         <source>Could not load file</source>
         <translation>ファイルを読み込めませんでした</translation>
     </message>

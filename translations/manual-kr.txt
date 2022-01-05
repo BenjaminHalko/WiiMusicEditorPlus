@@ -2,6 +2,65 @@
 Wii Music Editor Plus	Wii 뮤직 에디터 플러스
 Cancel	취소
 Ok	확인
+A Little Night Music	아이네 클라이네 나흐트무지크
+American Patrol	American Patrol
+Animal Crossing	놀러오세요 동물의 숲
+Animal Crossing -- K.K. Blues	T.K.블루스
+Bridal Chorus	결혼 행진곡
+Carmen	카르멘
+Chariots of Fire	불의 전차
+Daydream Believer	Daydream Believer
+Do-Re-Mi	도레미
+Every Breath You Take	Every Breath You Take
+F-Zero -- Mute City Theme	Mute City(F-ZERO)
+From Santurtzi to Bilbao	From Santurtzi to Bilbao
+From the New World	꿈속의 고향
+Happy Birthday to You	생일 축하 노래
+I'll Be There	I'll Be There
+I've Never Been to Me	I've Never Been to Me
+Jingle Bell Rock	Jingle Bell Rock
+La Bamba	라밤바
+La Cucaracha	라쿠카라차
+Little Hans	나비야
+Long, Long Ago	그 옛날에
+Material Girl	Material Girl
+Minuet in G Major	미뉴에트 사장조
+My Grandfather's Clock	할아버지의 시계
+O Christmas Tree	소나무야
+Ode to Joy	환희의 송가
+Oh, My Darling Clementine	클레멘타인
+Over the Waves	파도를 넘어서
+Please Mr. Postman	Please Mr. Postman
+Sakura Sakura	사쿠라 사쿠라
+Scarborough Fair	스카보로 페어
+September	September
+Sukiyaki	Sukiyaki
+Super Mario Bros.	슈퍼 마리오브라더스
+Sur le pont d'Avignon	아비뇽 다리 위에서
+Swan Lake	백조의 호수
+The Blue Danube	아름답고 푸른 도나우
+The Entertainer	The Entertainer
+The Flea Waltz	고양이 춤
+The Legend of Zelda	젤다의 전설
+The Loco-Motion	The Loco-Motion
+Troika	트로이카
+Turkey in the Straw	Oklahoma Mixer
+Twinkle, Twinkle, Little Star	작은 별
+Wake Me Up Before You Go-Go	Wake Me Up Before You Go-Go
+Wii Music	Wii Music
+Wii Sports	Wii Sports
+Woman	Woman
+Yankee Doodle	Yankee Doodle
+Twinkle, Twinkle, Little Star (Mii Maestro)	작은 별 (미이 마에스트로)
+Carmen (Mii Maestro)	카르멘 (미이 마에스트로)
+The Four Seasons -- Spring (Mii Maestro)	봄(사계) (미이 마에스트로)
+Ode to Joy (Mii Maestro)	환희의 송가 (미이 마에스트로)
+The Legend of Zelda (Mii Maestro)	젤다의 전설 (미이 마에스트로)
+O Christmas Tree (Handbell Harmony)	소나무야i (핸드벨 하모니)
+Hum, Hum, Hum (Handbell Harmony)	꿀벌i (핸드벨 하모니)
+My Grandfather's Clock (Handbell Harmony)	할아버지의 시계i (핸드벨 하모니)
+Do-Re-Mi (Handbell Harmony)	도레미i (핸드벨 하모니)
+Sukiyaki (Handbell Harmony)	Sukiyaki (핸드벨 하모니)
 Menu Song	메뉴송
 Jazz	재즈
 Rock	바위
@@ -119,9 +178,47 @@ Female	여자
 Male	남성
 Beat Boxer	비트 복서
 Drum Mode	드럼 모드
+Frère Jacques	Are You Sleeping
 Wii Music Editor Plus - Error	Wii 뮤직 에디터 플러스 - 오류
 Close	닫다
 Create Geckocode	게코코드 생성
+First Setup	첫 번째 설정
+Thanks for downloading the
+Wii Music Editor Plus!	다운로드해주셔서 감사합니다
+Wii 뮤직 에디터 플러스!
+Let's help you setup the essentials!	필수 설정을 도와드리겠습니다!
+Language:	언어:
+Loading Roms	롬 로딩
+Rom Path	롬 경로
+No Specified Path	지정된 경로 없음
+Load From File	파일에서 로드
+Load From Folder	폴더에서 로드
+Rom Settings	롬 설정
+Fallback Region (Used if rom region can't be determinded):	대체 영역(ROM 영역을 결정할 수 없는 경우 사용):
+U.S.	우리를.
+Europe	유럽
+Japan	일본
+Korea	한국
+Rom Language:	롬 언어:
+Setting Up Dolphin	돌고래 설정
+Dolphin Path	돌고래 길
+Browse	검색
+Gecko Codes	도마뱀붙이 코드
+Copy Gecko codes to Dolphin save directory	Dolphin 저장 디렉토리에 Gecko 코드 복사
+Force Enable Cheats when launching Dolphin	Dolphin을 시작할 때 강제로 치트 활성화
+<html><head/><body><p align="center">All Done!</p></body></html>	<html><head/><body><p align="center">완료!</p></body></html>
+Enjoy modding Wii Music!	모딩 Wii 음악을 즐기십시오!
+<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: underline; color:#ffaa00;">https://www.youtube.com/BenjaminHalko</span></a></p><p>Donate: <a href="https://ko-fi.com/benjaminhalko"><span style=" text-decoration: underline; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: underline; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></a></p></body></html>	<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: underline; color:#ffaa00;" >https://www.youtube.com/BenjaminHalko</span></a></p><p>기부: <a href="https://ko-fi.com/benjaminhalko"><스팬 스타일 =" text-decoration: underline; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>위키: <a href="https: //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: underline; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></ ></p></body></html>
+Back	뒤
+Next	다음
+English	영어
+French	프랑스 국민
+Spanish	스페인의
+Germen	독일인
+Italian	이탈리아 사람
+Korean	한국인
+Not a valid Wii Music folder	유효한 Wii 음악 폴더가 아닙니다
+Files and sys folder not found	파일 및 sys 폴더를 찾을 수 없습니다
 Could not import change	변경사항을 가져올 수 없습니다
 Import Changes	변경사항 가져오기
 Finished Importing Changes	변경사항 가져오기 완료
@@ -143,10 +240,8 @@ Revert Changes	변경 사항 되돌리기
 Pack Rom Filesystem	팩 롬 파일 시스템
 Import Files	파일 가져오기
 Export Files	파일 내보내기
-Back	뒤
 Replace Song	노래 바꾸기
 Load a Midi-Type file	Midi-Type 파일 로드
-Browse	검색
 SCORE:	점수:
 SONG:	노래:
 Replace SONG seperatly	SONG을 별도로 교체
@@ -241,12 +336,6 @@ Copy Codes	코드 복사
 Do Nothing	아무것도하지 마세요
 Create!	만들다!
 Creation Complete!	생성 완료!
-Rom Settings	롬 설정
-Fallback Region (Used if rom region can't be determinded):	대체 영역(ROM 영역을 결정할 수 없는 경우 사용):
-US	우리를
-Europe	유럽
-Japan	일본
-Korea	한국
 Remove changes from Changes.ini when reverting changes	변경 사항을 되돌릴 때 Changes.ini에서 변경 사항 제거
 Load Song and Score separately	노래와 악보를 별도로 로드
 Add the Rapper Crash fix to Gecko codes	Gecko 코드에 래퍼 충돌 수정 추가
@@ -257,27 +346,14 @@ Switch to Beta	베타로 전환
 Debug Options	디버그 옵션
 Unsafe mode (Enables options that might crash the game)	안전하지 않은 모드(게임을 중단시킬 수 있는 옵션 활성화)
 General	일반적인
-Dolphin Path	돌고래 길
-No Specified Path	지정된 경로 없음
 Dolphin Save Path	돌고래 저장 경로
 Default Path	기본 경로
 Set as Default	기본값으로 설정
-Gecko Codes	도마뱀붙이 코드
-Copy Gecko codes to Dolphin save directory	Dolphin 저장 디렉토리에 Gecko 코드 복사
-Force Enable Cheats when launching Dolphin	Dolphin을 시작할 때 강제로 치트 활성화
 Appearence	외모
-Language:	언어:
-Rom Language:	롬 언어:
 Editor Settings	에디터 설정
 Switch to Main	메인으로 전환
 Not a Dolphin Save Directory	돌고래 저장 디렉토리가 아닙니다
 Wii and GameSettings folder not found	Wii 및 GameSettings 폴더를 찾을 수 없음
-English	영어
-French	프랑스 국민
-Spanish	스페인의
-Germen	독일인
-Italian	이탈리아 사람
-Korean	한국인
 Completed!	완전한!
 Updater	업데이터
 New Update Available!	새로운 업데이트 사용 가능!
@@ -288,8 +364,6 @@ Currently Loaded Folder:	현재 로드된 폴더:
 Mii Maestro	미이 마에스트로
 Handbell Harmony	핸드벨 하모니
 Replaced	교체됨
-Not a valid Wii Music folder	유효한 Wii 음악 폴더가 아닙니다
-Files and sys folder not found	파일 및 sys 폴더를 찾을 수 없습니다
 Unable to load song editor	노래 편집기를 로드할 수 없습니다
 Must load Wii Music Rom, Brsar, or Message File	Wii Music Rom, Brsar 또는 메시지 파일을 로드해야 합니다
 Unable to load style editor	스타일 편집기를 로드할 수 없습니다

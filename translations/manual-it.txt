@@ -2,6 +2,65 @@
 Wii Music Editor Plus	Wii Music Editor Plus
 Cancel	Annulla
 Ok	Ok
+A Little Night Music	Eine kleine Nachtmusik
+American Patrol	American Patrol
+Animal Crossing	Animal Crossing
+Animal Crossing -- K.K. Blues	Animal Crossing - K.K. Blues
+Bridal Chorus	Marcia nuziale
+Carmen	Carmen
+Chariots of Fire	Chariots of Fire
+Daydream Believer	Daydream Believer
+Do-Re-Mi	Do-Re-Mi
+Every Breath You Take	Every Breath You Take
+F-Zero -- Mute City Theme	F-Zero - Mute City
+From Santurtzi to Bilbao	Desde Santurce a Bilbao
+From the New World	Dal nuovo mondo
+Happy Birthday to You	Tanti auguri a te
+I'll Be There	I'll Be There
+I've Never Been to Me	I've Never Been to Me
+Jingle Bell Rock	Jingle Bell Rock
+La Bamba	La bamba
+La Cucaracha	La cucaracha
+Little Hans	Hänschen klein
+Long, Long Ago	Long, Long Ago
+Material Girl	Material Girl
+Minuet in G Major	Minuetto in Sol maggiore
+My Grandfather's Clock	My Grandfather's Clock
+O Christmas Tree	L'albero di Natale
+Ode to Joy	Inno alla gioia
+Oh, My Darling Clementine	Oh, My Darling Clementine
+Over the Waves	Sulle onde
+Please Mr. Postman	Please Mr. Postman
+Sakura Sakura	Sakura Sakura
+Scarborough Fair	Scarborough Fair
+September	September
+Sukiyaki	Sukiyaki
+Super Mario Bros.	Super Mario Bros.
+Sur le pont d'Avignon	Sur le pont d'Avignon
+Swan Lake	Il lago dei cigni
+The Blue Danube	Sul bel Danubio blu
+The Entertainer	The Entertainer
+The Flea Waltz	Flohwalzer
+The Legend of Zelda	The Legend of Zelda
+The Loco-Motion	The Loco-Motion
+Troika	Troika
+Turkey in the Straw	Turkey in the Straw
+Twinkle, Twinkle, Little Star	Twinkle, Twinkle, Little Star
+Wake Me Up Before You Go-Go	Wake Me Up Before You Go-Go
+Wii Music	Wii Music
+Wii Sports	Wii Sports
+Woman	Woman
+Yankee Doodle	Yankee Doodle
+Twinkle, Twinkle, Little Star (Mii Maestro)	Twinkle, Twinkle, Little Star (Mii Maestro)
+Carmen (Mii Maestro)	Carmen (Mii Maestro)
+The Four Seasons -- Spring (Mii Maestro)	Le quattro stagioni - Primavera (Mii Maestro)
+Ode to Joy (Mii Maestro)	Inno alla Gioia (Mii Maestro)
+The Legend of Zelda (Mii Maestro)	The Legend of Zelda (Mii Maestro)
+O Christmas Tree (Handbell Harmony)	L'albero di Natale (Armonia del campanello)
+Hum, Hum, Hum (Handbell Harmony)	Bzz, bzz, bzz (Armonia del campanello)
+My Grandfather's Clock (Handbell Harmony)	My Grandfather's Clock (Armonia del campanello)
+Do-Re-Mi (Handbell Harmony)	Do-Re-Mi (Armonia del campanello)
+Sukiyaki (Handbell Harmony)	Sukiyaki (Armonia del campanello)
 Menu Song	Menu Canzone
 Jazz	Jazz
 Rock	Musica rock
@@ -119,9 +178,47 @@ Female	Femmina
 Male	Maschio
 Beat Boxer	Ritmatore
 Drum Mode	Modalità batteria
+Frère Jacques	Fra' Martino
 Wii Music Editor Plus - Error	Wii Music Editor Plus - Errore
 Close	Vicino
 Create Geckocode	Crea Gecocodice
+First Setup	Prima configurazione
+Thanks for downloading the
+Wii Music Editor Plus!	Grazie per aver scaricato il
+Wii Music Editor Plus!
+Let's help you setup the essentials!	Ti aiutiamo a configurare l'essenziale!
+Language:	Lingua:
+Loading Roms	Caricamento Rom
+Rom Path	Sentiero Rom
+No Specified Path	Nessun percorso specificato
+Load From File	Carica da file
+Load From Folder	Carica da cartella
+Rom Settings	Impostazioni Rom
+Fallback Region (Used if rom region can't be determinded):	Regione di fallback (usata se la regione della ROM non può essere determinata):
+U.S.	NOI.
+Europe	Europa
+Japan	Giappone
+Korea	Corea
+Rom Language:	Lingua Rom:
+Setting Up Dolphin	Configurazione di Dolphin
+Dolphin Path	Sentiero dei delfini
+Browse	Navigare
+Gecko Codes	Codici Geco
+Copy Gecko codes to Dolphin save directory	Copia i codici Gecko nella directory di salvataggio di Dolphin
+Force Enable Cheats when launching Dolphin	Forza abilita i trucchi all'avvio di Dolphin
+<html><head/><body><p align="center">All Done!</p></body></html>	<html><head/><body><p align="center">Tutto fatto!</p></body></html>
+Enjoy modding Wii Music!	Divertiti a modificare Wii Music!
+<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: underline; color:#ffaa00;">https://www.youtube.com/BenjaminHalko</span></a></p><p>Donate: <a href="https://ko-fi.com/benjaminhalko"><span style=" text-decoration: underline; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: underline; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></a></p></body></html>	<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: sottolineato; color:#ffaa00;" >https://www.youtube.com/BenjaminHalko</span></a></p><p>Fai una donazione: <a href="https://ko-fi.com/benjaminhalko"><span style =" text-decoration: sottolineato; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https: //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: sottolineato; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></ a></p></body></html>
+Back	Indietro
+Next	Prossimo
+English	inglese
+French	francese
+Spanish	spagnolo
+Germen	tedesco
+Italian	italiano
+Korean	coreano
+Not a valid Wii Music folder	Non è una cartella Wii Music valida
+Files and sys folder not found	File e cartella sys non trovati
 Could not import change	Impossibile importare la modifica
 Import Changes	Importa modifiche
 Finished Importing Changes	Terminata l'importazione delle modifiche
@@ -143,10 +240,8 @@ Revert Changes	Ripristina modifiche
 Pack Rom Filesystem	Pack Rom Filesystem
 Import Files	Importa file
 Export Files	Esporta file
-Back	Indietro
 Replace Song	Sostituisci canzone
 Load a Midi-Type file	Carica un file di tipo Midi
-Browse	Navigare
 SCORE:	PUNTO:
 SONG:	CANZONE:
 Replace SONG seperatly	Sostituisci SONG separatamente
@@ -241,12 +336,6 @@ Copy Codes	Copia codici
 Do Nothing	Fare niente
 Create!	Creare!
 Creation Complete!	Creazione completata!
-Rom Settings	Impostazioni Rom
-Fallback Region (Used if rom region can't be determinded):	Regione di fallback (usata se la regione della ROM non può essere determinata):
-US	noi
-Europe	Europa
-Japan	Giappone
-Korea	Corea
 Remove changes from Changes.ini when reverting changes	Rimuovere le modifiche da Changes.ini quando si ripristinano le modifiche
 Load Song and Score separately	Carica brano e spartito separatamente
 Add the Rapper Crash fix to Gecko codes	Aggiungi la correzione di Rapper Crash ai codici Gecko
@@ -257,27 +346,14 @@ Switch to Beta	Passa alla versione beta
 Debug Options	Opzioni di debug
 Unsafe mode (Enables options that might crash the game)	Modalità non sicura (abilita le opzioni che potrebbero bloccare il gioco)
 General	Generale
-Dolphin Path	Sentiero dei delfini
-No Specified Path	Nessun percorso specificato
 Dolphin Save Path	Percorso di salvataggio dei delfini
 Default Path	Percorso predefinito
 Set as Default	Imposta come predefinito
-Gecko Codes	Codici Geco
-Copy Gecko codes to Dolphin save directory	Copia i codici Gecko nella directory di salvataggio di Dolphin
-Force Enable Cheats when launching Dolphin	Forza abilita i trucchi all'avvio di Dolphin
 Appearence	Aspetto
-Language:	Lingua:
-Rom Language:	Lingua Rom:
 Editor Settings	Impostazioni dell'editor
 Switch to Main	Passa a Principale
 Not a Dolphin Save Directory	Non è una directory di salvataggio di Dolphin
 Wii and GameSettings folder not found	Cartella Wii e GameSettings non trovata
-English	inglese
-French	francese
-Spanish	spagnolo
-Germen	tedesco
-Italian	italiano
-Korean	coreano
 Completed!	Completato!
 Updater	Aggiornatore
 New Update Available!	Nuovo aggiornamento disponibile!
@@ -288,8 +364,6 @@ Currently Loaded Folder:	Cartella attualmente caricata:
 Mii Maestro	Mii Maestro
 Handbell Harmony	Armonia del campanello
 Replaced	Sostituito
-Not a valid Wii Music folder	Non è una cartella Wii Music valida
-Files and sys folder not found	File e cartella sys non trovati
 Unable to load song editor	Impossibile caricare l'editor dei brani
 Must load Wii Music Rom, Brsar, or Message File	È necessario caricare Wii Music Rom, Brsar o file di messaggi
 Unable to load style editor	Impossibile caricare l'editor di stile

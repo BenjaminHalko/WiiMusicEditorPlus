@@ -2,6 +2,65 @@
 Wii Music Editor Plus	Wiiミュージックエディタープラス
 Cancel	キャンセル
 Ok	Ok
+A Little Night Music	アイネ・クライネ・ナハトムジーク
+American Patrol	アメリカン・パトロール
+Animal Crossing	おいでよどうぶつの森
+Animal Crossing -- K.K. Blues	けけブルース
+Bridal Chorus	結婚行進曲
+Carmen	カルメン
+Chariots of Fire	炎のランナー
+Daydream Believer	デイドリーム・ビリーバー
+Do-Re-Mi	ドレミの歌
+Every Breath You Take	見つめていたい
+F-Zero -- Mute City Theme	ミュート・シティ（F-ZERO）
+From Santurtzi to Bilbao	サントゥルセからビルバオへ
+From the New World	新世界より
+Happy Birthday to You	ハッピー・バースディ・トゥ・ユー
+I'll Be There	アイル・ビー・ゼア
+I've Never Been to Me	愛はかげろうのように
+Jingle Bell Rock	ジングルベル・ロック
+La Bamba	ラ・バンバ
+La Cucaracha	ラ・クカラチャ
+Little Hans	ちょうちょ
+Long, Long Ago	思い出
+Material Girl	マテリアル・ガール
+Minuet in G Major	メヌエット ト長調
+My Grandfather's Clock	大きな古時計
+O Christmas Tree	もみの木
+Ode to Joy	喜びの歌
+Oh, My Darling Clementine	いとしのクレメンタイン
+Over the Waves	波濤(はとう)を越えて
+Please Mr. Postman	プリーズ・ミスター・ポストマン
+Sakura Sakura	さくらさくら
+Scarborough Fair	スカボロ・フェア
+September	セプテンバー
+Sukiyaki	上を向いて歩こう
+Super Mario Bros.	スーパーマリオブラザーズ
+Sur le pont d'Avignon	アヴィニヨンの橋の上で
+Swan Lake	白鳥の湖
+The Blue Danube	美しく青きドナウ
+The Entertainer	エンターテイナー
+The Flea Waltz	ネコふんじゃった
+The Legend of Zelda	ゼルダの伝説
+The Loco-Motion	ロコモーション
+Troika	トロイカ
+Turkey in the Straw	オクラホマ・ミキサー
+Twinkle, Twinkle, Little Star	キラキラ星
+Wake Me Up Before You Go-Go	ウキウキ・ウェイク・ミー・アップ
+Wii Music	Wii Music
+Wii Sports	Wii Sports
+Woman	ウーマン
+Yankee Doodle	アルプス一万尺
+Twinkle, Twinkle, Little Star (Mii Maestro)	キラキラ星 (Mii Maestro)
+Carmen (Mii Maestro)	カルメン (Mii Maestro)
+The Four Seasons -- Spring (Mii Maestro)	春（「四季」より） (Mii Maestro)
+Ode to Joy (Mii Maestro)	喜びの歌 (Mii Maestro)
+The Legend of Zelda (Mii Maestro)	ゼルダの伝説 (Mii Maestro)
+O Christmas Tree (Handbell Harmony)	もみの木 (ハンドベルハーモニー)
+Hum, Hum, Hum (Handbell Harmony)	ぶんぶんぶん (ハンドベルハーモニー)
+My Grandfather's Clock (Handbell Harmony)	大きな古時計 (ハンドベルハーモニー)
+Do-Re-Mi (Handbell Harmony)	ドレミの歌 (ハンドベルハーモニー)
+Sukiyaki (Handbell Harmony)	上を向いて歩こう (ハンドベルハーモニー)
 Menu Song	メニューソング
 Jazz	ジャズ
 Rock	岩
@@ -119,9 +178,47 @@ Female	女性
 Male	男
 Beat Boxer	ビートボクサー
 Drum Mode	ドラムモード
+Frère Jacques	アー・ユー・スリーピング
 Wii Music Editor Plus - Error	Wiiミュージックエディタープラス-エラー
 Close	選ぶ
 Create Geckocode	Geckocodeを作成する
+First Setup	最初のセットアップ
+Thanks for downloading the
+Wii Music Editor Plus!	ダウンロードしていただきありがとうございます
+Wiiミュージックエディタープラス！
+Let's help you setup the essentials!	必需品のセットアップを手伝いましょう！
+Language:	言語：
+Loading Roms	ROMの読み込み
+Rom Path	Romパス
+No Specified Path	指定されたパスがありません
+Load From File	ファイルからロード
+Load From Folder	フォルダからロード
+Rom Settings	ROM設定
+Fallback Region (Used if rom region can't be determinded):	フォールバックリージョン（ROMリージョンを判別できない場合に使用）：
+U.S.	我ら。
+Europe	ヨーロッパ
+Japan	日本
+Korea	韓国
+Rom Language:	ロマ語：
+Setting Up Dolphin	イルカのセットアップ
+Dolphin Path	イルカの小道
+Browse	ブラウズ
+Gecko Codes	Geckoコード
+Copy Gecko codes to Dolphin save directory	GeckoコードをDolphin保存ディレクトリにコピーします
+Force Enable Cheats when launching Dolphin	Dolphinを起動するときにチートを強制的に有効にする
+<html><head/><body><p align="center">All Done!</p></body></html>	<html> <head /> <body> <p align = "center">すべて完了！</ p> </ body> </ html>
+Enjoy modding Wii Music!	Wiiミュージックのモッディングをお楽しみください！
+<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: underline; color:#ffaa00;">https://www.youtube.com/BenjaminHalko</span></a></p><p>Donate: <a href="https://ko-fi.com/benjaminhalko"><span style=" text-decoration: underline; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: underline; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></a></p></body></html>	<html> <head /> <body> <p> YouTube：<a href="https://www.youtube.com/BenjaminHalko"> <span style = "text-decoration：underline; color：＃ffaa00;" > https://www.youtube.com/BenjaminHalko </ span> </a> </ p> <p> Donate：<a href="https://ko-fi.com/benjaminhalko"> <span style = "text-decoration：underline; color：＃ffaa00;"> https://ko-fi.com/benjaminhalko </ span> </a> </ p> <p> Wiki：<a href = "https： //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki "> <span style =" text-decoration：underline; color：＃ffaa00; "> https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki </ span> </ a> </ p> </ body> </ html>
+Back	戻る
+Next	次
+English	英語
+French	フランス語
+Spanish	スペイン語
+Germen	ゲルメン
+Italian	イタリア語
+Korean	韓国語
+Not a valid Wii Music folder	有効なWiiミュージックフォルダではありません
+Files and sys folder not found	ファイルとsysフォルダーが見つかりません
 Could not import change	変更をインポートできませんでした
 Import Changes	変更をインポートする
 Finished Importing Changes	変更のインポートが完了しました
@@ -143,10 +240,8 @@ Revert Changes	変更を元に戻す
 Pack Rom Filesystem	パックRomファイルシステム
 Import Files	ファイルのインポート
 Export Files	ファイルのエクスポート
-Back	戻る
 Replace Song	曲を置き換える
 Load a Midi-Type file	MIDIタイプのファイルをロードする
-Browse	ブラウズ
 SCORE:	スコア：
 SONG:	歌：
 Replace SONG seperatly	SONGを個別に交換してください
@@ -241,12 +336,6 @@ Copy Codes	コードをコピーする
 Do Nothing	何もしない
 Create!	作成！
 Creation Complete!	作成完了！
-Rom Settings	ROM設定
-Fallback Region (Used if rom region can't be determinded):	フォールバックリージョン（ROMリージョンを判別できない場合に使用）：
-US	我ら
-Europe	ヨーロッパ
-Japan	日本
-Korea	韓国
 Remove changes from Changes.ini when reverting changes	変更を元に戻すときにChanges.iniから変更を削除します
 Load Song and Score separately	ソングとスコアを別々にロードする
 Add the Rapper Crash fix to Gecko codes	RapperCrash修正をGeckoコードに追加します
@@ -257,27 +346,14 @@ Switch to Beta	ベータ版に切り替える
 Debug Options	デバッグオプション
 Unsafe mode (Enables options that might crash the game)	安全でないモード（ゲームをクラッシュさせる可能性のあるオプションを有効にします）
 General	全般的
-Dolphin Path	イルカの小道
-No Specified Path	指定されたパスがありません
 Dolphin Save Path	イルカセーブパス
 Default Path	デフォルトパス
 Set as Default	デフォルトとして設定
-Gecko Codes	Geckoコード
-Copy Gecko codes to Dolphin save directory	GeckoコードをDolphin保存ディレクトリにコピーします
-Force Enable Cheats when launching Dolphin	Dolphinを起動するときにチートを強制的に有効にする
 Appearence	出現
-Language:	言語：
-Rom Language:	ロマ語：
 Editor Settings	エディター設定
 Switch to Main	メインに切り替えます
 Not a Dolphin Save Directory	イルカの保存ディレクトリではありません
 Wii and GameSettings folder not found	WiiとGameSettingsフォルダーが見つかりません
-English	英語
-French	フランス語
-Spanish	スペイン語
-Germen	ゲルメン
-Italian	イタリア語
-Korean	韓国語
 Completed!	完了しました！
 Updater	アップデータ
 New Update Available!	新しいアップデートが利用可能です！
@@ -288,8 +364,6 @@ Currently Loaded Folder:	現在ロードされているフォルダ：
 Mii Maestro	Mii Maestro
 Handbell Harmony	ハンドベルハーモニー
 Replaced	交換済み
-Not a valid Wii Music folder	有効なWiiミュージックフォルダではありません
-Files and sys folder not found	ファイルとsysフォルダーが見つかりません
 Unable to load song editor	ソングエディタを読み込めません
 Must load Wii Music Rom, Brsar, or Message File	WiiミュージックROM、Brsar、またはメッセージファイルをロードする必要があります
 Unable to load style editor	スタイルエディタを読み込めません

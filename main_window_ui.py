@@ -251,15 +251,6 @@ class Ui_MainWindow(object):
 "    border-radius: 5;\n"
 "}\n"
 "\n"
-"QSpinBox\n"
-"{\n"
-"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
-"    padding: 1px;\n"
-"    border-style: solid;\n"
-"    border: 1px solid #1e1e1e;\n"
-"    border-radius: 5;\n"
-"}\n"
-"\n"
 "QPushButton\n"
 "{\n"
 "    color: white;\n"
@@ -599,17 +590,8 @@ class Ui_MainWindow(object):
 "        fx: 0.5, fy: 0.5,\n"
 "        radius: 1.0,\n"
 "        stop: 0.25 #ffaa00,\n"
-"        stop: 0.3 #323232);\n"
-"}\n"
-"\n"
-"QRadioButton::indicator:checked:disabled\n"
-"{\n"
-"    background-color: qradialgradient(\n"
-"        cx: 0.5, cy: 0.5,\n"
-"        fx: 0.5, fy: 0.5,\n"
-"        radius: 1.0,\n"
-"        stop: 0.25 #323232,\n"
-"        stop: 0.3 #323232);\n"
+"        stop: 0.3 #323232\n"
+"    );\n"
 "}\n"
 "\n"
 "QCheckBox::indicator{\n"
@@ -630,6 +612,12 @@ class Ui_MainWindow(object):
 "    border: 1px solid #ffaa00;\n"
 "}\n"
 "\n"
+"QRadioButton:disabled\n"
+"{\n"
+"    background-color: #404040;\n"
+"}\n"
+"\n"
+"\n"
 "QCheckBox::indicator:checked\n"
 "{\n"
 "    image:url(:images/images/checkbox.png);\n"
@@ -638,6 +626,16 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
 "{\n"
 "    border: 1px solid #444;\n"
+"}\n"
+"\n"
+"QWidget[error=\"true\"]\n"
+"{\n"
+"    border: 1px solid red;\n"
+"}\n"
+"\n"
+"QWidget[error=\"true\"]\n"
+"{\n"
+"    border: 1px solid red;\n"
 "}")
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -1718,7 +1716,6 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.MB_Help)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.MB_Donate)
-        self.menuHelp.addAction(self.MB_About)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.MB_Options.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
