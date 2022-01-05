@@ -524,7 +524,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 env = os.environ
                 if(currentSystem == "Mac"):
                     cmd[0] += "/Contents/MacOS/Dolphin"
-                    print(env["QT_QPA_PLATFORM_PLUGIN_PATH"])
                     env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/Contents/MacOS/platforms/'
                     env["QT_DEBUG_PLUGINS"] = 1
                 elif(currentSystem == "Windows"):
