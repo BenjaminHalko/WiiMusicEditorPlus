@@ -1,27 +1,31 @@
 from os import path
-from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtCore import Qt, QLocale, QTranslator
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtWidgets
 from settings_ui import Ui_Settings
 import editor
-from editor import SaveSetting, LoadSetting, ChooseFromOS, currentSystem
+from editor import SaveSetting, LoadSetting, ChooseFromOS, languageList, TranslationPath, romLanguageList, GetSongNames, LoadType
 from errorhandler import ShowError
 from update import UpdateWindow, CheckForUpdate
 
-_translate = QCoreApplication.translate
-
 class SettingsWindow(QDialog,Ui_Settings):
-    def __init__(self,otherWindow):
+    def __init__(self,otherWindow,app,translator):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setupUi(self)
         self.otherWindow = otherWindow
+        self.app = app
+        self.translator = translator
 
-        self.RegionBox.setCurrentIndex(editor.regionSelected)
+        self.RegionBox.setCurrentIndex(LoadSetting("Settings","DefaultRegion",0))
         self.RegionBox.currentIndexChanged.connect(self.RegionChange)
+        self.LanguageBox.setCurrentIndex(LoadSetting("Settings","Language",0))
+        self.LanguageBox.currentIndexChanged.connect(self.LanguageChange)
+        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[LoadSetting("Settings","DefaultRegion",0)])
+        self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
 
         self.SwitchBeta.clicked.connect(self.Button_SwitchBeta)
-        if(LoadSetting("Settings","Beta",False)): self.SwitchBeta.setText(_translate("MainWindow","Switch to Main"))
+        if(LoadSetting("Settings","Beta",False)): self.SwitchBeta.setText(self.tr("Switch to Main"))
 
         self.ConnectCheckmark(self.CheckForUpdates,"AutoUpdate",True)
         self.ConnectCheckmark(self.RapperFix,"RapperFix",True)
@@ -37,8 +41,10 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.DolphinSave_Browse.clicked.connect(self.GetDolphinSave)
         self.DolphinSave_Default.clicked.connect(self.DefaultDolphinSave)
 
-        if(editor.dolphinPath != ""): self.DolphinPath_Label.setText(_translate("MainWindow",editor.dolphinPath))
-        if(editor.dolphinSavePath != ""): self.DolphinSave_Label.setText(_translate("MainWindow",editor.dolphinSavePath))
+        self.RomLanguageChange()
+
+        if(editor.dolphinPath != ""): self.DolphinPath_Label.setText(editor.dolphinPath)
+        if(editor.dolphinSavePath != ""): self.DolphinSave_Label.setText(editor.dolphinSavePath)
 
         self.show()
         self.exec()
@@ -46,9 +52,9 @@ class SettingsWindow(QDialog,Ui_Settings):
     def Button_SwitchBeta(self):
         SaveSetting("Settings","Beta",not LoadSetting("Settings","Beta",False))
         if(LoadSetting("Settings","Beta",False)):
-            self.SwitchBeta.setText(_translate("MainWindow","Switch to Main"))
+            self.SwitchBeta.setText(self.tr("Switch to Main"))
         else:
-            self.SwitchBeta.setText(_translate("MainWindow","Switch to Beta"))
+            self.SwitchBeta.setText(self.tr("Switch to Beta"))
         version = CheckForUpdate()
         if(version != "null"): UpdateWindow([self.otherWindow,self],version)
 
@@ -62,8 +68,43 @@ class SettingsWindow(QDialog,Ui_Settings):
         if(setting == "LoadSongSeparately"): CheckboxSeperateSongPatching(self.otherWindow)
 
     def RegionChange(self):
-        editor.regionSelected = self.RegionBox.currentIndex()
-        SaveSetting("Settings","DefaultRegion",editor.regionSelected)
+        if(editor.file.type != LoadType.Rom):
+            editor.regionSelected = self.RegionBox.currentIndex()
+        SaveSetting("Settings","DefaultRegion",self.RegionBox.currentIndex())
+        self.RomLanguageChange()
+
+    def RomLanguageChange(self):
+        self.RomLanguageBox.blockSignals(True)
+        self.RomLanguageBox.clear()
+        romLanguageList = [self.tr("English"),self.tr("French"),self.tr("Spanish"),self.tr("Germen"),self.tr("Italian"),self.tr("Japanese"),self.tr("Korean")]
+        if(self.RegionBox.currentIndex() > 1):
+            self.RomLanguageBox.addItem(romLanguageList[3+self.RegionBox.currentIndex()])
+        else:
+            for i in range(3+2*self.RegionBox.currentIndex()):
+                self.RomLanguageBox.addItem(romLanguageList[i])
+        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[self.RegionBox.currentIndex()])
+        self.RomLanguageBox.blockSignals(False)
+
+    def RomLanguageSelect(self):
+        SaveSetting("Settings","RomLanguage",self.RomLanguageBox.currentIndex())
+        editor.romLanguageNumber = [self.RomLanguageBox.currentIndex()]*4
+        for i in range(4):
+            if(editor.romLanguageNumber[i] >= len(romLanguageList[i])):
+                editor.romLanguageNumber[i] = 0
+            editor.romLanguage[i] = romLanguageList[i][editor.romLanguageNumber[i]]
+        if(editor.file.type == LoadType.Rom): GetSongNames()
+
+    def LanguageChange(self):
+        SaveSetting("Settings","Language",self.LanguageBox.currentIndex())
+        self.app.removeTranslator(self.translator)
+        if(self.LanguageBox.currentIndex() != 0):
+            translator = QTranslator()
+            translator.load(QLocale(),TranslationPath()+f"/{languageList[self.LanguageBox.currentIndex()]}.qm")
+            self.app.installTranslator(translator)
+        self.retranslateUi(self)
+        self.otherWindow.retranslateUi(self.otherWindow)
+        editor.RetranslateSongNames()
+        self.RomLanguageChange()
 
     def GetDolphin(self):
         file = QtWidgets.QFileDialog() 
@@ -71,11 +112,11 @@ class SettingsWindow(QDialog,Ui_Settings):
         file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin.app)","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
-            self.DolphinPath_Label.setText(_translate("MainWindow",file.selectedFiles()[0]))
+            self.DolphinPath_Label.setText(file.selectedFiles()[0])
             SaveSetting("Paths","Dolphin",file.selectedFiles()[0])
 
     def DefaultDolphinSave(self):
-        self.DolphinSave_Label.setText(_translate("MainWindow","Default Path"))
+        self.DolphinSave_Label.setText(self.tr("Default Path"))
         SaveSetting("Paths","DolphinSave","")
 
     def GetDolphinSave(self):
@@ -84,11 +125,11 @@ class SettingsWindow(QDialog,Ui_Settings):
         if file.exec_():
             if(path.isdir(file.selectedFiles()[0]+"/Wii") and path.isdir(file.selectedFiles()[0]+"/GameSettings")):
                 editor.dolphinSavePath = file.selectedFiles()[0]
-                self.DolphinSave_Label.setText(_translate("MainWindow",file.selectedFiles()[0]))
+                self.DolphinSave_Label.setText(file.selectedFiles()[0])
                 SaveSetting("Paths","DolphinSave",file.selectedFiles()[0])
             else:
                 self.hide()
-                ShowError("Not a Dolphin Save Directory","Wii and GameSettings folder not found")
+                ShowError(self.tr("Not a Dolphin Save Directory"),self.tr("Wii and GameSettings folder not found"))
                 self.show()
 
 def CheckboxSeperateSongPatching(otherWindow):

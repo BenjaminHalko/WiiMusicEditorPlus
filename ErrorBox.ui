@@ -521,7 +521,7 @@ QWidget[error=&quot;true&quot;]
             </size>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -534,7 +534,7 @@ QWidget[error=&quot;true&quot;]
             </font>
            </property>
            <property name="text">
-            <string>Error</string>
+            <string notr="true">Error</string>
            </property>
           </widget>
          </item>
@@ -555,7 +555,7 @@ QWidget[error=&quot;true&quot;]
           </font>
          </property>
          <property name="text">
-          <string>ErrorText</string>
+          <string notr="true">ErrorText</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -600,7 +600,7 @@ QWidget[error=&quot;true&quot;]
             </size>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -613,7 +613,7 @@ QWidget[error=&quot;true&quot;]
             </font>
            </property>
            <property name="text">
-            <string>Error</string>
+            <string notr="true">Error</string>
            </property>
           </widget>
          </item>
@@ -634,7 +634,7 @@ QWidget[error=&quot;true&quot;]
           </font>
          </property>
          <property name="text">
-          <string>ErrorText</string>
+          <string notr="true">ErrorText</string>
          </property>
         </widget>
        </item>

@@ -1,0 +1,334 @@
+###TsSection	#
+Wii Music Editor Plus	Wiiミュージックエディタープラス
+Cancel	キャンセル
+Ok	Ok
+Menu Song	メニューソング
+Jazz	ジャズ
+Rock	岩
+Latin	ラテン語
+March	行進
+Electronic	電子
+Pop	ポップ
+Japanese	日本
+Tango	タンゴ
+Classical	クラシック
+Hawaiian	ハワイアン
+Reggae	レゲエ
+Animal Crossing K.K. Blues	どうぶつの森株式会社ブルース
+O-Christmas Tree	O-クリスマスツリー
+Oh My Darling Clementine	Oh My Darling Clementine
+Over The Waves	波を越えて
+Super Mario Bros	スーパーマリオブラザーズ
+Twinkle Twinkle Little Star	キラキラ光る
+A Capella	アカペラ
+Acoustic	音響
+African Electronic	アフリカンエレクトロニック
+Animals!	動物！
+Calypso	カリプソ
+Exotic	エキゾチック
+Flamenco	フラメンコ
+Galactic	ギャラクティック
+Handbell	ハンドベル
+Karate	空手
+Orchestral	オーケストラ
+Parade	パレード
+Rap	ラップ
+Samba	サンバ
+Menu Style Main	メニュースタイルメイン
+Menu Style Electronic	メニュースタイルエレクトロニック
+Menu Style Japanese	メニュースタイル日本語
+Menu Style March	メニュースタイルマーチ
+Menu Style A Capella	メニュースタイルアカペラ
+Piano	ピアノ
+Marimba	マリンバ
+Vibraphone	ビブラフォン
+Steel Drum	スチールドラム
+Dulcimer	ダルシマー
+Harpsichord	チェンバロ
+Timpani	ティンパニー
+Galactic Piano	銀河ピアノ
+Toy Piano	トイピアノ
+Dog	犬
+Cat	ネコ
+Rapper	ラッパー
+Guitar	ギター
+Electric Guitar	エレキギター
+Electric Bass	エレクトリックベース
+Double Bass	ダブルベース
+Ukulele	ウクレレ
+Banjo	バンジョー
+Sitar	シタール
+Shamisen	三味線
+Harp	ハープ
+Galactic Guitar	銀河ギター
+Galactic Bass	銀河系低音
+Jaw Harp	口琴
+Violin	バイオリン
+Cello	チェロ
+Trumpet	トランペット
+Saxophone	サックス
+Flute	フルート
+Clairenet	クレアネット
+Tuba	チューバ
+Accordion	アコーディオン
+Harmonica	ハーモニカ
+Bagpipe	バグパイプ
+Recorder	レコーダー
+Galactic horn	銀河の角
+Nes	ネス
+Singer	歌手
+Bass Singer	バスシンガー
+Basic Drums	ベーシックドラム
+Rock Drums	ロックドラム
+Jazz Drums	ジャズドラム
+Latin Drums	ラテンドラム
+Ballad Drums	バラードドラム
+Congas	コンガ
+Maracas	マラカス
+Tambourine	タンバリン
+Cuica	クイーカ
+Cowbell	カウベル
+Clap	拍手
+Bells	ベル
+Castanets	カスタネット
+Guiro	ギロ
+Timpales	ティンバレス
+Djembe	ジャンベ
+Taiko Drum	太鼓
+Cheerleader	チアリーダー
+Snare Drum	スネアドラム
+Bass Drum	バスドラム
+Galactic Drums	銀河のドラム
+Galactic Congas	銀河コンガ
+DJ Turntables	DJターンテーブル
+Black Belt	黒帯
+Reggae Drums	レゲエドラム
+Whistle	ホイッスル
+Beatbox	ビートボックス
+None	なし
+Basic Drum	ベーシックドラム
+Cymbal for Basic, Jazz, Latin, Reggae, and Ballad Drums	ベーシック、ジャズ、ラテン、レゲエ、バラードドラム用のシンバル
+Bass for Basic, Latin, and Ballad Drums	ベーシック、ラテン、バラードドラムのベース
+Female Variant	女性の変種
+Hand Clap	拍手
+Male Variant	男性の変種
+Timbales	ティンバレス
+Taiko Drums	太鼓
+Female Varient	女性の変種
+Female	女性
+Male	男
+Beat Boxer	ビートボクサー
+Drum Mode	ドラムモード
+Wii Music Editor Plus - Error	Wiiミュージックエディタープラス-エラー
+Close	選ぶ
+Create Geckocode	Geckocodeを作成する
+Could not import change	変更をインポートできませんでした
+Import Changes	変更をインポートする
+Finished Importing Changes	変更のインポートが完了しました
+Importing Change {} out of {}	{}から変更{}をインポートする
+Currently Loaded File:	現在ロードされているファイル：
+No File Loaded	ファイルがロードされていません
+Song Editor	ソングエディター
+Style Editor	スタイルエディター
+Advanced Features	高度な機能
+Change All Text	すべてのテキストを変更
+Change Default Styles	デフォルトのスタイルを変更する
+Replace Sounds	サウンドを置き換える
+Remove Song	曲を削除
+Convert Geckocode to .gct	Geckocodeを.gctに変換します
+Patch Main.dol with Geckocode	Main.dolにGeckocodeをパッチする
+Create Riivolution Patch	Riivolutionパッチを作成する
+Rom Editing	ROM編集
+Revert Changes	変更を元に戻す
+Pack Rom Filesystem	パックRomファイルシステム
+Import Files	ファイルのインポート
+Export Files	ファイルのエクスポート
+Back	戻る
+Replace Song	曲を置き換える
+Load a Midi-Type file	MIDIタイプのファイルをロードする
+Browse	ブラウズ
+SCORE:	スコア：
+SONG:	歌：
+Replace SONG seperatly	SONGを個別に交換してください
+Tempo:	テンポ：
+Length:	長さ：
+Measures	対策
+Beats	Beats
+Time Signature:	拍子記号：
+Change Song Text	曲のテキストを変更する
+Name:	名前：
+Genre:	ジャンル：
+Description:	説明：
+Patch!	パッチ！
+Song to change	変更する曲
+Style:	スタイル：
+Edit in Style Editor	スタイルエディタで編集
+Change Default Style	デフォルトスタイルの変更
+Parts	部品
+Bass:	ベース：
+Perc 1:	Perc 1：
+Harmony:	調和：
+Chords:	コード：
+Perc 2:	Perc 2：
+Melody:	メロディー：
+Reset to Default	デフォルトにリセット
+Instruments	楽器
+Part to Change:	変更する部分：
+Melody	メロディー
+Harmony	調和
+Chords	和音
+Bass	ベース
+Percussion 1	パーカッション1
+Percussion 2	パーカッション2
+Style to change	変更するスタイル
+Style Name:	スタイル名：
+Text Editor	テキストエディタ
+Open in External Editor	外部エディタで開く
+Default Style Editor	デフォルトのスタイルエディタ
+Song List	曲リスト
+Style List	スタイルリスト
+Set to Default	デフォルトに設定
+Remove Songs	曲を削除する
+Remove All Non-Custom Songs	カスタム以外の曲をすべて削除する
+Deselect All	すべての選択を解除
+Purge Songs!!!	曲をパージ!!!
+Sound Editor	サウンドエディタ
+Sound List	サウンドリスト
+File	ファイル
+Load a Rwav-Type file	Rwavタイプのファイルをロードします
+Sound Types	サウンドタイプ
+Select All	すべて選択
+Play Audio	オーディオを再生
+Options	オプション
+Help	ヘルプ
+Load Wii Music File	Wiiミュージックファイルをロードする
+Load Wii Music Folder	Wiiミュージックフォルダを読み込む
+Run Dolphin	イルカを実行します
+F5	F5
+Run Dolphin (Menu)	イルカを実行する（メニュー）
+F6	F6
+Check for Updates	アップデートを確認する
+Settings	設定
+Download Pre-made Songs	既製の曲をダウンロードする
+Open Wiki	Wikiを開く
+Open Save Folder	保存フォルダを開く
+Add 100% Save File to Dolphin	Dolphinに100％保存ファイルを追加
+Game Documentation	ゲームのドキュメント
+About	約
+Donate	寄付
+Wii Backup File System	Wiiバックアップファイルシステム
+Rom Successfuly Packed!	Romが正常にパックされました！
+Could not pack rom	ROMをパックできませんでした
+Rom Type:	Romタイプ：
+Patch Main.dol with Geckocodes	Main.dolにGeckocodesをパッチします
+Songs	曲
+Styles	スタイル
+Text	文章
+Main.dol	Main.dol
+Revert!	元に戻す！
+Could not revert songs	曲を元に戻すことができませんでした
+Could not revert message file	メッセージファイルを元に戻すことができませんでした
+Could not revert styles	スタイルを元に戻すことができませんでした
+Could not revert main.dol	main.dolを元に戻すことができませんでした
+Files Reverted!	ファイルが元に戻りました！
+Riivolution Creator	Riivolutionクリエーター
+Mod Name:	Mod名：
+Saving to:	保存先：
+Copy to SD Card:	SDカードにコピー：
+Geckocode Copy Method:	Geckocodeコピー方法：
+Patch Main.dol	パッチMain.dol
+Copy Codes	コードをコピーする
+Do Nothing	何もしない
+Create!	作成！
+Creation Complete!	作成完了！
+Rom Settings	ROM設定
+Fallback Region (Used if rom region can't be determinded):	フォールバックリージョン（ROMリージョンを判別できない場合に使用）：
+US	我ら
+Europe	ヨーロッパ
+Japan	日本
+Korea	韓国
+Remove changes from Changes.ini when reverting changes	変更を元に戻すときにChanges.iniから変更を削除します
+Load Song and Score separately	ソングとスコアを別々にロードする
+Add the Rapper Crash fix to Gecko codes	RapperCrash修正をGeckoコードに追加します
+Normalize Midi (Makes Midis more Wii Music friendly)	ミディを正規化する（ミディをよりWii音楽にやさしいものにする）
+Updates	更新
+Check for Updates on Startup	起動時に更新を確認する
+Switch to Beta	ベータ版に切り替える
+Debug Options	デバッグオプション
+Unsafe mode (Enables options that might crash the game)	安全でないモード（ゲームをクラッシュさせる可能性のあるオプションを有効にします）
+General	全般的
+Dolphin Path	イルカの小道
+No Specified Path	指定されたパスがありません
+Dolphin Save Path	イルカセーブパス
+Default Path	デフォルトパス
+Set as Default	デフォルトとして設定
+Gecko Codes	Geckoコード
+Copy Gecko codes to Dolphin save directory	GeckoコードをDolphin保存ディレクトリにコピーします
+Force Enable Cheats when launching Dolphin	Dolphinを起動するときにチートを強制的に有効にする
+Appearence	出現
+Language:	言語：
+Rom Language:	ロマ語：
+Editor Settings	エディター設定
+Switch to Main	メインに切り替えます
+Not a Dolphin Save Directory	イルカの保存ディレクトリではありません
+Wii and GameSettings folder not found	WiiとGameSettingsフォルダーが見つかりません
+English	英語
+French	フランス語
+Spanish	スペイン語
+Germen	ゲルメン
+Italian	イタリア語
+Korean	韓国語
+Completed!	完了しました！
+Updater	アップデータ
+New Update Available!	新しいアップデートが利用可能です！
+Update	アップデート
+Downloading From Github...	Githubからダウンロードしています...
+No New Updates :(	新しい更新はありません:(
+Currently Loaded Folder:	現在ロードされているフォルダ：
+Mii Maestro	Mii Maestro
+Handbell Harmony	ハンドベルハーモニー
+Replaced	交換済み
+Not a valid Wii Music folder	有効なWiiミュージックフォルダではありません
+Files and sys folder not found	ファイルとsysフォルダーが見つかりません
+Unable to load song editor	ソングエディタを読み込めません
+Must load Wii Music Rom, Brsar, or Message File	WiiミュージックROM、Brsar、またはメッセージファイルをロードする必要があります
+Unable to load style editor	スタイルエディタを読み込めません
+Must load Wii Music Rom, Message File, or Geckocode	WiiミュージックROM、メッセージファイル、またはGeckocodeをロードする必要があります
+Unable to load text editor	テキストエディタを読み込めません
+Must load Wii Music Rom or Message File	WiiミュージックROMまたはメッセージファイルをロードする必要があります
+Unable to load default style editor	デフォルトのスタイルエディタを読み込めません
+Must load Wii Music Rom or Geckocode	WiiミュージックROMまたはGeckocodeをロードする必要があります
+Unable to remove songs	曲を削除できません
+Must load Wii Music Rom or Main.dol	WiiミュージックROMまたはMain.dolをロードする必要があります
+Load .rwav File	.rwavファイルをロードします
+Unable to load sound editor	サウンドエディタを読み込めません
+Must load Wii Music Rom or Brsar	WiiミュージックROMまたはBrsarをロードする必要があります
+Unable to create .gct file	.gctファイルを作成できません
+Main.dol Patched!	Main.dolにパッチが適用されました！
+Unable to patch Main.dol	Main.dolにパッチを適用できません
+Must load Wii Music Rom, Main.dol, or Geckocode	Wii Music Rom、Main.dol、またはGeckocodeをロードする必要があります
+Unable to create Riivolution patch	Riivolutionパッチを作成できません
+Must load Wii Music Rom	WiiミュージックROMをロードする必要があります
+Unable to revert changes	変更を元に戻すことができません
+Unable to pack rom	ROMをパックできません
+Files Successfully Imported!	ファイルが正常にインポートされました！
+Unable to import files	ファイルをインポートできません
+Files Exported	エクスポートされたファイル
+Files not Exported	エクスポートされないファイル
+Unable to export files	ファイルをエクスポートできません
+Rom Change File	Rom変更ファイル
+Unable to import changes	変更をインポートできません
+Unable to launch Dolphin	Dolphinを起動できません
+Loaded file must be a complete rom	ロードされたファイルは完全なROMでなければなりません
+Dolphin path not specified	イルカの道が指定されていません
+Go to settings to add a Dolphin path	設定に移動して、イルカのパスを追加します
+Check the Dolphin path in the settings	設定でイルカの道を確認してください
+Are you sure you want to overwrite your save file?	保存ファイルを上書きしてもよろしいですか？
+Save file copied!	コピーしたファイルを保存してください！
+Unable to copy save file	保存ファイルをコピーできません
+Songs Saved to: Program Path	保存先の曲：プログラムパス
+Midi-Type File	MIDIタイプのファイル
+Songs Successfully Destroyed!!!	曲が正常に破棄されました!!!
+Could not remove songs	曲を削除できませんでした
+One or more errors have occurred	1つ以上のエラーが発生しました
+Could not load file	ファイルを読み込めませんでした

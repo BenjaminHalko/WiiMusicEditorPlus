@@ -495,6 +495,7 @@ class Ui_Confirm(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(Confirm)
         self.verticalLayout.setObjectName("verticalLayout")
         self.text = QtWidgets.QLabel(Confirm)
+        self.text.setText("Words")
         self.text.setObjectName("text")
         self.verticalLayout.addWidget(self.text)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -515,6 +516,5 @@ class Ui_Confirm(object):
     def retranslateUi(self, Confirm):
         _translate = QtCore.QCoreApplication.translate
         Confirm.setWindowTitle(_translate("Confirm", "Wii Music Editor Plus"))
-        self.text.setText(_translate("Confirm", "Words"))
         self.noButton.setText(_translate("Confirm", "Cancel"))
         self.yesButton.setText(_translate("Confirm", "Ok"))

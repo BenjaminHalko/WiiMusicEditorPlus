@@ -16,7 +16,7 @@ class Ui_Error(object):
         Error.setObjectName("Error")
         Error.setWindowModality(QtCore.Qt.ApplicationModal)
         Error.setEnabled(True)
-        Error.resize(281, 134)
+        Error.resize(281, 139)
         Error.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -506,6 +506,7 @@ class Ui_Error(object):
         self.Title.setObjectName("Title")
         self.ErrorSymbol = QtWidgets.QLabel(self.ErrorNormal)
         self.ErrorSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
+        self.ErrorSymbol.setText("<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>")
         self.ErrorSymbol.setObjectName("ErrorSymbol")
         self.Title.addWidget(self.ErrorSymbol)
         self.ErrorTitle = QtWidgets.QLabel(self.ErrorNormal)
@@ -513,6 +514,7 @@ class Ui_Error(object):
         font.setFamily("Continuum Medium")
         font.setPointSize(16)
         self.ErrorTitle.setFont(font)
+        self.ErrorTitle.setText("Error")
         self.ErrorTitle.setObjectName("ErrorTitle")
         self.Title.addWidget(self.ErrorTitle)
         self.verticalLayout_2.addLayout(self.Title)
@@ -525,6 +527,7 @@ class Ui_Error(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         self.ErrorMessage.setFont(font)
+        self.ErrorMessage.setText("ErrorText")
         self.ErrorMessage.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
         self.ErrorMessage.setObjectName("ErrorMessage")
         self.verticalLayout_2.addWidget(self.ErrorMessage)
@@ -543,6 +546,7 @@ class Ui_Error(object):
         self.Title_GC.setObjectName("Title_GC")
         self.ErrorSymbol_GC = QtWidgets.QLabel(self.ErrorGct)
         self.ErrorSymbol_GC.setMaximumSize(QtCore.QSize(32, 16777215))
+        self.ErrorSymbol_GC.setText("<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>")
         self.ErrorSymbol_GC.setObjectName("ErrorSymbol_GC")
         self.Title_GC.addWidget(self.ErrorSymbol_GC)
         self.ErrorTitle_GC = QtWidgets.QLabel(self.ErrorGct)
@@ -550,6 +554,7 @@ class Ui_Error(object):
         font.setFamily("Continuum Medium")
         font.setPointSize(16)
         self.ErrorTitle_GC.setFont(font)
+        self.ErrorTitle_GC.setText("Error")
         self.ErrorTitle_GC.setObjectName("ErrorTitle_GC")
         self.Title_GC.addWidget(self.ErrorTitle_GC)
         self.verticalLayout_3.addLayout(self.Title_GC)
@@ -562,6 +567,7 @@ class Ui_Error(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         self.ErrorMessage_GC.setFont(font)
+        self.ErrorMessage_GC.setText("ErrorText")
         self.ErrorMessage_GC.setObjectName("ErrorMessage_GC")
         self.verticalLayout_3.addWidget(self.ErrorMessage_GC)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -586,13 +592,7 @@ class Ui_Error(object):
     def retranslateUi(self, Error):
         _translate = QtCore.QCoreApplication.translate
         Error.setWindowTitle(_translate("Error", "Wii Music Editor Plus - Error"))
-        self.ErrorSymbol.setText(_translate("Error", "<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>"))
-        self.ErrorTitle.setText(_translate("Error", "Error"))
-        self.ErrorMessage.setText(_translate("Error", "ErrorText"))
         self.ErrorClose.setText(_translate("Error", "Close"))
-        self.ErrorSymbol_GC.setText(_translate("Error", "<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>"))
-        self.ErrorTitle_GC.setText(_translate("Error", "Error"))
-        self.ErrorMessage_GC.setText(_translate("Error", "ErrorText"))
         self.ErrorClose_GC.setText(_translate("Error", "Close"))
         self.ErrorCreate_GC.setText(_translate("Error", "Create Geckocode"))
 import resources_rc

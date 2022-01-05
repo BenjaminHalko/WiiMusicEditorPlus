@@ -13,6 +13,8 @@ from configparser import ConfigParser
 from getpass import getuser
 import stat as stats
 
+from PyQt5.QtCore import QCoreApplication
+
 #Classes
 class SongClass:
 	def __init__(self,SongType,Name,MemOrder,DefaultStyle="nope",MemOffset = -1):
@@ -73,230 +75,239 @@ class LoadedFile:
 		self.path = path
 		self.type = type
 
-Songs = [
-SongClass(SongTypeValue.Regular,'A Little Night Music',6,"21"),
-SongClass(SongTypeValue.Regular,'American Patrol',11,"03"),
-SongClass(SongTypeValue.Regular,'Animal Crossing',48,"1B"),
-SongClass(SongTypeValue.Regular,'Animal Crossing -- K.K. Blues',26,"23"),
-SongClass(SongTypeValue.Regular,'Bridal Chorus',1,"08"),
-SongClass(SongTypeValue.Regular,'Carmen',3,"0F"),
-SongClass(SongTypeValue.Regular,'Chariots of Fire',35,"13"),
-SongClass(SongTypeValue.Regular,'Daydream Believer',33,"00"),
-SongClass(SongTypeValue.Regular,'Do-Re-Mi',9,"01"),
-SongClass(SongTypeValue.Regular,'Every Breath You Take',34,"12"),
-SongClass(SongTypeValue.Regular,'F-Zero -- Mute City Theme',49,"01"),
-SongClass(SongTypeValue.Regular,'Frère Jacques',22,"04"),
-SongClass(SongTypeValue.Regular,'From Santurtzi to Bilbao',27,"20"),
-SongClass(SongTypeValue.Regular,'From the New World',16,"02"),
-SongClass(SongTypeValue.Regular,'Happy Birthday to You',8,"1E"),
-SongClass(SongTypeValue.Regular,'I\'ll Be There',40,"16"),
-SongClass(SongTypeValue.Regular,'I\'ve Never Been to Me',44,"18"),
-SongClass(SongTypeValue.Regular,'Jingle Bell Rock',41,"00"),
-SongClass(SongTypeValue.Regular,'La Bamba',17,"0A"),
-SongClass(SongTypeValue.Regular,'La Cucaracha',29,"1F"),
-SongClass(SongTypeValue.Regular,'Little Hans',25,"04"),
-SongClass(SongTypeValue.Regular,'Long, Long Ago',19,"08"),
-SongClass(SongTypeValue.Regular,'Material Girl',38,"15"),
-SongClass(SongTypeValue.Regular,'Minuet in G Major',7,"1C"),
-SongClass(SongTypeValue.Regular,'My Grandfather\'s Clock',15,"05"),
-SongClass(SongTypeValue.Regular,'O Christmas Tree',24,"10"),
-SongClass(SongTypeValue.Regular,'Ode to Joy',0,"02"),
-SongClass(SongTypeValue.Regular,'Oh, My Darling Clementine',14,"0D"),
-SongClass(SongTypeValue.Regular,'Over the Waves',30,"11"),
-SongClass(SongTypeValue.Regular,'Please Mr. Postman',37,"09"),
-SongClass(SongTypeValue.Regular,'Sakura Sakura',31,"06"),
-SongClass(SongTypeValue.Regular,'Scarborough Fair',18,"0E"),
-SongClass(SongTypeValue.Regular,'September',36,"14"),
-SongClass(SongTypeValue.Regular,'Sukiyaki',32,"0A"),
-SongClass(SongTypeValue.Regular,'Super Mario Bros.',45,"2C"),
-SongClass(SongTypeValue.Regular,'Sur le pont d\'Avignon',21,"09"),
-SongClass(SongTypeValue.Regular,'Swan Lake',2,"07"),
-SongClass(SongTypeValue.Regular,'The Blue Danube',5,"22"),
-SongClass(SongTypeValue.Regular,'The Entertainer',10,"1D"),
-SongClass(SongTypeValue.Regular,'The Flea Waltz',23,"03"),
-SongClass(SongTypeValue.Regular,'The Legend of Zelda',46,"19"),
-SongClass(SongTypeValue.Regular,'The Loco-Motion',39,"05"),
-SongClass(SongTypeValue.Regular,'Troika',28,"07"),
-SongClass(SongTypeValue.Regular,'Turkey in the Straw',12,"06"),
-SongClass(SongTypeValue.Regular,'Twinkle, Twinkle, Little Star',20,"0B"),
-SongClass(SongTypeValue.Regular,'Wake Me Up Before You Go-Go',42,"17"),
-SongClass(SongTypeValue.Regular,'Wii Music',4,"24"),
-SongClass(SongTypeValue.Regular,'Wii Sports',47,"1A"),
-SongClass(SongTypeValue.Regular,'Woman',43,"17"),
-SongClass(SongTypeValue.Regular,'Yankee Doodle',13,"0C"),
-SongClass(SongTypeValue.Maestro,'Twinkle, Twinkle, Little Star (Mii Maestro)',2,MemOffset=0x25a3e1c),
-SongClass(SongTypeValue.Maestro,'Carmen (Mii Maestro)',0,MemOffset=0x25a3d80),
-SongClass(SongTypeValue.Maestro,'The Four Seasons -- Spring (Mii Maestro)',4,MemOffset=0x25a3f54),
-SongClass(SongTypeValue.Maestro,'Ode to Joy (Mii Maestro)',3,MemOffset=0x25a3ff0),
-SongClass(SongTypeValue.Maestro,'The Legend of Zelda (Mii Maestro)',1,MemOffset=0x25a3eb8),
-SongClass(SongTypeValue.Handbell,'O Christmas Tree (Handbell Harmony)',0,MemOffset=0x2566D5A),
-SongClass(SongTypeValue.Handbell,'Hum, Hum, Hum (Handbell Harmony)',2,MemOffset=0x2566E0A),
-SongClass(SongTypeValue.Handbell,'My Grandfather\'s Clock (Handbell Harmony)',3,MemOffset=0x2566E62),
-SongClass(SongTypeValue.Handbell,'Do-Re-Mi (Handbell Harmony)',1,MemOffset=0x2566DB2),
-SongClass(SongTypeValue.Handbell,'Sukiyaki (Handbell Harmony)',4,MemOffset=0x2566EBA),
-SongClass(SongTypeValue.Menu,'Menu Song',-1,MemOffset=[0x259ACB0,0x259ACD4,0x259ACF8,0x259AD1C,0x259AD40])]
+def RetranslateSongNames():
+	_translate = QCoreApplication.translate
+	global Songs
+	global Styles
+	global Instruments
+	global extraSounds
 
-noneInstrument = 67
-Styles = [
-StyleClass(StyleTypeValue.Global,'Jazz',0x0659A65C,'00',[28,2,0,16,42,45]),
-StyleClass(StyleTypeValue.Global,'Rock',0x0659A680,'01',[14,14,36,15,41,47]),
-StyleClass(StyleTypeValue.Global,'Latin',0x0659A6A4,'02',[27,28,1,15,43,46]),
-StyleClass(StyleTypeValue.Global,'March',0x0659A6C8,'03',[27,27,27,31,59,58]),
-StyleClass(StyleTypeValue.Global,'Electronic',0x659A6EC,'04',[2,22,8,23,62,50]),
-StyleClass(StyleTypeValue.Global,'Pop',0x659A710,'05',[0,2,13,15,40,47]),
-StyleClass(StyleTypeValue.Global,'Japanese',0x659A734,'06',[29,noneInstrument,noneInstrument,20,56,51]),
-StyleClass(StyleTypeValue.Global,'Tango',0x659A758,'07',[25,0,32,16,58,52]),
-StyleClass(StyleTypeValue.Global,'Classical',0x659A77C,'08',[25,25,6,26,noneInstrument,noneInstrument]),
-StyleClass(StyleTypeValue.Global,'Hawaiian',0x659A7A0,'09',[17,17,17,16,46,45]),
-StyleClass(StyleTypeValue.Global,'Reggae',0x659A7C4,'0A',[3,3,0,15,64,noneInstrument]),
-StyleClass(StyleTypeValue.SongSpecific,'A Little Night Music',0x659AB00,'21',[29,25,6,26,noneInstrument,noneInstrument]),
-StyleClass(StyleTypeValue.SongSpecific,'Animal Crossing',0x659AA28,'1B',[32,18,13,13,46,45]),
-StyleClass(StyleTypeValue.SongSpecific,'Animal Crossing K.K. Blues',0x659AB48,'23',[33,28,13,16,42,53]),
-StyleClass(StyleTypeValue.SongSpecific,'Carmen',0x659A878,'0F',[35,32,13,16,59,46]),
-StyleClass(StyleTypeValue.SongSpecific,'Chariots of Fire',0x659A908,'13',[0,13,6,7,58,46]),
-StyleClass(StyleTypeValue.SongSpecific,'Every Breath You Take',0x659A8E4,'12',[33,0,22,15,40,47]),
-StyleClass(StyleTypeValue.SongSpecific,'From Santurtzi to Bilbao',0x659AADC,'20',[3,3,3,3,50,47]),
-StyleClass(StyleTypeValue.SongSpecific,'Happy Birthday to You',0x659AA94,'1E',[27,28,0,16,42,45]),
-StyleClass(StyleTypeValue.SongSpecific,'I\'ll Be There',0x659A974,'16',[38,38,39,39,44,50]),
-StyleClass(StyleTypeValue.SongSpecific,'I\'ve Never Been to Me',0x659A9BC,'18',[0,0,13,15,40,46]),
-StyleClass(StyleTypeValue.SongSpecific,'La Cucaracha',0x659AAB8,'1F',[29,1,13,15,48,54]),
-StyleClass(StyleTypeValue.SongSpecific,'Material Girl',0x659A950,'15',[36,14,22,23,60,47]),
-StyleClass(StyleTypeValue.SongSpecific,'Minuet in G Major',0x659AA4C,'1C',[29,30,0,6,noneInstrument,noneInstrument]),
-StyleClass(StyleTypeValue.SongSpecific,'O-Christmas Tree',0x659A89C,'10',[5,5,5,5,51,noneInstrument]),
-StyleClass(StyleTypeValue.SongSpecific,'Oh My Darling Clementine',0x659A830,'0D',[36,36,9,36,58,52]),
-StyleClass(StyleTypeValue.SongSpecific,'Over The Waves',0x659A8C0,'11',[32,30,6,16,53,47]),
-StyleClass(StyleTypeValue.SongSpecific,'Scarborough Fair',0x659A854,'0E',[34,34,13,16,59,47]),
-StyleClass(StyleTypeValue.SongSpecific,'September',0x659A92C,'14',[27,28,8,23,40,50]),
-StyleClass(StyleTypeValue.SongSpecific,'Super Mario Bros',0x659AC8C,'2C',[37,37,37,37,noneInstrument,noneInstrument]),
-StyleClass(StyleTypeValue.SongSpecific,'The Blue Danube',0x659AB24,'22',[30,25,4,31,58,52]),
-StyleClass(StyleTypeValue.SongSpecific,'The Entertainer',0x659AA70,'1D',[0,6,0,16,42,46]),
-StyleClass(StyleTypeValue.SongSpecific,'The Legend of Zelda',0x659A9E0,'19',[27,25,21,31,58,59]),
-StyleClass(StyleTypeValue.SongSpecific,'Twinkle Twinkle Little Star',0x659A7E8,'0B',[0,1,13,16,51,52]),
-StyleClass(StyleTypeValue.SongSpecific,'Wii Sports',0x659AA04,'1A',[29,0,13,15,60,47]),
-StyleClass(StyleTypeValue.SongSpecific,'Wii Music',0x659AB6C,'24',[25,28,0,15,40,50]),
-StyleClass(StyleTypeValue.SongSpecific,'Woman',0x659A998,'17',[28,27,13,15,40,49]),
-StyleClass(StyleTypeValue.SongSpecific,'Yankee Doodle',0x659A80C,'0C',[33,24,18,16,49,46]),
-StyleClass(StyleTypeValue.QuickJam,'A Capella',0x659AC20,'29',[38,38,39,39,66,50]),
-StyleClass(StyleTypeValue.QuickJam,'Acoustic',0x659AB90,'38',[25,25,13,13,52,50]), #
-StyleClass(StyleTypeValue.QuickJam,'African Electronic',0x659AB93,'3C',[25,25,13,13,52,50]), #
-StyleClass(StyleTypeValue.QuickJam,'Animals!',0x659AC68,'2B',[11,11,10,31,59,49]),
-StyleClass(StyleTypeValue.QuickJam,'Calypso',0x659AC44,'2A',[3,3,3,3,noneInstrument,noneInstrument]),
-StyleClass(StyleTypeValue.QuickJam,'Exotic',0x659ABFC,'28',[19,19,4,19,55,noneInstrument]),
-StyleClass(StyleTypeValue.QuickJam,'Flamenco',0x659AB90,'25',[25,25,13,13,52,50]), #
-StyleClass(StyleTypeValue.QuickJam,'Galactic',0x659ADD0,'35',[25,25,13,13,52,50]), #
-StyleClass(StyleTypeValue.QuickJam,'Handbell',0x659AB93,'43',[25,25,13,13,52,50]), #
-StyleClass(StyleTypeValue.QuickJam,'Karate',0x659ABB4,'26',[14,14,14,15,41,63]),
-StyleClass(StyleTypeValue.QuickJam,'Orchestral',0x659AD64,'32',[29,27,25,7,58,noneInstrument]),
-StyleClass(StyleTypeValue.QuickJam,'Parade',0x659ABD8,'27',[27,30,27,31,65,57]),
-StyleClass(StyleTypeValue.QuickJam,'Rap',0x659ADF4,'36',[12,noneInstrument,8,23,62,61]),
-StyleClass(StyleTypeValue.QuickJam,'Samba',0x659AE18,'37',[29,1,13,15,65,48]),
-StyleClass(StyleTypeValue.Menu,'Menu Style Main',0x659ACB0,'2D',[25,28,0,15,40,40]),
-StyleClass(StyleTypeValue.Menu,'Menu Style Electronic',0x659ACD4,'2E',[2,22,0,23,62,40]),
-StyleClass(StyleTypeValue.Menu,'Menu Style Japanese',0x659ACF8,'2F',[29,20,0,20,56,40]),
-StyleClass(StyleTypeValue.Menu,'Menu Style March',0x659AD1C,'30',[30,27,0,31,58,40]),
-StyleClass(StyleTypeValue.Menu,'Menu Style A Capella',0x659AD40,'31',[38,39,0,39,66,40])]
+	Songs = [
+	SongClass(SongTypeValue.Regular,_translate("Editor",'A Little Night Music'),6,"21"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'American Patrol'),11,"03"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Animal Crossing'),48,"1B"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Animal Crossing -- K.K. Blues'),26,"23"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Bridal Chorus'),1,"08"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Carmen'),3,"0F"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Chariots of Fire'),35,"13"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Daydream Believer'),33,"00"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Do-Re-Mi'),9,"01"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Every Breath You Take'),34,"12"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'F-Zero -- Mute City Theme'),49,"01"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Frère Jacques'),22,"04"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'From Santurtzi to Bilbao'),27,"20"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'From the New World'),16,"02"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Happy Birthday to You'),8,"1E"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'I\'ll Be There'),40,"16"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'I\'ve Never Been to Me'),44,"18"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Jingle Bell Rock'),41,"00"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'La Bamba'),17,"0A"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'La Cucaracha'),29,"1F"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Little Hans'),25,"04"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Long, Long Ago'),19,"08"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Material Girl'),38,"15"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Minuet in G Major'),7,"1C"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'My Grandfather\'s Clock'),15,"05"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'O Christmas Tree'),24,"10"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Ode to Joy'),0,"02"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Oh, My Darling Clementine'),14,"0D"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Over the Waves'),30,"11"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Please Mr. Postman'),37,"09"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Sakura Sakura'),31,"06"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Scarborough Fair'),18,"0E"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'September'),36,"14"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Sukiyaki'),32,"0A"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Super Mario Bros.'),45,"2C"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Sur le pont d\'Avignon'),21,"09"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Swan Lake'),2,"07"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'The Blue Danube'),5,"22"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'The Entertainer'),10,"1D"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'The Flea Waltz'),23,"03"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'The Legend of Zelda'),46,"19"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'The Loco-Motion'),39,"05"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Troika'),28,"07"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Turkey in the Straw'),12,"06"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Twinkle, Twinkle, Little Star'),20,"0B"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Wake Me Up Before You Go-Go'),42,"17"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Wii Music'),4,"24"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Wii Sports'),47,"1A"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Woman'),43,"17"),
+	SongClass(SongTypeValue.Regular,_translate("Editor",'Yankee Doodle'),13,"0C"),
+	SongClass(SongTypeValue.Maestro,_translate("Editor",'Twinkle, Twinkle, Little Star (Mii Maestro)'),2,MemOffset=0x25a3e1c),
+	SongClass(SongTypeValue.Maestro,_translate("Editor",'Carmen (Mii Maestro)'),0,MemOffset=0x25a3d80),
+	SongClass(SongTypeValue.Maestro,_translate("Editor",'The Four Seasons -- Spring (Mii Maestro)'),4,MemOffset=0x25a3f54),
+	SongClass(SongTypeValue.Maestro,_translate("Editor",'Ode to Joy (Mii Maestro)'),3,MemOffset=0x25a3ff0),
+	SongClass(SongTypeValue.Maestro,_translate("Editor",'The Legend of Zelda (Mii Maestro)'),1,MemOffset=0x25a3eb8),
+	SongClass(SongTypeValue.Handbell,_translate("Editor",'O Christmas Tree (Handbell Harmony)'),0,MemOffset=0x2566D5A),
+	SongClass(SongTypeValue.Handbell,_translate("Editor",'Hum, Hum, Hum (Handbell Harmony)'),2,MemOffset=0x2566E0A),
+	SongClass(SongTypeValue.Handbell,_translate("Editor",'My Grandfather\'s Clock (Handbell Harmony)'),3,MemOffset=0x2566E62),
+	SongClass(SongTypeValue.Handbell,_translate("Editor",'Do-Re-Mi (Handbell Harmony)'),1,MemOffset=0x2566DB2),
+	SongClass(SongTypeValue.Handbell,_translate("Editor",'Sukiyaki (Handbell Harmony)'),4,MemOffset=0x2566EBA),
+	SongClass(SongTypeValue.Menu,_translate("Editor",'Menu Song'),-1,MemOffset=[0x259ACB0,0x259ACD4,0x259ACF8,0x259AD1C,0x259AD40])]
 
-Instruments = [
-InstrumentClass('Piano',0,True,["C2","G2","D3","A3","E4","B4","F#5","D6","F6"]),
-InstrumentClass('Marimba',1,False,["G3","D4","A4","E5","B5","F#6"]),
-InstrumentClass('Vibraphone',2,False,["F#3","C#4","G#4","D#5","A#5","F6"]),
-InstrumentClass('Steel Drum',3,False,["F#2","A#3","F#4","G4","E4","??(26)","C4"]),
-InstrumentClass('Dulcimer',4,False,["F3","C#4","G4","C5","A4","D6"]),
-InstrumentClass('Handbell',5,False,["G4","G4 (Variation)","G4 (Variation 2)","C7"]),
-InstrumentClass('Harpsichord',6,False,["G2","C4","C5","C6"]),
-InstrumentClass('Timpani',7,False,["F3","F3 (Variation)","F3 (Variation 2)"]),
-InstrumentClass('Galactic Piano',8,False,["G2","D3","A3","E4","B4","F#5"]),
-InstrumentClass('Toy Piano',9,False,["B4","D6"]),
-InstrumentClass('Dog',10,False,["Howl","??(54)","??(55)","??(54)","D5","G5","C#6"]),
-InstrumentClass('Cat',11,False,["G3","C#4","G4","C#5","G5","C#6"]),
-InstrumentClass('Rapper',12,False,["??"]*62),
-InstrumentClass('Guitar',13,False,["G#2","E3","B3","F#4","D5","??(133)"]),
-InstrumentClass('Electric Guitar',14,False,["A2","D3","B3","G4","E5","A5"]),
-InstrumentClass('Electric Bass',15,True,["G1","D2","G2","C3","G#3"]),
-InstrumentClass('Double Bass',16,False,["F1","G#1","G#2","G#3"]),
-InstrumentClass('Ukulele',17,False,["B3","F#4","C#5","G#5"]),
-InstrumentClass('Banjo',18,False,["A#2","F3","C4","G4","D5","A5"]),
-InstrumentClass('Sitar',19,False,["C3","G3","C4","G4"]),
-InstrumentClass('Shamisen',20,True,["D3","A3","D4","A4"]),
-InstrumentClass('Harp',21,False,["C3","C4","E5","B5","G6"]),
-InstrumentClass('Galactic Guitar',22,False,["F2","C3","F3","C4","F4","C5","F5"]),
-InstrumentClass('Galactic Bass',23,True,["A1","C2","F2","A2","C3"]),
-InstrumentClass('Jaw Harp',24,False,["??(184)","??(185)","??(186)","??(187)"]),
-InstrumentClass('Violin',25,True,["C4","A4","E5","B5","F#6"]),
-InstrumentClass('Cello',26,False,["A2","D3","A3","E4","B4"]),
-InstrumentClass('Trumpet',27,True,["F#2","G#3","A3","D4","G4","C5","F5","Bb5","G6"]),
-InstrumentClass('Saxophone',28,True,["F2","B2","F3","E4","Bb4","E5","Bb5","E6"]),
-InstrumentClass('Flute',29,True,["D4","G4","C5","G5","D6","G6","D7"]),
-InstrumentClass('Clairenet',30,True,["Bb2","F3","C4","F4","C5","F5","C6"]),
-InstrumentClass('Tuba',31,False,["??(229)","Eb2","Bb2","A3"]),
-InstrumentClass('Accordion',32,False,["B2","C4"]),
-InstrumentClass('Harmonica',33,False,["B4","A3","E4","D5","B5","A6"]),
-InstrumentClass('Bagpipe',34,False,["C4","F#4","C5","F#5"]),
-InstrumentClass('Recorder',35,False,["G6"]),
-InstrumentClass('Galactic horn',36,False,["G2","C4","C5"]),
-InstrumentClass('Nes',37,False,["Mario Jump","C3","F3","Bb3","G4","C5","C6"]),
-InstrumentClass('Singer',38,True,["C4 (Wii)","G4 (Wii)","C5 (Wii)","G5 (Wii)","C4 (Do)","F#4 (Do)","D5 (Do)","F#5 (Do)","C4 (Ba)","G4 (Ba)","C5 (Ba)","G5 (Ba)"]),
-InstrumentClass('Bass Singer',39,True,["D3 (Wii)","G3 (Wii)","C4 (Wii)","G4 (Wii)","C3 (Do)","G3 (Do)","C4 (Do)","G4 (Do)","D3 (Ba)","A3 (Ba)","D4 (Ba)","G4 (Ba)"]),
-InstrumentClass('Basic Drums',40,True),
-InstrumentClass('Rock Drums',41,False),
-InstrumentClass('Jazz Drums',42,False),
-InstrumentClass('Latin Drums',43,False),
-InstrumentClass('Ballad Drums',44,False),
-InstrumentClass('Congas',45,False),
-InstrumentClass('Maracas',46,False),
-InstrumentClass('Tambourine',47,False),
-InstrumentClass('Cuica',48,False),
-InstrumentClass('Cowbell',49,False),
-InstrumentClass('Clap',50,False),
-InstrumentClass('Bells',51,False),
-InstrumentClass('Castanets',52,False),
-InstrumentClass('Guiro',53,False),
-InstrumentClass('Timpales',54,False),
-InstrumentClass('Djembe',55,False),
-InstrumentClass('Taiko Drum',56,True),
-InstrumentClass('Cheerleader',57,False),
-InstrumentClass('Snare Drum',58,True),
-InstrumentClass('Bass Drum',59,False),
-InstrumentClass('Galactic Drums',60,False),
-InstrumentClass('Galactic Congas',61,False),
-InstrumentClass('DJ Turntables',62,True),
-InstrumentClass('Black Belt',63,False),
-InstrumentClass('Reggae Drums',64,False),
-InstrumentClass('Whistle',65,False),
-InstrumentClass('Beatbox',66,True),
-InstrumentClass('None',-1,False)]
+	noneInstrument = 67
+	Styles = [
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Jazz'),0x0659A65C,'00',[28,2,0,16,42,45]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Rock'),0x0659A680,'01',[14,14,36,15,41,47]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Latin'),0x0659A6A4,'02',[27,28,1,15,43,46]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'March'),0x0659A6C8,'03',[27,27,27,31,59,58]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Electronic'),0x659A6EC,'04',[2,22,8,23,62,50]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Pop'),0x659A710,'05',[0,2,13,15,40,47]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Japanese'),0x659A734,'06',[29,noneInstrument,noneInstrument,20,56,51]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Tango'),0x659A758,'07',[25,0,32,16,58,52]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Classical'),0x659A77C,'08',[25,25,6,26,noneInstrument,noneInstrument]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Hawaiian'),0x659A7A0,'09',[17,17,17,16,46,45]),
+	StyleClass(StyleTypeValue.Global,_translate("Editor",'Reggae'),0x659A7C4,'0A',[3,3,0,15,64,noneInstrument]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'A Little Night Music'),0x659AB00,'21',[29,25,6,26,noneInstrument,noneInstrument]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Animal Crossing'),0x659AA28,'1B',[32,18,13,13,46,45]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Animal Crossing K.K. Blues'),0x659AB48,'23',[33,28,13,16,42,53]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Carmen'),0x659A878,'0F',[35,32,13,16,59,46]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Chariots of Fire'),0x659A908,'13',[0,13,6,7,58,46]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Every Breath You Take'),0x659A8E4,'12',[33,0,22,15,40,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'From Santurtzi to Bilbao'),0x659AADc,'20',[3,3,3,3,50,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Happy Birthday to You'),0x659AA94,'1E',[27,28,0,16,42,45]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'I\'ll Be There'),0x659A974,'16',[38,38,39,39,44,50]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'I\'ve Never Been to Me'),0x659A9Bc,'18',[0,0,13,15,40,46]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'La Cucaracha'),0x659AAB8,'1F',[29,1,13,15,48,54]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Material Girl'),0x659A950,'15',[36,14,22,23,60,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Minuet in G Major'),0x659AA4c,'1C',[29,30,0,6,noneInstrument,noneInstrument]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'O-Christmas Tree'),0x659A89c,'10',[5,5,5,5,51,noneInstrument]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Oh My Darling Clementine'),0x659A830,'0D',[36,36,9,36,58,52]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Over The Waves'),0x659A8C0,'11',[32,30,6,16,53,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Scarborough Fair'),0x659A854,'0E',[34,34,13,16,59,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'September'),0x659A92c,'14',[27,28,8,23,40,50]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Super Mario Bros'),0x659AC8c,'2C',[37,37,37,37,noneInstrument,noneInstrument]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'The Blue Danube'),0x659AB24,'22',[30,25,4,31,58,52]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'The Entertainer'),0x659AA70,'1D',[0,6,0,16,42,46]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'The Legend of Zelda'),0x659A9E0,'19',[27,25,21,31,58,59]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Twinkle Twinkle Little Star'),0x659A7E8,'0B',[0,1,13,16,51,52]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Wii Sports'),0x659AA04,'1A',[29,0,13,15,60,47]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Wii Music'),0x659AB6c,'24',[25,28,0,15,40,50]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Woman'),0x659A998,'17',[28,27,13,15,40,49]),
+	StyleClass(StyleTypeValue.SongSpecific,_translate("Editor",'Yankee Doodle'),0x659A80C,'0C',[33,24,18,16,49,46]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'A Capella'),0x659AC20,'29',[38,38,39,39,66,50]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Acoustic'),0x659AB90,'38',[25,25,13,13,52,50]), #
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'African Electronic'),0x659AB93,'3C',[25,25,13,13,52,50]), #
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Animals!'),0x659AC68,'2B',[11,11,10,31,59,49]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Calypso'),0x659AC44,'2A',[3,3,3,3,noneInstrument,noneInstrument]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Exotic'),0x659ABFC,'28',[19,19,4,19,55,noneInstrument]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Flamenco'),0x659AB90,'25',[25,25,13,13,52,50]), #
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Galactic'),0x659ADD0,'35',[25,25,13,13,52,50]), #
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Handbell'),0x659AB93,'43',[25,25,13,13,52,50]), #
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Karate'),0x659ABB4,'26',[14,14,14,15,41,63]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Orchestral'),0x659AD64,'32',[29,27,25,7,58,noneInstrument]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Parade'),0x659ABD8,'27',[27,30,27,31,65,57]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Rap'),0x659ADF4,'36',[12,noneInstrument,8,23,62,61]),
+	StyleClass(StyleTypeValue.QuickJam,_translate("Editor",'Samba'),0x659AE18,'37',[29,1,13,15,65,48]),
+	StyleClass(StyleTypeValue.Menu,_translate("Editor",'Menu Style Main'),0x659ACB0,'2D',[25,28,0,15,40,40]),
+	StyleClass(StyleTypeValue.Menu,_translate("Editor",'Menu Style Electronic'),0x659ACD4,'2E',[2,22,0,23,62,40]),
+	StyleClass(StyleTypeValue.Menu,_translate("Editor",'Menu Style Japanese'),0x659ACF8,'2F',[29,20,0,20,56,40]),
+	StyleClass(StyleTypeValue.Menu,_translate("Editor",'Menu Style March'),0x659AD1C,'30',[30,27,0,31,58,40]),
+	StyleClass(StyleTypeValue.Menu,_translate("Editor",'Menu Style A Capella'),0x659AD40,'31',[38,39,0,39,66,40])]
 
-extraSounds = [
-SoundClass("Basic Drum",[297,300]),
-SoundClass("Rock Drums",[302,306]),
-SoundClass("Jazz Drums",[307,311]),
-SoundClass("Latin Drums",[312,315]),
-SoundClass("Ballad Drums",[316,319]),
-SoundClass("Cymbal for Basic, Jazz, Latin, Reggae, and Ballad Drums",301),
-SoundClass("Bass for Basic, Latin, and Ballad Drums",296),
-SoundClass("Congas",[320,324]),
-SoundClass("Maracas",[325,330],[430,"Female Variant"]),
-SoundClass("Tambourine",[331,335]),
-SoundClass("Cuica",[336,340]),
-SoundClass("Cowbell",[341,343]),
-SoundClass("Hand Clap",[344,346]),
-SoundClass("Bells",[347,349]),
-SoundClass("Castanets",[350,353],[431,"Male Variant"]),
-SoundClass("Guiro",[354,358]),
-SoundClass("Timbales",[359,362]),
-SoundClass("Djembe",[363,367]),
-SoundClass("Taiko Drums",[368,370],[432,"Female Varient"]),
-SoundClass("Cheerleader",[371,376,"Female"],[424,429,"Male"]),
-SoundClass("Snare Drum",[377,380]),
-SoundClass("Bass Drum",[381,383]),
-SoundClass("Galactic Drums",[384,388]),
-SoundClass("Galactic Congas",[389,393]),
-SoundClass("DJ Turntables",[280,295]),
-SoundClass("Black Belt",[394,399,"Male"],[418,423,"Female"]),
-SoundClass("Reggae Drums",[400,404]),
-SoundClass("Whistle",[405,408]),
-SoundClass("Beat Boxer",[409,414]),
-SoundClass("Drum Mode",[433,444])]
+	Instruments = [
+	InstrumentClass(_translate("Editor",'Piano'),0,True,["C2","G2","D3","A3","E4","B4","F#5","D6","F6"]),
+	InstrumentClass(_translate("Editor",'Marimba'),1,False,["G3","D4","A4","E5","B5","F#6"]),
+	InstrumentClass(_translate("Editor",'Vibraphone'),2,False,["F#3","C#4","G#4","D#5","A#5","F6"]),
+	InstrumentClass(_translate("Editor",'Steel Drum'),3,False,["F#2","A#3","F#4","G4","E4","??(26)","C4"]),
+	InstrumentClass(_translate("Editor",'Dulcimer'),4,False,["F3","C#4","G4","C5","A4","D6"]),
+	InstrumentClass(_translate("Editor",'Handbell'),5,False,["G4","G4 (Variation)","G4 (Variation 2)","C7"]),
+	InstrumentClass(_translate("Editor",'Harpsichord'),6,False,["G2","C4","C5","C6"]),
+	InstrumentClass(_translate("Editor",'Timpani'),7,False,["F3","F3 (Variation)","F3 (Variation 2)"]),
+	InstrumentClass(_translate("Editor",'Galactic Piano'),8,False,["G2","D3","A3","E4","B4","F#5"]),
+	InstrumentClass(_translate("Editor",'Toy Piano'),9,False,["B4","D6"]),
+	InstrumentClass(_translate("Editor",'Dog'),10,False,["Howl","??(54)","??(55)","??(54)","D5","G5","C#6"]),
+	InstrumentClass(_translate("Editor",'Cat'),11,False,["G3","C#4","G4","C#5","G5","C#6"]),
+	InstrumentClass(_translate("Editor",'Rapper'),12,False,["??"]*62),
+	InstrumentClass(_translate("Editor",'Guitar'),13,False,["G#2","E3","B3","F#4","D5","??(133)"]),
+	InstrumentClass(_translate("Editor",'Electric Guitar'),14,False,["A2","D3","B3","G4","E5","A5"]),
+	InstrumentClass(_translate("Editor",'Electric Bass'),15,True,["G1","D2","G2","C3","G#3"]),
+	InstrumentClass(_translate("Editor",'Double Bass'),16,False,["F1","G#1","G#2","G#3"]),
+	InstrumentClass(_translate("Editor",'Ukulele'),17,False,["B3","F#4","C#5","G#5"]),
+	InstrumentClass(_translate("Editor",'Banjo'),18,False,["A#2","F3","C4","G4","D5","A5"]),
+	InstrumentClass(_translate("Editor",'Sitar'),19,False,["C3","G3","C4","G4"]),
+	InstrumentClass(_translate("Editor",'Shamisen'),20,True,["D3","A3","D4","A4"]),
+	InstrumentClass(_translate("Editor",'Harp'),21,False,["C3","C4","E5","B5","G6"]),
+	InstrumentClass(_translate("Editor",'Galactic Guitar'),22,False,["F2","C3","F3","C4","F4","C5","F5"]),
+	InstrumentClass(_translate("Editor",'Galactic Bass'),23,True,["A1","C2","F2","A2","C3"]),
+	InstrumentClass(_translate("Editor",'Jaw Harp'),24,False,["??(184)","??(185)","??(186)","??(187)"]),
+	InstrumentClass(_translate("Editor",'Violin'),25,True,["C4","A4","E5","B5","F#6"]),
+	InstrumentClass(_translate("Editor",'Cello'),26,False,["A2","D3","A3","E4","B4"]),
+	InstrumentClass(_translate("Editor",'Trumpet'),27,True,["F#2","G#3","A3","D4","G4","C5","F5","Bb5","G6"]),
+	InstrumentClass(_translate("Editor",'Saxophone'),28,True,["F2","B2","F3","E4","Bb4","E5","Bb5","E6"]),
+	InstrumentClass(_translate("Editor",'Flute'),29,True,["D4","G4","C5","G5","D6","G6","D7"]),
+	InstrumentClass(_translate("Editor",'Clairenet'),30,True,["Bb2","F3","C4","F4","C5","F5","C6"]),
+	InstrumentClass(_translate("Editor",'Tuba'),31,False,["??(229)","Eb2","Bb2","A3"]),
+	InstrumentClass(_translate("Editor",'Accordion'),32,False,["B2","C4"]),
+	InstrumentClass(_translate("Editor",'Harmonica'),33,False,["B4","A3","E4","D5","B5","A6"]),
+	InstrumentClass(_translate("Editor",'Bagpipe'),34,False,["C4","F#4","C5","F#5"]),
+	InstrumentClass(_translate("Editor",'Recorder'),35,False,["G6"]),
+	InstrumentClass(_translate("Editor",'Galactic horn'),36,False,["G2","C4","C5"]),
+	InstrumentClass(_translate("Editor",'Nes'),37,False,["Mario Jump","C3","F3","Bb3","G4","C5","C6"]),
+	InstrumentClass(_translate("Editor",'Singer'),38,True,["C4 (Wii)","G4 (Wii)","C5 (Wii)","G5 (Wii)","C4 (Do)","F#4 (Do)","D5 (Do)","F#5 (Do)","C4 (Ba)","G4 (Ba)","C5 (Ba)","G5 (Ba)"]),
+	InstrumentClass(_translate("Editor",'Bass Singer'),39,True,["D3 (Wii)","G3 (Wii)","C4 (Wii)","G4 (Wii)","C3 (Do)","G3 (Do)","C4 (Do)","G4 (Do)","D3 (Ba)","A3 (Ba)","D4 (Ba)","G4 (Ba)"]),
+	InstrumentClass(_translate("Editor",'Basic Drums'),40,True),
+	InstrumentClass(_translate("Editor",'Rock Drums'),41,False),
+	InstrumentClass(_translate("Editor",'Jazz Drums'),42,False),
+	InstrumentClass(_translate("Editor",'Latin Drums'),43,False),
+	InstrumentClass(_translate("Editor",'Ballad Drums'),44,False),
+	InstrumentClass(_translate("Editor",'Congas'),45,False),
+	InstrumentClass(_translate("Editor",'Maracas'),46,False),
+	InstrumentClass(_translate("Editor",'Tambourine'),47,False),
+	InstrumentClass(_translate("Editor",'Cuica'),48,False),
+	InstrumentClass(_translate("Editor",'Cowbell'),49,False),
+	InstrumentClass(_translate("Editor",'Clap'),50,False),
+	InstrumentClass(_translate("Editor",'Bells'),51,False),
+	InstrumentClass(_translate("Editor",'Castanets'),52,False),
+	InstrumentClass(_translate("Editor",'Guiro'),53,False),
+	InstrumentClass(_translate("Editor",'Timpales'),54,False),
+	InstrumentClass(_translate("Editor",'Djembe'),55,False),
+	InstrumentClass(_translate("Editor",'Taiko Drum'),56,True),
+	InstrumentClass(_translate("Editor",'Cheerleader'),57,False),
+	InstrumentClass(_translate("Editor",'Snare Drum'),58,True),
+	InstrumentClass(_translate("Editor",'Bass Drum'),59,False),
+	InstrumentClass(_translate("Editor",'Galactic Drums'),60,False),
+	InstrumentClass(_translate("Editor",'Galactic Congas'),61,False),
+	InstrumentClass(_translate("Editor",'DJ Turntables'),62,True),
+	InstrumentClass(_translate("Editor",'Black Belt'),63,False),
+	InstrumentClass(_translate("Editor",'Reggae Drums'),64,False),
+	InstrumentClass(_translate("Editor",'Whistle'),65,False),
+	InstrumentClass(_translate("Editor",'Beatbox'),66,True),
+	InstrumentClass(_translate("Editor",'None'),-1,False)]
+
+	extraSounds = [
+	SoundClass(_translate("Editor","Basic Drum"),[297,300]),
+	SoundClass(_translate("Editor","Rock Drums"),[302,306]),
+	SoundClass(_translate("Editor","Jazz Drums"),[307,311]),
+	SoundClass(_translate("Editor","Latin Drums"),[312,315]),
+	SoundClass(_translate("Editor","Ballad Drums"),[316,319]),
+	SoundClass(_translate("Editor","Cymbal for Basic, Jazz, Latin, Reggae, and Ballad Drums"),301),
+	SoundClass(_translate("Editor","Bass for Basic, Latin, and Ballad Drums"),296),
+	SoundClass(_translate("Editor","Congas"),[320,324]),
+	SoundClass(_translate("Editor","Maracas"),[325,330],[430,_translate("Editor","Female Variant")]),
+	SoundClass(_translate("Editor","Tambourine"),[331,335]),
+	SoundClass(_translate("Editor","Cuica"),[336,340]),
+	SoundClass(_translate("Editor","Cowbell"),[341,343]),
+	SoundClass(_translate("Editor","Hand Clap"),[344,346]),
+	SoundClass(_translate("Editor","Bells"),[347,349]),
+	SoundClass(_translate("Editor","Castanets"),[350,353],[431,_translate("Editor","Male Variant")]),
+	SoundClass(_translate("Editor","Guiro"),[354,358]),
+	SoundClass(_translate("Editor","Timbales"),[359,362]),
+	SoundClass(_translate("Editor","Djembe"),[363,367]),
+	SoundClass(_translate("Editor","Taiko Drums"),[368,370],[432,_translate("Editor","Female Varient")]),
+	SoundClass(_translate("Editor","Cheerleader"),[371,376,_translate("Editor","Female")],[424,429,_translate("Editor","Male")]),
+	SoundClass(_translate("Editor","Snare Drum"),[377,380]),
+	SoundClass(_translate("Editor","Bass Drum"),[381,383]),
+	SoundClass(_translate("Editor","Galactic Drums"),[384,388]),
+	SoundClass(_translate("Editor","Galactic Congas"),[389,393]),
+	SoundClass(_translate("Editor","DJ Turntables"),[280,295]),
+	SoundClass(_translate("Editor","Black Belt"),[394,399,_translate("Editor","Male")],[418,423,_translate("Editor","Female")]),
+	SoundClass(_translate("Editor","Reggae Drums"),[400,404]),
+	SoundClass(_translate("Editor","Whistle"),[405,408]),
+	SoundClass(_translate("Editor","Beat Boxer"),[409,414]),
+	SoundClass(_translate("Editor","Drum Mode"),[433,444])]
+
+RetranslateSongNames()
 
 class LoadType:
 	Rom = 0
@@ -327,7 +338,7 @@ def GetBrsarPath():
 
 def GetMessagePath():
 	if(os.path.isdir(file.path)):
-		return file.path+"/files/"+BasedOnRegion(regionNames)+"/Message"
+		return file.path+"/files/"+BasedOnRegion(romLanguage)+"/Message"
 	else:
 		return os.path.dirname(file.path)
 
@@ -1309,20 +1320,21 @@ def dataPathPoint(file,*argv):
 	return file.tell()
 
 def FixMessageFile(textlines):
+	nameIndex = romLanguageNumber[regionSelected]+(4+max(regionSelected-1))*(regionSelected > 1)
 	for num in range(len(textlines)):
 		if(textlines[num] == b'  b200 @015f /\r\n'):
-			textlines[num] = b'  b200 @015f [/,4b] = '+BasedOnRegion(["Default","Default","オリジナル","오리지널"]).encode("utf-8")+b'\r\n'
-			textlines[num+1] = b'  b201 @0160 [/,4b] = '+BasedOnRegion(["Rock","Rock","ロック","록"]).encode("utf-8")+b'\r\n'
-			textlines[num+2] = b'  b202 @0161 [/,4b] = '+BasedOnRegion(["March","March","マーチ","행진곡"]).encode("utf-8")+b'\r\n'
-			textlines[num+3] = b'  b203 @0162 [/,4b] = '+BasedOnRegion(["Jazz","Jazz","ジャズ","재즈"]).encode("utf-8")+b'\r\n'
-			textlines[num+4] = b'  b204 @0163 [/,4b] = '+BasedOnRegion(["Latin","Latin","ラテン","라틴 음악"]).encode("utf-8")+b'\r\n'
-			textlines[num+5] = b'  b205 @0164 [/,4b] = '+BasedOnRegion(["Reggae","Reggae","レゲエ","레게"]).encode("utf-8")+b'\r\n'
-			textlines[num+6] = b'  b206 @0165 [/,4b] = '+BasedOnRegion(["Hawaiian","Hawaiian","ハワイ風","하와이 음악"]).encode("utf-8")+b'\r\n'
-			textlines[num+7] = b'  b207 @0166 [/,4b] = '+BasedOnRegion(["Electronic","Electronic","ダウンビート","전자 음악"]).encode("utf-8")+b'\r\n'
-			textlines[num+8] = b'  b208 @0167 [/,4b] = '+BasedOnRegion(["Classical","Classical","室内楽","실내악"]).encode("utf-8")+b'\r\n'
-			textlines[num+9] = b'  b209 @0168 [/,4b] = '+BasedOnRegion(["Tango","Tango","タンゴ","탱고"]).encode("utf-8")+b'\r\n'
-			textlines[num+10] = b'  b20a @0169 [/,4b] = '+BasedOnRegion(["Pop","Pop","ポップス","팝"]).encode("utf-8")+b'\r\n'
-			textlines[num+11] = b'  b20b @016a [/,4b] = '+BasedOnRegion(["Japanese","Japanese","和風","일본 음악"]).encode("utf-8")+b'\r\n'
+			textlines[num] = b'  b200 @015f [/,4b] = '+["Default","Par défaut","Predeterm.","Standard","Normale","オリジナル","오리지널"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+1] = b'  b201 @0160 [/,4b] = '+["Rock","Rock","Rock","Rock","Rock","ロック","록"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+2] = b'  b202 @0161 [/,4b] = '+["March","Marche","Marcha","Marsch","Marcia","マーチ","행진곡"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+3] = b'  b203 @0162 [/,4b] = '+["Jazz","Jazz","Jazz","Jazz","Jazz","ジャズ","재즈"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+4] = b'  b204 @0163 [/,4b] = '+["Latin","Latino","Latino","Latin","Latino","ラテン","라틴 음악"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+5] = b'  b205 @0164 [/,4b] = '+["Reggae","Reggae","Reggae","Reggae","Reggae","レゲエ","레게"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+6] = b'  b206 @0165 [/,4b] = '+["Hawaiian","Hawaïen","Hawaiano","Hawaii","Hawaiano","ハワイ風","하와이 음악"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+7] = b'  b207 @0166 [/,4b] = '+["Electronic","Électronique","Electrónico","Elektronik","Elettronico","ダウンビート","전자 음악"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+8] = b'  b208 @0167 [/,4b] = '+["Classical","Classique","Clásico","Klassisch","Classico","室内楽","실내악"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+9] = b'  b209 @0168 [/,4b] = '+["Tango","Tango","Tango","Tango","Tango","タンゴ","탱고"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+10] = b'  b20a @0169 [/,4b] = '+["Pop","Pop","Pop","Pop","Pop","ポップス","팝"].index(nameIndex).encode("utf-8")+b'\r\n'
+			textlines[num+11] = b'  b20b @016a [/,4b] = '+["Japanese","Japonais","Japonés","Japanisch","Giapponese","和風","일본 음악"].index(nameIndex).encode("utf-8")+b'\r\n'
 			break
 	return textlines
 
@@ -1430,6 +1442,12 @@ def HelperPath():
 	else:
 		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
 
+def TranslationPath():
+	if getattr(sys, 'frozen', False):
+		return sys._MEIPASS+"/translations"
+	else:
+		return ProgramPath+"/translations/translations"
+
 def getData(file,point):
 	file.seek(point)
 	return int.from_bytes(file.read(4),"big")
@@ -1450,7 +1468,9 @@ textFromTxt = []
 loadedStyles = [[]]*len(Styles)
 rseqList = [0x3364C,0x336B8,0x33744,0x343F0,0x343F8,0x359FC,0x35A04,0x35A68,0x35A70,0x35AD4,0x35ADC,0x35B40,0x35B48,0x35BCC,0x35BD4,0x35C38,0x35C40,0x35CA4,0x35CAC,0x35D30,0x35D38,0x35DBC,0x35DC4,0x35E28,0x35E30,0x35EB4,0x35EBC,0x35F20,0x35F28,0x35F8C,0x35F94,0x36018,0x36020,0x36064,0x3606C,0x360D0,0x360D8,0x3705C,0x37064,0x370E8,0x370F0,0x371F4,0x371FC,0x37340,0x37348,0x376CC,0x376D4,0x37738,0x37740,0x3374C,0x37784,0x3778C,0x379D0,0x379D8,0x37ABC,0x37AC4,0x37B48,0x37B50,0x37BB4,0x37BBC,0x37C20,0x37C28,0x37C8C,0x37C94,0x37D18,0x37D20,0x37D64,0x37D6C,0x37E70,0x37E78,0x37EBC,0x37EC4,0x37F48,0x37F50]
 rseqInfoList = [0x8,0x1C,0x20]
+languageList = ["en","fr","sp","ge","it","jp","kr"]
 regionNames = ["US","EN","JP","KR"]
+romLanguageList = [["US","FU","SU"],["EN","FR","SP","GE","IT"],["JP"],["KR"]]
 regionFullNames = ["US","Europe","Japan","Korea"]
 gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
@@ -1458,6 +1478,18 @@ gctRegionOffsets = [0,0x200,-0x35F0,-0x428E8]
 gctRegionOffsetsStyles = [0,0x200,-0x3420,-0x25320]
 currentSystem = platform.system()
 if(currentSystem == "Darwin"): currentSystem = "Mac"
+
+romLanguage = []
+romLanguageNumber = [LoadSetting("Settings","RomLanguage",0)]*4
+for i in range(4):
+	try:
+		if(romLanguageNumber[i] >= len(romLanguageList[i])):
+			romLanguageNumber[i] = 0
+		romLanguage.append(romLanguageList[i][romLanguageNumber[i]])
+	except Exception as e:
+		SaveSetting("Settings","RomLanguage",0)
+		romLanguageNumber[i] = 0
+		romLanguage.append(romLanguageList[i][0])
 
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):

@@ -1,0 +1,347 @@
+###TsAbschnitt
+Wii Music Editor Plus
+Abbrechen
+In Ordnung
+Menü Lied
+Jazz
+Felsen
+Latein
+Marsch
+Elektronisch
+Pop
+japanisch
+Tango
+Klassik
+hawaiisch
+Reggae
+Animal Crossing K.K. Blues
+O-Weihnachtsbaum
+Oh mein Liebling Clementine
+Über den Wellen
+Super Mario Bros
+Funkel, funkel kleiner Stern
+A capella
+Akustik
+Afrikanische Elektronik
+Tiere!
+Calypso
+Exotisch
+Flamenco
+Galaktisch
+Handglocke
+Karate
+Orchestral
+Parade
+Rap
+Samba
+Menüstil Hauptmenü
+Menüstil elektronisch
+Menüstil Japanisch
+Menüstil März
+Menüstil A Capella
+Klavier
+Marimba
+Vibraphon
+Stahltrommel
+Hackbrett
+Cembalo
+Timpani
+Galaktisches Klavier
+Spielzeugklavier
+Hund
+Katze
+Rapper
+Gitarre
+Elektrische Gitarre
+E-Bass
+Kontrabass
+Ukulele
+Banjo
+Sitar
+Shamisen
+Harfe
+Galaktische Gitarre
+Galaktischer Bass
+Maultrommel
+Violine
+Cello
+Trompete
+Saxophon
+Flöte
+Clairenet
+Tuba
+Akkordeon
+Mundharmonika
+Dudelsack
+Recorder
+Galaktisches Horn
+Nes
+Sänger
+Bassist
+Grundschlagzeug
+Rock-Drums
+Jazz-Schlagzeug
+Lateinische Trommeln
+Balladentrommeln
+Congas
+Maracas
+Tambourin
+Cuica
+Kuhglocke
+Klatschen
+Glocken
+Kastagnetten
+Guiro
+Timpales
+Djembé
+Taiko-Trommel
+Cheerleader
+Kleine Trommel
+Schlagzeug
+Galaktische Trommeln
+Galaktische Congas
+DJ-Plattenspieler
+Schwarzer Gürtel
+Reggae-Schlagzeug
+Pfeife
+Beatbox
+Keiner
+Grundtrommel
+Becken für Basic, Jazz, Latin, Reggae und Ballad Drums
+Bass für Basic, Latin und Ballad Drums
+Weibliche Variante
+Handklatschen
+Männliche Variante
+Timbales
+Taiko-Trommeln
+Weibliche Variante
+Weiblich
+Männlich
+Beat-Boxer
+Schlagzeugmodus
+Wii Music Editor Plus - Fehler
+Nah dran
+Geckocode erstellen
+Erste Einrichtung
+Vielen Dank für das Herunterladen der
+Wii Music Editor Plus!
+Lassen Sie uns Ihnen bei der Einrichtung der wesentlichen Elemente helfen!
+Sprache:
+Roms laden
+Rom-Pfad
+Kein angegebener Pfad
+Lade von der Datei
+Aus Ordner laden
+Rom-Einstellungen
+Fallback-Region (Wird verwendet, wenn die Rom-Region nicht bestimmt werden kann):
+UNS.
+Europa
+Japan
+Korea
+Römische Sprache:
+Delphin einrichten
+Delphinpfad
+Durchsuche
+Gecko-Codes
+Gecko-Codes in das Dolphin-Speicherverzeichnis kopieren
+Erzwinge die Aktivierung von Cheats beim Starten von Dolphin
+<html><head/><body><p align="center">Fertig!</p></body></html>
+Viel Spaß beim Modding von Wii-Musik!
+<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: underline; color:#ffaa00;" >https://www.youtube.com/BenjaminHalko</span></a></p><p>Spenden: <a href="https://ko-fi.com/benjaminhalko"><span style =" text-decoration: underline; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https: //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: underline; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></ a></p></body></html>
+Zurück
+Nächste
+Englisch
+Französisch
+Spanisch
+Deutsch
+Italienisch
+Koreanisch
+Kein gültiger Wii-Musikordner
+Dateien und sys-Ordner nicht gefunden
+Änderung konnte nicht importiert werden
+Änderungen importieren
+Import der Änderungen abgeschlossen
+Importieren der Änderung {} aus {}
+Aktuell geladene Datei:
+Keine Datei geladen
+Song-Editor
+Stil-Editor
+Erweiterte Funktionen
+Gesamten Text ändern
+Standardstile ändern
+Töne ersetzen
+Lied entfernen
+Konvertieren Sie Geckocode in .gct
+Main.dol mit Geckocode patchen
+Riivolution-Patch erstellen
+Rom-Bearbeitung
+Änderungen rückgängig machen
+Pack Rom-Dateisystem
+Dateien importieren
+Dateien exportieren
+Lied ersetzen
+Laden Sie eine Midi-Type-Datei
+ERGEBNIS:
+LIED:
+SONG separat ersetzen
+Tempo:
+Länge:
+Mittel
+Beats
+Zeitstempel:
+Songtext ändern
+Name:
+Genre:
+Beschreibung:
+Patchen!
+Lied zum ändern
+Stil:
+Im Stileditor bearbeiten
+Standardstil ändern
+Teile
+Bass:
+Perz 1:
+Harmonie:
+Akkorde:
+Perz 2:
+Melodie:
+Zurücksetzen
+Instrumente
+Teil zu ändern:
+Melodie
+Harmonie
+Akkorde
+Bass
+Schlagzeug 1
+Schlagzeug 2
+Stil zum Ändern
+Stilname:
+Texteditor
+Im externen Editor öffnen
+Standardstil-Editor
+Lieder Liste
+Stilliste
+Auf Standard setzen
+Lieder entfernen
+Alle nicht benutzerdefinierten Songs entfernen
+Alle abwählen
+Säubere Lieder!!!
+Sound-Editor
+Soundliste
+Datei
+Laden Sie eine Datei vom Typ Rwav
+Tonarten
+Wählen Sie Alle
+Audio abspielen
+Optionen
+Hilfe
+Wii-Musikdatei laden
+Wii-Musikordner laden
+Lauf Delphin
+F5
+Delphin laufen (Menü)
+F6
+Auf Updates prüfen
+Einstellungen
+Vorgefertigte Songs herunterladen
+Wiki öffnen
+Ordner speichern öffnen
+Fügen Sie eine 100%-Speicherdatei zu Dolphin hinzu
+Spieldokumentation
+Etwa
+Spenden
+Wii-Sicherungsdateisystem
+Rom erfolgreich gepackt!
+Rom konnte nicht gepackt werden
+Rom-Typ:
+Main.dol mit Geckocodes patchen
+Lieder
+Stile
+Text
+Main.dol
+Zurückkehren!
+Lieder konnten nicht zurückgesetzt werden
+Nachrichtendatei konnte nicht zurückgesetzt werden
+Stile konnten nicht zurückgesetzt werden
+main.dol konnte nicht zurückgesetzt werden
+Dateien zurückgesetzt!
+Riivolution-Ersteller
+Mod-Name:
+Speichern unter:
+Auf SD-Karte kopieren:
+Geckocode-Kopiermethode:
+Patch Main.dol
+Codes kopieren
+Nichts tun
+Erstellen!
+Erstellung abgeschlossen!
+Entfernen Sie Änderungen aus Changes.ini, wenn Sie Änderungen rückgängig machen
+Song und Partitur separat laden
+Füge den Rapper-Crash-Fix zu Gecko-Codes hinzu
+Midi normalisieren (macht Midis Wii-Musikfreundlicher)
+Aktualisierung
+Nach Updates beim Start suchen
+Zur Beta wechseln
+Debug-Optionen
+Unsicherer Modus (aktiviert Optionen, die das Spiel zum Absturz bringen könnten)
+Allgemein
+Delphin-Speicherpfad
+Standardpfad
+Als Standard einstellen
+Aussehen
+Editor-Einstellungen
+Wechseln Sie zum Main
+Kein Dolphin-Speicherverzeichnis
+Wii- und GameSettings-Ordner nicht gefunden
+Vollendet!
+Updater
+Neues Update verfügbar!
+Aktualisieren
+Herunterladen von Github...
+Keine neuen Updates :(
+Aktuell geladener Ordner:
+Mii-Maestro
+Handglockenharmonie
+Ersetzt
+Song-Editor kann nicht geladen werden
+Muss Wii Music Rom, Brsar oder Message File laden
+Der Stileditor kann nicht geladen werden
+Muss Wii Music Rom, Message File oder Geckocode laden
+Texteditor kann nicht geladen werden
+Muss Wii Music Rom oder Nachrichtendatei laden
+Der Standardstil-Editor kann nicht geladen werden
+Muss Wii Music Rom oder Geckocode laden
+Lieder können nicht entfernt werden
+Muss Wii Music Rom oder Main.dol laden
+.rwav-Datei laden
+Soundeditor kann nicht geladen werden
+Muss Wii Music Rom oder Brsar laden
+.gct-Datei kann nicht erstellt werden
+Main.dol gepatcht!
+Kann Main.dol nicht patchen
+Muss Wii Music Rom, Main.dol oder Geckocode laden
+Riivolution-Patch kann nicht erstellt werden
+Muss Wii Music Rom laden
+Änderungen können nicht rückgängig gemacht werden
+Rom kann nicht gepackt werden
+Dateien erfolgreich importiert!
+Dateien können nicht importiert werden
+Exportierte Dateien
+Dateien nicht exportiert
+Dateien können nicht exportiert werden
+Rom Datei ändern
+Änderungen können nicht importiert werden
+Dolphin kann nicht gestartet werden
+Die geladene Datei muss eine vollständige ROM sein
+Delphinpfad nicht angegeben
+Gehen Sie zu den Einstellungen, um einen Dolphin-Pfad hinzuzufügen
+Überprüfen Sie den Dolphin-Pfad in den Einstellungen
+Möchten Sie Ihre Speicherdatei wirklich überschreiben?
+Datei kopiert speichern!
+Speicherdatei kann nicht kopiert werden
+Songs gespeichert unter: Programmpfad
+Midi-Type-Datei
+Songs erfolgreich zerstört!!!
+Lieder konnten nicht entfernt werden
+Ein oder mehrere Fehler sind aufgetreten
+Datei konnte nicht geladen werden

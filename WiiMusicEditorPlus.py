@@ -8,6 +8,7 @@ from configparser import ConfigParser
 import webbrowser
 
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import QLocale, QTranslator
 from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
@@ -17,11 +18,12 @@ app = QApplication([])
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, SoundClass, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
 from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog, DownloadSongThread
+from firstsetup import FirstSetupWindow
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -59,8 +61,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.fromSongEditor = -1
 
         if(editor.file.path != ""):
-            if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))
-            self.MP_LoadedFile_Path.setText(_translate("MainWindow",editor.file.path))
+            if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded Folder:'))
+            self.MP_LoadedFile_Path.setText(editor.file.path)
         self.menuBar().setNativeMenuBar(False)
 
         #Menu Bar Buttons
@@ -155,9 +157,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 text = Songs[i].Name
                 if(AllowType(LoadType.Carc) and len(editor.textFromTxt[0]) > i) and (Songs[i].SongType != SongTypeValue.Regular or editor.textFromTxt[0][i] != Songs[i].Name) and (Songs[i].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-14:1]) and (Songs[i].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][i] != Songs[i].Name[0:len(Songs[i].Name)-19:1]) and (Songs[i].SongType != SongTypeValue.Menu):
                     text = editor.textFromTxt[0][i]
-                    if(Songs[i].SongType == SongTypeValue.Maestro): text = text+" (Mii Maestro)"
-                    if(Songs[i].SongType == SongTypeValue.Handbell): text = text+" (Handbell Harmony)"
-                item.setText(_translate("MainWindow", text))
+                    if(Songs[i].SongType == SongTypeValue.Maestro): text = text+" ("+self.tr("Mii Maestro")+")"
+                    if(Songs[i].SongType == SongTypeValue.Handbell): text = text+" ("+self.tr("Handbell Harmony")+")"
+                item.setText(text)
                 if(lockSongs and i != self.fromSongEditor): item.setFlags(QtCore.Qt.ItemIsSelectable)
                 widgetID.addItem(item)
         if(lockSongs): widgetID.setCurrentRow(self.fromSongEditor)
@@ -167,8 +169,8 @@ class Window(QMainWindow, Ui_MainWindow):
         for i in range(len(Styles)):
             item = QtWidgets.QListWidgetItem()
             extraText = ""
-            if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " ~[Replaced]~" 
-            item.setText(_translate("MainWindow", Styles[i].Name+extraText))
+            if(AllowType(LoadType.Gct) and editor.loadedStyles[i] != Styles[i].DefaultStyle): extraText = " ~["+self.tr("Replaced")+"]~" 
+            item.setText(Styles[i].Name+extraText)
             if(lockSongs and i != self.fromSongEditor): item.setFlags(QtCore.Qt.ItemIsSelectable)
             widgetID.addItem(item)
         if(lockSongs): widgetID.setCurrentRow(self.fromSongEditor)
@@ -181,14 +183,14 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.unsafeMode or percussion == -1): array = range(0,len(Instruments)-1)
         for i in array:
             item = QtWidgets.QListWidgetItem()
-            item.setText(_translate("MainWindow", Instruments[i].Name))
+            item.setText(Instruments[i].Name)
             if(menu and not Instruments[i].InMenu):
                 if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
                 else: item.setFlags(QtCore.Qt.ItemIsSelectable)
             if(i not in normal): item.setForeground(QColor("#cf1800"))
             widgetID.addItem(item)
         item = QtWidgets.QListWidgetItem()
-        item.setText(_translate("MainWindow", Instruments[len(Instruments)-1].Name))
+        item.setText(Instruments[len(Instruments)-1].Name)
         if(menu):
             if(editor.unsafeMode): item.setForeground(QColor("#cf1800"))
             else: item.setFlags(QtCore.Qt.ItemIsSelectable)
@@ -204,8 +206,8 @@ class Window(QMainWindow, Ui_MainWindow):
         if file.exec_():
             path = file.selectedFiles()[0]
             if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
-            if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))):
-                ShowError("Not a valid Wii Music folder","Files and sys folder not found")
+            if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")):
+                ShowError(self.tr("Not a valid Wii Music folder"),self.tr("Files and sys folder not found"))
                 return False
             editor.file.path = path
             if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
@@ -247,8 +249,8 @@ class Window(QMainWindow, Ui_MainWindow):
             openfile.close()
             PrepareFile()
             SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
-            self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
-            self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded File:'))
+            self.MP_LoadedFile_Path.setText(editor.file.path)
+            self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded File:'))
             return True
         return False
 
@@ -274,14 +276,14 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_StyleText.setEnabled(False)
             self.SE_OpenDefaultStyleEditor.setEnabled(False)
             self.SE_OpenStyleEditor.setEnabled(False)
-            self.SE_Midi_File_Score_Label.setText(_translate("MainWindow","Load a Midi-Type file"))
-            self.SE_Midi_File_Song_Label.setText(_translate("MainWindow","Load a Midi-Type file"))
+            self.SE_Midi_File_Score_Label.setText(self.tr("Load a Midi-Type file"))
+            self.SE_Midi_File_Song_Label.setText(self.tr("Load a Midi-Type file"))
             self.brseqInfo = [0,0]
             self.brseqLength = [0,0]
             self.brseqPath = ["",""]
             if(not AllowType(LoadType.Brsar)): self.SE_SongToChange.removeItemWidget(self.SE_SongToChange.takeItem(len(Songs)-1))
         else:
-            ShowError("Unable to load song editor","Must load Wii Music Rom, Brsar, or Message File")
+            ShowError(self.tr("Unable to load song editor"),self.tr("Must load Wii Music Rom, Brsar, or Message File"))
 
     def LoadStyleEditor(self):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Gct or editor.file.type == LoadType.Carc):
@@ -297,7 +299,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.styleSelected = []
             if(self.fromSongEditor != -1): self.List_StE_StyleList()
         else:
-            error = ShowError("Unable to load style editor","Must load Wii Music Rom, Message File, or Geckocode",geckocode=True)
+            error = ShowError(self.tr("Unable to load style editor"),self.tr("Must load Wii Music Rom, Message File, or Geckocode"),geckocode=True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadStyleEditor()
 
@@ -311,11 +313,11 @@ class Window(QMainWindow, Ui_MainWindow):
             if(textlines != originalTextlines): file.writelines(textlines)
             file.close()
             file = open(GetMessagePath()+"/message.d/new_music_message.txt","rb")
-            self.TE_Text.setPlainText(_translate("MainWindow",file.read().decode("utf-8")))
+            self.TE_Text.setPlainText(file.read().decode("utf-8"))
             file.close()
             self.MainWidget.setCurrentIndex(TAB.TextEditor)
         else:
-            ShowError("Unable to load text editor","Must load Wii Music Rom or Message File")
+            ShowError(self.tr("Unable to load text editor"),self.tr("Must load Wii Music Rom or Message File"))
 
     def LoadDefaultStyleEditor(self):
         if(AllowType(LoadType.Gct)):
@@ -327,7 +329,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.DS_Patch.setEnabled(False)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
-            error = ShowError("Unable to load default style editor","Must load Wii Music Rom or Geckocode",geckocode=True)
+            error = ShowError(self.tr("Unable to load default style editor"),self.tr("Must load Wii Music Rom or Geckocode"),geckocode=True)
             if(error.clicked):
                 if(self.CreateGeckoCode()): self.LoadDefaultStyleEditor()
 
@@ -338,7 +340,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.RS_RemoveCustomSongs.setEnabled(editor.file.type == LoadType.Rom)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
         else:
-            ShowError("Unable to remove songs","Must load Wii Music Rom or Main.dol")
+            ShowError(self.tr("Unable to remove songs"),self.tr("Must load Wii Music Rom or Main.dol"))
 
     def LoadSoundEditor(self):
         if(AllowType(LoadType.Brsar)):
@@ -358,9 +360,9 @@ class Window(QMainWindow, Ui_MainWindow):
             self.extraFile = ""
             self.SOE_Patch.setEnabled(False)
             self.SOE_SoundTypeBox.setEnabled(False)
-            self.SOE_File_Label.setText(_translate("MainWindow","Load .rwav File"))
+            self.SOE_File_Label.setText(self.tr("Load .rwav File"))
         else:
-            ShowError("Unable to load sound editor","Must load Wii Music Rom or Brsar")
+            ShowError(self.tr("Unable to load sound editor"),self.tr("Must load Wii Music Rom or Brsar"))
 
     def ConvertGeckocode(self):
         if(AllowType(LoadType.Gct)):
@@ -375,7 +377,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 CreateGct(path)
                 SuccessWindow("Creation Complete!")
         else:
-            ShowError("Unable to create .gct file","Must load Wii Music Rom or Geckocode")
+            ShowError(self.tr("Unable to create .gct file"),self.tr("Must load Wii Music Rom or Geckocode"))
 
     def PatchMainDolWithGeckoCode(self):
         if(editor.file.type == LoadType.Rom):
@@ -400,27 +402,27 @@ class Window(QMainWindow, Ui_MainWindow):
                     PatchMainDol(geckoPath=file.selectedFiles()[0])
                 else:
                     PatchMainDol(dolPath=file.selectedFiles()[0])
-                SuccessWindow("Main.dol Patched!")
+                SuccessWindow(self.tr("Main.dol Patched!"))
         else:
-            ShowError("Unable to patch Main.dol","Must load Wii Music Rom, Main.dol, or Geckocode")
+            ShowError(self.tr("Unable to patch Main.dol"),self.tr("Must load Wii Music Rom, Main.dol, or Geckocode"))
 
     def CreateRiivolutionPatch(self):
         if(editor.file.type == LoadType.Rom):
             RiivolutionWindow()
         else:
-            ShowError("Unable to create Riivolution patch","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to create Riivolution patch"),self.tr("Must load Wii Music Rom"))
 
     def RevertChanges(self):
         if(editor.file.type == LoadType.Rom):
             RevertChangesWindow()
         else:
-            ShowError("Unable to revert changes","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to revert changes"),self.tr("Must load Wii Music Rom"))
 
     def PackRom(self):
         if(editor.file.type == LoadType.Rom):
             PackRomWindow()
         else:
-            ShowError("Unable to pack rom","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to pack rom"),self.tr("Must load Wii Music Rom"))
 
     def ImportFiles(self):
         if(editor.file.type == LoadType.Rom):
@@ -449,11 +451,11 @@ class Window(QMainWindow, Ui_MainWindow):
                         elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
                     if(pathlib.Path(path).suffix == "zip"):
                         rmtree(SavePath()+"/tmp")
-                    SuccessWindow("Files Successfully Imported!")                
+                    SuccessWindow(self.tr("Files Successfully Imported!"))            
                 except Exception as e:
-                    ShowError("Unable to import files",str(e))
+                    ShowError(self.tr("Unable to import files"),str(e))
         else:
-            ShowError("Unable to import files","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to import files"),self.tr("Must load Wii Music Rom"))
 
 
     def ExportFiles(self):
@@ -473,22 +475,22 @@ class Window(QMainWindow, Ui_MainWindow):
                     zipObj.write(GetMainDolPath(),"main.dol")
                     zipObj.write(GetGeckoPath(),"Geckocodes.ini")
                     zipObj.close()
-                    SuccessWindow("Files Exported")
+                    SuccessWindow(self.tr("Files Exported"))
                 except Exception as e:
-                    ShowError("Files not Exported",str(e))
+                    ShowError(self.tr("Files not Exported"),str(e))
         else:
-            ShowError("Unable to export files","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to export files"),self.tr("Must load Wii Music Rom"))
 
     def ImportChanges(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
             file.setFileMode(QFileDialog.AnyFile)
-            file.setNameFilter("Rom Change File (*.ini)")
+            file.setNameFilter(self.tr("Rom Change File")+" (*.ini)")
             file.setDirectory(lastFileDirectory)
             if(file.exec()):
                 ImportChangesWindow(file.selectedFiles()[0])
         else:
-            ShowError("Unable to import changes","Must load Wii Music Rom")
+            ShowError(self.tr("Unable to import changes"),self.tr("Must load Wii Music Rom"))
 
     #############Menu Bar
 
@@ -497,9 +499,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def LoadDolphin(self,menu):
         if(editor.file.type != LoadType.Rom):
-            ShowError("Unable to launch Dolphin","Loaded file must be a complete rom")
+            ShowError(self.tr("Unable to launch Dolphin"),self.tr("Loaded file must be a complete rom"))
         elif(editor.dolphinPath == ""):
-            ShowError("Unable to launch Dolphin","Dolphin path not specified\nGo to settings to add a Dolphin path")
+            ShowError(self.tr("Unable to launch Dolphin"),self.tr("Dolphin path not specified")+"\n"+self.tr("Go to settings to add a Dolphin path"))
         else:
             try:
                 if(os.path.isfile(GetGeckoPath()) and LoadSetting("Settings","CopyCodes",True)):
@@ -523,11 +525,11 @@ class Window(QMainWindow, Ui_MainWindow):
                 GivePermission(editor.dolphinPath)
                 subprocess.Popen(cmd,env=env)
             except Exception as e:
-                ShowError("Unable to launch Dolphin","Check the Dolphin path in the settings\n"+str(e))
+                ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
 
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
-        SettingsWindow(self)
+        SettingsWindow(self,app,translator)
 
     def MenuBar_Load_Rom(self):
         if(self.LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *.ini)
@@ -538,29 +540,29 @@ class Window(QMainWindow, Ui_MainWindow):
         Geckocode (*.ini)""")):
             PrepareFile()
             SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
-            self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
-            self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded File:'))
+            self.MP_LoadedFile_Path.setText(editor.file.path)
+            self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded File:'))
             self.GotoMainMenu()
 
     def MenuBar_Load_RomFolder(self):
-        self.LoadMainFile("")
-        PrepareFile()
-        SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
-        self.MP_LoadedFile_Path.setText(_translate("MainWindow", editor.file.path))
-        self.MP_LoadedFile_Label.setText(_translate("MainWindow",'Currently Loaded Folder:'))   
+        if(self.LoadMainFile("")):
+            PrepareFile()
+            SaveSetting("Paths","CurrentLoadedFile",editor.file.path)
+            self.MP_LoadedFile_Path.setText(editor.file.path)
+            self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded Folder:'))
 
     def MenuBar_Save_File(self):
         try:
-            if(ConfirmDialog("Are you sure you want to overwrite your save file?")):
+            if(ConfirmDialog(self.tr("Are you sure you want to overwrite your save file?"))):
                 rmtree(GetDolphinSave()+"/Wii/title/00010000/"+BasedOnRegion(savePathIds)+"/data")
                 copytree(HelperPath()+"/WiiMusicSave",GetDolphinSave()+"/Wii/title/00010000/"+BasedOnRegion(savePathIds)+"/data")
-                SuccessWindow("Save file copied!")
+                SuccessWindow(self.tr("Save file copied!"))
         except Exception as e:
-            ShowError("Unable to copy save file",str(e))
+            ShowError(self.tr("Unable to copy save file"),str(e))
 
     def DownloadSongs(self):
         self.importthread = DownloadSongThread()
-        self.importthread.done.connect(lambda: SuccessWindow("Songs Saved to: Program Path/Pre-Made Songs for Wii Music"))
+        self.importthread.done.connect(lambda: SuccessWindow(self.tr("Songs Saved to: Program Path")+"/Pre-Made Songs for Wii Music"))
         self.importthread.start()
 
     #############Song Editor Buttons
@@ -575,13 +577,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Patch.setEnabled(allow)
 
     def Button_SE_SongToChange(self,song=False):
-        if(self.LoadExtraFile("Midi-Type File (*.midi *.mid *.brseq *.rseq)")):
+        if(self.LoadExtraFile(self.tr("Midi-Type File")+" (*.midi *.mid *.brseq *.rseq)")):
             midiInfo = LoadMidi(self.extraFile)
             if(midiInfo[0] != False):
                 if(song):
-                    self.SE_Midi_File_Song_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+                    self.SE_Midi_File_Song_Label.setText(os.path.basename(self.extraFile))
                 else:
-                    self.SE_Midi_File_Score_Label.setText(_translate("MainWindow", os.path.basename(self.extraFile)))
+                    self.SE_Midi_File_Score_Label.setText(os.path.basename(self.extraFile))
                     self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
                     self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
                     self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
@@ -618,14 +620,14 @@ class Window(QMainWindow, Ui_MainWindow):
         if(AllowType(LoadType.Carc)):
             if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
                 self.SE_ChangeSongText.setEnabled(True)
-                self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", editor.textFromTxt[0][self.SE_SongToChange.currentRow()]))
-                self.SE_ChangeSongText_Desc_Input.setText(_translate("MainWindow", editor.textFromTxt[1][self.SE_SongToChange.currentRow()]))
-                self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", editor.textFromTxt[2][self.SE_SongToChange.currentRow()]))
+                self.SE_ChangeSongText_Name_Input.setText(editor.textFromTxt[0][self.SE_SongToChange.currentRow()])
+                self.SE_ChangeSongText_Desc_Input.setText(editor.textFromTxt[1][self.SE_SongToChange.currentRow()])
+                self.SE_ChangeSongText_Genre_Input.setText(editor.textFromTxt[2][self.SE_SongToChange.currentRow()])
             else:
                 self.SE_ChangeSongText.setEnabled(False)
-                self.SE_ChangeSongText_Name_Input.setText(_translate("MainWindow", ""))
-                self.SE_ChangeSongText_Desc_Input.setText(_translate("MainWindow", ""))
-                self.SE_ChangeSongText_Genre_Input.setText(_translate("MainWindow", ""))
+                self.SE_ChangeSongText_Name_Input.setText("")
+                self.SE_ChangeSongText_Desc_Input.setText("")
+                self.SE_ChangeSongText_Genre_Input.setText("")
                 self.SE_Midi.setCheckable(False)
                 self.SE_Midi.setEnabled(True)
         if(AllowType(LoadType.Brsar)):
@@ -633,8 +635,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
             self.SE_OpenDefaultStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
             self.SE_OpenStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
-            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular): self.SE_StyleText.setText(_translate("MainWindow",""))
-            else: self.SE_StyleText.setText(_translate("MainWindow",Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name))
+            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular): self.SE_StyleText.setText("")
+            else: self.SE_StyleText.setText(Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name)
         self.SE_Patchable()
 
     def Button_SE_Patch(self):
@@ -675,9 +677,9 @@ class Window(QMainWindow, Ui_MainWindow):
             text = Songs[self.SE_SongToChange.currentRow()].Name
             if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
                 text = editor.textFromTxt[0][self.SE_SongToChange.currentRow()]
-                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Maestro): text = text+" (Mii Maestro)"
-                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Handbell): text = text+" (Handbell Harmony)"
-            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(_translate("MainWindow", text))
+                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Maestro): text = text+" ("+self.tr("Mii Maestro")+")"
+                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Handbell): text = text+" ("+self.tr("Handbell Harmony")+")"
+            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(text)
             editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
             editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
             editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
@@ -722,12 +724,12 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(songSelected == 40): songSelected = len(Instruments)-1
             self.styleSelected[self.StE_PartSelector.currentIndex()] = songSelected
             self.StE_Patchable()
-            if(self.StE_PartSelector.currentIndex() == 0): self.StE_Part_Melody_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
-            elif(self.StE_PartSelector.currentIndex() == 1): self.StE_Part_Harmony_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
-            elif(self.StE_PartSelector.currentIndex() == 2): self.StE_Part_Chords_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
-            elif(self.StE_PartSelector.currentIndex() == 3): self.StE_Part_Bass_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
-            elif(self.StE_PartSelector.currentIndex() == 4): self.StE_Part_Percussion1_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
-            elif(self.StE_PartSelector.currentIndex() == 5): self.StE_Part_Percussion2_Instrument.setText(_translate("MainWindow",Instruments[songSelected].Name))
+            if(self.StE_PartSelector.currentIndex() == 0): self.StE_Part_Melody_Instrument.setText(Instruments[songSelected].Name)
+            elif(self.StE_PartSelector.currentIndex() == 1): self.StE_Part_Harmony_Instrument.setText(Instruments[songSelected].Name)
+            elif(self.StE_PartSelector.currentIndex() == 2): self.StE_Part_Chords_Instrument.setText(Instruments[songSelected].Name)
+            elif(self.StE_PartSelector.currentIndex() == 3): self.StE_Part_Bass_Instrument.setText(Instruments[songSelected].Name)
+            elif(self.StE_PartSelector.currentIndex() == 4): self.StE_Part_Percussion1_Instrument.setText(Instruments[songSelected].Name)
+            elif(self.StE_PartSelector.currentIndex() == 5): self.StE_Part_Percussion2_Instrument.setText(Instruments[songSelected].Name)
             self.StE_ResetStyle.setEnabled(self.styleSelected != Styles[self.StE_StyleList.currentRow()].DefaultStyle)
     
     def List_StE_StyleList(self):
@@ -736,11 +738,11 @@ class Window(QMainWindow, Ui_MainWindow):
         if(AllowType(LoadType.Carc) and (Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Global)):
             self.StE_ChangeStyleName.setEnabled(True)
             self.StE_ChangeStyleName_Label.setEnabled(True)
-            self.StE_ChangeStyleName.setText(_translate("MainWindow",editor.textFromTxt[3][self.StE_StyleList.currentRow()]))
+            self.StE_ChangeStyleName.setText(editor.textFromTxt[3][self.StE_StyleList.currentRow()])
         else:
             self.StE_ChangeStyleName.setEnabled(False)
             self.StE_ChangeStyleName_Label.setEnabled(False)
-            self.StE_ChangeStyleName.setText(_translate("MainWindow",""))
+            self.StE_ChangeStyleName.setText("")
         self.styleSelected = editor.loadedStyles[self.StE_StyleList.currentRow()].copy()
         self.StE_InstrumentList.setCurrentRow(-1)
         self.LoadInstruments(self.StE_InstrumentList,(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
@@ -752,23 +754,23 @@ class Window(QMainWindow, Ui_MainWindow):
             if(toHighlight == len(Instruments)-1): toHighlight = 40
         self.StE_ResetStyle.setEnabled(self.styleSelected != Styles[self.StE_StyleList.currentRow()].DefaultStyle)
         self.StE_InstrumentList.setCurrentRow(toHighlight)
-        self.StE_Part_Melody_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][0]].Name))
-        self.StE_Part_Harmony_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][1]].Name))
-        self.StE_Part_Chords_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][2]].Name))
-        self.StE_Part_Bass_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][3]].Name))
-        self.StE_Part_Percussion1_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][4]].Name))
-        self.StE_Part_Percussion2_Instrument.setText(_translate("MainWindow",Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][5]].Name))
+        self.StE_Part_Melody_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][0]].Name)
+        self.StE_Part_Harmony_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][1]].Name)
+        self.StE_Part_Chords_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][2]].Name)
+        self.StE_Part_Bass_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][3]].Name)
+        self.StE_Part_Percussion1_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][4]].Name)
+        self.StE_Part_Percussion2_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][5]].Name)
 
     def Button_StE_ResetStyle(self):
         self.styleSelected = Styles[self.StE_StyleList.currentRow()].DefaultStyle.copy()
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patchable()
-        self.StE_Part_Melody_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[0]].Name))
-        self.StE_Part_Harmony_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[1]].Name))
-        self.StE_Part_Chords_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[2]].Name))
-        self.StE_Part_Bass_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[3]].Name))
-        self.StE_Part_Percussion1_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[4]].Name))
-        self.StE_Part_Percussion2_Instrument.setText(_translate("MainWindow",Instruments[self.styleSelected[5]].Name))
+        self.StE_Part_Melody_Instrument.setText(Instruments[self.styleSelected[0]].Name)
+        self.StE_Part_Harmony_Instrument.setText(Instruments[self.styleSelected[1]].Name)
+        self.StE_Part_Chords_Instrument.setText(Instruments[self.styleSelected[2]].Name)
+        self.StE_Part_Bass_Instrument.setText(Instruments[self.styleSelected[3]].Name)
+        self.StE_Part_Percussion1_Instrument.setText(Instruments[self.styleSelected[4]].Name)
+        self.StE_Part_Percussion2_Instrument.setText(Instruments[self.styleSelected[5]].Name)
         if(editor.unsafeMode): toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
         elif(self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
             toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]-40
@@ -782,9 +784,9 @@ class Window(QMainWindow, Ui_MainWindow):
         if(self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]):
             editor.loadedStyles[self.StE_StyleList.currentRow()] = self.styleSelected.copy()
             if(Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected):
-                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name))
+                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(Styles[self.StE_StyleList.currentRow()].Name)
             else:
-                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(_translate("MainWindow",Styles[self.StE_StyleList.currentRow()].Name+" ~[Replaced]~"))
+                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(Styles[self.StE_StyleList.currentRow()].Name+" ~["+self.tr("Replaced")+"]~")
                 patchInfo = '0'+format(Styles[self.StE_StyleList.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsetsStyles),"x")+" 00000018\n"
                 for i in range(3):
                     if(self.styleSelected[i*2] == len(Instruments)-1): num1 = "ffffffff"
@@ -828,7 +830,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def TE_FinishEditor(self):
         file = open(GetMessagePath()+"/message.d/new_music_message.txt","r+b")
-        self.TE_Text.setPlainText(_translate("MainWindow",file.read().decode("utf-8")))
+        self.TE_Text.setPlainText(file.read().decode("utf-8"))
         file.close()
         self.TE_Patch.setEnabled(True)
         self.TE_Text.setEnabled(True)
@@ -840,7 +842,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_DS_Patch(self):
         AddPatch(Songs[self.DS_Songs.currentRow()].Name+' Default Style Patch','0'+format(Songs[self.DS_Songs.currentRow()].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[self.DS_Styles.currentRow()].StyleId+'\n')
         self.DS_Patch.setEnabled(False)
-        if(self.fromSongEditor != -1): self.SE_StyleText.setText(_translate("MainWindow",Styles[self.DS_Styles.currentRow()].Name))
+        if(self.fromSongEditor != -1): self.SE_StyleText.setText(Styles[self.DS_Styles.currentRow()].Name)
         SaveRecording(RecordType.DefaultStyle,self.DS_Songs.currentRow(),["style",self.DS_Styles.currentRow()],self.DS_Styles.currentRow() == GetDefaultStyle(self.DS_Songs.currentRow(),True))
 
     def List_DS_SongList(self):
@@ -885,9 +887,9 @@ class Window(QMainWindow, Ui_MainWindow):
                     removesongs.append(i)
             file.close()
             SaveRecording(RecordType.RemoveSong,"null",["songs",removesongs])
-            SuccessWindow("Songs Successfully Destroyed!!!")
+            SuccessWindow(self.tr("Songs Successfully Destroyed!!!"))
         except Exception as e:
-            ShowError("Could not remove songs",str(e))
+            ShowError(self.tr("Could not remove songs"),str(e))
 
     #############Sound Editor
     def SOE_Patchable(self):
@@ -951,7 +953,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def Button_SOE_Browse(self):
         if(self.LoadExtraFile("rwav (*.rwav)")):
             self.SOE_Patchable()
-            self.SOE_File_Label.setText(_translate("MainWindow",os.path.basename(self.extraFile)))
+            self.SOE_File_Label.setText(os.path.basename(self.extraFile))
 
     def Button_SOE_Patch(self):
         file = open(self.extraFile,"rb")
@@ -987,9 +989,17 @@ if __name__ == "__main__":
     app.setWindowIcon(QIcon(HelperPath()+"/Extra/icon.png"))
     QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contb.ttf")
     QFontDatabase.addApplicationFont(HelperPath()+"/Fonts/contm.ttf")
+    lang = LoadSetting("Settings","Language",0)
+    translator = QTranslator()
+    if(lang != 0):
+        translator.load(QLocale(),TranslationPath()+f"/{languageList[lang]}.qm")
+        app.installTranslator(translator)
+        RetranslateSongNames()
+    if(not os.path.isfile(SavePath()+"/Settings.ini")):
+        FirstSetupWindow(app,translator)
     win = Window()
     win.show()
-    if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError("Could not load file","One or more errors have occurred")
+    if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError(_translate("Window","Could not load file"),_translate("Window","One or more errors have occurred"))
     if(LoadSetting("Settings","AutoUpdate",True)):
         try:
             version = CheckForUpdate()

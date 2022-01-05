@@ -498,7 +498,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
    <item>
     <widget class="QLabel" name="text">
      <property name="text">
-      <string>Words</string>
+      <string notr="true">Words</string>
      </property>
     </widget>
    </item>

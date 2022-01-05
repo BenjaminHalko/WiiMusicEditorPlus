@@ -1,0 +1,334 @@
+###TsSection	#
+Wii Music Editor Plus	Éditeur de musique Wii Plus
+Cancel	Annuler
+Ok	D'accord
+Menu Song	Chanson du menu
+Jazz	le jazz
+Rock	Osciller
+Latin	Latin
+March	Mars
+Electronic	Électronique
+Pop	Pop
+Japanese	Japonais
+Tango	Tango
+Classical	Classique
+Hawaiian	hawaïen
+Reggae	Reggae
+Animal Crossing K.K. Blues	Animal Crossing K.K. Bleus
+O-Christmas Tree	O-Sapin de Noël
+Oh My Darling Clementine	Oh ma chérie Clémentine
+Over The Waves	Au fil des vagues
+Super Mario Bros	super Mario Bros
+Twinkle Twinkle Little Star	Twinkle Twinkle Petite étoile
+A Capella	A capella
+Acoustic	Acoustique
+African Electronic	électronique africaine
+Animals!	Animaux!
+Calypso	Calypso
+Exotic	Exotique
+Flamenco	Flamenco
+Galactic	Galactique
+Handbell	Sonnette
+Karate	Karaté
+Orchestral	Orchestral
+Parade	Parade
+Rap	Rap
+Samba	Samba
+Menu Style Main	Style de menu Principal
+Menu Style Electronic	Style de menu Électronique
+Menu Style Japanese	Style de menu japonais
+Menu Style March	Style de menu Mars
+Menu Style A Capella	Style de menu A Capella
+Piano	Piano
+Marimba	Marimba
+Vibraphone	Vibraphone
+Steel Drum	Tonneau en acier
+Dulcimer	Tympanon
+Harpsichord	Clavecin
+Timpani	Timbales
+Galactic Piano	Piano Galactique
+Toy Piano	Piano jouet
+Dog	Chien
+Cat	Chat
+Rapper	Rappeur
+Guitar	Guitare
+Electric Guitar	Guitare électrique
+Electric Bass	Basse électrique
+Double Bass	Contrebasse
+Ukulele	Ukulélé
+Banjo	Banjo
+Sitar	Sitar
+Shamisen	Shamisen
+Harp	Harpe
+Galactic Guitar	Guitare Galactique
+Galactic Bass	Basse galactique
+Jaw Harp	Harpe à mâchoires
+Violin	Violon
+Cello	Violoncelle
+Trumpet	Trompette
+Saxophone	Saxophone
+Flute	Flûte
+Clairenet	Clairenet
+Tuba	Tuba
+Accordion	Accordéon
+Harmonica	Harmonica
+Bagpipe	Cornemuse
+Recorder	Enregistreur
+Galactic horn	corne galactique
+Nes	Nes
+Singer	Chanteuse
+Bass Singer	Chanteur de basse
+Basic Drums	Batterie de base
+Rock Drums	Tambours rock
+Jazz Drums	Tambours Jazz
+Latin Drums	Tambours Latins
+Ballad Drums	Ballades Tambours
+Congas	Congas
+Maracas	Maracas
+Tambourine	Tambourin
+Cuica	Cuica
+Cowbell	Sonnaille
+Clap	Taper
+Bells	Cloches
+Castanets	Castagnettes
+Guiro	Guiro
+Timpales	Timpales
+Djembe	Djembé
+Taiko Drum	Taiko Taiko
+Cheerleader	Majorette
+Snare Drum	Caisse Claire
+Bass Drum	Grosse caisse
+Galactic Drums	Tambours Galactiques
+Galactic Congas	Congas galactiques
+DJ Turntables	Platines DJ
+Black Belt	Ceinture noire
+Reggae Drums	Batterie Reggae
+Whistle	Sifflet
+Beatbox	boîte à rythmes
+None	Rien
+Basic Drum	Tambour de base
+Cymbal for Basic, Jazz, Latin, Reggae, and Ballad Drums	Cymbale pour batterie basique, jazz, latin, reggae et ballade
+Bass for Basic, Latin, and Ballad Drums	Basse pour batterie basique, latine et ballade
+Female Variant	Variante féminine
+Hand Clap	Applaudissement
+Male Variant	Variante masculine
+Timbales	Timbales
+Taiko Drums	Taiko Taiko
+Female Varient	Variante Féminine
+Female	Femelle
+Male	Homme
+Beat Boxer	Battre le boxeur
+Drum Mode	Mode tambour
+Wii Music Editor Plus - Error	Wii Music Editor Plus - Erreur
+Close	Fermer
+Create Geckocode	Créer un geckocode
+Could not import change	Impossible d'importer la modification
+Import Changes	Importer les modifications
+Finished Importing Changes	Importation des modifications terminée
+Importing Change {} out of {}	Importation de modification {} sur {}
+Currently Loaded File:	Fichier actuellement chargé :
+No File Loaded	Aucun fichier chargé
+Song Editor	Éditeur de chanson
+Style Editor	Éditeur de styles
+Advanced Features	Fonctionnalités avancées
+Change All Text	Changer tout le texte
+Change Default Styles	Modifier les styles par défaut
+Replace Sounds	Remplacer les sons
+Remove Song	Supprimer la chanson
+Convert Geckocode to .gct	Convertir Geckocode en .gct
+Patch Main.dol with Geckocode	Patch Main.dol avec Geckocode
+Create Riivolution Patch	Créer un patch Riivolution
+Rom Editing	Édition Rom
+Revert Changes	Rétablir les changements
+Pack Rom Filesystem	Pack système de fichiers Rom
+Import Files	Importer des fichiers
+Export Files	Exporter des fichiers
+Back	Retour
+Replace Song	Remplacer la chanson
+Load a Midi-Type file	Charger un fichier de type Midi
+Browse	Parcourir
+SCORE:	BUT:
+SONG:	CHANSON:
+Replace SONG seperatly	Remplacez SONG séparément
+Tempo:	Tempo:
+Length:	Longueur:
+Measures	Les mesures
+Beats	Beats
+Time Signature:	Signature temporelle:
+Change Song Text	Changer le texte de la chanson
+Name:	Nom:
+Genre:	Genre:
+Description:	La description:
+Patch!	Pièce!
+Song to change	Chanson à changer
+Style:	Style:
+Edit in Style Editor	Modifier dans l'éditeur de style
+Change Default Style	Modifier le style par défaut
+Parts	les pièces
+Bass:	Basse:
+Perc 1:	Perc 1 :
+Harmony:	Harmonie:
+Chords:	Accords :
+Perc 2:	Perc 2:
+Melody:	Mélodie:
+Reset to Default	Réinitialiser par défaut
+Instruments	Instruments
+Part to Change:	Pièce à changer :
+Melody	Mélodie
+Harmony	Harmonie
+Chords	Accords
+Bass	Basse
+Percussion 1	Percussions 1
+Percussion 2	Percussions 2
+Style to change	Style à changer
+Style Name:	Nom du style:
+Text Editor	Éditeur de texte
+Open in External Editor	Ouvrir dans l'éditeur externe
+Default Style Editor	Éditeur de style par défaut
+Song List	Liste des chansons
+Style List	Liste des styles
+Set to Default	Définir par défaut
+Remove Songs	Supprimer des morceaux
+Remove All Non-Custom Songs	Supprimer toutes les chansons non personnalisées
+Deselect All	Tout déselectionner
+Purge Songs!!!	Purger les chansons !!!
+Sound Editor	Éditeur de son
+Sound List	Liste des sons
+File	Déposer
+Load a Rwav-Type file	Charger un fichier Rwav-Type
+Sound Types	Types de sons
+Select All	Tout sélectionner
+Play Audio	Lire le son
+Options	Options
+Help	Aider
+Load Wii Music File	Charger un fichier de musique Wii
+Load Wii Music Folder	Charger le dossier de musique Wii
+Run Dolphin	Courir le dauphin
+F5	F5
+Run Dolphin (Menu)	Courir Dauphin (Menu)
+F6	F6
+Check for Updates	Vérifier les mises à jour
+Settings	Réglages
+Download Pre-made Songs	Télécharger des chansons prédéfinies
+Open Wiki	Ouvrir le wiki
+Open Save Folder	Ouvrir le dossier de sauvegarde
+Add 100% Save File to Dolphin	Ajouter 100% Enregistrer le fichier à Dolphin
+Game Documentation	Documentation du jeu
+About	Sur
+Donate	Faire un don
+Wii Backup File System	Système de fichiers de sauvegarde Wii
+Rom Successfuly Packed!	Rom emballé avec succès !
+Could not pack rom	Impossible d'emballer la rom
+Rom Type:	Type de Rom :
+Patch Main.dol with Geckocodes	Patch Main.dol avec Geckocodes
+Songs	Chansons
+Styles	modes
+Text	Texte
+Main.dol	Main.dol
+Revert!	Revenir!
+Could not revert songs	Impossible de rétablir les chansons
+Could not revert message file	Impossible de restaurer le fichier de messages
+Could not revert styles	Impossible de rétablir les styles
+Could not revert main.dol	Impossible de restaurer main.dol
+Files Reverted!	Fichiers restaurés !
+Riivolution Creator	Créateur de Riivolution
+Mod Name:	Nom du module :
+Saving to:	Enregistrement sur :
+Copy to SD Card:	Copier sur la carte SD :
+Geckocode Copy Method:	Méthode de copie de geckocode :
+Patch Main.dol	Patch Main.dol
+Copy Codes	Copier les codes
+Do Nothing	Ne fais rien
+Create!	Créer!
+Creation Complete!	Création terminée !
+Rom Settings	Paramètres de la Rom
+Fallback Region (Used if rom region can't be determinded):	Région de secours (utilisée si la région rom ne peut pas être déterminée) :
+US	nous
+Europe	L'Europe 
+Japan	Japon
+Korea	Corée
+Remove changes from Changes.ini when reverting changes	Supprimer les modifications de Changes.ini lors de l'annulation des modifications
+Load Song and Score separately	Charger la chanson et la partition séparément
+Add the Rapper Crash fix to Gecko codes	Ajouter le correctif Rapper Crash aux codes Gecko
+Normalize Midi (Makes Midis more Wii Music friendly)	Normaliser Midi (rend les Midis plus conviviaux pour Wii Music)
+Updates	Mises à jour
+Check for Updates on Startup	Vérifier les mises à jour au démarrage
+Switch to Beta	Passer en version bêta
+Debug Options	Options de débogage
+Unsafe mode (Enables options that might crash the game)	Mode non sécurisé (active les options susceptibles de faire planter le jeu)
+General	Général
+Dolphin Path	Sentier des dauphins
+No Specified Path	Pas de chemin spécifié
+Dolphin Save Path	Chemin de sauvegarde des dauphins
+Default Path	Chemin par défaut
+Set as Default	Définir par défaut
+Gecko Codes	Codes Gecko
+Copy Gecko codes to Dolphin save directory	Copiez les codes Gecko dans le répertoire de sauvegarde de Dolphin
+Force Enable Cheats when launching Dolphin	Forcer l'activation des astuces lors du lancement de Dolphin
+Appearence	Apparence
+Language:	Langue:
+Rom Language:	Langue Rom :
+Editor Settings	Paramètres de l'éditeur
+Switch to Main	Basculer vers le principal
+Not a Dolphin Save Directory	Pas un répertoire de sauvegarde Dolphin
+Wii and GameSettings folder not found	Dossier Wii et GameSettings introuvable
+English	Anglais
+French	français
+Spanish	Espagnol
+Germen	Allemand
+Italian	italien
+Korean	coréen
+Completed!	Complété!
+Updater	Mise à jour
+New Update Available!	Nouvelle mise à jour disponible!
+Update	Mettre à jour
+Downloading From Github...	Téléchargement depuis Github...
+No New Updates :(	Pas de nouvelles mises à jour :(
+Currently Loaded Folder:	Dossier actuellement chargé :
+Mii Maestro	Maestro Mii
+Handbell Harmony	Harmonie des cloches
+Replaced	Remplacé
+Not a valid Wii Music folder	Pas un dossier Wii Music valide
+Files and sys folder not found	Fichiers et dossier sys introuvables
+Unable to load song editor	Impossible de charger l'éditeur de chanson
+Must load Wii Music Rom, Brsar, or Message File	Doit charger Wii Music Rom, Brsar ou un fichier de message
+Unable to load style editor	Impossible de charger l'éditeur de style
+Must load Wii Music Rom, Message File, or Geckocode	Doit charger Wii Music Rom, Message File ou Geckocode
+Unable to load text editor	Impossible de charger l'éditeur de texte
+Must load Wii Music Rom or Message File	Doit charger la Wii Music Rom ou le fichier de message
+Unable to load default style editor	Impossible de charger l'éditeur de style par défaut
+Must load Wii Music Rom or Geckocode	Doit charger Wii Music Rom ou Geckocode
+Unable to remove songs	Impossible de supprimer des chansons
+Must load Wii Music Rom or Main.dol	Doit charger Wii Music Rom ou Main.dol
+Load .rwav File	Charger le fichier .rwav
+Unable to load sound editor	Impossible de charger l'éditeur de son
+Must load Wii Music Rom or Brsar	Doit charger Wii Music Rom ou Brsar
+Unable to create .gct file	Impossible de créer le fichier .gct
+Main.dol Patched!	Main.dol patché !
+Unable to patch Main.dol	Impossible de patcher Main.dol
+Must load Wii Music Rom, Main.dol, or Geckocode	Doit charger Wii Music Rom, Main.dol ou Geckocode
+Unable to create Riivolution patch	Impossible de créer le patch Riivolution
+Must load Wii Music Rom	Doit charger la Wii Music Rom
+Unable to revert changes	Impossible d'annuler les modifications
+Unable to pack rom	Impossible d'emballer la rom
+Files Successfully Imported!	Fichiers importés avec succès !
+Unable to import files	Impossible d'importer des fichiers
+Files Exported	Fichiers exportés
+Files not Exported	Fichiers non exportés
+Unable to export files	Impossible d'exporter les fichiers
+Rom Change File	Rom changer le fichier
+Unable to import changes	Impossible d'importer les modifications
+Unable to launch Dolphin	Impossible de lancer Dolphin
+Loaded file must be a complete rom	Le fichier chargé doit être une rom complète
+Dolphin path not specified	Chemin des dauphins non spécifié
+Go to settings to add a Dolphin path	Allez dans les paramètres pour ajouter un chemin Dolphin
+Check the Dolphin path in the settings	Vérifiez le chemin des dauphins dans les paramètres
+Are you sure you want to overwrite your save file?	Êtes-vous sûr de vouloir écraser votre fichier de sauvegarde ?
+Save file copied!	Enregistrer le fichier copié !
+Unable to copy save file	Impossible de copier le fichier de sauvegarde
+Songs Saved to: Program Path	Morceaux enregistrés dans : chemin du programme
+Midi-Type File	Fichier de type Midi
+Songs Successfully Destroyed!!!	Chansons détruites avec succès !!!
+Could not remove songs	Impossible de supprimer les chansons
+One or more errors have occurred	Une ou plusieurs erreurs se sont produites
+Could not load file	Impossible de charger le fichier

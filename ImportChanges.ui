@@ -498,7 +498,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
    <item>
     <widget class="QLabel" name="Label">
      <property name="text">
-      <string>Import Change 0 out of 0</string>
+      <string notr="true">Import Change 0 out of 0</string>
      </property>
     </widget>
    </item>

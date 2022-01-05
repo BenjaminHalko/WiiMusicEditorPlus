@@ -1,0 +1,347 @@
+###TsSezione
+Wii Music Editor Plus
+Annulla
+Ok
+Menu Canzone
+Jazz
+Musica rock
+latino
+marzo
+Elettronico
+Pop
+giapponese
+Tango
+Classico
+hawaiano
+Reggae
+Animal Crossing K.K. Blues
+O-Albero di Natale
+Oh mia cara Clementina
+Oltre le onde
+Super Mario Bros
+Twinkle Twinkle Little Star
+A Cappella
+Acustico
+Elettronica africana
+Animali!
+Calipso
+Esotico
+Flamenco
+Galattico
+Campanello
+Karatè
+Orchestrale
+Parata
+Rap
+Samba
+Stile menu principale
+Menu stile elettronico
+Menu in stile giapponese
+Menu Style marzo
+Menu Stile A Cappella
+Pianoforte
+Marimba
+Vibrafono
+Tamburo d'acciaio
+Dulcimer
+Clavicembalo
+Timpani
+Piano Galattico
+Pianoforte giocattolo
+Cane
+Gatto
+Cantante rap
+Chitarra
+Chitarra elettrica
+Basso elettrico
+Contrabbasso
+Ukulele
+banjo
+Sitar
+Shamisen
+Arpa
+Chitarra Galattica
+Basso Galattico
+arpa mascellare
+Violino
+Violoncello
+Tromba
+Sassofono
+Flauto
+Clairenet
+Tuba
+Fisarmonica
+Armonica
+Cornamusa
+Registratore
+corno galattico
+Nes
+Cantante
+bassista
+Batteria di base
+batteria rock
+Batteria Jazz
+tamburi latini
+Batteria ballata
+Congas
+Maracas
+Tamburello
+Cuica
+campanaccio
+applauso
+campane
+Nacchere
+Guiro
+timpali
+Djembe
+Taiko Drum
+Cheerleader
+Tamburo rullante
+Grancassa
+Tamburi Galattici
+Congas Galattici
+Giradischi DJ
+Cintura nera
+Batteria reggae
+Fischio
+Beatbox
+Nessuno
+Tamburo di base
+Piatti per batteria base, jazz, latina, reggae e ballata
+Basso per batteria base, latina e ballata
+Variante femminile
+Applauso
+Variante maschile
+timballi
+Tamburi Taiko
+Variante femminile
+Femmina
+Maschio
+Ritmatore
+Modalità batteria
+Wii Music Editor Plus - Errore
+Vicino
+Crea Gecocodice
+Prima configurazione
+Grazie per aver scaricato il
+Wii Music Editor Plus!
+Ti aiutiamo a configurare l'essenziale!
+Lingua:
+Caricamento Rom
+Sentiero Rom
+Nessun percorso specificato
+Carica da file
+Carica da cartella
+Impostazioni Rom
+Regione di fallback (usata se la regione della ROM non può essere determinata):
+NOI.
+Europa
+Giappone
+Corea
+Lingua Rom:
+Configurazione di Dolphin
+Sentiero dei delfini
+Navigare
+Codici Geco
+Copia i codici Gecko nella directory di salvataggio di Dolphin
+Forza abilita i trucchi all'avvio di Dolphin
+<html><head/><body><p align="center">Tutto fatto!</p></body></html>
+Divertiti a modificare Wii Music!
+<html><head/><body><p>YouTube: <a href="https://www.youtube.com/BenjaminHalko"><span style=" text-decoration: sottolineato; color:#ffaa00;" >https://www.youtube.com/BenjaminHalko</span></a></p><p>Fai una donazione: <a href="https://ko-fi.com/benjaminhalko"><span style =" text-decoration: sottolineato; color:#ffaa00;">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href="https: //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"><span style=" text-decoration: sottolineato; color:#ffaa00;">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></ a></p></body></html>
+Indietro
+Prossimo
+inglese
+francese
+spagnolo
+tedesco
+italiano
+coreano
+Non è una cartella Wii Music valida
+File e cartella sys non trovati
+Impossibile importare la modifica
+Importa modifiche
+Terminata l'importazione delle modifiche
+Importazione modifica {} da {}
+File attualmente caricato:
+Nessun file caricato
+Editor di canzoni
+Editor di stile
+Funzionalità avanzate
+Cambia tutto il testo
+Cambia stili predefiniti
+Sostituisci suoni
+Rimuovi canzone
+Converti Geckocode in .gct
+Patch Main.dol con Geckocode
+Crea Patch Riivoluzione
+Modifica Rom
+Ripristina modifiche
+Pack Rom Filesystem
+Importa file
+Esporta file
+Sostituisci canzone
+Carica un file di tipo Midi
+PUNTO:
+CANZONE:
+Sostituisci SONG separatamente
+Tempo:
+Lunghezza:
+Le misure
+battiti
+Indicazione di tempo:
+Cambia il testo della canzone
+Nome:
+Genere:
+Descrizione:
+Toppa!
+Canzone da cambiare
+Stile:
+Modifica nell'editor di stile
+Cambia stile predefinito
+Parti
+Basso:
+Perc 1:
+Armonia:
+Accordi:
+Perc 2:
+Melodia:
+Riportare alle condizioni originali
+Strumenti
+Parte da cambiare:
+Melodia
+Armonia
+accordi
+Basso
+Percussioni 1
+Percussioni 2
+Stile da cambiare
+Nome stile:
+Editor di testo
+Apri nell'editor esterno
+Editor di stile predefinito
+Lista delle canzoni
+Lista degli stili
+Imposta su predefinito
+Rimuovi canzoni
+Rimuovi tutti i brani non personalizzati
+Deselezionare tutto
+Elimina le canzoni!!!
+Editor del suono
+Elenco dei suoni
+File
+Carica un file di tipo Rwav
+Tipi di suono
+Seleziona tutto
+Riproduci audio
+Opzioni
+Aiuto
+Carica file musicale Wii
+Carica la cartella Wii Music
+Corri Delfino
+F5
+Corri Dolphin (Menu)
+F6
+Controlla gli aggiornamenti
+Impostazioni
+Scarica brani già pronti
+Apri Wiki
+Apri cartella di salvataggio
+Aggiungi il 100% di salvataggio del file a Dolphin
+Documentazione del gioco
+Di
+Donare
+Wii Backup File System
+Rom imballato con successo!
+Impossibile imballare la rom
+Tipo Rom:
+Patch Main.dol con Geckocodes
+Canzoni
+Stili
+Testo
+Main.dol
+Ripristina!
+Impossibile ripristinare i brani
+Impossibile ripristinare il file del messaggio
+Impossibile ripristinare gli stili
+Impossibile ripristinare main.dol
+File ripristinati!
+Creatore Rivoluzione
+Nome del modulo:
+Salvataggio in:
+Copia su scheda SD:
+Metodo di copia del gecocodice:
+Patch Main.dol
+Copia codici
+Fare niente
+Creare!
+Creazione completata!
+Rimuovere le modifiche da Changes.ini quando si ripristinano le modifiche
+Carica brano e spartito separatamente
+Aggiungi la correzione di Rapper Crash ai codici Gecko
+Normalize Midi (rende Midis più compatibile con Wii Music)
+Aggiornamenti
+Controlla aggiornamenti all'avvio
+Passa alla versione beta
+Opzioni di debug
+Modalità non sicura (abilita le opzioni che potrebbero bloccare il gioco)
+Generale
+Percorso di salvataggio dei delfini
+Percorso predefinito
+Imposta come predefinito
+Aspetto
+Impostazioni dell'editor
+Passa a Principale
+Non è una directory di salvataggio di Dolphin
+Cartella Wii e GameSettings non trovata
+Completato!
+Aggiornatore
+Nuovo aggiornamento disponibile!
+Aggiornare
+Download da Github...
+Nessun nuovo aggiornamento :(
+Cartella attualmente caricata:
+Mii Maestro
+Armonia del campanello
+Sostituito
+Impossibile caricare l'editor dei brani
+È necessario caricare Wii Music Rom, Brsar o file di messaggi
+Impossibile caricare l'editor di stile
+Devi caricare Wii Music Rom, Message File o Geckocode
+Impossibile caricare l'editor di testo
+È necessario caricare Wii Music Rom o un file di messaggio
+Impossibile caricare l'editor di stile predefinito
+Devi caricare Wii Music Rom o Geckocode
+Impossibile rimuovere i brani
+Devi caricare Wii Music Rom o Main.dol
+Carica file .rwav
+Impossibile caricare l'editor audio
+Devi caricare Wii Music Rom o Brsar
+Impossibile creare il file .gct
+Main.dol Patchato!
+Impossibile patchare Main.dol
+Devi caricare Wii Music Rom, Main.dol o Geckocode
+Impossibile creare la patch di Riivolution
+Devi caricare Wii Music Rom
+Impossibile annullare le modifiche
+Impossibile mettere in valigia la rom
+File importati con successo!
+Impossibile importare i file
+File esportati
+File non esportati
+Impossibile esportare i file
+File di modifica della ROM
+Impossibile importare le modifiche
+Impossibile avviare Dolphin
+Il file caricato deve essere una rom completa
+Percorso delfino non specificato
+Vai alle impostazioni per aggiungere un percorso Dolphin
+Controlla il percorso Dolphin nelle impostazioni
+Sei sicuro di voler sovrascrivere il tuo file di salvataggio?
+Salva il file copiato!
+Impossibile copiare il file di salvataggio
+Brani salvati in: Percorso programma
+File di tipo midi
+Canzoni distrutte con successo!!!
+Impossibile rimuovere i brani
+Si sono verificati uno o più errori
+Impossibile caricare il file

@@ -495,6 +495,7 @@ class Ui_Import(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(Import)
         self.verticalLayout.setObjectName("verticalLayout")
         self.Label = QtWidgets.QLabel(Import)
+        self.Label.setText("Import Change 0 out of 0")
         self.Label.setObjectName("Label")
         self.verticalLayout.addWidget(self.Label)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -510,4 +511,3 @@ class Ui_Import(object):
     def retranslateUi(self, Import):
         _translate = QtCore.QCoreApplication.translate
         Import.setWindowTitle(_translate("Import", "Import Changes"))
-        self.Label.setText(_translate("Import", "Import Change 0 out of 0"))

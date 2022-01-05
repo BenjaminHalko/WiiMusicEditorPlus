@@ -497,6 +497,7 @@ class Ui_Success(object):
         self.Title.setObjectName("Title")
         self.CompleteSymbol = QtWidgets.QLabel(Success)
         self.CompleteSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
+        self.CompleteSymbol.setText("<html><head/><body><p><img src=\":/images/images/checkmark.png\"/></p></body></html>")
         self.CompleteSymbol.setObjectName("CompleteSymbol")
         self.Title.addWidget(self.CompleteSymbol)
         self.CompleteTitle = QtWidgets.QLabel(Success)
@@ -520,7 +521,6 @@ class Ui_Success(object):
     def retranslateUi(self, Success):
         _translate = QtCore.QCoreApplication.translate
         Success.setWindowTitle(_translate("Success", "Wii Music Editor Plus"))
-        self.CompleteSymbol.setText(_translate("Success", "<html><head/><body><p><img src=\":/images/images/checkmark.png\"/></p></body></html>"))
         self.CompleteTitle.setText(_translate("Success", "Completed!"))
         self.CompleteClose.setText(_translate("Success", "Close"))
 import resources_rc

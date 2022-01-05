@@ -1,5 +1,5 @@
 from os import path, remove
-from editor import HelperPath, LoadSetting, FullPath, ProgramPath, currentSystem, ChooseFromOS, Run, version, SavePath, GivePermission
+from editor import HelperPath, LoadSetting, FullPath, currentSystem, ChooseFromOS, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from update_ui import Ui_Update

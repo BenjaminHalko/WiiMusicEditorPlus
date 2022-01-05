@@ -533,7 +533,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
      <item>
       <widget class="QRadioButton" name="RomTypeWbfs">
        <property name="text">
-        <string>.wbfs</string>
+        <string notr="true">.wbfs</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -543,7 +543,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
      <item>
       <widget class="QRadioButton" name="RomTypeIso">
        <property name="text">
-        <string>.iso</string>
+        <string notr="true">.iso</string>
        </property>
       </widget>
      </item>

@@ -535,7 +535,7 @@ QWidget[error=&quot;true&quot;]
         </size>
        </property>
        <property name="text">
-        <string>Mod Name: </string>
+        <string>Mod Name:</string>
        </property>
       </widget>
      </item>
@@ -561,7 +561,7 @@ QWidget[error=&quot;true&quot;]
         </size>
        </property>
        <property name="text">
-        <string>Saving to: </string>
+        <string>Saving to:</string>
        </property>
       </widget>
      </item>
@@ -661,7 +661,7 @@ background-color: #242424;
      <item>
       <widget class="QLabel" name="GeckocodeLabel">
        <property name="text">
-        <string>Geckocode Copy Method: </string>
+        <string>Geckocode Copy Method:</string>
        </property>
       </widget>
      </item>

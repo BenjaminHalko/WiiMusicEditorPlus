@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>FirstSetup</class>
  <widget class="QDialog" name="FirstSetup">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>250</height>
+    <width>404</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,6 +130,7 @@ QComboBox
     border-style: solid;
     border: 1px solid #1e1e1e;
     border-radius: 5;
+	padding-left: 4px;
 }
 
 QComboBox:hover,QPushButton:hover
@@ -137,8 +141,6 @@ QComboBox:hover,QPushButton:hover
 
 QComboBox:on
 {
-    padding-top: 3px;
-    padding-left: 4px;
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2d2d2d, stop: 0.1 #2b2b2b, stop: 0.5 #292929, stop: 0.9 #282828, stop: 1 #252525);
     selection-background-color: #ffaa00;
 }
@@ -164,7 +166,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url(:/down_arrow.png);
+     image: url(:images/images/down_arrow.png);
 }
 
 QGroupBox:focus
@@ -346,7 +348,7 @@ QMainWindow::separator:hover
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(:/images/handle.png);
+     background: url(:images/images/handle.png);
 }
 
 QMenu::separator
@@ -472,7 +474,7 @@ QRadioButton:disabled
 
 QCheckBox::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:images/images/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
@@ -494,40 +496,43 @@ QWidget[error=&quot;true&quot;]
    <item>
     <widget class="QStackedWidget" name="MainWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Title">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="SE_Title">
+        <widget class="QLabel" name="MainTitle">
          <property name="font">
           <font>
            <family>Continuum Medium</family>
-           <pointsize>20</pointsize>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="text">
           <string>Thanks for downloading the
 Wii Music Editor Plus!</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_2">
+        <widget class="Line" name="TitleLine">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="Desc">
          <property name="text">
           <string>Let's help you setup the essentials!</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
+        <spacer name="TitleSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -539,16 +544,66 @@ Wii Music Editor Plus!</string>
          </property>
         </spacer>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="LanguageLayout">
+         <item>
+          <widget class="QLabel" name="LanguageLabel">
+           <property name="text">
+            <string>Language:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="LanguageBox">
+           <item>
+            <property name="text">
+             <string notr="true">English</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">Français</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">Español</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">Deutsch</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">Italiano</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">日本</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">한국인</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="Roms">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="SE_Title_2">
+        <widget class="QLabel" name="RomTitle">
          <property name="font">
           <font>
            <family>Continuum Medium</family>
-           <pointsize>20</pointsize>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="text">
@@ -557,14 +612,165 @@ Wii Music Editor Plus!</string>
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line">
+        <widget class="Line" name="RomLine">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <widget class="QGroupBox" name="RomPath">
+         <property name="title">
+          <string>Rom Path</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QLabel" name="RomPath_Label">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+}
+
+QLabel[error=&quot;true&quot;]
+{
+padding: 1px;
+border: 1px solid;
+border-color: red;
+background-color: #242424;
+}</string>
+            </property>
+            <property name="text">
+             <string>No Specified Path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="RomPath_Buttons">
+            <item>
+             <widget class="QPushButton" name="RomPath_File">
+              <property name="text">
+               <string>Load From File</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="RomPath_Folder">
+              <property name="text">
+               <string>Load From Folder</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="RomSettings">
+         <property name="title">
+          <string>Rom Settings</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <layout class="QHBoxLayout" name="Region">
+            <item>
+             <widget class="QLabel" name="RegionLabel">
+              <property name="text">
+               <string>Fallback Region (Used if rom region can't be determinded):</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="RegionBox">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>20</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>U.S.</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Europe</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Japan</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Korea</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="RomLanguage">
+            <item>
+             <widget class="QLabel" name="RomLanguageLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Rom Language:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="RomLanguageBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="currentText">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="RomSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -578,14 +784,14 @@ Wii Music Editor Plus!</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+     <widget class="QWidget" name="Dolphin">
+      <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
-        <widget class="QLabel" name="SE_Title_3">
+        <widget class="QLabel" name="DolphinTitle">
          <property name="font">
           <font>
            <family>Continuum Medium</family>
-           <pointsize>20</pointsize>
+           <pointsize>14</pointsize>
           </font>
          </property>
          <property name="text">
@@ -594,14 +800,103 @@ Wii Music Editor Plus!</string>
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_3">
+        <widget class="Line" name="DolphinLine">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_3">
+        <widget class="QGroupBox" name="DolphinPath_Title">
+         <property name="title">
+          <string>Dolphin Path</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QLabel" name="DolphinPath_Label">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
+{
+padding: 1px;
+border: 1px solid;
+border-color: #1e1e1e;
+background-color: #242424;
+}
+
+QLabel[error=&quot;true&quot;]
+{
+padding: 1px;
+border: 1px solid;
+border-color: red;
+background-color: #242424;
+}</string>
+            </property>
+            <property name="text">
+             <string>No Specified Path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="DolphinPath_Browse">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="Dolphin_Geckocodes_Title">
+         <property name="title">
+          <string>Gecko Codes</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QCheckBox" name="Dolphon_Geckocodes">
+            <property name="text">
+             <string>Copy Gecko codes to Dolphin save directory</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="DolphinEnableCheats">
+            <property name="text">
+             <string>Force Enable Cheats when launching Dolphin</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="DolphinSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -615,31 +910,10 @@ Wii Music Editor Plus!</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_3">
-      <widget class="QLabel" name="SE_Title_4">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>110</y>
-         <width>416</width>
-         <height>80</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Continuum Medium</family>
-         <pointsize>20</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Thanks for downloading the&lt;/p&gt;&lt;p&gt;Wii Music Editor Plus!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_4">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+     <widget class="QWidget" name="End">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="SE_Title_5">
+        <widget class="QLabel" name="EndTitle">
          <property name="font">
           <font>
            <family>Continuum Medium</family>
@@ -647,12 +921,56 @@ Wii Music Editor Plus!</string>
           </font>
          </property>
          <property name="text">
-          <string>fe</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;All Done!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="EndLine">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="EndDesc">
+         <property name="text">
+          <string>Enjoy modding Wii Music!</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="EndSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="EndLinks">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube: &lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://www.youtube.com/BenjaminHalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Donate: &lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://ko-fi.com/benjaminhalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wiki: &lt;a href=&quot;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="BottomLine">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -700,6 +1018,8 @@ Wii Music Editor Plus!</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

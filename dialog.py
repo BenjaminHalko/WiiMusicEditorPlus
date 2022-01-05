@@ -1,9 +1,8 @@
-from genericpath import exists
-from os import path, mkdir, remove, rename
+from os import path, mkdir, remove
 from shutil import copyfile, move, copytree
 from editor import GetBrsarPath, GetGeckoPath, GetMainDolPath, GetMessagePath, GetSongNames, LoadSetting, SavePath, ProgramPath
 import editor
-from editor import RecordType, LoadSetting, RecordType, GetMainDolPath, Songs, LoadMidi, PatchBrsar, Styles, AddPatch, ChangeName, BasedOnRegion, gctRegionOffsets, Instruments, PatchMainDol, gctRegionOffsetsStyles, HelperPath, Run, regionNames, gameIds
+from editor import RecordType, LoadSetting, RecordType, GetMainDolPath, Songs, LoadMidi, PatchBrsar, Styles, AddPatch, ChangeName, BasedOnRegion, gctRegionOffsets, Instruments, PatchMainDol, gctRegionOffsetsStyles, HelperPath, Run, romLanguage, gameIds
 from configparser import ConfigParser
 from errorhandler import ShowError
 from psutil import disk_partitions
@@ -12,7 +11,7 @@ from requests import get
 from zipfile import ZipFile
 
 from PyQt5.QtWidgets import QDialog, QFileDialog
-from PyQt5.QtCore import QThread, pyqtSignal, QCoreApplication, Qt
+from PyQt5.QtCore import QThread, pyqtSignal, Qt
 
 from revertchanges_ui import Ui_Revert
 from confirm_ui import Ui_Confirm
@@ -26,7 +25,7 @@ class SuccessWindow(QDialog,Ui_Success):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setupUi(self)
-        self.CompleteTitle.setText(QCoreApplication.translate("MainWindow",message))
+        self.CompleteTitle.setText(message)
         self.CompleteClose.clicked.connect(self.close)
         self.show()
         self.exec()
@@ -78,7 +77,7 @@ class RevertChangesWindow(QDialog,Ui_Revert):
                 for section in sections:
                     if(RecordType.Song in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert songs",str(e),self)
+                ShowError(self.tr("Could not revert songs"),str(e),self)
         if(self.Text.isChecked()):
             try:
                 copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
@@ -86,7 +85,7 @@ class RevertChangesWindow(QDialog,Ui_Revert):
                 for section in sections:
                     if(RecordType.TextSong in section or RecordType.TextStyle in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert message file",str(e),self)
+                ShowError(self.tr("Could not revert message file"),str(e),self)
         if(self.Styles.isChecked()):
             try:
                 codes = open(GetGeckoPath())
@@ -106,19 +105,19 @@ class RevertChangesWindow(QDialog,Ui_Revert):
                 for section in sections:
                     if(RecordType.Style in section or RecordType.DefaultStyle in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert styles",str(e),self)
+                ShowError(self.tr("Could not revert styles"),str(e),self)
         if(self.MainDol.isChecked()):
             try:
                 copyfile(GetMainDolPath()+".backup",GetMainDolPath())
                 for section in sections:
                     if(RecordType.RemoveSong in section or RecordType.MainDol in section): ini.remove_section(section)
             except Exception as e:
-                ShowError("Could not revert main.dol",str(e),self)
+                ShowError(self.tr("Could not revert main.dol"),str(e),self)
         if(path.isfile(editor.file.path+"/Changes.ini") and LoadSetting("Settings","RemoveChangesFromChangesINI",True)):
             with open(editor.file.path+"/Changes.ini", 'w') as inifile:
                 ini.write(inifile)
         self.close()
-        SuccessWindow("Files Reverted!")
+        SuccessWindow(self.tr("Files Reverted!"))
 
 class ConfirmWindow(QDialog,Ui_Confirm):
     def __init__(self,message):
@@ -127,7 +126,7 @@ class ConfirmWindow(QDialog,Ui_Confirm):
         self.setupUi(self)
         self.clicked = False
 
-        self.text.setText(QCoreApplication.translate("MainWindow",message))
+        self.text.setText(self.tr(message))
         self.noButton.clicked.connect(self.close)
         self.yesButton.clicked.connect(self.Ok)
 
@@ -200,9 +199,8 @@ class Import(QThread):
                 elif(action == RecordType.DefaultStyle):
                     AddPatch(Songs[int(name)].Name+' Default Style Patch','0'+format(Songs[int(name)].MemOffset+BasedOnRegion(gctRegionOffsets)+42,'x')+' 000000'+Styles[int(ini.get(section,"style"))].StyleId+'\n')
             except Exception as e:
-                self.error.emit("Could not import change "+section,str(e))
+                self.error.emit(self.tr("Could not import change")+" "+section,str(e))
                 self.waiting = True
-                print("f")
                 while self.waiting: w = 0
         self.done.emit()
 
@@ -225,11 +223,11 @@ class ImportChangesWindow(QDialog,Ui_Import):
 
     def finish(self):
         self.Progress.setValue(100)
-        self.Label.setText(QCoreApplication.translate("MainWindow","Finished Importing Changes"))
+        self.Label.setText(self.tr("Finished Importing Changes"))
 
     def reportProgress(self,value,total):
         self.Progress.setValue((value-1)/total*100)
-        self.Label.setText(QCoreApplication.translate("MainWindow","Importing Change "+str(value)+" out of "+str(total)))
+        self.Label.setText(self.tr("Importing Change {} out of {}".format(value,total)))
 
     def error(self,error,message):
         ShowError(error,message,self)
@@ -248,7 +246,7 @@ class PackRomWindow(QDialog,Ui_Packrom):
         file = QFileDialog()
         file.setFileMode(QFileDialog.AnyFile)
         file.setAcceptMode(QFileDialog.AcceptSave)
-        if(self.RomTypeWbfs.isChecked()): file.setNameFilter("Wii Backup File System (*.wbfs)")
+        if(self.RomTypeWbfs.isChecked()): file.setNameFilter(self.tr("Wii Backup File System")+" (*.wbfs)")
         else: file.setNameFilter("iso (*.iso)")
         if(file.exec()):
             try:
@@ -267,14 +265,13 @@ class PackRomWindow(QDialog,Ui_Packrom):
                     remove(GetMainDolPath())
                     move(GetMainDolPath()+".tmp",GetMainDolPath())
                 self.close()
-                SuccessWindow("Rom Successfuly Packed!")      
+                SuccessWindow(self.tr("Rom Successfuly Packed!"))
             except Exception as e:
                 self.close()
-                ShowError("Could not pack rom",str(e))
+                ShowError(self.tr("Could not pack rom"),str(e))
 
 class RiivolutionWindow(QDialog,Ui_Riivolution):
     def __init__(self):
-        global UpdateThread
         super().__init__(None)
         self.setupUi(self)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
@@ -283,7 +280,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         for disk in self.disks:
             self.SDSelector.addItem(disk.device)
 
-        self.ModName.setText(QCoreApplication.translate("MainWindow",path.basename(editor.file.path[0:len(editor.file.path)-len(path.basename(editor.file.path))-1:1])))
+        self.ModName.setText(path.basename(editor.file.path[0:len(editor.file.path)-len(path.basename(editor.file.path))-1:1]))
         self.UpdateName()
         self.ModName.textEdited.connect(self.UpdateName)
         self.Patch.clicked.connect(self.CreatePatch)
@@ -301,7 +298,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         while(path.exists(name+extra)):
             num += 1
             extra = " ("+str(num)+")"
-        self.SaveLabel.setText(QCoreApplication.translate("MainWindow",name+extra))
+        self.SaveLabel.setText(name+extra)
 
     def CreatePatch(self):
         ModPath = self.SaveLabel.text()
@@ -332,7 +329,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
         '  </options>\n',
         '  <patch id="TheMod">\n',
         '    <file disc="/Sound/MusicStatic/rp_Music_sound.brsar" external="/'+ModName.replace(' ','')+'/rp_Music_sound.brsar" offset="" />\n',
-        '    <file disc="/'+editor.BasedOnRegion(regionNames)+'/Message/message.carc" external="/'+ModName.replace(' ','')+'/message.carc" offset="" />\n',
+        '    <file disc="/'+editor.BasedOnRegion(romLanguage)+'/Message/message.carc" external="/'+ModName.replace(' ','')+'/message.carc" offset="" />\n',
         '    <file disc="main.dol" external="/'+ModName.replace(' ','')+'/main.dol" offset="" />\n',
         '  </patch>\n',
         '</wiidisc>\n']
@@ -351,7 +348,7 @@ class RiivolutionWindow(QDialog,Ui_Riivolution):
             copytree(ModPath+'/Riivolution',mpoint+'Riivolution')
             copytree(ModPath+'/'+ModName.replace(' ',''),mpoint+ModName.replace(' ',''))
         self.Patch.setEnabled(False)
-        SuccessWindow("Creation Complete!")
+        SuccessWindow(self.tr("Creation Complete!"))
         self.close()
 
 class DownloadSongThread(QThread):
@@ -368,4 +365,6 @@ class DownloadSongThread(QThread):
                 continue
             zip_info.filename = zip_info.filename.replace("Pre-Made-Songs-for-Wii-Music-main/","")
             zip.extract(zip_info,ProgramPath+"/Pre-Made Songs for Wii Music")
+        zip.close()
+        remove(SavePath()+"/downloaded.zip")
         self.done.emit()

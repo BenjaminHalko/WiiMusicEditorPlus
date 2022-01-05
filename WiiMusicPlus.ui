@@ -456,7 +456,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Wii Music Editor Plus</string>
+   <string notr="true">Wii Music Editor Plus</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QToolTip
@@ -539,15 +539,6 @@ QWidget:disabled
 }
 
 QLineEdit
-{
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);
-    padding: 1px;
-    border-style: solid;
-    border: 1px solid #1e1e1e;
-    border-radius: 5;
-}
-
-QSpinBox
 {
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);
     padding: 1px;
@@ -895,17 +886,8 @@ QRadioButton::indicator:checked
         fx: 0.5, fy: 0.5,
         radius: 1.0,
         stop: 0.25 #ffaa00,
-        stop: 0.3 #323232);
-}
-
-QRadioButton::indicator:checked:disabled
-{
-    background-color: qradialgradient(
-        cx: 0.5, cy: 0.5,
-        fx: 0.5, fy: 0.5,
-        radius: 1.0,
-        stop: 0.25 #323232,
-        stop: 0.3 #323232);
+        stop: 0.3 #323232
+    );
 }
 
 QCheckBox::indicator{
@@ -926,6 +908,12 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
+QRadioButton:disabled
+{
+    background-color: #404040;
+}
+
+
 QCheckBox::indicator:checked
 {
     image:url(:images/images/checkbox.png);
@@ -934,6 +922,16 @@ QCheckBox::indicator:checked
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
+}
+
+QWidget[error=&quot;true&quot;]
+{
+	border: 1px solid red;
+}
+
+QWidget[error=&quot;true&quot;]
+{
+	border: 1px solid red;
 }</string>
   </property>
   <property name="tabShape">
@@ -1168,7 +1166,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
            </font>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Title.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Title.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
@@ -1560,7 +1558,7 @@ padding-bottom: 6px;
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
@@ -1755,7 +1753,7 @@ padding-bottom: 6px;
                          </size>
                         </property>
                         <property name="text">
-                         <string>BPM</string>
+                         <string notr="true">BPM</string>
                         </property>
                        </widget>
                       </item>
@@ -1879,7 +1877,7 @@ padding-bottom: 6px;
                          <enum>Qt::TabFocus</enum>
                         </property>
                         <property name="text">
-                         <string>4/4</string>
+                         <string notr="true">4/4</string>
                         </property>
                         <property name="checked">
                          <bool>true</bool>
@@ -1904,7 +1902,7 @@ padding-bottom: 6px;
                          <enum>Qt::TabFocus</enum>
                         </property>
                         <property name="text">
-                         <string>3/4</string>
+                         <string notr="true">3/4</string>
                         </property>
                        </widget>
                       </item>
@@ -2117,7 +2115,7 @@ padding-bottom: 6px;
                <item>
                 <widget class="QLabel" name="SE_StyleLabel">
                  <property name="text">
-                  <string>Style: </string>
+                  <string>Style:</string>
                  </property>
                 </widget>
                </item>
@@ -2223,7 +2221,7 @@ padding-bottom: 6px;
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
@@ -2638,7 +2636,7 @@ background-color: #242424;</string>
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
@@ -2728,7 +2726,7 @@ background-color: #242424;</string>
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
@@ -2827,7 +2825,7 @@ background-color: #242424;</string>
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
@@ -2928,7 +2926,7 @@ background-color: #242424;</string>
              </font>
             </property>
             <property name="text">
-             <string> Back</string>
+             <string>Back</string>
             </property>
            </widget>
           </item>
