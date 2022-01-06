@@ -2,9 +2,10 @@ import os
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtCore import Qt, QLocale, QTranslator
 from firstsetup_ui import Ui_FirstSetup
-from editor import SaveSetting, TranslationPath, PrepareFile, GetSongNames, ChooseFromOS, languageList, romLanguageList, ProgramPath, LoadType
+from editor import SaveSetting, TranslationPath, PrepareFile, GetSongNames, ChooseFromOS, languageList, romLanguageList, ProgramPath, currentSystem, LoadType
 import editor
 from errorhandler import ShowError
+from subprocess import check_output
 
 class FirstSetupWindow(QDialog,Ui_FirstSetup):
     def __init__(self,app,translator):
@@ -29,7 +30,10 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
         self.DolphinEnableCheats.stateChanged.connect(lambda: self.Checkmark(self.DolphinEnableCheats,"DolphinEnableCheats"))
         self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
 
-        if(editor.dolphinPath != ""): self.DolphinPath_Label.setText(editor.dolphinPath)
+        if(currentSystem == "Linux"):
+            temp = check_output("whereis dolphin-emu",shell=True).decode()
+            if(os.path.exists(temp[13:len(temp)-1:1])):
+                self.DolphinPath_Label.setText(editor.dolphinPath)
 
         self.RomLanguageChange()
 
