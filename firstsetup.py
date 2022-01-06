@@ -29,6 +29,8 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
         self.DolphinEnableCheats.stateChanged.connect(lambda: self.Checkmark(self.DolphinEnableCheats,"DolphinEnableCheats"))
         self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
 
+        if(editor.dolphinPath != ""): self.DolphinPath_Label.setText(editor.dolphinPath)
+
         self.RomLanguageChange()
 
         self.show()
