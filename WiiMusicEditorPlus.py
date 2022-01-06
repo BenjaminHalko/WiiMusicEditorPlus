@@ -521,9 +521,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 cmd = ['-e',editor.file.path+'/sys/main.dol']
                 if(not menu): cmd.insert(0,"-b")
                 dolphin = QProcess()
-                name = editor.dolphinPath
-                if(currentSystem == "Mac"): name += "/Contents/MacOS/Dolphin"
-                dolphin.startDetached(name,cmd)
+                dolphin.startDetached(editor.dolphinPath,cmd)
             except Exception as e:
                 ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
 
