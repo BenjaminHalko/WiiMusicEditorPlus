@@ -1432,7 +1432,7 @@ def ChooseFromOS(array):
 	else: return array[2]
 
 def SavePath():
-	path = ChooseFromOS(["C:/Users/"+getuser()+"/AppData/Local/WiiMusicEditorPlus","/Users/"+getuser()+"/Library/Application Support/WiiMusicEditorPlus","/home/"+getuser()+"/.WiiMusicEditorPlus"])
+	path = ChooseFromOS(["C:/Users/"+getuser()+"/AppData/Local/WiiMusicEditorPlus","/Users/"+getuser()+"/Library/Application Support/WiiMusicEditorPlus","/home/"+getuser()+"/.local/share/WiiMusicEditorPlus"])
 	if(not os.path.isdir(path)): os.mkdir(path)
 	return path
 
