@@ -2095,11 +2095,6 @@ padding-bottom: 6px;
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
                  <property name="acceptDrops">
                   <bool>true</bool>
                  </property>

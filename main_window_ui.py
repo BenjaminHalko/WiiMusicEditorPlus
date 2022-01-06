@@ -1183,9 +1183,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_StyleText.sizePolicy().hasHeightForWidth())
         self.SE_StyleText.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SE_StyleText.setFont(font)
         self.SE_StyleText.setAcceptDrops(True)
         self.SE_StyleText.setStyleSheet("QLabel\n"
 "{\n"
