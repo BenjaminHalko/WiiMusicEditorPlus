@@ -996,7 +996,7 @@ if __name__ == "__main__":
         translator.load(QLocale(),TranslationPath()+f"/{languageList[lang]}.qm")
         app.installTranslator(translator)
         RetranslateSongNames()
-    if(not os.path.isfile(SavePath()+"/Settings.ini")):
+    if(not os.path.isfile(SavePath()+"/settings.ini")):
         FirstSetupWindow(app,translator)
     win = Window()
     win.show()
