@@ -6,6 +6,7 @@ import sys
 import zipfile
 from configparser import ConfigParser
 import webbrowser
+from getpass import getuser
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QLocale, QTranslator, QProcess
@@ -514,9 +515,11 @@ class Window(QMainWindow, Ui_MainWindow):
                         copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
                 if(LoadSetting("Settings","DolphinEnableCheats",True)):
                     ini = ConfigParser()
-                    ini.read(GetDolphinSave()+"/Config/Dolphin.ini")
+                    if(currentSystem == "Linux"): config = "/home/"+getuser()+"/.config/dolphin-emu/"
+                    else: config = GetDolphinSave()+"/Config/"
+                    ini.read(config+"Dolphin.ini")
                     ini.set("Core","EnableCheats","True")
-                    with open(GetDolphinSave()+"/Config/Dolphin.ini","w") as inifile:
+                    with open(config+"Dolphin.ini","w") as inifile:
                         ini.write(inifile)
                 cmd = ['-e',editor.file.path+'/sys/main.dol']
                 if(not menu): cmd.insert(0,"-b")
