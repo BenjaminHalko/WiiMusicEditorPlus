@@ -1,20 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
- <class>Riivolution</class>
- <widget class="QDialog" name="Riivolution">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>411</width>
-    <height>237</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Riivolution Creator</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QToolTip
+QToolTip
 {
      border: 1px solid black;
      background-color: #ffa02f;
@@ -450,8 +434,17 @@ QRadioButton::indicator:checked
         fx: 0.5, fy: 0.5,
         radius: 1.0,
         stop: 0.25 #ffaa00,
-        stop: 0.3 #323232
-    );
+        stop: 0.3 #323232);
+}
+
+QRadioButton::indicator:checked:disabled
+{
+    background-color: qradialgradient(
+        cx: 0.5, cy: 0.5,
+        fx: 0.5, fy: 0.5,
+        radius: 1.0,
+        stop: 0.25 #323232,
+        stop: 0.3 #323232);
 }
 
 QCheckBox::indicator{
@@ -472,12 +465,6 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
-QRadioButton:disabled
-{
-    background-color: #404040;
-}
-
-
 QCheckBox::indicator:checked
 {
     image:url(:images/images/checkbox.png);
@@ -487,217 +474,3 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
 }
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
-}</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="Title">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>44</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Continuum Medium</family>
-       <pointsize>26</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Riivolution Creator</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="ModNameLayout">
-     <item>
-      <widget class="QLabel" name="ModNameLabel">
-       <property name="minimumSize">
-        <size>
-         <width>57</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>57</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Mod Name:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="ModName"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="Save">
-     <item>
-      <widget class="QLabel" name="SaveTitle">
-       <property name="minimumSize">
-        <size>
-         <width>57</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>57</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Saving to:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="SaveLabel">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>26</height>
-        </size>
-       </property>
-       <property name="acceptDrops">
-        <bool>true</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel
-{
-padding: 1px;
-border: 1px solid;
-border-color: #1e1e1e;
-background-color: #242424;
-}
-
-QLabel[error=&quot;true&quot;]
-{
-padding: 1px;
-border: 1px solid;
-border-color: red;
-background-color: #242424;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="SDCard">
-     <item>
-      <widget class="QLabel" name="SDCardTitle">
-       <property name="text">
-        <string>Copy to SD Card:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="SDSelector">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
-       </property>
-       <item>
-        <property name="text">
-         <string>None</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="Geckocodes">
-     <item>
-      <widget class="QLabel" name="GeckocodeLabel">
-       <property name="text">
-        <string>Geckocode Copy Method:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="GeckocodeOptions">
-       <property name="minimumSize">
-        <size>
-         <width>110</width>
-         <height>0</height>
-        </size>
-       </property>
-       <item>
-        <property name="text">
-         <string>Patch Main.dol</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Copy Codes</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Do Nothing</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <spacer name="Spacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QPushButton" name="Patch">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>45</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Continuum Medium</family>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Create!</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
- <connections/>
-</ui>

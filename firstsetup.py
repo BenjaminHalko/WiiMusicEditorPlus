@@ -2,7 +2,7 @@ import os
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtCore import Qt, QLocale, QTranslator
 from firstsetup_ui import Ui_FirstSetup
-from editor import SaveSetting, TranslationPath, PrepareFile, GetSongNames, ChooseFromOS, languageList, romLanguageList, ProgramPath, currentSystem, LoadType
+from editor import SaveSetting, TranslationPath, PrepareFile, GetSongNames, ChooseFromOS, languageList, regionNames, ProgramPath, currentSystem, LoadType
 import editor
 from errorhandler import ShowError
 from subprocess import check_output
@@ -83,9 +83,9 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
         SaveSetting("Settings","RomLanguage",self.RomLanguageBox.currentIndex())
         editor.romLanguageNumber = [self.RomLanguageBox.currentIndex()]*4
         for i in range(4):
-            if(editor.romLanguageNumber[i] >= len(romLanguageList[i])):
+            if(editor.romLanguageNumber[i] >= len(regionNames[i])):
                 editor.romLanguageNumber[i] = 0
-            editor.romLanguage[i] = romLanguageList[i][editor.romLanguageNumber[i]]
+            editor.romLanguage[i] = regionNames[i][editor.romLanguageNumber[i]]
         if(editor.file.type == LoadType.Rom): GetSongNames()
 
     def LoadMainFile(self,filter):

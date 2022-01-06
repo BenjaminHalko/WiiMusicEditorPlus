@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Riivolution(object):
     def setupUi(self, Riivolution):
         Riivolution.setObjectName("Riivolution")
-        Riivolution.resize(398, 239)
+        Riivolution.resize(411, 237)
         Riivolution.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -528,10 +528,6 @@ class Ui_Riivolution(object):
         self.Save.addWidget(self.SaveTitle)
         self.SaveLabel = QtWidgets.QLabel(Riivolution)
         self.SaveLabel.setMinimumSize(QtCore.QSize(0, 26))
-        self.SaveLabel.setMaximumSize(QtCore.QSize(16777215, 26))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SaveLabel.setFont(font)
         self.SaveLabel.setAcceptDrops(True)
         self.SaveLabel.setStyleSheet("QLabel\n"
 "{\n"
@@ -555,7 +551,6 @@ class Ui_Riivolution(object):
         self.SDCard = QtWidgets.QHBoxLayout()
         self.SDCard.setObjectName("SDCard")
         self.SDCardTitle = QtWidgets.QLabel(Riivolution)
-        self.SDCardTitle.setMaximumSize(QtCore.QSize(138, 16777215))
         self.SDCardTitle.setObjectName("SDCardTitle")
         self.SDCard.addWidget(self.SDCardTitle)
         self.SDSelector = QtWidgets.QComboBox(Riivolution)
@@ -563,8 +558,6 @@ class Ui_Riivolution(object):
         self.SDSelector.setObjectName("SDSelector")
         self.SDSelector.addItem("")
         self.SDCard.addWidget(self.SDSelector)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.SDCard.addItem(spacerItem)
         self.verticalLayout.addLayout(self.SDCard)
         self.Geckocodes = QtWidgets.QHBoxLayout()
         self.Geckocodes.setObjectName("Geckocodes")
@@ -572,22 +565,15 @@ class Ui_Riivolution(object):
         self.GeckocodeLabel.setObjectName("GeckocodeLabel")
         self.Geckocodes.addWidget(self.GeckocodeLabel)
         self.GeckocodeOptions = QtWidgets.QComboBox(Riivolution)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.GeckocodeOptions.sizePolicy().hasHeightForWidth())
-        self.GeckocodeOptions.setSizePolicy(sizePolicy)
         self.GeckocodeOptions.setMinimumSize(QtCore.QSize(110, 0))
         self.GeckocodeOptions.setObjectName("GeckocodeOptions")
         self.GeckocodeOptions.addItem("")
         self.GeckocodeOptions.addItem("")
         self.GeckocodeOptions.addItem("")
         self.Geckocodes.addWidget(self.GeckocodeOptions)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.Geckocodes.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.Geckocodes)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem2)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
         self.Patch = QtWidgets.QPushButton(Riivolution)
         self.Patch.setMinimumSize(QtCore.QSize(0, 45))
         font = QtGui.QFont()

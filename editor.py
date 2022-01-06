@@ -398,7 +398,7 @@ def EncodeTxt():
 
 def GetRegion():
 	for i in range(len(regionNames)):
-		if(os.path.isdir(file.path+"/files/"+regionNames[i]+"/Message")):
+		if(os.path.isdir(file.path+"/files/"+regionNames[i][0]+"/Message")):
 			return i
 	ShowError("Could not determine region","Using fallback region: "+BasedOnRegion(regionFullNames))
 	return regionSelected
@@ -1469,8 +1469,7 @@ loadedStyles = [[]]*len(Styles)
 rseqList = [0x3364C,0x336B8,0x33744,0x343F0,0x343F8,0x359FC,0x35A04,0x35A68,0x35A70,0x35AD4,0x35ADC,0x35B40,0x35B48,0x35BCC,0x35BD4,0x35C38,0x35C40,0x35CA4,0x35CAC,0x35D30,0x35D38,0x35DBC,0x35DC4,0x35E28,0x35E30,0x35EB4,0x35EBC,0x35F20,0x35F28,0x35F8C,0x35F94,0x36018,0x36020,0x36064,0x3606C,0x360D0,0x360D8,0x3705C,0x37064,0x370E8,0x370F0,0x371F4,0x371FC,0x37340,0x37348,0x376CC,0x376D4,0x37738,0x37740,0x3374C,0x37784,0x3778C,0x379D0,0x379D8,0x37ABC,0x37AC4,0x37B48,0x37B50,0x37BB4,0x37BBC,0x37C20,0x37C28,0x37C8C,0x37C94,0x37D18,0x37D20,0x37D64,0x37D6C,0x37E70,0x37E78,0x37EBC,0x37EC4,0x37F48,0x37F50]
 rseqInfoList = [0x8,0x1C,0x20]
 languageList = ["en","fr","sp","ge","it","jp","kr"]
-regionNames = ["US","EN","JP","KR"]
-romLanguageList = [["US","FU","SU"],["EN","FR","SP","GE","IT"],["JP"],["KR"]]
+regionNames = [["US","FU","SU"],["EN","FR","SP","GE","IT"],["JP"],["KR"]]
 regionFullNames = ["US","Europe","Japan","Korea"]
 gameIds = ["R64E01","R64P01","R64J01","R64K01"]
 savePathIds = ["52363445","52363450","5236344a","5236344b"]
@@ -1484,13 +1483,13 @@ romLanguage = []
 romLanguageNumber = [LoadSetting("Settings","RomLanguage",0)]*4
 for i in range(4):
 	try:
-		if(romLanguageNumber[i] >= len(romLanguageList[i])):
+		if(romLanguageNumber[i] >= len(regionNames[i])):
 			romLanguageNumber[i] = 0
-		romLanguage.append(romLanguageList[i][romLanguageNumber[i]])
+		romLanguage.append(regionNames[i][romLanguageNumber[i]])
 	except Exception as e:
 		SaveSetting("Settings","RomLanguage",0)
 		romLanguageNumber[i] = 0
-		romLanguage.append(romLanguageList[i][0])
+		romLanguage.append(regionNames[i][0])
 
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):

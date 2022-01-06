@@ -638,14 +638,6 @@ Wii Music Editor Plus!</string>
               <height>26</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="acceptDrops">
-             <bool>true</bool>
-            </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
@@ -825,14 +817,6 @@ background-color: #242424;
               <width>16777215</width>
               <height>26</height>
              </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="acceptDrops">
-             <bool>true</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel

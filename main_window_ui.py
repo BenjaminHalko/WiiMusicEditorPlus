@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(829, 598)
+        MainWindow.resize(819, 573)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -243,6 +243,15 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QLineEdit\n"
+"{\n"
+"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
+"    padding: 1px;\n"
+"    border-style: solid;\n"
+"    border: 1px solid #1e1e1e;\n"
+"    border-radius: 5;\n"
+"}\n"
+"\n"
+"QSpinBox\n"
 "{\n"
 "    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
 "    padding: 1px;\n"
@@ -590,8 +599,17 @@ class Ui_MainWindow(object):
 "        fx: 0.5, fy: 0.5,\n"
 "        radius: 1.0,\n"
 "        stop: 0.25 #ffaa00,\n"
-"        stop: 0.3 #323232\n"
-"    );\n"
+"        stop: 0.3 #323232);\n"
+"}\n"
+"\n"
+"QRadioButton::indicator:checked:disabled\n"
+"{\n"
+"    background-color: qradialgradient(\n"
+"        cx: 0.5, cy: 0.5,\n"
+"        fx: 0.5, fy: 0.5,\n"
+"        radius: 1.0,\n"
+"        stop: 0.25 #323232,\n"
+"        stop: 0.3 #323232);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator{\n"
@@ -612,12 +630,6 @@ class Ui_MainWindow(object):
 "    border: 1px solid #ffaa00;\n"
 "}\n"
 "\n"
-"QRadioButton:disabled\n"
-"{\n"
-"    background-color: #404040;\n"
-"}\n"
-"\n"
-"\n"
 "QCheckBox::indicator:checked\n"
 "{\n"
 "    image:url(:images/images/checkbox.png);\n"
@@ -626,16 +638,6 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
 "{\n"
 "    border: 1px solid #444;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
-"}\n"
-"\n"
-"QWidget[error=\"true\"]\n"
-"{\n"
-"    border: 1px solid red;\n"
 "}")
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -712,6 +714,7 @@ class Ui_MainWindow(object):
         font.setFamily("Continuum Bold")
         font.setPointSize(72)
         self.MainWidget.setFont(font)
+        self.MainWidget.setStyleSheet("")
         self.MainWidget.setObjectName("MainWidget")
         self.MainPage = QtWidgets.QWidget()
         self.MainPage.setObjectName("MainPage")
@@ -736,7 +739,6 @@ class Ui_MainWindow(object):
         self.MP_LoadedFile_Label.setObjectName("MP_LoadedFile_Label")
         self.verticalLayout_9.addWidget(self.MP_LoadedFile_Label)
         self.MP_LoadedFile_Path = QtWidgets.QLabel(self.MainPage)
-        self.MP_LoadedFile_Path.setMaximumSize(QtCore.QSize(16777215, 26))
         self.MP_LoadedFile_Path.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -936,10 +938,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_File_Score_Label.sizePolicy().hasHeightForWidth())
         self.SE_Midi_File_Score_Label.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SE_Midi_File_Score_Label.setFont(font)
-        self.SE_Midi_File_Score_Label.setAcceptDrops(True)
         self.SE_Midi_File_Score_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -964,10 +962,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_File_Song_Label.sizePolicy().hasHeightForWidth())
         self.SE_Midi_File_Song_Label.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SE_Midi_File_Song_Label.setFont(font)
-        self.SE_Midi_File_Song_Label.setAcceptDrops(True)
         self.SE_Midi_File_Song_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -1074,7 +1068,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_TimeSignature_4.sizePolicy().hasHeightForWidth())
         self.SE_Midi_TimeSignature_4.setSizePolicy(sizePolicy)
-        self.SE_Midi_TimeSignature_4.setMinimumSize(QtCore.QSize(50, 0))
         self.SE_Midi_TimeSignature_4.setMouseTracking(True)
         self.SE_Midi_TimeSignature_4.setFocusPolicy(QtCore.Qt.TabFocus)
         self.SE_Midi_TimeSignature_4.setText("4/4")
@@ -1087,7 +1080,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_Midi_TimeSignature_3.sizePolicy().hasHeightForWidth())
         self.SE_Midi_TimeSignature_3.setSizePolicy(sizePolicy)
-        self.SE_Midi_TimeSignature_3.setMinimumSize(QtCore.QSize(50, 0))
         self.SE_Midi_TimeSignature_3.setFocusPolicy(QtCore.Qt.TabFocus)
         self.SE_Midi_TimeSignature_3.setText("3/4")
         self.SE_Midi_TimeSignature_3.setObjectName("SE_Midi_TimeSignature_3")
@@ -1153,7 +1145,6 @@ class Ui_MainWindow(object):
         self.SE_ChangeSongText_Desc_Input = QtWidgets.QTextEdit(self.SE_ChangeSongText)
         self.SE_ChangeSongText_Desc_Input.setMinimumSize(QtCore.QSize(0, 70))
         self.SE_ChangeSongText_Desc_Input.setMaximumSize(QtCore.QSize(16777215, 71))
-        self.SE_ChangeSongText_Desc_Input.setAcceptDrops(False)
         self.SE_ChangeSongText_Desc_Input.setObjectName("SE_ChangeSongText_Desc_Input")
         self.verticalLayout_5.addWidget(self.SE_ChangeSongText_Desc_Input)
         self.SE_MidiAndText.addWidget(self.SE_ChangeSongText)
@@ -1192,7 +1183,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_StyleText.sizePolicy().hasHeightForWidth())
         self.SE_StyleText.setSizePolicy(sizePolicy)
-        self.SE_StyleText.setMinimumSize(QtCore.QSize(0, 26))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.SE_StyleText.setFont(font)
@@ -1259,10 +1249,6 @@ class Ui_MainWindow(object):
         self.StE_Parts_List = QtWidgets.QGridLayout()
         self.StE_Parts_List.setObjectName("StE_Parts_List")
         self.StE_Part_Percussion1_Instrument = QtWidgets.QLabel(self.StE_Parts)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Percussion1_Instrument.setFont(font)
-        self.StE_Part_Percussion1_Instrument.setAcceptDrops(True)
         self.StE_Part_Percussion1_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1280,10 +1266,6 @@ class Ui_MainWindow(object):
         self.StE_Part_Harmony_Label.setObjectName("StE_Part_Harmony_Label")
         self.StE_Parts_List.addWidget(self.StE_Part_Harmony_Label, 1, 0, 1, 1)
         self.StE_Part_Bass_Instrument = QtWidgets.QLabel(self.StE_Parts)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Bass_Instrument.setFont(font)
-        self.StE_Part_Bass_Instrument.setAcceptDrops(True)
         self.StE_Part_Bass_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1292,10 +1274,6 @@ class Ui_MainWindow(object):
         self.StE_Part_Bass_Instrument.setObjectName("StE_Part_Bass_Instrument")
         self.StE_Parts_List.addWidget(self.StE_Part_Bass_Instrument, 3, 1, 1, 1)
         self.StE_Part_Chords_Instrument = QtWidgets.QLabel(self.StE_Parts)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Chords_Instrument.setFont(font)
-        self.StE_Part_Chords_Instrument.setAcceptDrops(True)
         self.StE_Part_Chords_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1304,10 +1282,6 @@ class Ui_MainWindow(object):
         self.StE_Part_Chords_Instrument.setObjectName("StE_Part_Chords_Instrument")
         self.StE_Parts_List.addWidget(self.StE_Part_Chords_Instrument, 2, 1, 1, 1)
         self.StE_Part_Harmony_Instrument = QtWidgets.QLabel(self.StE_Parts)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Harmony_Instrument.setFont(font)
-        self.StE_Part_Harmony_Instrument.setAcceptDrops(True)
         self.StE_Part_Harmony_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1322,10 +1296,6 @@ class Ui_MainWindow(object):
         self.StE_Part_Percussion2_Label.setObjectName("StE_Part_Percussion2_Label")
         self.StE_Parts_List.addWidget(self.StE_Part_Percussion2_Label, 5, 0, 1, 1)
         self.StE_Part_Percussion2_Instrument = QtWidgets.QLabel(self.StE_Parts)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Percussion2_Instrument.setFont(font)
-        self.StE_Part_Percussion2_Instrument.setAcceptDrops(True)
         self.StE_Part_Percussion2_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1339,10 +1309,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.StE_Part_Melody_Instrument.sizePolicy().hasHeightForWidth())
         self.StE_Part_Melody_Instrument.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.StE_Part_Melody_Instrument.setFont(font)
-        self.StE_Part_Melody_Instrument.setAcceptDrops(True)
         self.StE_Part_Melody_Instrument.setStyleSheet("padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1391,8 +1357,6 @@ class Ui_MainWindow(object):
         self.StE_PartSelector.addItem("")
         self.StE_PartSelector.addItem("")
         self.StE_PartSelector_Layout.addWidget(self.StE_PartSelector)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.StE_PartSelector_Layout.addItem(spacerItem6)
         self.verticalLayout_32.addLayout(self.StE_PartSelector_Layout)
         self.StE_MainLayout.addWidget(self.StE_Instruments)
         self.StE_Styles = QtWidgets.QGroupBox(self.StyleEditor)
@@ -1609,10 +1573,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SOE_File_Label.sizePolicy().hasHeightForWidth())
         self.SOE_File_Label.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.SOE_File_Label.setFont(font)
-        self.SOE_File_Label.setAcceptDrops(True)
         self.SOE_File_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -1662,7 +1622,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addWidget(self.MainWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 829, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 819, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")

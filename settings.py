@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtWidgets
 from settings_ui import Ui_Settings
 import editor
-from editor import SaveSetting, LoadSetting, ChooseFromOS, languageList, TranslationPath, romLanguageList, GetSongNames, LoadType
+from editor import SaveSetting, LoadSetting, ChooseFromOS, languageList, TranslationPath, regionNames, GetSongNames, LoadType
 from errorhandler import ShowError
 from update import UpdateWindow, CheckForUpdate
 
@@ -89,9 +89,9 @@ class SettingsWindow(QDialog,Ui_Settings):
         SaveSetting("Settings","RomLanguage",self.RomLanguageBox.currentIndex())
         editor.romLanguageNumber = [self.RomLanguageBox.currentIndex()]*4
         for i in range(4):
-            if(editor.romLanguageNumber[i] >= len(romLanguageList[i])):
+            if(editor.romLanguageNumber[i] >= len(regionNames[i])):
                 editor.romLanguageNumber[i] = 0
-            editor.romLanguage[i] = romLanguageList[i][editor.romLanguageNumber[i]]
+            editor.romLanguage[i] = regionNames[i][editor.romLanguageNumber[i]]
         if(editor.file.type == LoadType.Rom): GetSongNames()
 
     def LanguageChange(self):

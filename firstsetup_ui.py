@@ -563,10 +563,6 @@ class Ui_FirstSetup(object):
         self.RomPath_Label = QtWidgets.QLabel(self.RomPath)
         self.RomPath_Label.setMinimumSize(QtCore.QSize(0, 26))
         self.RomPath_Label.setMaximumSize(QtCore.QSize(16777215, 26))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.RomPath_Label.setFont(font)
-        self.RomPath_Label.setAcceptDrops(True)
         self.RomPath_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -659,10 +655,6 @@ class Ui_FirstSetup(object):
         self.DolphinPath_Label = QtWidgets.QLabel(self.DolphinPath_Title)
         self.DolphinPath_Label.setMinimumSize(QtCore.QSize(0, 26))
         self.DolphinPath_Label.setMaximumSize(QtCore.QSize(16777215, 26))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.DolphinPath_Label.setFont(font)
-        self.DolphinPath_Label.setAcceptDrops(True)
         self.DolphinPath_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"

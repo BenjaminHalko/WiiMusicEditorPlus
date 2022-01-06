@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>829</width>
-    <height>598</height>
+    <width>819</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="palette">
@@ -547,6 +547,15 @@ QLineEdit
     border-radius: 5;
 }
 
+QSpinBox
+{
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);
+    padding: 1px;
+    border-style: solid;
+    border: 1px solid #1e1e1e;
+    border-radius: 5;
+}
+
 QPushButton
 {
     color: white;
@@ -886,8 +895,17 @@ QRadioButton::indicator:checked
         fx: 0.5, fy: 0.5,
         radius: 1.0,
         stop: 0.25 #ffaa00,
-        stop: 0.3 #323232
-    );
+        stop: 0.3 #323232);
+}
+
+QRadioButton::indicator:checked:disabled
+{
+    background-color: qradialgradient(
+        cx: 0.5, cy: 0.5,
+        fx: 0.5, fy: 0.5,
+        radius: 1.0,
+        stop: 0.25 #323232,
+        stop: 0.3 #323232);
 }
 
 QCheckBox::indicator{
@@ -908,12 +926,6 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
     border: 1px solid #ffaa00;
 }
 
-QRadioButton:disabled
-{
-    background-color: #404040;
-}
-
-
 QCheckBox::indicator:checked
 {
     image:url(:images/images/checkbox.png);
@@ -922,16 +934,6 @@ QCheckBox::indicator:checked
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
-}
-
-QWidget[error=&quot;true&quot;]
-{
-	border: 1px solid red;
 }</string>
   </property>
   <property name="tabShape">
@@ -1146,6 +1148,9 @@ QWidget[error=&quot;true&quot;]
         <pointsize>72</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -1189,12 +1194,6 @@ QWidget[error=&quot;true&quot;]
         </item>
         <item>
          <widget class="QLabel" name="MP_LoadedFile_Path">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>26</height>
-           </size>
-          </property>
           <property name="styleSheet">
            <string notr="true">QLabel
 {
@@ -1599,14 +1598,6 @@ padding-bottom: 6px;
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">QLabel
 {
@@ -1650,14 +1641,6 @@ padding-bottom: 6px;
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QLabel
@@ -1864,12 +1847,6 @@ padding-bottom: 6px;
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>50</width>
-                          <height>0</height>
-                         </size>
-                        </property>
                         <property name="mouseTracking">
                          <bool>true</bool>
                         </property>
@@ -1891,12 +1868,6 @@ padding-bottom: 6px;
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>50</width>
-                          <height>0</height>
-                         </size>
                         </property>
                         <property name="focusPolicy">
                          <enum>Qt::TabFocus</enum>
@@ -2046,9 +2017,6 @@ padding-bottom: 6px;
                    <height>71</height>
                   </size>
                  </property>
-                 <property name="acceptDrops">
-                  <bool>false</bool>
-                 </property>
                 </widget>
                </item>
               </layout>
@@ -2126,12 +2094,6 @@ padding-bottom: 6px;
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>26</height>
-                  </size>
                  </property>
                  <property name="font">
                   <font>
@@ -2259,14 +2221,6 @@ padding-bottom: 6px;
                 <layout class="QGridLayout" name="StE_Parts_List">
                  <item row="4" column="1">
                   <widget class="QLabel" name="StE_Part_Percussion1_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
 border: 1px solid;
@@ -2301,14 +2255,6 @@ background-color: #242424;</string>
                  </item>
                  <item row="3" column="1">
                   <widget class="QLabel" name="StE_Part_Bass_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
 border: 1px solid;
@@ -2322,14 +2268,6 @@ background-color: #242424;</string>
                  </item>
                  <item row="2" column="1">
                   <widget class="QLabel" name="StE_Part_Chords_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
 border: 1px solid;
@@ -2343,14 +2281,6 @@ background-color: #242424;</string>
                  </item>
                  <item row="1" column="1">
                   <widget class="QLabel" name="StE_Part_Harmony_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
 border: 1px solid;
@@ -2378,14 +2308,6 @@ background-color: #242424;</string>
                  </item>
                  <item row="5" column="1">
                   <widget class="QLabel" name="StE_Part_Percussion2_Instrument">
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
 border: 1px solid;
@@ -2404,14 +2326,6 @@ background-color: #242424;</string>
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="acceptDrops">
-                    <bool>true</bool>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">padding: 1px;
@@ -2534,19 +2448,6 @@ background-color: #242424;</string>
                   </property>
                  </item>
                 </widget>
-               </item>
-               <item>
-                <spacer name="StE_PartSelector_Spacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
@@ -2962,14 +2863,6 @@ background-color: #242424;</string>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="acceptDrops">
-                  <bool>true</bool>
-                 </property>
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
@@ -3073,7 +2966,7 @@ padding-bottom: 6px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>829</width>
+     <width>819</width>
      <height>21</height>
     </rect>
    </property>
