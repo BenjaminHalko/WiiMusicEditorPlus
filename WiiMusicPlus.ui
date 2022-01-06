@@ -1625,6 +1625,9 @@ padding-bottom: 6px;
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
               </widget>
              </item>
              <item>
@@ -1952,6 +1955,9 @@ background-color: #242424;</string>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
               </widget>
              </item>
              <item>
@@ -2018,6 +2024,9 @@ background-color: #242424;</string>
               <widget class="QListWidget" name="StE_StyleList">
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
                </property>
               </widget>
              </item>
@@ -2198,6 +2207,9 @@ background-color: #242424;</string>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
               </widget>
              </item>
             </layout>
@@ -2213,6 +2225,9 @@ background-color: #242424;</string>
               <widget class="QListWidget" name="DS_Styles">
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
                </property>
               </widget>
              </item>
@@ -2302,6 +2317,9 @@ background-color: #242424;</string>
             <widget class="QListWidget" name="RS_Songs">
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -2409,6 +2427,9 @@ background-color: #242424;</string>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
               </widget>
              </item>
             </layout>
@@ -2472,6 +2493,9 @@ padding-bottom: 6px;
                 <widget class="QListWidget" name="SOE_SoundType">
                  <property name="horizontalScrollBarPolicy">
                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy">
+                  <enum>QAbstractScrollArea::AdjustToContents</enum>
                  </property>
                  <property name="selectionMode">
                   <enum>QAbstractItemView::ExtendedSelection</enum>
