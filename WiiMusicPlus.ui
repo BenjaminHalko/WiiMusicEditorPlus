@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
+    <width>861</width>
     <height>573</height>
    </rect>
   </property>
@@ -705,9 +705,6 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         <family>Continuum Bold</family>
         <pointsize>72</pointsize>
        </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -1622,12 +1619,6 @@ padding-bottom: 6px;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
               </widget>
              </item>
              <item>
@@ -1951,14 +1942,7 @@ background-color: #242424;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_32">
              <item>
-              <widget class="QListWidget" name="StE_InstrumentList">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="StE_InstrumentList"/>
              </item>
              <item>
               <layout class="QHBoxLayout" name="StE_PartSelector_Layout">
@@ -2021,14 +2005,7 @@ background-color: #242424;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <widget class="QListWidget" name="StE_StyleList">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="StE_StyleList"/>
              </item>
              <item>
               <layout class="QHBoxLayout" name="StE_ChangeStyleName_Layout">
@@ -2203,14 +2180,7 @@ background-color: #242424;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_15">
              <item>
-              <widget class="QListWidget" name="DS_Songs">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="DS_Songs"/>
              </item>
             </layout>
            </widget>
@@ -2222,14 +2192,7 @@ background-color: #242424;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_16">
              <item>
-              <widget class="QListWidget" name="DS_Styles">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="DS_Styles"/>
              </item>
              <item>
               <widget class="QPushButton" name="DS_Reset">
@@ -2315,12 +2278,6 @@ background-color: #242424;</string>
           <layout class="QVBoxLayout" name="verticalLayout_19">
            <item>
             <widget class="QListWidget" name="RS_Songs">
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOff</enum>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QAbstractScrollArea::AdjustToContents</enum>
-             </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::ExtendedSelection</enum>
              </property>
@@ -2423,14 +2380,7 @@ background-color: #242424;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_42">
              <item>
-              <widget class="QListWidget" name="SOE_Sounds">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="SOE_Sounds"/>
              </item>
             </layout>
            </widget>
@@ -2491,12 +2441,6 @@ padding-bottom: 6px;
               <layout class="QVBoxLayout" name="verticalLayout_43">
                <item>
                 <widget class="QListWidget" name="SOE_SoundType">
-                 <property name="horizontalScrollBarPolicy">
-                  <enum>Qt::ScrollBarAlwaysOff</enum>
-                 </property>
-                 <property name="sizeAdjustPolicy">
-                  <enum>QAbstractScrollArea::AdjustToContents</enum>
-                 </property>
                  <property name="selectionMode">
                   <enum>QAbstractItemView::ExtendedSelection</enum>
                  </property>
@@ -2560,7 +2504,7 @@ padding-bottom: 6px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>819</width>
+     <width>861</width>
      <height>21</height>
     </rect>
    </property>
