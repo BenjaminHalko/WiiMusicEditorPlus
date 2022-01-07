@@ -773,10 +773,9 @@ def PlayRwav(startOffset,replaceNumber):
 def NormalizeMidi(midiPath,savePath,defaultTempo):
 	midi_data = pretty_midi.PrettyMIDI(midiPath)
 	newMidi = pretty_midi.PrettyMIDI(initial_tempo=defaultTempo,resolution=2000)
-	name = ["Melody","Harmony","Chords","Bass"]
 	i = 0
 	for instrument in midi_data.instruments:
-		newInstrument = pretty_midi.Instrument(program=instrument.program,is_drum=instrument.is_drum,name=name[i])
+		newInstrument = pretty_midi.Instrument(program=instrument.program,is_drum=instrument.is_drum,name="Track"+str(i))
 		i += 1
 		for note in instrument.notes:
 			newInstrument.notes.append(pretty_midi.Note(

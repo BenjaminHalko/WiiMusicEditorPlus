@@ -489,6 +489,11 @@ QCheckBox::indicator:checked
     image:url(:images/images/checkbox.png);
 }
 
+QCheckBox::indicator:checked:disabled
+{
+    image:url(:images/images/checkbox_disabled.png);
+}
+
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
     border: 1px solid #444;
@@ -1140,6 +1145,9 @@ padding-bottom: 6px;
                <string>Replace Song</string>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
                <bool>true</bool>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">

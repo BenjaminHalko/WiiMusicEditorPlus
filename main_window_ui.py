@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(819, 573)
+        MainWindow.resize(861, 573)
         MainWindow.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         MainWindow.setWindowTitle("Wii Music Editor Plus")
         MainWindow.setStyleSheet("QToolTip\n"
@@ -489,6 +489,11 @@ class Ui_MainWindow(object):
 "    image:url(:images/images/checkbox.png);\n"
 "}\n"
 "\n"
+"QCheckBox::indicator:checked:disabled\n"
+"{\n"
+"    image:url(:images/images/checkbox_disabled.png);\n"
+"}\n"
+"\n"
 "QCheckBox::indicator:disabled, QRadioButton::indicator:disabled\n"
 "{\n"
 "    border: 1px solid #444;\n"
@@ -568,7 +573,6 @@ class Ui_MainWindow(object):
         font.setFamily("Continuum Bold")
         font.setPointSize(72)
         self.MainWidget.setFont(font)
-        self.MainWidget.setStyleSheet("")
         self.MainWidget.setObjectName("MainWidget")
         self.MainPage = QtWidgets.QWidget()
         self.MainPage.setObjectName("MainPage")
@@ -781,6 +785,7 @@ class Ui_MainWindow(object):
         self.SE_Midi.setSizePolicy(sizePolicy)
         self.SE_Midi.setFocusPolicy(QtCore.Qt.NoFocus)
         self.SE_Midi.setCheckable(True)
+        self.SE_Midi.setChecked(True)
         self.SE_Midi.setObjectName("SE_Midi")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.SE_Midi)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -1018,8 +1023,6 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SE_SongToChange.sizePolicy().hasHeightForWidth())
         self.SE_SongToChange.setSizePolicy(sizePolicy)
-        self.SE_SongToChange.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.SE_SongToChange.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.SE_SongToChange.setObjectName("SE_SongToChange")
         self.verticalLayout_3.addWidget(self.SE_SongToChange)
         self.SE_Style = QtWidgets.QHBoxLayout()
@@ -1188,8 +1191,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_32 = QtWidgets.QVBoxLayout(self.StE_Instruments)
         self.verticalLayout_32.setObjectName("verticalLayout_32")
         self.StE_InstrumentList = QtWidgets.QListWidget(self.StE_Instruments)
-        self.StE_InstrumentList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.StE_InstrumentList.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.StE_InstrumentList.setObjectName("StE_InstrumentList")
         self.verticalLayout_32.addWidget(self.StE_InstrumentList)
         self.StE_PartSelector_Layout = QtWidgets.QHBoxLayout()
@@ -1214,8 +1215,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.StE_Styles)
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.StE_StyleList = QtWidgets.QListWidget(self.StE_Styles)
-        self.StE_StyleList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.StE_StyleList.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.StE_StyleList.setObjectName("StE_StyleList")
         self.verticalLayout_13.addWidget(self.StE_StyleList)
         self.StE_ChangeStyleName_Layout = QtWidgets.QHBoxLayout()
@@ -1306,8 +1305,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.DS_SongBox)
         self.verticalLayout_15.setObjectName("verticalLayout_15")
         self.DS_Songs = QtWidgets.QListWidget(self.DS_SongBox)
-        self.DS_Songs.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.DS_Songs.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.DS_Songs.setObjectName("DS_Songs")
         self.verticalLayout_15.addWidget(self.DS_Songs)
         self.DS_Lists.addWidget(self.DS_SongBox)
@@ -1316,8 +1313,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.DS_StyleBox)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
         self.DS_Styles = QtWidgets.QListWidget(self.DS_StyleBox)
-        self.DS_Styles.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.DS_Styles.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.DS_Styles.setObjectName("DS_Styles")
         self.verticalLayout_16.addWidget(self.DS_Styles)
         self.DS_Reset = QtWidgets.QPushButton(self.DS_StyleBox)
@@ -1361,8 +1356,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_19 = QtWidgets.QVBoxLayout(self.RS_SongBox)
         self.verticalLayout_19.setObjectName("verticalLayout_19")
         self.RS_Songs = QtWidgets.QListWidget(self.RS_SongBox)
-        self.RS_Songs.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.RS_Songs.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.RS_Songs.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.RS_Songs.setMovement(QtWidgets.QListView.Static)
         self.RS_Songs.setObjectName("RS_Songs")
@@ -1415,8 +1408,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_42 = QtWidgets.QVBoxLayout(self.SOE_SoundBox)
         self.verticalLayout_42.setObjectName("verticalLayout_42")
         self.SOE_Sounds = QtWidgets.QListWidget(self.SOE_SoundBox)
-        self.SOE_Sounds.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.SOE_Sounds.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.SOE_Sounds.setObjectName("SOE_Sounds")
         self.verticalLayout_42.addWidget(self.SOE_Sounds)
         self.SOE_Lists.addWidget(self.SOE_SoundBox)
@@ -1453,8 +1444,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_43 = QtWidgets.QVBoxLayout(self.SOE_SoundTypeBox)
         self.verticalLayout_43.setObjectName("verticalLayout_43")
         self.SOE_SoundType = QtWidgets.QListWidget(self.SOE_SoundTypeBox)
-        self.SOE_SoundType.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.SOE_SoundType.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.SOE_SoundType.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.SOE_SoundType.setMovement(QtWidgets.QListView.Static)
         self.SOE_SoundType.setObjectName("SOE_SoundType")
@@ -1483,7 +1472,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addWidget(self.MainWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 819, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 861, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
