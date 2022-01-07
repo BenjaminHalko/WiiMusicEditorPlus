@@ -9,7 +9,7 @@ import webbrowser
 from getpass import getuser
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QLocale, QTranslator, QProcess
+from PyQt5.QtCore import QLocale, QTranslator
 from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
@@ -521,10 +521,12 @@ class Window(QMainWindow, Ui_MainWindow):
                     ini.set("Core","EnableCheats","True")
                     with open(config+"Dolphin.ini","w") as inifile:
                         ini.write(inifile)
-                cmd = ['-e',editor.file.path+'/sys/main.dol']
-                if(not menu): cmd.insert(0,"-b")
-                dolphin = QProcess()
-                dolphin.startDetached(editor.dolphinPath,cmd)
+                cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
+                if(currentSystem == "Mac"): cmd[0] += "/Contents/MacOS/Dolphin"
+                if(not menu): cmd.insert(1,"-b")
+                env = os.environ
+                env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
+                subprocess.Popen(cmd,env=env)
             except Exception as e:
                 ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
 
