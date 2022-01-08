@@ -527,7 +527,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 env = os.environ
                 if(currentSystem == "Mac"):
                     #cmd[0] += "/Contents/MacOS/Dolphin"
-                    cmd.insert(0,"-a")
+                    cmd.insert(1,"--args")
                     process = QProcess()
                     process.execute("open",cmd)
                 else:
