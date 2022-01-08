@@ -9,7 +9,7 @@ import webbrowser
 from getpass import getuser
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QLocale, QTranslator
+from PyQt5.QtCore import QLocale, QTranslator, QProcess
 from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
@@ -526,8 +526,8 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(not menu): cmd.insert(1,"-b")
                 env = os.environ
                 if(currentSystem == "Mac"):
-                    cmd[0] += "/Contents/MacOS/Dolphin"
-                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = cmd[0]
+                    #cmd[0] += "/Contents/MacOS/Dolphin"
+                    QProcess("open",cmd)
                 else:
                     env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
                 subprocess.Popen(cmd,env=env)
