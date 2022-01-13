@@ -206,10 +206,11 @@ class Window(QMainWindow, Ui_MainWindow):
         file.setDirectory(lastFileDirectory)
         if file.exec_():
             path = file.selectedFiles()[0]
-            if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
-            if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")):
-                ShowError(self.tr("Not a valid Wii Music folder"),self.tr("Files and sys folder not found"))
-                return False
+            if(filter == ""):
+                if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+                if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")):
+                    ShowError(self.tr("Not a valid Wii Music folder"),self.tr("Files and sys folder not found"),self)
+                    return False
             editor.file.path = path
             if(os.path.isdir(path)): lastFileDirectory = editor.file.path[0:len(editor.file.path)-len(os.path.basename(editor.file.path))-1:1]
             else: lastFileDirectory = os.path.dirname(editor.file.path)

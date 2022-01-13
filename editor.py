@@ -1420,8 +1420,7 @@ def SaveRecording(action,name,values,remove=False):
 			ini.write(inifile)
 
 def GetDolphinSave():
-	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
-	if(os.path.exists(os.path.dirname(dolphinSavePath)+"/portable.txt")): return os.path.dirname(dolphinSavePath)+"/User"
+	if(os.path.exists(os.path.dirname(dolphinPath)+"/portable.txt") and currentSystem == "Windows"): return os.path.dirname(dolphinPath)+"/User"
 	return ChooseFromOS(["C:/Users/"+getuser()+"/Documents/Dolphin Emulator","/Users/"+getuser()+"/Library/Application Support/Dolphin","/home/"+getuser()+"/.local/share/dolphin-emu"])
 		
 #OS Specific
