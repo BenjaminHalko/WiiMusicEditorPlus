@@ -2544,6 +2544,7 @@ padding-bottom: 6px;
     </property>
     <addaction name="separator"/>
     <addaction name="MB_Help"/>
+    <addaction name="MB_Discord"/>
     <addaction name="separator"/>
     <addaction name="MB_Donate"/>
    </widget>
@@ -2624,6 +2625,11 @@ padding-bottom: 6px;
   <action name="MB_Donate">
    <property name="text">
     <string>Donate</string>
+   </property>
+  </action>
+  <action name="MB_Discord">
+   <property name="text">
+    <string notr="true">Discord</string>
    </property>
   </action>
  </widget>

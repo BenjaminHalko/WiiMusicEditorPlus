@@ -77,6 +77,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.MB_SaveFile.triggered.connect(self.MenuBar_Save_File)
         self.MB_Help.triggered.connect(lambda: webbrowser.open("https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki"))
         self.MB_Donate.triggered.connect(lambda: webbrowser.open("https://ko-fi.com/benjaminhalko"))
+        self.MB_Discord.triggered.connect(lambda: webbrowser.open("https://discord.gg/tXW5Mex7rR"))
 
         #Main Menu Buttons
         self.MP_SongEditor_Button.clicked.connect(self.LoadSongEditor)
