@@ -7,6 +7,7 @@ import zipfile
 from configparser import ConfigParser
 import webbrowser
 from getpass import getuser
+import time
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QLocale, QTranslator
@@ -25,6 +26,7 @@ from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
 from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog, DownloadSongThread
 from firstsetup import FirstSetupWindow
+from pypresence import Presence
 
 _translate = QtCore.QCoreApplication.translate
 defaultStyle = ""
@@ -60,6 +62,11 @@ class Window(QMainWindow, Ui_MainWindow):
         defaultStyle=self.styleSheet()
         self.externalEditorOpen = False
         self.fromSongEditor = -1
+        self.discord = False
+        self.starttime = int(time.time())
+        if(LoadSetting("Settings","Discord",True)):
+            self.DiscordPresenceConnect()
+            self.DiscordUpdate(0)
 
         if(editor.file.path != ""):
             if(editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded Folder:'))
@@ -257,6 +264,33 @@ class Window(QMainWindow, Ui_MainWindow):
             return True
         return False
 
+    def DiscordPresenceConnect(self):
+        try:
+            self.discord = Presence("932356297704226817")
+            self.discord.connect()
+        except Exception:
+            self.discord = False
+
+    def DiscordUpdate(self,state):
+        if(self.discord):
+            statelist = [
+                self.tr("Changing Settings"),
+                self.tr("Modding Wii Music"),
+                self.tr("Editing Songs"),
+                self.tr("Editing Styles"),
+                self.tr("Editing Text"),
+                self.tr("Editing Default Styles"),
+                self.tr("Removing Songs"),
+                self.tr("Editing Sounds"),
+                self.tr("Creating Riivolution Patch"),
+                self.tr("Reverting Changes"),
+                self.tr("Packing Rom"),
+                self.tr("Importing Changes")]
+            try:
+                self.discord.update(state=statelist[state+1],large_image="logo",start=self.starttime)
+            except Exception:
+                tried = True
+
     #############Load Places
 
     def GotoMainMenu(self):
@@ -265,6 +299,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.fromSongEditor = -1
         else:
             self.MainWidget.setCurrentIndex(TAB.MainMenu)
+            self.DiscordUpdate(0)
 
     def LoadSongEditor(self):
         if(editor.file.type == LoadType.Rom or editor.file.type == LoadType.Brsar or editor.file.type == LoadType.Carc):
@@ -285,6 +320,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.brseqLength = [0,0]
             self.brseqPath = ["",""]
             if(not AllowType(LoadType.Brsar)): self.SE_SongToChange.removeItemWidget(self.SE_SongToChange.takeItem(len(Songs)-1))
+            self.DiscordUpdate(1)
         else:
             ShowError(self.tr("Unable to load song editor"),self.tr("Must load Wii Music Rom, Brsar, or Message File"))
 
@@ -300,6 +336,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.StE_ResetStyle.setEnabled(False)
             self.StE_Patch.setEnabled(False)
             self.styleSelected = []
+            self.DiscordUpdate(2)
             if(self.fromSongEditor != -1): self.List_StE_StyleList()
         else:
             error = ShowError(self.tr("Unable to load style editor"),self.tr("Must load Wii Music Rom, Message File, or Geckocode"),geckocode=True)
@@ -319,6 +356,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.TE_Text.setPlainText(file.read().decode("utf-8"))
             file.close()
             self.MainWidget.setCurrentIndex(TAB.TextEditor)
+            self.DiscordUpdate(3)
         else:
             ShowError(self.tr("Unable to load text editor"),self.tr("Must load Wii Music Rom or Message File"))
 
@@ -331,6 +369,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.DS_StyleBox.setEnabled(False)
             self.DS_Patch.setEnabled(False)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
+            self.DiscordUpdate(4)
         else:
             error = ShowError(self.tr("Unable to load default style editor"),self.tr("Must load Wii Music Rom or Geckocode"),geckocode=True)
             if(error.clicked):
@@ -342,6 +381,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LoadSongs(self.RS_Songs,[SongTypeValue.Regular])
             self.RS_RemoveCustomSongs.setEnabled(editor.file.type == LoadType.Rom)
             if(self.fromSongEditor != -1): self.List_DS_SongList()
+            self.DiscordUpdate(5)
         else:
             ShowError(self.tr("Unable to remove songs"),self.tr("Must load Wii Music Rom or Main.dol"))
 
@@ -364,6 +404,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SOE_Patch.setEnabled(False)
             self.SOE_SoundTypeBox.setEnabled(False)
             self.SOE_File_Label.setText(self.tr("Load .rwav File"))
+            self.DiscordUpdate(6)
         else:
             ShowError(self.tr("Unable to load sound editor"),self.tr("Must load Wii Music Rom or Brsar"))
 
@@ -411,19 +452,25 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def CreateRiivolutionPatch(self):
         if(editor.file.type == LoadType.Rom):
+            self.DiscordUpdate(7)
             RiivolutionWindow()
+            self.DiscordUpdate(0)
         else:
             ShowError(self.tr("Unable to create Riivolution patch"),self.tr("Must load Wii Music Rom"))
 
     def RevertChanges(self):
         if(editor.file.type == LoadType.Rom):
+            self.DiscordUpdate(8)
             RevertChangesWindow()
+            self.DiscordUpdate(0)
         else:
             ShowError(self.tr("Unable to revert changes"),self.tr("Must load Wii Music Rom"))
 
     def PackRom(self):
         if(editor.file.type == LoadType.Rom):
+            self.DiscordUpdate(9)
             PackRomWindow()
+            self.DiscordUpdate(0)
         else:
             ShowError(self.tr("Unable to pack rom"),self.tr("Must load Wii Music Rom"))
 
@@ -491,6 +538,7 @@ class Window(QMainWindow, Ui_MainWindow):
             file.setNameFilter(self.tr("Rom Change File")+" (*.ini)")
             file.setDirectory(lastFileDirectory)
             if(file.exec()):
+                self.DiscordUpdate(10)
                 ImportChangesWindow(file.selectedFiles()[0])
         else:
             ShowError(self.tr("Unable to import changes"),self.tr("Must load Wii Music Rom"))
@@ -537,7 +585,18 @@ class Window(QMainWindow, Ui_MainWindow):
 
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
+        self.DiscordUpdate(-1)
         SettingsWindow(self,app,translator)
+        if((self.discord != False) != LoadSetting("Settings","Discord",True)):
+            if(self.discord == False):
+                self.DiscordPresenceConnect()
+            else:
+                try:
+                    self.discord.close()
+                    self.discord = False
+                except Exception:
+                    self.discord = False
+        self.DiscordUpdate(self.MainWidget.currentIndex())
 
     def MenuBar_Load_Rom(self):
         if(self.LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *.ini)
@@ -1015,4 +1074,6 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     CheckboxSeperateSongPatching(win)
-    sys.exit(app.exec())
+    app.exec()
+    if(win.discord): win.discord.close()
+    sys.exit()
