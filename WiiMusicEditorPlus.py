@@ -576,9 +576,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(not menu): cmd.insert(1,"-b")
                 
                 if(currentSystem == "Mac"):
-                    cmd.remove(editor.dolphinPath)
-                    launch = QProcess()
-                    launch.startDetached(editor.dolphinPath)
+                    cmd = ["open",editor.dolphinPath,"&"]
                 else:
                     env = os.environ
                     if(currentSystem == "Windows"): env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
