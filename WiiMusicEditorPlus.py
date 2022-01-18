@@ -574,13 +574,15 @@ class Window(QMainWindow, Ui_MainWindow):
                 cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
                 
                 if(not menu): cmd.insert(1,"-b")
-                env = os.environ
+                
                 if(currentSystem == "Mac"):
                     cmd.remove(editor.dolphinPath)
-                    QProcess.startDetached(editor.dolphinPath,cmd)
-                elif(currentSystem == "Windows"):
-                    env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
-                subprocess.Popen(cmd,env=env)
+                    launch = QProcess()
+                    launch.startDetached(editor.dolphinPath,cmd)
+                else:
+                    env = os.environ
+                    if(currentSystem == "Windows"): env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
+                    subprocess.Popen(cmd,env=env)
             except Exception as e:
                 ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
 
