@@ -1,3 +1,4 @@
+![Discord Shield](https://discordapp.com/api/guilds/931335263509151846/widget.png?style=shield)
 ![](https://user-images.githubusercontent.com/73490201/147893121-3ed1ae74-5f3e-45ca-b5d4-2d6a4285a508.png)
 
 ## Screenshots
