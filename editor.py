@@ -662,6 +662,16 @@ def ReplaceSong(positionNum,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqL
 			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 	brsar.close()
 
+def ConvertWav(wavPath):
+	with tempfile.TemporaryDirectory() as directory:
+		Run([HelperPath()+"/soundconverter/rwavconverter",wavPath,directory+"converted.rwav"])
+		file = open(directory+"converted.rwav","rb")
+		rwavInfo = file.read()
+		file.close()
+		rwavSize = os.stat(directory+"converted.rwav").st_size
+
+	return rwavInfo, rwavSize
+
 def ReplaceWave(startOffset,replaceNumber,rwavInfo,rwavSize):
 	if(not os.path.exists(GetBrsarPath()+".backup")): copyfile(GetBrsarPath(),GetBrsarPath()+".backup")
 	sizeDifference = 0

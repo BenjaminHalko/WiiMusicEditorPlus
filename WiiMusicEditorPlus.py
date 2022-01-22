@@ -20,7 +20,7 @@ app = QApplication([])
 from main_window_ui import Ui_MainWindow 
 
 import editor
-from editor import RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -1019,15 +1019,18 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SOE_Patchable()
 
     def Button_SOE_Browse(self):
-        if(self.LoadExtraFile("rwav (*.rwav)")):
+        if(self.LoadExtraFile("Wav Files (*.wav *.rwav)")):
             self.SOE_Patchable()
             self.SOE_File_Label.setText(os.path.basename(self.extraFile))
 
     def Button_SOE_Patch(self):
-        file = open(self.extraFile,"rb")
-        rwavInfo = file.read()
-        file.close()
-        rwavSize = os.stat(self.extraFile).st_size
+        if(pathlib.Path(self.extraFile).suffix == ".wav"):
+            rwavInfo, rwavSize = ConvertWav(self.extraFile)
+        else:
+            file = open(self.extraFile,"rb")
+            rwavInfo = file.read()
+            file.close()
+            rwavSize = os.stat(self.extraFile).st_size
         index = 0x33654
         selected = []
         offset = 0
