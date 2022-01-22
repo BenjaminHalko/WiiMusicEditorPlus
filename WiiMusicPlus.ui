@@ -1078,6 +1078,16 @@ padding-bottom: 6px;
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QLineEdit" name="testLine"/>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="testCheck">
+          <property name="text">
+           <string>CheckBox</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="SongEditor">

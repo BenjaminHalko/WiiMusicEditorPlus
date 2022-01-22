@@ -576,9 +576,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(not menu): cmd.insert(1,"-b")
                 
                 if(currentSystem == "Mac"):
-                    cmd.insert(0,"open")
-                    cmd.insert(2,"--args")
-                    subprocess.Popen(cmd,shell=True)
+                    subprocess.Popen(self.testLine.text().replace("[d]",'"'+editor.dolphinPath+'"').replace("[m]",'"'+editor.file.path+'/sys/main.dol"'),shell=self.testCheck.isChecked())
                 else:
                     env = os.environ
                     if(currentSystem == "Windows"): env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
