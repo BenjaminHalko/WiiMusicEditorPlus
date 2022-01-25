@@ -1,5 +1,5 @@
 #Mac
-pip3 install PyQt5 mido requests psutil pretty_midi pypresence pyinstaller
+pip3 install PyQt5==5.15.0 mido requests psutil pretty_midi pypresence pyinstaller
 
 #Linux
 sudo apt install -y python3-pip build-essential zlib1g-dev
