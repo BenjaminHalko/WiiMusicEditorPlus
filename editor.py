@@ -681,7 +681,7 @@ def ConvertWav(wavPath):
 			s_read.close()
 			
 
-		Run([HelperPath()+"/soundconverter/rwavconverter",wavPath,directory+"converted.rwav"])
+		Run([HelperPath()+"/soundconverter/rwavconvert",wavPath,directory+"converted.rwav"])
 		file = open(directory+"converted.rwav","rb")
 		rwavInfo = file.read()
 		file.close()
