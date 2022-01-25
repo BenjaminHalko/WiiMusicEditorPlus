@@ -6,7 +6,6 @@ import sys
 import zipfile
 from configparser import ConfigParser
 import webbrowser
-from getpass import getuser
 import time
 
 from PyQt5 import QtCore, QtWidgets
@@ -403,7 +402,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.extraFile = ""
             self.SOE_Patch.setEnabled(False)
             self.SOE_SoundTypeBox.setEnabled(False)
-            self.SOE_File_Label.setText(self.tr("Load .rwav File"))
+            self.SOE_File_Label.setText(self.tr("Load a Wav-Type File"))
             self.DiscordUpdate(6)
         else:
             ShowError(self.tr("Unable to load sound editor"),self.tr("Must load Wii Music Rom or Brsar"))
@@ -565,7 +564,7 @@ class Window(QMainWindow, Ui_MainWindow):
                         copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
                 if(LoadSetting("Settings","DolphinEnableCheats",True)):
                     ini = ConfigParser()
-                    if(currentSystem == "Linux"): config = "/home/"+getuser()+"/.config/dolphin-emu/"
+                    if(currentSystem == "Linux"): config = os.path.expanduser('~/.config/dolphin-emu/')
                     else: config = GetDolphinSave()+"/Config/"
                     ini.read(config+"Dolphin.ini")
                     ini.set("Core","EnableCheats","True")

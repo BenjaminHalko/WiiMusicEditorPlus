@@ -10,8 +10,9 @@ from shutil import copyfile, rmtree
 from math import floor, ceil
 import mido
 from configparser import ConfigParser
-from getpass import getuser
 import stat as stats
+import wave
+import audioop
 
 from PyQt5.QtCore import QCoreApplication
 
@@ -664,6 +665,22 @@ def ReplaceSong(positionNum,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqL
 
 def ConvertWav(wavPath):
 	with tempfile.TemporaryDirectory() as directory:
+		if(LoadSetting("Settings","ResampleSounds",True)):
+			s_read = wave.open(wavPath, 'r')
+
+			if(s_read.getframerate() != 16000 and s_read.getnchannels() != 1):
+				wavPath = directory+"converted.wav"
+				s_write = wave.open(wavPath, 'w')
+				s_write.setparams((1, 2, 16000, 0, 'NONE', 'Uncompressed'))
+				data = s_read.readframes(s_read.getnframes())
+				if(s_read.getframerate() != 16000): data = audioop.ratecv(data, 2, s_read.getnchannels(), s_read.getframerate(), 16000, None)
+				if(s_read.getnchannels() != 1): data = audioop.tomono(data[0], 2, 1, 0)
+				s_write.writeframes(data)
+				s_write.close()
+
+			s_read.close()
+			
+
 		Run([HelperPath()+"/soundconverter/rwavconverter",wavPath,directory+"converted.rwav"])
 		file = open(directory+"converted.rwav","rb")
 		rwavInfo = file.read()
@@ -1432,7 +1449,7 @@ def SaveRecording(action,name,values,remove=False):
 def GetDolphinSave():
 	if(os.path.isdir(dolphinSavePath)): return dolphinSavePath
 	if(os.path.exists(os.path.dirname(dolphinPath)+"/portable.txt") and currentSystem == "Windows"): return os.path.dirname(dolphinPath)+"/User"
-	return ChooseFromOS(["C:/Users/"+getuser()+"/Documents/Dolphin Emulator","/Users/"+getuser()+"/Library/Application Support/Dolphin","/home/"+getuser()+"/.local/share/dolphin-emu"])
+	return ChooseFromOS([os.path.expanduser('~/Documents/Dolphin Emulator'),os.path.expanduser('~/Library/Application Support/Dolphin'),os.path.expanduser('~/.local/share/dolphin-emu')])
 		
 #OS Specific
 def ChooseFromOS(array):
@@ -1441,7 +1458,7 @@ def ChooseFromOS(array):
 	else: return array[2]
 
 def SavePath():
-	path = ChooseFromOS(["C:/Users/"+getuser()+"/AppData/Local/WiiMusicEditorPlus","/Users/"+getuser()+"/Library/Application Support/WiiMusicEditorPlus","/home/"+getuser()+"/.local/share/WiiMusicEditorPlus"])
+	path = ChooseFromOS([os.path.expanduser('~/AppData/Local/WiiMusicEditorPlus'),os.path.expanduser('~/Library/Application Support/WiiMusicEditorPlus'),os.path.expanduser('~/.local/share/WiiMusicEditorPlus')])
 	if(not os.path.isdir(path)): os.mkdir(path)
 	return path
 
@@ -1528,4 +1545,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "1.0.0-beta"
+version = "1.0.0-beta.a"

@@ -1078,16 +1078,6 @@ padding-bottom: 6px;
           </property>
          </spacer>
         </item>
-        <item>
-         <widget class="QLineEdit" name="testLine"/>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="testCheck">
-          <property name="text">
-           <string>CheckBox</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="SongEditor">
@@ -2431,7 +2421,7 @@ padding-bottom: 6px;
 }</string>
                  </property>
                  <property name="text">
-                  <string>Load a Rwav-Type file</string>
+                  <string>Load a Wav-Type file</string>
                  </property>
                 </widget>
                </item>
