@@ -116,6 +116,15 @@ def GetReleaseTag():
     try:
         if(not LoadSetting("Settings","Beta",False)):
             while (data[i]["prerelease"]): i += 1
+        else:
+            looking = True
+            i = -1
+            while(looking):
+                i += 1
+                for j in data[i]["assets"]:
+                    if(j["name"] == f"WiiMusicEditorPlus-{currentSystem}.zip"):
+                        looking = False
+                        break
     except:
         i = 0
     return data[i]["tag_name"]
