@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>images/warning.png</file>
     <file>images/checkbox_disabled.png</file>
     <file>images/checkmark.png</file>
     <file>images/checkbox.png</file>
