@@ -576,9 +576,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 
                 if(currentSystem == "Mac"):
                     cmd[0] = cmd[0]+"/Contents/MacOS/Dolphin"
-                    cmd.insert(0,"open")
-                    cmd.insert(0,"/bin/sh")
-                    cmd.insert(2,"--args")
                     subprocess.Popen(cmd)
                 else:
                     env = os.environ
