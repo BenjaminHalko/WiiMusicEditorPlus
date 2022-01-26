@@ -1,1 +1,0 @@
-pyuic5 -o riivolution_ui.py Riivolution.ui

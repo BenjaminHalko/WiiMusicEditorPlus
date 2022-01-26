@@ -1,1 +1,0 @@
-pyuic5 -o packrom_ui.py PackRom.ui

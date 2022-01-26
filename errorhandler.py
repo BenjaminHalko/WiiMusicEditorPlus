@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
-from error_ui import Ui_Error
+from errorhandler_ui import Ui_Error
 
 class ShowError(QDialog,Ui_Error):
     def __init__(self,error,message,parent=None,geckocode=False):

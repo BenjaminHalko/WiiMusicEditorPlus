@@ -1,1 +1,0 @@
-pyuic5 -o firstsetup_ui.py FirstSetup.ui

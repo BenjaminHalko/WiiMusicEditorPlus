@@ -1,1 +1,0 @@
-pyuic5 -o importchanges_ui.py ImportChanges.ui

@@ -1,1 +1,0 @@
-pyuic5 -o main_window_ui.py WiiMusicPlus.ui
