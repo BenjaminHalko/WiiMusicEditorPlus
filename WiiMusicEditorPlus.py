@@ -574,7 +574,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 
                 if(not menu): cmd.insert(1,"-b")
                 
-                if(currentSystem != "Mac"):
+                if(currentSystem == "Mac"):
                     cmd = self.testLine.text().replace("[e]",'"'+editor.dolphinPath+'/Contents/MacOS/Dolphin"').replace("[d]",'"'+editor.dolphinPath+'"').replace("[m]",'"'+editor.file.path+'/sys/main.dol"')
                     cmd = cmd.split(",")
                     print(cmd)
