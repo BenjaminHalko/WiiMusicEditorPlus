@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Success</class>
- <widget class="QDialog" name="Success">
+ <class>Warning</class>
+ <widget class="QDialog" name="Warning">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -495,7 +495,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
    <item>
     <layout class="QHBoxLayout" name="Title">
      <item>
-      <widget class="QLabel" name="CompleteSymbol">
+      <widget class="QLabel" name="WarningSymbol">
        <property name="maximumSize">
         <size>
          <width>32</width>
@@ -508,7 +508,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="CompleteTitle">
+      <widget class="QLabel" name="WarningTitle">
        <property name="font">
         <font>
          <family>Continuum Medium</family>
@@ -537,7 +537,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
     </widget>
    </item>
    <item>
-    <spacer name="CompleteSpacer">
+    <spacer name="WarningSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -550,7 +550,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="CompleteClose">
+    <widget class="QPushButton" name="WarningClose">
      <property name="enabled">
       <bool>true</bool>
      </property>

@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Success(object):
-    def setupUi(self, Success):
-        Success.setObjectName("Success")
-        Success.resize(283, 214)
-        Success.setStyleSheet("QToolTip\n"
+class Ui_Warning(object):
+    def setupUi(self, Warning):
+        Warning.setObjectName("Warning")
+        Warning.resize(283, 113)
+        Warning.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
 "     background-color: #ffa02f;\n"
@@ -491,36 +491,45 @@ class Ui_Success(object):
 "{\n"
 "    border: 1px solid #444;\n"
 "}")
-        self.verticalLayout = QtWidgets.QVBoxLayout(Success)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Warning)
         self.verticalLayout.setObjectName("verticalLayout")
         self.Title = QtWidgets.QHBoxLayout()
         self.Title.setObjectName("Title")
-        self.CompleteSymbol = QtWidgets.QLabel(Success)
-        self.CompleteSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
-        self.CompleteSymbol.setText("<html><head/><body><p><img src=\":/images/images/warning.png\"/></p></body></html>")
-        self.CompleteSymbol.setObjectName("CompleteSymbol")
-        self.Title.addWidget(self.CompleteSymbol)
-        self.CompleteTitle = QtWidgets.QLabel(Success)
+        self.WarningSymbol = QtWidgets.QLabel(Warning)
+        self.WarningSymbol.setMaximumSize(QtCore.QSize(32, 16777215))
+        self.WarningSymbol.setText("<html><head/><body><p><img src=\":/images/images/warning.png\"/></p></body></html>")
+        self.WarningSymbol.setObjectName("WarningSymbol")
+        self.Title.addWidget(self.WarningSymbol)
+        self.WarningTitle = QtWidgets.QLabel(Warning)
         font = QtGui.QFont()
         font.setFamily("Continuum Medium")
         font.setPointSize(16)
-        self.CompleteTitle.setFont(font)
-        self.CompleteTitle.setObjectName("CompleteTitle")
-        self.Title.addWidget(self.CompleteTitle)
+        self.WarningTitle.setFont(font)
+        self.WarningTitle.setObjectName("WarningTitle")
+        self.Title.addWidget(self.WarningTitle)
         self.verticalLayout.addLayout(self.Title)
+        self.line = QtWidgets.QFrame(Warning)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.verticalLayout.addWidget(self.line)
+        self.WarningText = QtWidgets.QLabel(Warning)
+        self.WarningText.setText("Warning text")
+        self.WarningText.setObjectName("WarningText")
+        self.verticalLayout.addWidget(self.WarningText)
         spacerItem = QtWidgets.QSpacerItem(20, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.CompleteClose = QtWidgets.QPushButton(Success)
-        self.CompleteClose.setEnabled(True)
-        self.CompleteClose.setObjectName("CompleteClose")
-        self.verticalLayout.addWidget(self.CompleteClose)
+        self.WarningClose = QtWidgets.QPushButton(Warning)
+        self.WarningClose.setEnabled(True)
+        self.WarningClose.setObjectName("WarningClose")
+        self.verticalLayout.addWidget(self.WarningClose)
 
-        self.retranslateUi(Success)
-        QtCore.QMetaObject.connectSlotsByName(Success)
+        self.retranslateUi(Warning)
+        QtCore.QMetaObject.connectSlotsByName(Warning)
 
-    def retranslateUi(self, Success):
+    def retranslateUi(self, Warning):
         _translate = QtCore.QCoreApplication.translate
-        Success.setWindowTitle(_translate("Success", "Wii Music Editor Plus"))
-        self.CompleteTitle.setText(_translate("Success", "Warning!"))
-        self.CompleteClose.setText(_translate("Success", "Close"))
+        Warning.setWindowTitle(_translate("Warning", "Wii Music Editor Plus"))
+        self.WarningTitle.setText(_translate("Warning", "Warning!"))
+        self.WarningClose.setText(_translate("Warning", "Close"))
 import resources_rc
