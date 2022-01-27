@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>443</width>
-    <height>322</height>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -786,9 +786,6 @@ QWidget[error=&quot;true&quot;]
               <pointsize>8</pointsize>
              </font>
             </property>
-            <property name="acceptDrops">
-             <bool>true</bool>
-            </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
@@ -796,14 +793,8 @@ padding: 1px;
 border: 1px solid;
 border-color: #1e1e1e;
 background-color: #242424;
-}
-
-QLabel[error=&quot;true&quot;]
-{
-padding: 1px;
-border: 1px solid;
-border-color: red;
-background-color: #242424;
+padding-top: 6px;
+padding-bottom: 6px;
 }</string>
             </property>
             <property name="text">
@@ -834,9 +825,6 @@ background-color: #242424;
               <pointsize>8</pointsize>
              </font>
             </property>
-            <property name="acceptDrops">
-             <bool>true</bool>
-            </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
@@ -844,14 +832,8 @@ padding: 1px;
 border: 1px solid;
 border-color: #1e1e1e;
 background-color: #242424;
-}
-
-QLabel[error=&quot;true&quot;]
-{
-padding: 1px;
-border: 1px solid;
-border-color: red;
-background-color: #242424;
+padding-top: 6px;
+padding-bottom: 6px;
 }</string>
             </property>
             <property name="text">

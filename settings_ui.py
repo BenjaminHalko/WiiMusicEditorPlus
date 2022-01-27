@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Settings.ui'
+# Form implementation generated from reading ui file 'settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -15,7 +15,7 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
         Settings.setWindowModality(QtCore.Qt.ApplicationModal)
-        Settings.resize(443, 322)
+        Settings.resize(443, 324)
         Settings.setStyleSheet("QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -626,21 +626,14 @@ class Ui_Settings(object):
         font = QtGui.QFont()
         font.setPointSize(8)
         self.DolphinPath_Label.setFont(font)
-        self.DolphinPath_Label.setAcceptDrops(True)
         self.DolphinPath_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
 "background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
 "}")
         self.DolphinPath_Label.setObjectName("DolphinPath_Label")
         self.verticalLayout_5.addWidget(self.DolphinPath_Label)
@@ -656,21 +649,14 @@ class Ui_Settings(object):
         font = QtGui.QFont()
         font.setPointSize(8)
         self.DolphinSave_Label.setFont(font)
-        self.DolphinSave_Label.setAcceptDrops(True)
         self.DolphinSave_Label.setStyleSheet("QLabel\n"
 "{\n"
 "padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
 "background-color: #242424;\n"
-"}\n"
-"\n"
-"QLabel[error=\"true\"]\n"
-"{\n"
-"padding: 1px;\n"
-"border: 1px solid;\n"
-"border-color: red;\n"
-"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
 "}")
         self.DolphinSave_Label.setObjectName("DolphinSave_Label")
         self.verticalLayout_6.addWidget(self.DolphinSave_Label)
