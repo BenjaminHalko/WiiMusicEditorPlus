@@ -1,4 +1,4 @@
-[![Discord Shield](https://img.shields.io/discord/931335263509151846?color=5865F2&label=discord&logo=discord&logoColor=white)](https://discord.gg/tXW5Mex7rR)
+[![Discord Shield](https://img.shields.io/discord/931335263509151846?color=5865F2&label=discord&logo=discord&logoColor=white)](https://discord.gg/NC3wYAeCDs)
 [![Github All Releases](https://img.shields.io/github/downloads/BenjaminHalko/WiiMusicEditorPlus/total.svg)](https://hanadigital.github.io/grev/?user=benjaminhalko&repo=wiimusiceditorplus)
 [![](https://img.shields.io/badge/dynamic/json?label=version&query=%24.0.tag_name&url=https%3A%2F%2Fapi.github.com%2Frepos%2FBenjaminHalko%2FWiiMusicEditorPlus%2Freleases)](https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/latest)
 
