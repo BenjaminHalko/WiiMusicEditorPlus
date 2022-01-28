@@ -749,12 +749,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.MP_RomEditing)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_9.addItem(spacerItem2)
-        self.testLine = QtWidgets.QLineEdit(self.MainPage)
-        self.testLine.setObjectName("testLine")
-        self.verticalLayout_9.addWidget(self.testLine)
-        self.testCheck = QtWidgets.QCheckBox(self.MainPage)
-        self.testCheck.setObjectName("testCheck")
-        self.verticalLayout_9.addWidget(self.testCheck)
         self.MainWidget.addWidget(self.MainPage)
         self.SongEditor = QtWidgets.QWidget()
         self.SongEditor.setObjectName("SongEditor")
@@ -812,6 +806,7 @@ class Ui_MainWindow(object):
 "padding-top: 6px;\n"
 "padding-bottom: 6px;\n"
 "}")
+        self.SE_Midi_File_Score_Label.setText("Load a Midi-Type file")
         self.SE_Midi_File_Score_Label.setObjectName("SE_Midi_File_Score_Label")
         self.gridLayout.addWidget(self.SE_Midi_File_Score_Label, 0, 1, 1, 1)
         self.SE_Midi_File_Score_Button = QtWidgets.QPushButton(self.SE_Midi)
@@ -836,6 +831,7 @@ class Ui_MainWindow(object):
 "padding-top: 6px;\n"
 "padding-bottom: 6px;\n"
 "}")
+        self.SE_Midi_File_Song_Label.setText("Load a Midi-Type file")
         self.SE_Midi_File_Song_Label.setObjectName("SE_Midi_File_Song_Label")
         self.gridLayout.addWidget(self.SE_Midi_File_Song_Label, 1, 1, 1, 1)
         self.SE_Midi_File_Song_Title = QtWidgets.QLabel(self.SE_Midi)
@@ -1438,6 +1434,7 @@ class Ui_MainWindow(object):
 "padding-top: 6px;\n"
 "padding-bottom: 6px;\n"
 "}")
+        self.SOE_File_Label.setText("Load a Wav-Type file")
         self.SOE_File_Label.setObjectName("SOE_File_Label")
         self.horizontalLayout.addWidget(self.SOE_File_Label)
         self.SOE_File_Browse = QtWidgets.QPushButton(self.SOE_File)
@@ -1564,14 +1561,11 @@ class Ui_MainWindow(object):
         self.MP_ImportFiles_Button.setText(_translate("MainWindow", "Import Files"))
         self.MP_ExportFiles_Button.setText(_translate("MainWindow", "Export Files"))
         self.MP_ImportChanges_Button.setText(_translate("MainWindow", "Import Changes"))
-        self.testCheck.setText(_translate("MainWindow", "CheckBox"))
         self.SE_Title.setText(_translate("MainWindow", "Song Editor"))
         self.SE_Back_Button.setText(_translate("MainWindow", "Back"))
         self.SE_Midi.setTitle(_translate("MainWindow", "Replace Song"))
-        self.SE_Midi_File_Score_Label.setText(_translate("MainWindow", "Load a Midi-Type file"))
         self.SE_Midi_File_Score_Button.setText(_translate("MainWindow", "Browse"))
         self.SE_Midi_File_Score_Title.setText(_translate("MainWindow", "SCORE:"))
-        self.SE_Midi_File_Song_Label.setText(_translate("MainWindow", "Load a Midi-Type file"))
         self.SE_Midi_File_Song_Title.setText(_translate("MainWindow", "SONG:"))
         self.SE_Midi_File_Song_Button.setText(_translate("MainWindow", "Browse"))
         self.SE_Midi_File_Replace_Song.setText(_translate("MainWindow", "Replace SONG seperatly"))
@@ -1630,7 +1624,6 @@ class Ui_MainWindow(object):
         self.SOE_Back_Button.setText(_translate("MainWindow", "Back"))
         self.SOE_SoundBox.setTitle(_translate("MainWindow", "Sound List"))
         self.SOE_File.setTitle(_translate("MainWindow", "File"))
-        self.SOE_File_Label.setText(_translate("MainWindow", "Load a Wav-Type file"))
         self.SOE_File_Browse.setText(_translate("MainWindow", "Browse"))
         self.SOE_SoundTypeBox.setTitle(_translate("MainWindow", "Sound Types"))
         self.SOE_SelectAll.setText(_translate("MainWindow", "Select All"))
