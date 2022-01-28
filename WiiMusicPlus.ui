@@ -1173,7 +1173,7 @@ padding-bottom: 6px;
 }</string>
                    </property>
                    <property name="text">
-                    <string>Load a Midi-Type file</string>
+                    <string notr="true">Load a Midi-Type file</string>
                    </property>
                   </widget>
                  </item>
@@ -1217,7 +1217,7 @@ padding-bottom: 6px;
 }</string>
                    </property>
                    <property name="text">
-                    <string>Load a Midi-Type file</string>
+                    <string notr="true">Load a Midi-Type file</string>
                    </property>
                   </widget>
                  </item>
@@ -1774,7 +1774,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -1808,7 +1808,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -1821,7 +1821,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -1834,7 +1834,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -1861,7 +1861,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -1880,7 +1880,7 @@ border-color: #1e1e1e;
 background-color: #242424;</string>
                    </property>
                    <property name="text">
-                    <string/>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -2421,7 +2421,7 @@ padding-bottom: 6px;
 }</string>
                  </property>
                  <property name="text">
-                  <string>Load a Wav-Type file</string>
+                  <string notr="true">Load a Wav-Type file</string>
                  </property>
                 </widget>
                </item>
