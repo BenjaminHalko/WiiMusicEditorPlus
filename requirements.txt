@@ -1,0 +1,6 @@
+PyQt5
+mido
+requests
+psutil
+pretty_midi
+pypresence
