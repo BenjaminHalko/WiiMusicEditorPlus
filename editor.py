@@ -798,7 +798,16 @@ def PlayRwav(startOffset,replaceNumber):
 		ShowError("Could not play audio",error)
 
 def NormalizeMidi(midiPath,savePath,defaultTempo):
-	midi_data = pretty_midi.PrettyMIDI(midiPath)
+	mid = mido.MidiFile(midiPath)
+	for track in mid.tracks:
+		for num,msg in enumerate(track):
+			try:
+				if(not msg.is_meta and msg.channel != 0):
+					track[num] = msg.copy(channel=0)
+			except Exception:
+				tried = True
+	mid.save(savePath)
+	midi_data = pretty_midi.PrettyMIDI(savePath)
 	newMidi = pretty_midi.PrettyMIDI(initial_tempo=defaultTempo,resolution=2000)
 	i = 0
 	for instrument in midi_data.instruments:
@@ -1545,4 +1554,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "1.0.0-beta.a"
+version = "1.0.0-beta.b"
