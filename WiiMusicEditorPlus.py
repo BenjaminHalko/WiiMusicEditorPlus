@@ -548,43 +548,40 @@ class Window(QMainWindow, Ui_MainWindow):
         UpdateWindow(self,False)
 
     def LoadDolphin(self,menu):
-        if(editor.file.type != LoadType.Rom):
-            ShowError(self.tr("Unable to launch Dolphin"),self.tr("Loaded file must be a complete rom"))
-        elif(editor.dolphinPath == ""):
-            ShowError(self.tr("Unable to launch Dolphin"),self.tr("Dolphin path not specified")+"\n"+self.tr("Go to settings to add a Dolphin path"))
-        else:
-            try:
-                if(os.path.isfile(GetGeckoPath()) and LoadSetting("Settings","CopyCodes",True)):
-                    dir = GetDolphinSave()
-                    if(os.path.isdir(dir)):
-                        if(os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")):
-                            if(not os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")):
-                                copyfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini",dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")
-                            os.remove(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
-                        copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
-                if(LoadSetting("Settings","DolphinEnableCheats",True)):
-                    ini = ConfigParser()
-                    if(currentSystem == "Linux"): config = os.path.expanduser('~/.config/dolphin-emu/')
-                    else: config = GetDolphinSave()+"/Config/"
-                    ini.read(config+"Dolphin.ini")
-                    ini.set("Core","EnableCheats","True")
-                    with open(config+"Dolphin.ini","w") as inifile:
-                        ini.write(inifile)
-                cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
-                
-                if(not menu): cmd.insert(1,"-b")
-                
-                if(currentSystem == "Mac"):
-                    cmd = self.testLine.text().replace("[e]",editor.dolphinPath+'/Contents/MacOS/Dolphin').replace("[d]",editor.dolphinPath).replace("[m]",editor.file.path+'/sys/main.dol')
-                    cmd = cmd.split(",")
-                    print(cmd)
-                    subprocess.Popen(cmd,shell=self.testCheck.isChecked())
-                else:
+        if(currentSystem != "Mac"):
+            if(editor.file.type != LoadType.Rom):
+                ShowError(self.tr("Unable to launch Dolphin"),self.tr("Loaded file must be a complete rom"))
+            elif(editor.dolphinPath == ""):
+                ShowError(self.tr("Unable to launch Dolphin"),self.tr("Dolphin path not specified")+"\n"+self.tr("Go to settings to add a Dolphin path"))
+            else:
+                try:
+                    if(os.path.isfile(GetGeckoPath()) and LoadSetting("Settings","CopyCodes",True)):
+                        dir = GetDolphinSave()
+                        if(os.path.isdir(dir)):
+                            if(os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")):
+                                if(not os.path.isfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")):
+                                    copyfile(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini",dir+"/GameSettings/"+BasedOnRegion(gameIds)+".backup.ini")
+                                os.remove(dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
+                            copyfile(GetGeckoPath(),dir+"/GameSettings/"+BasedOnRegion(gameIds)+".ini")
+                    if(LoadSetting("Settings","DolphinEnableCheats",True)):
+                        ini = ConfigParser()
+                        if(currentSystem == "Linux"): config = os.path.expanduser('~/.config/dolphin-emu/')
+                        else: config = GetDolphinSave()+"/Config/"
+                        ini.read(config+"Dolphin.ini")
+                        ini.set("Core","EnableCheats","True")
+                        with open(config+"Dolphin.ini","w") as inifile:
+                            ini.write(inifile)
+                    cmd = [editor.dolphinPath,'-e',editor.file.path+'/sys/main.dol']
+                    
+                    if(not menu): cmd.insert(1,"-b")
+                    
                     env = os.environ
                     if(currentSystem == "Windows"): env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(editor.dolphinPath)+'/QtPlugins/platforms/'
                     subprocess.Popen(cmd,env=env)
-            except Exception as e:
-                ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
+                except Exception as e:
+                    ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
+        else:
+            ShowError("Using Mac","Dolphin must be run manually\n(run the main.dol located in your Wii Music folder)",self)
 
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
@@ -710,54 +707,57 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Patchable()
 
     def Button_SE_Patch(self):
-        if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
-            tmpInfo = self.brseqInfo.copy()
-            tmpLength = self.brseqLength.copy()
-            tmpPath = self.brseqPath.copy()
-            if(LoadSetting("Settings","NormalizeMidi",False)):
-                midiInfo = LoadMidi(self.brseqPath[1],self.SE_Midi_Tempo_Input.value())
-                if(midiInfo[0] != False):
-                    tmpInfo[1] = midiInfo[0]
-                    tmpLength[1] = midiInfo[1]
+        try:
+            if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
+                tmpInfo = self.brseqInfo.copy()
+                tmpLength = self.brseqLength.copy()
+                tmpPath = self.brseqPath.copy()
+                if(LoadSetting("Settings","NormalizeMidi",False)):
+                    midiInfo = LoadMidi(self.brseqPath[1],self.SE_Midi_Tempo_Input.value())
+                    if(midiInfo[0] != False):
+                        tmpInfo[1] = midiInfo[0]
+                        tmpLength[1] = midiInfo[1]
+                
+                if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
+                    tmpInfo[0] = tmpInfo[1]
+                    tmpLength[0] = tmpLength[1]
+                    tmpPath[0] = ""
+                elif(LoadSetting("Settings","NormalizeMidi",False)):
+                    midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
+                    if(midiInfo[0] != False):
+                        tmpInfo[0] = midiInfo[0]
+                        tmpLength[0] = midiInfo[1]
+                length = self.SE_Midi_Length_Input.value()
+                if(self.SE_Midi_Length_Measures.isChecked()):
+                    length *= 3+self.SE_Midi_TimeSignature_4.isChecked()
+                PatchBrsar(self.SE_SongToChange.currentRow(),tmpInfo,tmpLength,self.SE_Midi_Tempo_Input.value(),length,3+self.SE_Midi_TimeSignature_4.isChecked())
+                SaveRecording(RecordType.Song,self.SE_SongToChange.currentRow(),[
+                    ["midisong",tmpPath[0]],
+                    ["midiscore",tmpPath[1]],
+                    ["tempo",self.SE_Midi_Tempo_Input.value()],
+                    ["length",length],
+                    ["timesignature",3+self.SE_Midi_TimeSignature_4.isChecked()]])
             
-            if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
-                tmpInfo[0] = tmpInfo[1]
-                tmpLength[0] = tmpLength[1]
-                tmpPath[0] = ""
-            elif(LoadSetting("Settings","NormalizeMidi",False)):
-                midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
-                if(midiInfo[0] != False):
-                    tmpInfo[0] = midiInfo[0]
-                    tmpLength[0] = midiInfo[1]
-            length = self.SE_Midi_Length_Input.value()
-            if(self.SE_Midi_Length_Measures.isChecked()):
-                length *= 3+self.SE_Midi_TimeSignature_4.isChecked()
-            PatchBrsar(self.SE_SongToChange.currentRow(),tmpInfo,tmpLength,self.SE_Midi_Tempo_Input.value(),length,3+self.SE_Midi_TimeSignature_4.isChecked())
-            SaveRecording(RecordType.Song,self.SE_SongToChange.currentRow(),[
-                ["midisong",tmpPath[0]],
-                ["midiscore",tmpPath[1]],
-                ["tempo",self.SE_Midi_Tempo_Input.value()],
-                ["length",length],
-                ["timesignature",3+self.SE_Midi_TimeSignature_4.isChecked()]])
-        
-        if(AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu)) and not ((self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
-                self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
-                self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()])):
-            ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
-            text = Songs[self.SE_SongToChange.currentRow()].Name
-            if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
-                text = editor.textFromTxt[0][self.SE_SongToChange.currentRow()]
-                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Maestro): text = text+" ("+self.tr("Mii Maestro")+")"
-                if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Handbell): text = text+" ("+self.tr("Handbell Harmony")+")"
-            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(text)
-            editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
-            editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
-            editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
-            SaveRecording(RecordType.TextSong,self.SE_SongToChange.currentRow(),[
-                ["name",self.SE_ChangeSongText_Name_Input.text()],
-                ["desc",self.SE_ChangeSongText_Desc_Input.toPlainText()],
-                ["genre",self.SE_ChangeSongText_Genre_Input.text()]])
-        self.SE_Patch.setEnabled(False)
+            if(AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu)) and not ((self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
+                    self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
+                    self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()])):
+                ChangeName(self.SE_SongToChange.currentRow(),[self.SE_ChangeSongText_Name_Input.text(),self.SE_ChangeSongText_Desc_Input.toPlainText(),self.SE_ChangeSongText_Genre_Input.text()])
+                text = Songs[self.SE_SongToChange.currentRow()].Name
+                if(len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-14:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Handbell or editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[self.SE_SongToChange.currentRow()].Name[0:len(Songs[self.SE_SongToChange.currentRow()].Name)-19:1]) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
+                    text = editor.textFromTxt[0][self.SE_SongToChange.currentRow()]
+                    if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Maestro): text = text+" ("+self.tr("Mii Maestro")+")"
+                    if(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Handbell): text = text+" ("+self.tr("Handbell Harmony")+")"
+                self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(text)
+                editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
+                editor.textFromTxt[1][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
+                editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
+                SaveRecording(RecordType.TextSong,self.SE_SongToChange.currentRow(),[
+                    ["name",self.SE_ChangeSongText_Name_Input.text()],
+                    ["desc",self.SE_ChangeSongText_Desc_Input.toPlainText()],
+                    ["genre",self.SE_ChangeSongText_Genre_Input.text()]])
+            self.SE_Patch.setEnabled(False)
+        except Exception as e:
+            ShowError("Could not patch songs",str(e))
 
     def Button_SE_OpenStyleEditor(self):
         self.fromSongEditor = GetDefaultStyle(self.SE_SongToChange.currentRow(),False)

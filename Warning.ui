@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Wii Music Editor Plus</string>
+   <string notr="true">Wii Music Editor Plus</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QToolTip
