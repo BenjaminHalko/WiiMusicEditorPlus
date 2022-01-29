@@ -1,6 +1,6 @@
-PyQt5
-mido
-requests
-psutil
-pretty_midi
-pypresence
+mido==1.2.10
+pretty_midi==0.2.9
+psutil==5.8.0
+pypresence==4.2.1
+PyQt5==5.15.4
+requests==2.26.0
