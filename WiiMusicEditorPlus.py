@@ -712,7 +712,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 tmpInfo = self.brseqInfo.copy()
                 tmpLength = self.brseqLength.copy()
                 tmpPath = self.brseqPath.copy()
-                if(LoadSetting("Settings","NormalizeMidi",False)):
+                if((pathlib.Path(self.brseqPath[1]).suffix == ".midi" or pathlib.Path(self.brseqPath[1]).suffix == ".mid") and LoadSetting("Settings","NormalizeMidi",False)):
                     midiInfo = LoadMidi(self.brseqPath[1],self.SE_Midi_Tempo_Input.value())
                     if(midiInfo[0] != False):
                         tmpInfo[1] = midiInfo[0]
@@ -722,7 +722,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     tmpInfo[0] = tmpInfo[1]
                     tmpLength[0] = tmpLength[1]
                     tmpPath[0] = ""
-                elif(LoadSetting("Settings","NormalizeMidi",False)):
+                elif((pathlib.Path(self.brseqPath[0]).suffix == ".midi" or pathlib.Path(self.brseqPath[0]).suffix == ".mid") and LoadSetting("Settings","NormalizeMidi",False)):
                     midiInfo = LoadMidi(self.brseqPath[0],self.SE_Midi_Tempo_Input.value())
                     if(midiInfo[0] != False):
                         tmpInfo[0] = midiInfo[0]

@@ -211,7 +211,7 @@ def RetranslateSongNames():
 	InstrumentClass(_translate("Editor",'Marimba'),1,False,["G3","D4","A4","E5","B5","F#6"]),
 	InstrumentClass(_translate("Editor",'Vibraphone'),2,False,["F#3","C#4","G#4","D#5","A#5","F6"]),
 	InstrumentClass(_translate("Editor",'Steel Drum'),3,False,["F#2","A#3","F#4","G4","E4","??(26)","C4"]),
-	InstrumentClass(_translate("Editor",'Dulcimer'),4,False,["F3","C#4","G4","C5","A4","D6"]),
+	InstrumentClass(_translate("Editor",'Dulcimer'),4,False,["F3","C#4","G4","C5","A6","D6"]),
 	InstrumentClass(_translate("Editor",'Handbell'),5,False,["G4","G4 (Variation)","G4 (Variation 2)","C7"]),
 	InstrumentClass(_translate("Editor",'Harpsichord'),6,False,["G2","C4","C5","C6"]),
 	InstrumentClass(_translate("Editor",'Timpani'),7,False,["F3","F3 (Variation)","F3 (Variation 2)"]),
@@ -663,25 +663,32 @@ def ReplaceSong(positionNum,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqL
 			brsar.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
 	brsar.close()
 
-def ConvertWav(wavPath):
+def ConvertWav(wavPath,loopstart=-1,loopend=-1):
 	with tempfile.TemporaryDirectory() as directory:
 		if(LoadSetting("Settings","ResampleSounds",True)):
 			s_read = wave.open(wavPath, 'r')
+			framerate = s_read.getframerate()
 
-			if(s_read.getframerate() != 16000 and s_read.getnchannels() != 1):
+			if(framerate != 16000 and s_read.getnchannels() != 1):
 				wavPath = directory+"converted.wav"
 				s_write = wave.open(wavPath, 'w')
 				s_write.setparams((1, 2, 16000, 0, 'NONE', 'Uncompressed'))
 				data = s_read.readframes(s_read.getnframes())
-				if(s_read.getframerate() != 16000): data = audioop.ratecv(data, 2, s_read.getnchannels(), s_read.getframerate(), 16000, None)
+				if(framerate != 16000):
+					data = audioop.ratecv(data, 2, s_read.getnchannels(), framerate, 16000, None)
+					if(loopstart != -1):
+						loopstart *= 16000/framerate
+						loopend *= 16000/framerate
 				if(s_read.getnchannels() != 1): data = audioop.tomono(data[0], 2, 1, 0)
 				s_write.writeframes(data)
 				s_write.close()
-
 			s_read.close()
 			
-
-		Run([HelperPath()+"/SoundConverter/rwavconvert",wavPath,directory+"converted.rwav"])
+		cmd = [HelperPath()+"/SoundConverter/rwavconvert",wavPath,directory+"converted.rwav"]
+		if(loopstart != -1):
+			cmd.append(str(loopstart))
+			cmd.append(str(loopend))
+		Run(cmd)
 		file = open(directory+"converted.rwav","rb")
 		rwavInfo = file.read()
 		file.close()
@@ -1554,4 +1561,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "1.0.0-beta.b"
+version = "1.0.0"
