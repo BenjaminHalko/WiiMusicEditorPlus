@@ -686,8 +686,8 @@ def ConvertWav(wavPath,loopstart=-1,loopend=-1):
 			
 		cmd = [HelperPath()+"/SoundConverter/rwavconvert",wavPath,directory+"converted.rwav"]
 		if(loopstart != -1):
-			cmd.append(str(loopstart))
-			cmd.append(str(loopend))
+			cmd.append(str(round(loopstart)))
+			cmd.append(str(round(loopend)))
 		Run(cmd)
 		file = open(directory+"converted.rwav","rb")
 		rwavInfo = file.read()

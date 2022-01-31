@@ -2444,7 +2444,13 @@ padding-bottom: 6px;
             <item>
              <widget class="QGroupBox" name="SOE_Loop">
               <property name="title">
-               <string>Loop Settings</string>
+               <string>Loop</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>

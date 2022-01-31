@@ -7,6 +7,7 @@ import zipfile
 from configparser import ConfigParser
 import webbrowser
 import time
+import wave
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QLocale, QTranslator
@@ -403,6 +404,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SOE_Patch.setEnabled(False)
             self.SOE_SoundTypeBox.setEnabled(False)
             self.SOE_File_Label.setText(self.tr("Load a Wav-Type File"))
+            self.SOE_Loop.setEnabled(False)
             self.DiscordUpdate(6)
         else:
             ShowError(self.tr("Unable to load sound editor"),self.tr("Must load Wii Music Rom or Brsar"))
@@ -1024,10 +1026,23 @@ class Window(QMainWindow, Ui_MainWindow):
         if(self.LoadExtraFile("Wav Files (*.wav *.rwav)")):
             self.SOE_Patchable()
             self.SOE_File_Label.setText(os.path.basename(self.extraFile))
+            if(pathlib.Path(self.extraFile).suffix == ".wav"):
+                self.SOE_Loop.setEnabled(True)
+                samples = wave.open(self.extraFile,"r").getnframes()
+                self.SOE_LoopStart.setMaximum(samples)
+                self.SOE_LoopEnd.setMaximum(samples)
+                self.SOE_LoopStart.setValue(0)
+                self.SOE_LoopEnd.setValue(samples)
+
+            else:
+                self.SOE_Loop.setEnabled(False)
 
     def Button_SOE_Patch(self):
         if(pathlib.Path(self.extraFile).suffix == ".wav"):
-            rwavInfo, rwavSize = ConvertWav(self.extraFile)
+            if(self.SOE_Loop.isEnabled() and self.SOE_Loop.isChecked()):       
+                rwavInfo, rwavSize = ConvertWav(self.extraFile,self.SOE_LoopStart.value(),self.SOE_LoopEnd.value())
+            else:
+                rwavInfo, rwavSize = ConvertWav(self.extraFile)
         else:
             file = open(self.extraFile,"rb")
             rwavInfo = file.read()
@@ -1047,7 +1062,7 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             for i in range(self.SOE_SoundType.count()):
                 if(self.SOE_SoundType.item(i).isSelected()): selected.append(extraSounds[self.SOE_Sounds.currentRow()-40].typeValues[i])
-                
+
         ReplaceWave(index,selected,rwavInfo,rwavSize)
         self.SOE_Patch.setEnabled(False)
 
