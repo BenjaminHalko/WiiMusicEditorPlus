@@ -602,10 +602,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DiscordUpdate(self.MainWidget.currentIndex())
 
     def MenuBar_Load_Rom(self):
-        if(self.LoadMainFile("""All supported files (*.wbfs *.iso *.brsar *.carc *.dol *.ini)
+        if(self.LoadMainFile(f"""{self.tr("All supported files")} (*.wbfs *.iso *.brsar *.carc *.dol *.ini)
         Wii Music Rom (*.wbfs *.iso)
-        Sound Archive (*.brsar)
-        Text File (*.carc)
+        {self.tr("Sound Archive")} (*.brsar)
+        {self.tr("Text File")} (*.carc)
         Main.dol (*.dol)
         Geckocode (*.ini)""")):
             PrepareFile()
