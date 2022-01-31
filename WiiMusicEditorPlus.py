@@ -421,7 +421,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 path = file.selectedFiles()[0]
                 if(pathlib.Path(path).suffix != ".gct"): file = file+".gct"
                 CreateGct(path)
-                SuccessWindow("Creation Complete!")
+                SuccessWindow(self.tr("Creation Complete!"))
         else:
             ShowError(self.tr("Unable to create .gct file"),self.tr("Must load Wii Music Rom or Geckocode"))
 
@@ -434,7 +434,7 @@ class Window(QMainWindow, Ui_MainWindow):
             if(file.exec()):
                 PatchMainDol(geckoPath=file.selectedFiles()[0])
                 SaveRecording(RecordType.MainDol,"null",["geckopath",str(file.selectedFiles()[0])])
-                SuccessWindow("Main.dol Patched!")
+                SuccessWindow(self.tr("Main.dol Patched!"))
         elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
             file = QFileDialog()
             file.setFileMode(QFileDialog.AnyFile)
@@ -480,10 +480,10 @@ class Window(QMainWindow, Ui_MainWindow):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
             file.setFileMode(QFileDialog.AnyFile)
-            file.setNameFilter("""All supported files (*.zip *.brsar *.carc *.dol *.ini)
-            Zipfile (*.zip)
-            Sound Archive (*.brsar)
-            Text File (*.carc)
+            file.setNameFilter(f"""{self.tr("All supported files")} (*.zip *.brsar *.carc *.dol *.ini)
+            Zip File (*.zip)
+            {self.tr("Sound Archive")} (*.brsar)
+            {self.tr("Text File")} (*.carc)
             Main.dol (*.dol)
             Geckocodes (*.ini)""")
             file.setDirectory(lastFileDirectory)
@@ -760,7 +760,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     ["genre",self.SE_ChangeSongText_Genre_Input.text()]])
             self.SE_Patch.setEnabled(False)
         except Exception as e:
-            ShowError("Could not patch songs",str(e))
+            ShowError(self.tr("Could not patch songs"),str(e))
 
     def Button_SE_OpenStyleEditor(self):
         self.fromSongEditor = GetDefaultStyle(self.SE_SongToChange.currentRow(),False)
@@ -1040,7 +1040,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SOE_Patchable()
 
     def Button_SOE_Browse(self):
-        if(self.LoadExtraFile("Wav Files (*.wav *.rwav)")):
+        if(self.LoadExtraFile(self.tr("Wav Files")+" (*.wav *.rwav)")):
             self.SOE_Patchable()
             self.SOE_File_Label.setText(os.path.basename(self.extraFile))
             if(pathlib.Path(self.extraFile).suffix == ".wav"):
@@ -1050,7 +1050,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(self.SOE_LoopSeconds.isChecked()): samples /= wav.getframerate()
                 self.SOE_LoopStart.setValue(0)
                 self.SOE_LoopEnd.setValue(samples)
-
             else:
                 self.SOE_Loop.setEnabled(False)
 
