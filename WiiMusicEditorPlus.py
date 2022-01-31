@@ -509,7 +509,6 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             ShowError(self.tr("Unable to import files"),self.tr("Must load Wii Music Rom"))
 
-
     def ExportFiles(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
