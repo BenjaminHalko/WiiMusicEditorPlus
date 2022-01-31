@@ -584,7 +584,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 except Exception as e:
                     ShowError(self.tr("Unable to launch Dolphin"),self.tr("Check the Dolphin path in the settings")+"\n"+str(e))
         else:
-            ShowError("Using Mac","Dolphin must be run manually\n(run the main.dol located in your Wii Music folder)",self)
+            ShowError(self.tr("Using Mac"),self.tr("Dolphin must be run manually\n(run the main.dol located in your Wii Music folder)"),self)
 
     #############Menu Bar Buttons
     def MenuBar_Load_Settings(self):
