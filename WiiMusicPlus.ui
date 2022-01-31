@@ -114,6 +114,15 @@ QSpinBox
     border-radius: 5;
 }
 
+QDoubleSpinBox
+{
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);
+    padding: 1px;
+    border-style: solid;
+    border: 1px solid #1e1e1e;
+    border-radius: 5;
+}
+
 QPushButton
 {
     color: white;
@@ -2452,33 +2461,79 @@ padding-bottom: 6px;
               <property name="checked">
                <bool>false</bool>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
-                <widget class="QLabel" name="SOE_LoopStartLabel">
-                 <property name="text">
-                  <string>Sample Start</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="SOE_LoopLayout">
+                 <item>
+                  <widget class="QLabel" name="SOE_LoopStartLabel">
+                   <property name="text">
+                    <string>Start</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="SOE_LoopStart">
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <double>10000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="SOE_LoopLine">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="SOE_LoopEndLabel">
+                   <property name="text">
+                    <string>End</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="SOE_LoopEnd">
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <double>10000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QSpinBox" name="SOE_LoopStart"/>
-               </item>
-               <item>
-                <widget class="Line" name="SOE_LoopLine">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="SOE_LoopEndLabel">
-                 <property name="text">
-                  <string>Sample End</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="SOE_LoopEnd"/>
+                <layout class="QHBoxLayout" name="SOE_LoopMesurementsLayout">
+                 <item>
+                  <widget class="QLabel" name="SOE_LoopMesurementsLabel">
+                   <property name="text">
+                    <string>Measurements:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="SOE_LoopSeconds">
+                   <property name="text">
+                    <string>Seconds</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="SOE_LoopSamples">
+                   <property name="text">
+                    <string>Samples</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>

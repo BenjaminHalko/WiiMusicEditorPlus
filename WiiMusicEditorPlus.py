@@ -156,6 +156,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SOE_File_Browse.clicked.connect(self.Button_SOE_Browse)
         self.SOE_Patch.clicked.connect(self.Button_SOE_Patch)
         self.SOE_PlayAudio.clicked.connect(self.Button_SOE_PlayAudio)
+        self.SOE_LoopSeconds.toggled.connect(self.Button_SOE_SwitchType)
 
     #Lists
     def LoadSongs(self,widgetID,types=[],lockSongs=False):
@@ -995,7 +996,23 @@ class Window(QMainWindow, Ui_MainWindow):
             subprocess.Popen(ChooseFromOS(["","open ","xdg-open "])+'"'+SavePath()+'/tmp/playlist.m3u"',shell=True)
         else:
             subprocess.Popen(ChooseFromOS(["","open ","xdg-open "])+'"'+SavePath()+"/tmp/sound"+str(selected[0])+'.rwav.wav"',shell=True)
-            
+
+    def Button_SOE_SwitchType(self):
+        wav = wave.open(self.extraFile,"r")
+        if(self.SOE_LoopSeconds.isChecked()):
+            self.SOE_LoopStart.setDecimals(3)
+            self.SOE_LoopEnd.setDecimals(3)
+            self.SOE_LoopStart.setValue(self.SOE_LoopStart.value()/wav.getframerate())
+            self.SOE_LoopEnd.setValue(self.SOE_LoopEnd.value()/wav.getframerate())
+            self.SOE_LoopStart.setMaximum(1000000)
+            self.SOE_LoopEnd.setMaximum(1000000)   
+        else:
+            self.SOE_LoopStart.setValue(self.SOE_LoopStart.value()*wav.getframerate())
+            self.SOE_LoopEnd.setValue(self.SOE_LoopEnd.value()*wav.getframerate())
+            self.SOE_LoopStart.setMaximum(1000000000)
+            self.SOE_LoopEnd.setMaximum(1000000000)
+            self.SOE_LoopStart.setDecimals(0)
+            self.SOE_LoopEnd.setDecimals(0)
 
     def List_SOE_Sounds(self):
         self.SOE_PlayAudio.setEnabled(False)
@@ -1028,9 +1045,9 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SOE_File_Label.setText(os.path.basename(self.extraFile))
             if(pathlib.Path(self.extraFile).suffix == ".wav"):
                 self.SOE_Loop.setEnabled(True)
-                samples = wave.open(self.extraFile,"r").getnframes()
-                self.SOE_LoopStart.setMaximum(samples)
-                self.SOE_LoopEnd.setMaximum(samples)
+                wav = wave.open(self.extraFile,"r")
+                samples = wav.getnframes()
+                if(self.SOE_LoopSeconds.isChecked()): samples /= wav.getframerate()
                 self.SOE_LoopStart.setValue(0)
                 self.SOE_LoopEnd.setValue(samples)
 
@@ -1039,8 +1056,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def Button_SOE_Patch(self):
         if(pathlib.Path(self.extraFile).suffix == ".wav"):
-            if(self.SOE_Loop.isEnabled() and self.SOE_Loop.isChecked()):       
-                rwavInfo, rwavSize = ConvertWav(self.extraFile,self.SOE_LoopStart.value(),self.SOE_LoopEnd.value())
+            if(self.SOE_Loop.isEnabled() and self.SOE_Loop.isChecked()):
+                modify = 1
+                wav = wave.open(self.extraFile,"r")
+                if(self.SOE_LoopSeconds): modify = wav.getframerate()
+                rwavInfo, rwavSize = ConvertWav(self.extraFile,min(self.SOE_LoopStart.value()*modify,wav.getnframes()),min(self.SOE_LoopEnd.value()*modify,wav.getnframes()))
             else:
                 rwavInfo, rwavSize = ConvertWav(self.extraFile)
         else:

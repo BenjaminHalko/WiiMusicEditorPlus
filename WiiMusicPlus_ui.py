@@ -114,6 +114,15 @@ class Ui_MainWindow(object):
 "    border-radius: 5;\n"
 "}\n"
 "\n"
+"QDoubleSpinBox\n"
+"{\n"
+"    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0 #646464, stop: 1 #5d5d5d);\n"
+"    padding: 1px;\n"
+"    border-style: solid;\n"
+"    border: 1px solid #1e1e1e;\n"
+"    border-radius: 5;\n"
+"}\n"
+"\n"
 "QPushButton\n"
 "{\n"
 "    color: white;\n"
@@ -1446,25 +1455,45 @@ class Ui_MainWindow(object):
         self.SOE_Loop.setCheckable(True)
         self.SOE_Loop.setChecked(False)
         self.SOE_Loop.setObjectName("SOE_Loop")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.SOE_Loop)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.SOE_Loop)
+        self.verticalLayout_21.setObjectName("verticalLayout_21")
+        self.SOE_LoopLayout = QtWidgets.QHBoxLayout()
+        self.SOE_LoopLayout.setObjectName("SOE_LoopLayout")
         self.SOE_LoopStartLabel = QtWidgets.QLabel(self.SOE_Loop)
         self.SOE_LoopStartLabel.setObjectName("SOE_LoopStartLabel")
-        self.horizontalLayout_3.addWidget(self.SOE_LoopStartLabel)
-        self.SOE_LoopStart = QtWidgets.QSpinBox(self.SOE_Loop)
+        self.SOE_LoopLayout.addWidget(self.SOE_LoopStartLabel)
+        self.SOE_LoopStart = QtWidgets.QDoubleSpinBox(self.SOE_Loop)
+        self.SOE_LoopStart.setDecimals(3)
+        self.SOE_LoopStart.setMaximum(10000000.0)
         self.SOE_LoopStart.setObjectName("SOE_LoopStart")
-        self.horizontalLayout_3.addWidget(self.SOE_LoopStart)
+        self.SOE_LoopLayout.addWidget(self.SOE_LoopStart)
         self.SOE_LoopLine = QtWidgets.QFrame(self.SOE_Loop)
         self.SOE_LoopLine.setFrameShape(QtWidgets.QFrame.VLine)
         self.SOE_LoopLine.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.SOE_LoopLine.setObjectName("SOE_LoopLine")
-        self.horizontalLayout_3.addWidget(self.SOE_LoopLine)
+        self.SOE_LoopLayout.addWidget(self.SOE_LoopLine)
         self.SOE_LoopEndLabel = QtWidgets.QLabel(self.SOE_Loop)
         self.SOE_LoopEndLabel.setObjectName("SOE_LoopEndLabel")
-        self.horizontalLayout_3.addWidget(self.SOE_LoopEndLabel)
-        self.SOE_LoopEnd = QtWidgets.QSpinBox(self.SOE_Loop)
+        self.SOE_LoopLayout.addWidget(self.SOE_LoopEndLabel)
+        self.SOE_LoopEnd = QtWidgets.QDoubleSpinBox(self.SOE_Loop)
+        self.SOE_LoopEnd.setDecimals(3)
+        self.SOE_LoopEnd.setMaximum(10000000.0)
         self.SOE_LoopEnd.setObjectName("SOE_LoopEnd")
-        self.horizontalLayout_3.addWidget(self.SOE_LoopEnd)
+        self.SOE_LoopLayout.addWidget(self.SOE_LoopEnd)
+        self.verticalLayout_21.addLayout(self.SOE_LoopLayout)
+        self.SOE_LoopMesurementsLayout = QtWidgets.QHBoxLayout()
+        self.SOE_LoopMesurementsLayout.setObjectName("SOE_LoopMesurementsLayout")
+        self.SOE_LoopMesurementsLabel = QtWidgets.QLabel(self.SOE_Loop)
+        self.SOE_LoopMesurementsLabel.setObjectName("SOE_LoopMesurementsLabel")
+        self.SOE_LoopMesurementsLayout.addWidget(self.SOE_LoopMesurementsLabel)
+        self.SOE_LoopSeconds = QtWidgets.QRadioButton(self.SOE_Loop)
+        self.SOE_LoopSeconds.setChecked(True)
+        self.SOE_LoopSeconds.setObjectName("SOE_LoopSeconds")
+        self.SOE_LoopMesurementsLayout.addWidget(self.SOE_LoopSeconds)
+        self.SOE_LoopSamples = QtWidgets.QRadioButton(self.SOE_Loop)
+        self.SOE_LoopSamples.setObjectName("SOE_LoopSamples")
+        self.SOE_LoopMesurementsLayout.addWidget(self.SOE_LoopSamples)
+        self.verticalLayout_21.addLayout(self.SOE_LoopMesurementsLayout)
         self.SOE_RightLayout.addWidget(self.SOE_Loop)
         self.SOE_SoundTypeBox = QtWidgets.QGroupBox(self.SoundEditor)
         self.SOE_SoundTypeBox.setObjectName("SOE_SoundTypeBox")
@@ -1650,8 +1679,11 @@ class Ui_MainWindow(object):
         self.SOE_File.setTitle(_translate("MainWindow", "File"))
         self.SOE_File_Browse.setText(_translate("MainWindow", "Browse"))
         self.SOE_Loop.setTitle(_translate("MainWindow", "Loop"))
-        self.SOE_LoopStartLabel.setText(_translate("MainWindow", "Sample Start"))
-        self.SOE_LoopEndLabel.setText(_translate("MainWindow", "Sample End"))
+        self.SOE_LoopStartLabel.setText(_translate("MainWindow", "Start"))
+        self.SOE_LoopEndLabel.setText(_translate("MainWindow", "End"))
+        self.SOE_LoopMesurementsLabel.setText(_translate("MainWindow", "Measurements:"))
+        self.SOE_LoopSeconds.setText(_translate("MainWindow", "Seconds"))
+        self.SOE_LoopSamples.setText(_translate("MainWindow", "Samples"))
         self.SOE_SoundTypeBox.setTitle(_translate("MainWindow", "Sound Types"))
         self.SOE_SelectAll.setText(_translate("MainWindow", "Select All"))
         self.SOE_PlayAudio.setText(_translate("MainWindow", "Play Audio"))
