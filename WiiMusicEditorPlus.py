@@ -34,12 +34,6 @@ defaultStyle = ""
 lastExtraFileDirectory = LoadSetting("Paths","LastExtraLoadedPath","")
 lastFileDirectory = LoadSetting("Paths","LastLoadedPath","")
 
-if(editor.file.path != ""):
-	try:
-		PrepareFile()
-	except:
-		editor.file.path = ""
-
 def AllowType(type):
     return (editor.file.type == LoadType.Rom or editor.file.type == type)
 
@@ -406,6 +400,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SOE_SoundTypeBox.setEnabled(False)
             self.SOE_File_Label.setText(self.tr("Load a Wav-Type File"))
             self.SOE_Loop.setEnabled(False)
+            self.SOE_Loop.setCheckable(False)
             self.DiscordUpdate(6)
         else:
             ShowError(self.tr("Unable to load sound editor"),self.tr("Must load Wii Music Rom or Brsar"))
@@ -1049,8 +1044,10 @@ class Window(QMainWindow, Ui_MainWindow):
                 if(self.SOE_LoopSeconds.isChecked()): samples /= wav.getframerate()
                 self.SOE_LoopStart.setValue(0)
                 self.SOE_LoopEnd.setValue(samples)
+                self.SOE_Loop.setCheckable(True)
             else:
                 self.SOE_Loop.setEnabled(False)
+                self.SOE_Loop.setCheckable(False)
 
     def Button_SOE_Patch(self):
         if(pathlib.Path(self.extraFile).suffix == ".wav"):
@@ -1105,6 +1102,11 @@ if __name__ == "__main__":
         FirstSetupWindow(app,translator)
     win = Window()
     win.show()
+    if(editor.file.path != ""):
+        try:
+            PrepareFile()
+        except:
+            editor.file.path = ""
     if(editor.file.path == "" and LoadSetting("Paths","CurrentLoadedFile","") != ""): ShowError(_translate("Window","Could not load file"),_translate("Window","One or more errors have occurred"))
     if(LoadSetting("Settings","AutoUpdate",True)):
         try:

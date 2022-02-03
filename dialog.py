@@ -81,6 +81,7 @@ class RevertChangesWindow(QDialog,Ui_Revert):
         if(self.Text.isChecked()):
             try:
                 copyfile(GetMessagePath()+"/message.carc.backup",GetMessagePath()+"/message.carc")
+                if(path.isfile(GetMessagePath()+'/message.d/new_music_message.txt')): remove(GetMessagePath()+'/message.d/new_music_message.txt')
                 GetSongNames()
                 for section in sections:
                     if(RecordType.TextSong in section or RecordType.TextStyle in section): ini.remove_section(section)

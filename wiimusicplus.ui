@@ -2508,6 +2508,13 @@ padding-bottom: 6px;
                 </layout>
                </item>
                <item>
+                <widget class="Line" name="SOE_LoopLineH">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <layout class="QHBoxLayout" name="SOE_LoopMesurementsLayout">
                  <item>
                   <widget class="QLabel" name="SOE_LoopMesurementsLabel">
