@@ -31,21 +31,20 @@ class Download(QThread):
 
         file.close()
 
-        if(path.isfile(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): remove(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
-        elif(path.isdir(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))): rmtree(SavePath()+"/WiiMusicEditorPlus"+ChooseFromOS([".exe",".app",""]))
-
-        if(currentSystem != "Mac"):
+        if(currentSystem == "Linux"):
+            if(path.isfile(SavePath()+"/WiiMusicEditorPlus")): remove(SavePath()+"/WiiMusicEditorPlus")
             zip = ZipFile(SavePath()+"/downloaded.zip")
             zip.extractall(SavePath())
             zip.close()
-        else:
+        elif (currentSystem == "Mac"):
+            if(path.isdir(SavePath()+"/WiiMusicEditorPlus.app")): rmtree(SavePath()+"/WiiMusicEditorPlus.app")
             zip = ZipFile(SavePath()+"/downloaded.zip")
             for file in zip.infolist():
                 zip.extract(file, SavePath())
                 call(["chmod","u+x",path.join(SavePath(), file.filename)])
             zip.close()
 
-        remove(SavePath()+"/downloaded.zip")
+        if(currentSystem != "Windows"): remove(SavePath()+"/downloaded.zip")
         UpdateThread.done.emit()
 
 class UpdateWindow(QDialog,Ui_Update):
