@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./WiiMusicEditorPlus
+./WiiMusicEditorPlus/WiiMusicEditorPlus
