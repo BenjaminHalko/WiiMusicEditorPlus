@@ -1481,6 +1481,7 @@ def SavePath():
 
 def HelperPath():
 	if getattr(sys, 'frozen', False):
+		if(currentSystem == "Mac"): return FullPath+"/Contents/Resources/WiiMusicEditorPlus/Helper"
 		return sys._MEIPASS+"/Helper"
 	else:
 		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
