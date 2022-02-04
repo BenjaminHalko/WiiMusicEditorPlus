@@ -7,7 +7,7 @@ class ShowWarning(QDialog,Ui_Warning):
         super().__init__(parent)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint,False)
         self.setupUi(self)
-        self.WarningMessage.setText(message)
+        self.WarningText.setText(message)
         self.WarningClose.clicked.connect(self.close)
         self.show()
         self.exec()

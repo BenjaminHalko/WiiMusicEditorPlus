@@ -1,4 +1,5 @@
 from os import path, remove
+import pathlib
 from editor import HelperPath, LoadSetting, FullPath, currentSystem, ChooseFromOS, version, SavePath, GivePermission
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
@@ -7,12 +8,14 @@ from subprocess import Popen
 from requests import get, ConnectionError, Timeout
 from zipfile import ZipFile
 from sys import exit as sys_exit
-from shutil import copyfile, rmtree
+from shutil import copyfile, rmtree, move
 from subprocess import call
+from warning import ShowWarning
 
 class Progress():
     def update(self, op_code, cur_count, max_count=None, message=''):
         if(op_code > 10): UpdateThread.progress.emit(cur_count/max_count*100)
+legacymode = False
 
 class Download(QThread):
     progress = pyqtSignal(int)
@@ -20,6 +23,7 @@ class Download(QThread):
     version = "null"
 
     def run(self):
+        global legacymode
         file = open(SavePath()+"/downloaded.zip", "wb")
         with get("https://github.com/BenjaminHalko/WiiMusicEditorPlus/releases/download/"+self.version+"/WiiMusicEditorPlus-"+currentSystem+".zip",stream=True) as response:
             total =  int(response.headers['content-length'])
@@ -37,6 +41,7 @@ class Download(QThread):
         if(currentSystem != "Mac"):
             zip = ZipFile(SavePath()+"/downloaded.zip")
             zip.extractall(SavePath())
+            if(len(zip.infolist()) > 5): legacymode = True
             zip.close()
         else:
             zip = ZipFile(SavePath()+"/downloaded.zip")
@@ -44,7 +49,7 @@ class Download(QThread):
                 zip.extract(file, SavePath())
                 call(["chmod","u+x",path.join(SavePath(), file.filename)])
             zip.close()
-
+        
         remove(SavePath()+"/downloaded.zip")
         UpdateThread.done.emit()
 
@@ -89,7 +94,14 @@ class UpdateWindow(QDialog,Ui_Update):
         copyfile(HelperPath()+"/Extra/update"+updateExt,SavePath()+"/update"+updateExt)
 
         if(currentSystem == "Windows"):
-            Popen([SavePath()+"/update.bat",FullPath])
+            if(legacymode):
+                move(SavePath()+"/WiiMusicEditorPlus",pathlib.Path(FullPath).parent)
+                if(path.exists(SavePath()+"/update.bat")): remove(SavePath()+"/update.bat")
+                copyfile(HelperPath()+"/Extra/update-legacy.bat",SavePath()+"/update.bat")
+                ShowWarning(f"Program format changed to folder\nNew path of program: {pathlib.Path(FullPath).parent}/WiiMusicEditorPlus/WiiMusicEditorPlus.exe",self)
+                Popen([SavePath()+"/update.bat",FullPath])
+                Popen(path.dirname(FullPath)+"/WiiMusicEditorPlus/WiiMusicEditorPlus.exe")
+            else: Popen([SavePath()+"/update.bat",FullPath])
         else:
             GivePermission(SavePath()+"/update.sh")
             if(currentSystem == "Linux"): GivePermission(SavePath()+'/WiiMusicEditorPlus')
