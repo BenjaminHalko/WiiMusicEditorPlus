@@ -9,16 +9,14 @@ import webbrowser
 import time
 import wave
 
-import editor
-from editor import ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
-
-if(currentSystem == "Mac"): os.environ["QT_MAC_WANTS_LAYER"] = "1"
-
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QLocale, QTranslator
 from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
+
+import editor
+from editor import ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 
 app = QApplication([])
 
