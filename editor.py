@@ -1481,7 +1481,7 @@ def SavePath():
 
 def HelperPath():
 	if getattr(sys, 'frozen', False):
-		if(currentSystem == "Mac"): return ProgramPath+"/Contents/Resources/WiiMusicEditorPlus/Helper"
+		if(currentSystem == "Mac"): return FullPath+"/Contents/Resources/WiiMusicEditorPlus/Helper"
 		return sys._MEIPASS+"/Helper"
 	else:
 		return ProgramPath+"/crossplatformhelpers/"+currentSystem+"/Helper"
@@ -1537,8 +1537,8 @@ for i in range(4):
 
 if getattr(sys, 'frozen', False):
 	if(sys.platform == "darwin"):
-		ProgramPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent.parent)
-		FullPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent)
+		ProgramPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent.parent.parent)
+		FullPath = os.path.dirname(pathlib.PosixPath(os.path.dirname(sys.executable)).parent.parent)
 	else:
 		ProgramPath = os.path.dirname(sys.executable)
 		FullPath = sys.executable
