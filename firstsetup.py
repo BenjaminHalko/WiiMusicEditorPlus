@@ -115,7 +115,7 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
 
     def GetDolphin(self):
         file = QFileDialog() 
-        file.setFileMode(QFileDialog.AnyFile)
+        file.setFileMode(QFileDialog.ExistingFile)
         file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin.app)","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
