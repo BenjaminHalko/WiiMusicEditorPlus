@@ -10,7 +10,7 @@ import time
 import wave
 
 import editor
-from editor import ConvertWav, ProgramPath, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 
 if(currentSystem == "Mac"): os.environ["QT_MAC_WANTS_LAYER"] = "1"
 
