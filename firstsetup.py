@@ -97,8 +97,8 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
         file.setDirectory(ProgramPath)
         if file.exec_():
             path = file.selectedFiles()[0]
-            if(filter == ""):
-                if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+            if(os.path.isdir(path)):
+                if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")): path = path+"/DATA"
                 if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")):
                     ShowError(self.tr("Not a valid Wii Music folder"),self.tr("Files and sys folder not found"),self)
                     return False
