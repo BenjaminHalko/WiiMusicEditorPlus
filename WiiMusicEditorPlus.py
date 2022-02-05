@@ -205,7 +205,7 @@ class Window(QMainWindow, Ui_MainWindow):
         global lastFileDirectory
         file = QtWidgets.QFileDialog()
         if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        else: file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         file.setNameFilter(filter)
         file.setDirectory(lastFileDirectory)
         if file.exec_():
@@ -226,7 +226,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
         file = QtWidgets.QFileDialog() 
-        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         file.setNameFilter(filter)
         file.setViewMode(QtWidgets.QFileDialog.Detail)
         file.setDirectory(lastExtraFileDirectory)
@@ -424,7 +424,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def PatchMainDolWithGeckoCode(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter("Geckocodes (*.ini *.gct)")
             file.setDirectory(os.path.dirname(GetGeckoPath()))
             if(file.exec()):
@@ -433,7 +433,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 SuccessWindow(self.tr("Main.dol Patched!"))
         elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             if(editor.file.type == LoadType.Midi):
                 file.setNameFilter("Geckocodes (*.ini *.gct)")
             else:
@@ -475,7 +475,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def ImportFiles(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter(f"""{self.tr("All supported files")} (*.zip *.brsar *.carc *.dol *.ini)
             Zip File (*.zip)
             {self.tr("Sound Archive")} (*.brsar)
@@ -531,7 +531,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def ImportChanges(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter(self.tr("Rom Change File")+" (*.ini)")
             file.setDirectory(lastFileDirectory)
             if(file.exec()):

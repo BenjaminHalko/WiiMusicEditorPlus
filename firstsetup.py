@@ -92,7 +92,7 @@ class FirstSetupWindow(QDialog,Ui_FirstSetup):
         global lastFileDirectory
         file = QFileDialog()
         if(filter == ""): file.setFileMode(QFileDialog.DirectoryOnly)
-        else: file.setFileMode(QFileDialog.AnyFile)
+        else: file.setFileMode(QFileDialog.ExistingFile)
         file.setNameFilter(filter)
         file.setDirectory(ProgramPath)
         if file.exec_():
