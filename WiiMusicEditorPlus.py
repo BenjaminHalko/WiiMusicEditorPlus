@@ -1099,7 +1099,6 @@ if __name__ == "__main__":
         translator.load(QLocale(),TranslationPath()+f"/{languageList[lang]}.qm")
         app.installTranslator(translator)
         RetranslateSongNames()
-    ShowError("Test Error",ProgramPath)
     if(editor.firstStart):
         FirstSetupWindow(app,translator)
     win = Window()

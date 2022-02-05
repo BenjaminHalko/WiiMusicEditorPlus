@@ -370,7 +370,7 @@ def Run(command):
 			CREATE_NO_WINDOW = 0x08000000
 			subprocess.run(command,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=CREATE_NO_WINDOW)
 		else:
-			subprocess.run(command) #,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE
+			subprocess.run(command,stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
 	except Exception as e:
 		ShowError("Could not execute command:","Command: "+str(command)+"\nError: "+str(e))
 
