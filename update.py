@@ -117,7 +117,7 @@ class UpdateWindow(QDialog,Ui_Update):
 def CheckForUpdate():
     try:
         tag = GetReleaseTag()
-        if(tag != version): return tag
+        if(tag != version and tag != "test"): return tag
         else: return "null"
     except (ConnectionError, Timeout):
         return "null"
@@ -137,6 +137,6 @@ def GetReleaseTag():
                     if(j["name"] == f"WiiMusicEditorPlus-{currentSystem}.zip"):
                         looking = False
                         break
-    except:
+    except Exception:
         i = 0
     return data[i]["tag_name"]
