@@ -108,8 +108,8 @@ class SettingsWindow(QDialog,Ui_Settings):
         self.RomLanguageChange()
 
     def GetDolphin(self):
-        file = QtWidgets.QFileDialog() 
-        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file = QtWidgets.QFileDialog()
+        file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)","Dolphin (Dolphin.app)","Dolphin (dolphin-emu)"]))
         if file.exec_():
             editor.dolphinPath = file.selectedFiles()[0]
