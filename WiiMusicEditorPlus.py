@@ -1099,6 +1099,7 @@ if __name__ == "__main__":
         translator.load(QLocale(),TranslationPath()+f"/{languageList[lang]}.qm")
         app.installTranslator(translator)
         RetranslateSongNames()
+    ShowError("Test Error",ProgramPath)
     if(editor.firstStart):
         FirstSetupWindow(app,translator)
     win = Window()
@@ -1116,7 +1117,6 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     CheckboxSeperateSongPatching(win)
-    ShowError("Test Error",ProgramPath)
     app.exec()
     if(win.discord): win.discord.close()
     sys.exit()
