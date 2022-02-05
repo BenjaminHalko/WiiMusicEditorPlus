@@ -1116,6 +1116,7 @@ if __name__ == "__main__":
         except:
             print("Could Not Update")
     CheckboxSeperateSongPatching(win)
+    ShowError("Test Error",ProgramPath)
     app.exec()
     if(win.discord): win.discord.close()
     sys.exit()
