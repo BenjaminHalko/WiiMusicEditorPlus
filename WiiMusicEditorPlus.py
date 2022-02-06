@@ -15,12 +15,13 @@ from PyQt5.Qt import QFontDatabase
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
+import editor
+from editor import ConvertWav, ProgramPath, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
+
 app = QApplication([])
 
 from wiimusicplus_ui import Ui_MainWindow 
 
-import editor
-from editor import ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
 from settings import SettingsWindow, CheckboxSeperateSongPatching
@@ -204,13 +205,13 @@ class Window(QMainWindow, Ui_MainWindow):
         global lastFileDirectory
         file = QtWidgets.QFileDialog()
         if(filter == ""): file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        else: file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        else: file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         file.setNameFilter(filter)
         file.setDirectory(lastFileDirectory)
         if file.exec_():
             path = file.selectedFiles()[0]
-            if(filter == ""):
-                if(os.path.isdir(path) and (not os.path.exists(path+"/files") or not os.path.exists(path+"/sys"))): path = path+"/DATA"
+            if(os.path.isdir(path)):
+                if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")): path = path+"/DATA"
                 if(not os.path.exists(path+"/files") or not os.path.exists(path+"/sys")):
                     ShowError(self.tr("Not a valid Wii Music folder"),self.tr("Files and sys folder not found"),self)
                     return False
@@ -225,7 +226,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def LoadExtraFile(self,filter):
         global lastExtraFileDirectory
         file = QtWidgets.QFileDialog() 
-        file.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         file.setNameFilter(filter)
         file.setViewMode(QtWidgets.QFileDialog.Detail)
         file.setDirectory(lastExtraFileDirectory)
@@ -423,7 +424,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def PatchMainDolWithGeckoCode(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter("Geckocodes (*.ini *.gct)")
             file.setDirectory(os.path.dirname(GetGeckoPath()))
             if(file.exec()):
@@ -432,7 +433,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 SuccessWindow(self.tr("Main.dol Patched!"))
         elif(editor.file.type == LoadType.Gct or editor.file.type == LoadType.Dol):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             if(editor.file.type == LoadType.Midi):
                 file.setNameFilter("Geckocodes (*.ini *.gct)")
             else:
@@ -474,7 +475,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def ImportFiles(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter(f"""{self.tr("All supported files")} (*.zip *.brsar *.carc *.dol *.ini)
             Zip File (*.zip)
             {self.tr("Sound Archive")} (*.brsar)
@@ -530,7 +531,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def ImportChanges(self):
         if(editor.file.type == LoadType.Rom):
             file = QFileDialog()
-            file.setFileMode(QFileDialog.AnyFile)
+            file.setFileMode(QFileDialog.ExistingFile)
             file.setNameFilter(self.tr("Rom Change File")+" (*.ini)")
             file.setDirectory(lastFileDirectory)
             if(file.exec()):
