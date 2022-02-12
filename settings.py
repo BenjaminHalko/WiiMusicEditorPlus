@@ -66,7 +66,7 @@ class SettingsWindow(QDialog,Ui_Settings):
     def Checkmark(self,checkmark,setting):
         SaveSetting("Settings",setting,(checkmark.checkState() == 2))
         if(setting == "UnsafeMode"): editor.unsafeMode = (checkmark.checkState() == 2)
-        if(setting == "LoadSongSeparately"): CheckboxSeperateSongPatching(self.otherWindow)
+        if(setting == "LoadSongSeparately"): self.otherWindow.SE_SeperateSongPatching()
 
     def RegionChange(self):
         if(editor.file.type != LoadType.Rom):
@@ -132,17 +132,3 @@ class SettingsWindow(QDialog,Ui_Settings):
                 self.hide()
                 ShowError(self.tr("Not a Dolphin Save Directory"),self.tr("Wii and GameSettings folder not found"))
                 self.show()
-
-def CheckboxSeperateSongPatching(otherWindow):
-    if(LoadSetting("Settings","LoadSongSeparately",False)):
-        otherWindow.SE_Midi_File_Song_Button.show()
-        otherWindow.SE_Midi_File_Song_Title.show()
-        otherWindow.SE_Midi_File_Song_Label.show()
-        otherWindow.SE_Midi_File_Score_Title.show()
-        otherWindow.SE_Midi_File_Replace_Song.show()
-    else:
-        otherWindow.SE_Midi_File_Song_Button.hide()
-        otherWindow.SE_Midi_File_Song_Title.hide()
-        otherWindow.SE_Midi_File_Song_Label.hide()
-        otherWindow.SE_Midi_File_Score_Title.hide()
-        otherWindow.SE_Midi_File_Replace_Song.hide()

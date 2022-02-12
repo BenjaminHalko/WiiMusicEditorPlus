@@ -574,7 +574,8 @@ def SizeIncreaseBrsar(file,sizeDifference,startoffset):
 			size = file.read(4)
 			file.seek(offset)
 			file.write((int.from_bytes(size,"big")+sizeDifference).to_bytes(4, 'big'))
-			offset += 8
+		offset += 8
+		if(offset > startoffset):
 			file.seek(offset)
 			size = file.read(4)
 			file.seek(offset)
@@ -1563,4 +1564,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "1.0.0"
+version = "1.0.1"

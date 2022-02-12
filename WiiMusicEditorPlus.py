@@ -24,7 +24,7 @@ from wiimusicplus_ui import Ui_MainWindow
 
 from update import UpdateWindow, CheckForUpdate
 from errorhandler import ShowError
-from settings import SettingsWindow, CheckboxSeperateSongPatching
+from settings import SettingsWindow
 from dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, ConfirmDialog, DownloadSongThread
 from firstsetup import FirstSetupWindow
 from pypresence import Presence
@@ -634,7 +634,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def SE_Patchable(self):
         allow = True
         if(self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
-            if(self.brseqInfo[1] == 0) or (self.brseqInfo[0] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings","LoadSongSeparately",False)): allow = False
+            if(self.brseqInfo[1] == 0) or (self.brseqInfo[0] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings","LoadSongSeparately",False) and (Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro)): allow = False
         elif(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
             if(self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
                 self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][self.SE_SongToChange.currentRow()] and
@@ -677,11 +677,29 @@ class Window(QMainWindow, Ui_MainWindow):
         if(self.SE_Midi_Length_Measures.isChecked()): self.SE_Midi_Length_Input.setValue(round(int(self.SE_Midi_Length_Input.text())/(3+self.SE_Midi_TimeSignature_4.isChecked())))
         else: self.SE_Midi_Length_Input.setValue(round(int(self.SE_Midi_Length_Input.text())*(3+self.SE_Midi_TimeSignature_4.isChecked())))
 
+    def SE_SeperateSongPatching(self):
+        if LoadSetting("Settings","LoadSongSeparately",False):
+            self.SE_Midi_File_Song_Button.show()
+            self.SE_Midi_File_Song_Title.show()
+            self.SE_Midi_File_Song_Label.show()
+            self.SE_Midi_File_Score_Title.show()
+            self.SE_Midi_File_Replace_Song.show()
+            enabled = (not self.SE_Midi.isEnabled() or Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro)
+            self.SE_Midi_File_Song_Button.setEnabled(enabled)
+            self.SE_Midi_File_Song_Title.setEnabled(enabled)
+            self.SE_Midi_File_Song_Label.setEnabled(enabled)
+            self.SE_Midi_File_Replace_Song.setEnabled(enabled)
+        else:
+            self.SE_Midi_File_Song_Button.hide()
+            self.SE_Midi_File_Song_Title.hide()
+            self.SE_Midi_File_Song_Label.hide()
+            self.SE_Midi_File_Score_Title.hide()
+            self.SE_Midi_File_Replace_Song.hide()
+
     def List_SE_SongToChange(self):
         if(AllowType(LoadType.Brsar)):
-            if(not self.SE_Midi.isCheckable()):
-                self.SE_Midi.setCheckable(True)
-                self.SE_Midi.setEnabled(True)
+            self.SE_Midi.setCheckable(True)
+            self.SE_Midi.setEnabled(True)
         if(AllowType(LoadType.Carc)):
             if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
                 self.SE_ChangeSongText.setEnabled(True)
@@ -696,6 +714,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.SE_Midi.setCheckable(False)
                 self.SE_Midi.setEnabled(True)
         if(AllowType(LoadType.Brsar)):
+            self.SE_SeperateSongPatching()
             self.SE_StyleLabel.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
             self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
             self.SE_OpenDefaultStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
@@ -716,7 +735,7 @@ class Window(QMainWindow, Ui_MainWindow):
                         tmpInfo[1] = midiInfo[0]
                         tmpLength[1] = midiInfo[1]
                 
-                if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False)):
+                if(not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings","LoadSongSeparately",False) or not self.SE_Midi_File_Replace_Song.isEnabled()):
                     tmpInfo[0] = tmpInfo[1]
                     tmpLength[0] = tmpLength[1]
                     tmpPath[0] = ""
@@ -1115,7 +1134,7 @@ if __name__ == "__main__":
             if(version != "null"): UpdateWindow(win,version)
         except:
             print("Could Not Update")
-    CheckboxSeperateSongPatching(win)
+    win.SE_SeperateSongPatching()
     app.exec()
     if(win.discord): win.discord.close()
     sys.exit()
