@@ -642,32 +642,35 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SE_Patch.setEnabled(allow)
 
     def Button_SE_SongToChange(self,song=False):
-        if(self.LoadExtraFile(self.tr("Midi-Type File")+" (*.midi *.mid *.brseq *.rseq)")):
-            midiInfo = LoadMidi(self.extraFile)
-            if(midiInfo[0] != False):
-                if(song):
-                    self.SE_Midi_File_Song_Label.setText(os.path.basename(self.extraFile))
-                else:
-                    self.SE_Midi_File_Score_Label.setText(os.path.basename(self.extraFile))
-                    self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
-                    self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
-                    self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
-                    self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
-                    self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
-                    self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
-                    if(self.SE_Midi_Length_Measures.isChecked()):
-                        self.SE_Midi_Length_Measures.setAutoExclusive(False)
-                        self.SE_Midi_Length_Beats.setAutoExclusive(False)
-                        self.SE_Midi_Length_Measures.setChecked(False)
-                        self.SE_Midi_Length_Beats.setChecked(True)
-                        self.SE_Midi_Length_Measures.setAutoExclusive(True)
-                        self.SE_Midi_Length_Beats.setAutoExclusive(True)
-                    self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
-                    self.SE_Midi_Length_Input.setValue(midiInfo[3])
-                self.brseqInfo[1-song] = midiInfo[0]
-                self.brseqLength[1-song] = midiInfo[1]
-                self.brseqPath[1-song] = self.extraFile
-                self.SE_Patchable()
+        try:
+            if(self.LoadExtraFile(self.tr("Midi-Type File")+" (*.midi *.mid *.brseq *.rseq)")):
+                midiInfo = LoadMidi(self.extraFile)
+                if(midiInfo[0] != False):
+                    if(song):
+                        self.SE_Midi_File_Song_Label.setText(os.path.basename(self.extraFile))
+                    else:
+                        self.SE_Midi_File_Score_Label.setText(os.path.basename(self.extraFile))
+                        self.SE_Midi_TimeSignature_3.setAutoExclusive(False)
+                        self.SE_Midi_TimeSignature_4.setAutoExclusive(False)
+                        self.SE_Midi_TimeSignature_3.setChecked(midiInfo[4] == 3)
+                        self.SE_Midi_TimeSignature_4.setChecked(midiInfo[4] != 3)
+                        self.SE_Midi_TimeSignature_3.setAutoExclusive(True)
+                        self.SE_Midi_TimeSignature_4.setAutoExclusive(True)
+                        if(self.SE_Midi_Length_Measures.isChecked()):
+                            self.SE_Midi_Length_Measures.setAutoExclusive(False)
+                            self.SE_Midi_Length_Beats.setAutoExclusive(False)
+                            self.SE_Midi_Length_Measures.setChecked(False)
+                            self.SE_Midi_Length_Beats.setChecked(True)
+                            self.SE_Midi_Length_Measures.setAutoExclusive(True)
+                            self.SE_Midi_Length_Beats.setAutoExclusive(True)
+                        self.SE_Midi_Tempo_Input.setValue(midiInfo[2])
+                        self.SE_Midi_Length_Input.setValue(midiInfo[3])
+                    self.brseqInfo[1-song] = midiInfo[0]
+                    self.brseqLength[1-song] = midiInfo[1]
+                    self.brseqPath[1-song] = self.extraFile
+                    self.SE_Patchable()
+        except Exception as e:
+            ShowError("Error",str(e))
             
     def Button_SE_Midi_TimeSignature(self):
         if(self.SE_Midi_Length_Measures.isChecked()):
@@ -697,31 +700,34 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_Midi_File_Replace_Song.hide()
 
     def List_SE_SongToChange(self):
-        if(AllowType(LoadType.Brsar)):
-            self.SE_Midi.setCheckable(True)
-            self.SE_Midi.setEnabled(True)
-        if(AllowType(LoadType.Carc)):
-            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
-                self.SE_ChangeSongText.setEnabled(True)
-                self.SE_ChangeSongText_Name_Input.setText(editor.textFromTxt[0][self.SE_SongToChange.currentRow()])
-                self.SE_ChangeSongText_Desc_Input.setText(editor.textFromTxt[1][self.SE_SongToChange.currentRow()])
-                self.SE_ChangeSongText_Genre_Input.setText(editor.textFromTxt[2][self.SE_SongToChange.currentRow()])
-            else:
-                self.SE_ChangeSongText.setEnabled(False)
-                self.SE_ChangeSongText_Name_Input.setText("")
-                self.SE_ChangeSongText_Desc_Input.setText("")
-                self.SE_ChangeSongText_Genre_Input.setText("")
-                self.SE_Midi.setCheckable(False)
+        try:
+            if(AllowType(LoadType.Brsar)):
+                self.SE_Midi.setCheckable(True)
                 self.SE_Midi.setEnabled(True)
-        if(AllowType(LoadType.Brsar)):
-            self.SE_SeperateSongPatching()
-            self.SE_StyleLabel.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
-            self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
-            self.SE_OpenDefaultStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
-            self.SE_OpenStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
-            if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular): self.SE_StyleText.setText("")
-            else: self.SE_StyleText.setText(Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name)
-        self.SE_Patchable()
+            if(AllowType(LoadType.Carc)):
+                if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Menu):
+                    self.SE_ChangeSongText.setEnabled(True)
+                    self.SE_ChangeSongText_Name_Input.setText(editor.textFromTxt[0][self.SE_SongToChange.currentRow()])
+                    self.SE_ChangeSongText_Desc_Input.setText(editor.textFromTxt[1][self.SE_SongToChange.currentRow()])
+                    self.SE_ChangeSongText_Genre_Input.setText(editor.textFromTxt[2][self.SE_SongToChange.currentRow()])
+                else:
+                    self.SE_ChangeSongText.setEnabled(False)
+                    self.SE_ChangeSongText_Name_Input.setText("")
+                    self.SE_ChangeSongText_Desc_Input.setText("")
+                    self.SE_ChangeSongText_Genre_Input.setText("")
+                    self.SE_Midi.setCheckable(False)
+                    self.SE_Midi.setEnabled(True)
+            if(AllowType(LoadType.Brsar)):
+                self.SE_SeperateSongPatching()
+                self.SE_StyleLabel.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+                self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+                self.SE_OpenDefaultStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+                self.SE_OpenStyleEditor.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
+                if(Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Regular): self.SE_StyleText.setText("")
+                else: self.SE_StyleText.setText(Styles[GetDefaultStyle(self.SE_SongToChange.currentRow(),False)].Name)
+            self.SE_Patchable()
+        except Exception as e:
+            ShowError("Error",str(e))
 
     def Button_SE_Patch(self):
         try:
