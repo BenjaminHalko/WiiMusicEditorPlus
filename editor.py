@@ -1564,4 +1564,4 @@ file = LoadedFile(LoadSetting("Paths","CurrentLoadedFile",""),None)
 if(not os.path.exists(file.path)): file.path = ""
 from errorhandler import ShowError
 
-version = "1.0.1a"
+version = "1.0.2"
