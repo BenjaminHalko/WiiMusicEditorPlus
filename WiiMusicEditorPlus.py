@@ -16,7 +16,7 @@ from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
 import editor
-from editor import ConvertWav, ProgramPath, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
+from editor import GetSongNames, ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
 
 app = QApplication([])
 
@@ -493,10 +493,19 @@ class Window(QMainWindow, Ui_MainWindow):
                     else:
                         files = [path]
                     for newfile in files:
-                        if(pathlib.Path(newfile).suffix == ".brsar"): copyfile(newfile,GetBrsarPath())
-                        elif(pathlib.Path(newfile).suffix == ".carc"): copyfile(newfile,GetMessagePath()+"/message.carc")
-                        elif(pathlib.Path(newfile).suffix == ".dol"): copyfile(newfile,GetMainDolPath())
-                        elif(pathlib.Path(newfile).suffix == ".ini"): copyfile(newfile,GetGeckoPath())
+                        if(pathlib.Path(newfile).suffix == ".brsar"):
+                            if(not os.path.isfile(GetBrsarPath()+".backup")): copyfile(GetBrsarPath(),GetBrsarPath()+".backup")
+                            copyfile(newfile,GetBrsarPath())
+                        elif(pathlib.Path(newfile).suffix == ".carc"):
+                            if(not os.path.isfile(GetMessagePath()+"/message.carc.backup")): copyfile(GetMessagePath()+"/message.carc",GetMessagePath()+"/message.carc.backup")
+                            copyfile(newfile,GetMessagePath()+"/message.carc")
+                            if(os.path.isfile(GetMessagePath()+'/message.d/new_music_message.txt')): os.remove(GetMessagePath()+'/message.d/new_music_message.txt')
+                            GetSongNames()
+                        elif(pathlib.Path(newfile).suffix == ".dol"):
+                            if(not os.path.isfile(GetMainDolPath()+".backup")): copyfile(GetMainDolPath(),GetMainDolPath()+".backup")
+                            copyfile(newfile,GetMainDolPath())
+                        elif(pathlib.Path(newfile).suffix == ".ini"):
+                            copyfile(newfile,GetGeckoPath())
                     if(pathlib.Path(path).suffix == "zip"):
                         rmtree(SavePath()+"/tmp")
                     SuccessWindow(self.tr("Files Successfully Imported!"))            

@@ -376,15 +376,14 @@ def Run(command):
 
 def DecodeTxt():
 	path = GetMessagePath()
-	if(not os.path.isfile(GetMessagePath()+'/message.d/new_music_message.txt')):
-		try:
-			if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
-			Run([HelperPath()+'/Wiimms/wszst','extract',path+'/message.carc'])
-			os.remove(path+"/message.d/wszst-setup.txt")
-			Run([HelperPath()+'/Wiimms/wbmgt','decode',path+'/message.d/new_music_message.bmg'])
-			os.remove(path+"/message.d/new_music_message.bmg")
-		except Exception as e:
-			ShowError("Could not decode text file",str(e))
+	try:
+		if(os.path.isdir(path+"/message.d")): rmtree(path+"/message.d")
+		Run([HelperPath()+'/Wiimms/wszst','extract',path+'/message.carc'])
+		os.remove(path+"/message.d/wszst-setup.txt")
+		Run([HelperPath()+'/Wiimms/wbmgt','decode',path+'/message.d/new_music_message.bmg'])
+		os.remove(path+"/message.d/new_music_message.bmg")
+	except Exception as e:
+		ShowError("Could not decode text file",str(e))
 
 def EncodeTxt():
 	path = GetMessagePath()
