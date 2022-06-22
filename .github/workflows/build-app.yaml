@@ -7,12 +7,11 @@ jobs:
     name: Build Windows
     runs-on: windows-latest
     steps:
-    - name: Building Windows
-      uses: actions/setup-python@v4
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.9'
         architecture: 'x64'
-      run: |
+    - run: |
         pip install requirements.txt
         build-windows.bat
     - uses: actions/upload-artifact@v3
