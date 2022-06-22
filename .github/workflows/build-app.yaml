@@ -10,9 +10,7 @@ jobs:
       with:
         python-version: '3.9'
         architecture: 'x64'
-    - run: |
-      pip install requirements.txt
-      build-windows.bat
+    - run: pip install requirements.txt | build-windows.bat
     - uses: actions/upload-artifact@v3
       with:
         name: editor-windows
