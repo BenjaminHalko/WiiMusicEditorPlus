@@ -12,9 +12,14 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v4
       with: 
-        python-version: '3.x'
+        python-version: '3.9'
         architecture: 'x64'
     - name: Build It
       run: |
         pip install requirements.txt
         build-windows.bat
+    - name: Upload Windows Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: editor-windows
+        path: dist/WiiMusicEditorPlus-Windows.zip
