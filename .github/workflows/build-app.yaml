@@ -8,7 +8,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
     - name: Setup Python
       uses: actions/setup-python@v4
       with: 
@@ -16,7 +18,7 @@ jobs:
         architecture: 'x64'
     - name: Build It
       run: |
-        pip install requirements.txt
+        pip install -r requirements.txt
         build-windows.bat
     - name: Upload Windows Build
       uses: actions/upload-artifact@v3
