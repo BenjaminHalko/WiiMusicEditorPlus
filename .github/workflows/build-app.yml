@@ -1,0 +1,17 @@
+name: Build App
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      name: Build Windows
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
+      run: pip install requirements.txt
+      run: build-windows.bat
+      name: Upload Windows Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: editor-windows
+        path: dist/WiiMusicEditorPlus-Windows.zip
