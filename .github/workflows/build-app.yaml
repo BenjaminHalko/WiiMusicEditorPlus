@@ -33,3 +33,9 @@ jobs:
       with:
         name: WiiMusicEditorPlus-Windows
         path: dist
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo hi
