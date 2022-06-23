@@ -1,11 +1,20 @@
 name: Build App
 on: 
   workflow_dispatch:
-
+    inputs:
+      platform:
+        type: choice
+        description: Platform
+        options:
+        - All
+        - Windows
+        - Linux
+        - MacOS
 jobs:
   build-windows:
     name: Build Windows
     runs-on: windows-latest
+    if:  ${{ inputs.platform }} == 'All' or ${{ inputs.platform }} == 'Windows'
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v3
@@ -23,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: WiiMusicEditorPlus-Windows
-        path: dist/WiiMusicEditorPlus
+        path: dist
