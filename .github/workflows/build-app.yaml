@@ -14,7 +14,7 @@ jobs:
   build-windows:
     name: Build Windows
     runs-on: windows-latest
-    if:  ${{ github.event.inputs.platform }} == 'All' || ${{ github.event.inputs.platform }} == 'Windows'
+    if:  ${{ github.event.inputs.platform }} == 'All'
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v3
