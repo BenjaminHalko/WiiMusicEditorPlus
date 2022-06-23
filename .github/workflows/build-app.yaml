@@ -14,8 +14,9 @@ jobs:
   build-windows:
     name: Build Windows
     runs-on: windows-latest
-    if:  ${{ github.event.inputs.platform }} == 'All'
+    if:  ${{ github.event.inputs.platform }} != 'All'
     steps:
+    - run: echo ${{ github.event.inputs.platform }}
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Setup Python
