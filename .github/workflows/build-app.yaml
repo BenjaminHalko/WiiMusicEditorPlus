@@ -80,6 +80,7 @@ jobs:
       run: |
         pyinstaller --noconfirm --add-data crossplatformhelpers/Mac/Helper:Helper --add-data translations/translations:translations --icon=Icon/icon.ico WiiMusicEditorPlus.py
         platypus -y -B -R -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
+        rm -r dist/WiiMusicEditorPlus
       shell: bash
     - name: Upload Build
       uses: actions/upload-artifact@v3
