@@ -1,7 +1,7 @@
 mido==1.2.10
-pretty_midi==0.2.9
-psutil==5.8.0
+pretty_midi==0.2.10
+psutil==5.9.4
 pypresence==4.2.1
-PyQt5==5.15.4
-requests==2.26.0
-pyinstaller==4.5.1
+PyQt5==5.15.9
+requests==2.28.2
+pyinstaller==5.10.1
