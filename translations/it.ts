@@ -1062,7 +1062,7 @@ Wii Music Editor Plus!</translation>
     <message>
         <location filename="../firstsetup_ui.py" line="773"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube: &lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://www.youtube.com/BenjaminHalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Donate: &lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://ko-fi.com/benjaminhalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wiki: &lt;a href=&quot;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Discord: &lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://discord.gg/NC3wYAeCDs&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube: &lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot; &gt;https://www.youtube.com/BenjaminHalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dona: &lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt;&lt;span style =&quot; decorazione del testo: sottolineatura; colore:#ffaa00;&quot;&gt;https://ko-fi.com/benjaminhalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wiki: &lt;a href=&quot;https: //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot;&gt;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&lt;/span&gt;&lt;/ a&gt;&lt;/p&gt;&lt;p&gt;Discord: &lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot;&gt;https://discord .gg/NC3wYAeCDs&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube: &lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot; &gt;https://www.youtube.com/BenjaminHalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dona: &lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt;&lt;span style =&quot; decorazione del testo: sottolineatura; colore:#ffaa00;&quot;&gt;https://ko-fi.com/benjaminhalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wiki: &lt;a href=&quot;https: //github.com/BenjaminHalko/app/wiki&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot;&gt;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&lt;/span&gt;&lt;/ a&gt;&lt;/p&gt;&lt;p&gt;Discord: &lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt;&lt;span style=&quot; text-decoration: sottolineare; color:#ffaa00;&quot;&gt;https://discord .gg/NC3wYAeCDs&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2063,312 +2063,312 @@ Wii Music Editor Plus!</translation>
 <context>
     <name>Window</name>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="622"/>
+        <location filename="../app.py" line="622"/>
         <source>Currently Loaded Folder:</source>
         <translation>Cartella attualmente caricata:</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="750"/>
+        <location filename="../app.py" line="750"/>
         <source>Mii Maestro</source>
         <translation>Mii Maestro</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="751"/>
+        <location filename="../app.py" line="751"/>
         <source>Handbell Harmony</source>
         <translation>Armonia del campanello</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="859"/>
+        <location filename="../app.py" line="859"/>
         <source>Replaced</source>
         <translation>Sostituito</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="219"/>
+        <location filename="../app.py" line="219"/>
         <source>Not a valid Wii Music folder</source>
         <translation>Non è una cartella Wii Music valida</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="219"/>
+        <location filename="../app.py" line="219"/>
         <source>Files and sys folder not found</source>
         <translation>File e cartella sys non trovati</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="614"/>
+        <location filename="../app.py" line="614"/>
         <source>Currently Loaded File:</source>
         <translation>File attualmente caricato:</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="317"/>
+        <location filename="../app.py" line="317"/>
         <source>Load a Midi-Type file</source>
         <translation>Carica un file di tipo Midi</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="324"/>
+        <location filename="../app.py" line="324"/>
         <source>Unable to load song editor</source>
         <translation>Impossibile caricare l&apos;editor dei brani</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="324"/>
+        <location filename="../app.py" line="324"/>
         <source>Must load Wii Music Rom, Brsar, or Message File</source>
         <translation>È necessario caricare Wii Music Rom, Brsar o file di messaggi</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="341"/>
+        <location filename="../app.py" line="341"/>
         <source>Unable to load style editor</source>
         <translation>Impossibile caricare l&apos;editor di stile</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="341"/>
+        <location filename="../app.py" line="341"/>
         <source>Must load Wii Music Rom, Message File, or Geckocode</source>
         <translation>Devi caricare Wii Music Rom, Message File o Geckocode</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="360"/>
+        <location filename="../app.py" line="360"/>
         <source>Unable to load text editor</source>
         <translation>Impossibile caricare l&apos;editor di testo</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="360"/>
+        <location filename="../app.py" line="360"/>
         <source>Must load Wii Music Rom or Message File</source>
         <translation>È necessario caricare Wii Music Rom o un file di messaggio</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="373"/>
+        <location filename="../app.py" line="373"/>
         <source>Unable to load default style editor</source>
         <translation>Impossibile caricare l&apos;editor di stile predefinito</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="423"/>
+        <location filename="../app.py" line="423"/>
         <source>Must load Wii Music Rom or Geckocode</source>
         <translation>Devi caricare Wii Music Rom o Geckocode</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="385"/>
+        <location filename="../app.py" line="385"/>
         <source>Unable to remove songs</source>
         <translation>Impossibile rimuovere i brani</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="385"/>
+        <location filename="../app.py" line="385"/>
         <source>Must load Wii Music Rom or Main.dol</source>
         <translation>Devi caricare Wii Music Rom o Main.dol</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="408"/>
+        <location filename="../app.py" line="408"/>
         <source>Unable to load sound editor</source>
         <translation>Impossibile caricare l&apos;editor audio</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="408"/>
+        <location filename="../app.py" line="408"/>
         <source>Must load Wii Music Rom or Brsar</source>
         <translation>Devi caricare Wii Music Rom o Brsar</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="423"/>
+        <location filename="../app.py" line="423"/>
         <source>Unable to create .gct file</source>
         <translation>Impossibile creare il file .gct</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="448"/>
+        <location filename="../app.py" line="448"/>
         <source>Main.dol Patched!</source>
         <translation>Main.dol Patchato!</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="450"/>
+        <location filename="../app.py" line="450"/>
         <source>Unable to patch Main.dol</source>
         <translation>Impossibile patchare Main.dol</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="450"/>
+        <location filename="../app.py" line="450"/>
         <source>Must load Wii Music Rom, Main.dol, or Geckocode</source>
         <translation>Devi caricare Wii Music Rom, Main.dol o Geckocode</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="458"/>
+        <location filename="../app.py" line="458"/>
         <source>Unable to create Riivolution patch</source>
         <translation>Impossibile creare la patch di Riivolution</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="543"/>
+        <location filename="../app.py" line="543"/>
         <source>Must load Wii Music Rom</source>
         <translation>Devi caricare Wii Music Rom</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="466"/>
+        <location filename="../app.py" line="466"/>
         <source>Unable to revert changes</source>
         <translation>Impossibile annullare le modifiche</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="474"/>
+        <location filename="../app.py" line="474"/>
         <source>Unable to pack rom</source>
         <translation>Impossibile mettere in valigia la rom</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="503"/>
+        <location filename="../app.py" line="503"/>
         <source>Files Successfully Imported!</source>
         <translation>File importati con successo!</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="507"/>
+        <location filename="../app.py" line="507"/>
         <source>Unable to import files</source>
         <translation>Impossibile importare i file</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="527"/>
+        <location filename="../app.py" line="527"/>
         <source>Files Exported</source>
         <translation>File esportati</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="529"/>
+        <location filename="../app.py" line="529"/>
         <source>Files not Exported</source>
         <translation>File non esportati</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="531"/>
+        <location filename="../app.py" line="531"/>
         <source>Unable to export files</source>
         <translation>Impossibile esportare i file</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="537"/>
+        <location filename="../app.py" line="537"/>
         <source>Rom Change File</source>
         <translation>File di modifica della ROM</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="543"/>
+        <location filename="../app.py" line="543"/>
         <source>Unable to import changes</source>
         <translation>Impossibile importare le modifiche</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="587"/>
+        <location filename="../app.py" line="587"/>
         <source>Unable to launch Dolphin</source>
         <translation>Impossibile avviare Dolphin</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="552"/>
+        <location filename="../app.py" line="552"/>
         <source>Loaded file must be a complete rom</source>
         <translation>Il file caricato deve essere una rom completa</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="554"/>
+        <location filename="../app.py" line="554"/>
         <source>Dolphin path not specified</source>
         <translation>Percorso delfino non specificato</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="554"/>
+        <location filename="../app.py" line="554"/>
         <source>Go to settings to add a Dolphin path</source>
         <translation>Vai alle impostazioni per aggiungere un percorso Dolphin</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="587"/>
+        <location filename="../app.py" line="587"/>
         <source>Check the Dolphin path in the settings</source>
         <translation>Controlla il percorso Dolphin nelle impostazioni</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="626"/>
+        <location filename="../app.py" line="626"/>
         <source>Are you sure you want to overwrite your save file?</source>
         <translation>Sei sicuro di voler sovrascrivere il tuo file di salvataggio?</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="629"/>
+        <location filename="../app.py" line="629"/>
         <source>Save file copied!</source>
         <translation>Salva il file copiato!</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="631"/>
+        <location filename="../app.py" line="631"/>
         <source>Unable to copy save file</source>
         <translation>Impossibile copiare il file di salvataggio</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="635"/>
+        <location filename="../app.py" line="635"/>
         <source>Songs Saved to: Program Path</source>
         <translation>Brani salvati in: Percorso programma</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="650"/>
+        <location filename="../app.py" line="650"/>
         <source>Midi-Type File</source>
         <translation>File di tipo midi</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="960"/>
+        <location filename="../app.py" line="960"/>
         <source>Songs Successfully Destroyed!!!</source>
         <translation>Canzoni distrutte con successo!!!</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="962"/>
+        <location filename="../app.py" line="962"/>
         <source>Could not remove songs</source>
         <translation>Impossibile rimuovere i brani</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1075"/>
+        <location filename="../app.py" line="1075"/>
         <source>One or more errors have occurred</source>
         <translation>Si sono verificati uno o più errori</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1075"/>
+        <location filename="../app.py" line="1075"/>
         <source>Could not load file</source>
         <translation>Impossibile caricare il file</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="276"/>
+        <location filename="../app.py" line="276"/>
         <source>Changing Settings</source>
         <translation>Modifica delle impostazioni</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="277"/>
+        <location filename="../app.py" line="277"/>
         <source>Modding Wii Music</source>
         <translation>Modding Wii Music</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="278"/>
+        <location filename="../app.py" line="278"/>
         <source>Editing Songs</source>
         <translation>Modifica di brani</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="279"/>
+        <location filename="../app.py" line="279"/>
         <source>Editing Styles</source>
         <translation>Stili di modifica</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="280"/>
+        <location filename="../app.py" line="280"/>
         <source>Editing Text</source>
         <translation>Modifica del testo</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="281"/>
+        <location filename="../app.py" line="281"/>
         <source>Editing Default Styles</source>
         <translation>Modifica degli stili predefiniti</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="282"/>
+        <location filename="../app.py" line="282"/>
         <source>Removing Songs</source>
         <translation>Rimozione di brani</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="283"/>
+        <location filename="../app.py" line="283"/>
         <source>Editing Sounds</source>
         <translation>Modifica dei suoni</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="284"/>
+        <location filename="../app.py" line="284"/>
         <source>Creating Riivolution Patch</source>
         <translation>Creazione di patch di rievoluzione</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="285"/>
+        <location filename="../app.py" line="285"/>
         <source>Reverting Changes</source>
         <translation>Annullamento delle modifiche</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="286"/>
+        <location filename="../app.py" line="286"/>
         <source>Packing Rom</source>
         <translation>Rom da imballaggio</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="287"/>
+        <location filename="../app.py" line="287"/>
         <source>Importing Changes</source>
         <translation>Importazione delle modifiche</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="405"/>
+        <location filename="../app.py" line="405"/>
         <source>Load a Wav-Type File</source>
         <translation>Carica un file di tipo Wav</translation>
     </message>

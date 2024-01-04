@@ -1062,7 +1062,7 @@ Wiiミュージックエディタープラス！</translation>
     <message>
         <location filename="../firstsetup_ui.py" line="773"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube: &lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://www.youtube.com/BenjaminHalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Donate: &lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://ko-fi.com/benjaminhalko&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wiki: &lt;a href=&quot;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Discord: &lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://discord.gg/NC3wYAeCDs&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; YouTube：&lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot; &gt; https://www.youtube.com/BenjaminHalko &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Donate：&lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot;&gt; https://ko-fi.com/benjaminhalko &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Wiki：&lt;a href = &quot;https： //github.com/BenjaminHalko/WiiMusicEditorPlus/wiki &quot;&gt; &lt;span style =&quot; text-decoration：underline; color：＃ffaa00; &quot;&gt; https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki &lt;/ span&gt; &lt;/ a&gt; &lt;/ p&gt; &lt;p&gt;ディスコード：&lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot;&gt; https：// discord .gg / NC3wYAeCDs &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; YouTube：&lt;a href=&quot;https://www.youtube.com/BenjaminHalko&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot; &gt; https://www.youtube.com/BenjaminHalko &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Donate：&lt;a href=&quot;https://ko-fi.com/benjaminhalko&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot;&gt; https://ko-fi.com/benjaminhalko &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Wiki：&lt;a href = &quot;https： //github.com/BenjaminHalko/app/wiki &quot;&gt; &lt;span style =&quot; text-decoration：underline; color：＃ffaa00; &quot;&gt; https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki &lt;/ span&gt; &lt;/ a&gt; &lt;/ p&gt; &lt;p&gt;ディスコード：&lt;a href=&quot;https://discord.gg/NC3wYAeCDs&quot;&gt; &lt;span style = &quot;text-decoration：underline; color：＃ffaa00;&quot;&gt; https：// discord .gg / NC3wYAeCDs &lt;/ span&gt; &lt;/a&gt; &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2063,312 +2063,312 @@ Wiiミュージックエディタープラス！</translation>
 <context>
     <name>Window</name>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="622"/>
+        <location filename="../app.py" line="622"/>
         <source>Currently Loaded Folder:</source>
         <translation>現在ロードされているフォルダ：</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="750"/>
+        <location filename="../app.py" line="750"/>
         <source>Mii Maestro</source>
         <translation>Mii Maestro</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="751"/>
+        <location filename="../app.py" line="751"/>
         <source>Handbell Harmony</source>
         <translation>ハンドベルハーモニー</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="859"/>
+        <location filename="../app.py" line="859"/>
         <source>Replaced</source>
         <translation>交換済み</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="219"/>
+        <location filename="../app.py" line="219"/>
         <source>Not a valid Wii Music folder</source>
         <translation>有効なWiiミュージックフォルダではありません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="219"/>
+        <location filename="../app.py" line="219"/>
         <source>Files and sys folder not found</source>
         <translation>ファイルとsysフォルダーが見つかりません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="614"/>
+        <location filename="../app.py" line="614"/>
         <source>Currently Loaded File:</source>
         <translation>現在ロードされているファイル：</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="317"/>
+        <location filename="../app.py" line="317"/>
         <source>Load a Midi-Type file</source>
         <translation>MIDIタイプのファイルをロードする</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="324"/>
+        <location filename="../app.py" line="324"/>
         <source>Unable to load song editor</source>
         <translation>ソングエディタを読み込めません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="324"/>
+        <location filename="../app.py" line="324"/>
         <source>Must load Wii Music Rom, Brsar, or Message File</source>
         <translation>WiiミュージックROM、Brsar、またはメッセージファイルをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="341"/>
+        <location filename="../app.py" line="341"/>
         <source>Unable to load style editor</source>
         <translation>スタイルエディタを読み込めません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="341"/>
+        <location filename="../app.py" line="341"/>
         <source>Must load Wii Music Rom, Message File, or Geckocode</source>
         <translation>WiiミュージックROM、メッセージファイル、またはGeckocodeをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="360"/>
+        <location filename="../app.py" line="360"/>
         <source>Unable to load text editor</source>
         <translation>テキストエディタを読み込めません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="360"/>
+        <location filename="../app.py" line="360"/>
         <source>Must load Wii Music Rom or Message File</source>
         <translation>WiiミュージックROMまたはメッセージファイルをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="373"/>
+        <location filename="../app.py" line="373"/>
         <source>Unable to load default style editor</source>
         <translation>デフォルトのスタイルエディタを読み込めません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="423"/>
+        <location filename="../app.py" line="423"/>
         <source>Must load Wii Music Rom or Geckocode</source>
         <translation>WiiミュージックROMまたはGeckocodeをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="385"/>
+        <location filename="../app.py" line="385"/>
         <source>Unable to remove songs</source>
         <translation>曲を削除できません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="385"/>
+        <location filename="../app.py" line="385"/>
         <source>Must load Wii Music Rom or Main.dol</source>
         <translation>WiiミュージックROMまたはMain.dolをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="408"/>
+        <location filename="../app.py" line="408"/>
         <source>Unable to load sound editor</source>
         <translation>サウンドエディタを読み込めません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="408"/>
+        <location filename="../app.py" line="408"/>
         <source>Must load Wii Music Rom or Brsar</source>
         <translation>WiiミュージックROMまたはBrsarをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="423"/>
+        <location filename="../app.py" line="423"/>
         <source>Unable to create .gct file</source>
         <translation>.gctファイルを作成できません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="448"/>
+        <location filename="../app.py" line="448"/>
         <source>Main.dol Patched!</source>
         <translation>Main.dolにパッチが適用されました！</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="450"/>
+        <location filename="../app.py" line="450"/>
         <source>Unable to patch Main.dol</source>
         <translation>Main.dolにパッチを適用できません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="450"/>
+        <location filename="../app.py" line="450"/>
         <source>Must load Wii Music Rom, Main.dol, or Geckocode</source>
         <translation>Wii Music Rom、Main.dol、またはGeckocodeをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="458"/>
+        <location filename="../app.py" line="458"/>
         <source>Unable to create Riivolution patch</source>
         <translation>Riivolutionパッチを作成できません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="543"/>
+        <location filename="../app.py" line="543"/>
         <source>Must load Wii Music Rom</source>
         <translation>WiiミュージックROMをロードする必要があります</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="466"/>
+        <location filename="../app.py" line="466"/>
         <source>Unable to revert changes</source>
         <translation>変更を元に戻すことができません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="474"/>
+        <location filename="../app.py" line="474"/>
         <source>Unable to pack rom</source>
         <translation>ROMをパックできません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="503"/>
+        <location filename="../app.py" line="503"/>
         <source>Files Successfully Imported!</source>
         <translation>ファイルが正常にインポートされました！</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="507"/>
+        <location filename="../app.py" line="507"/>
         <source>Unable to import files</source>
         <translation>ファイルをインポートできません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="527"/>
+        <location filename="../app.py" line="527"/>
         <source>Files Exported</source>
         <translation>エクスポートされたファイル</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="529"/>
+        <location filename="../app.py" line="529"/>
         <source>Files not Exported</source>
         <translation>エクスポートされないファイル</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="531"/>
+        <location filename="../app.py" line="531"/>
         <source>Unable to export files</source>
         <translation>ファイルをエクスポートできません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="537"/>
+        <location filename="../app.py" line="537"/>
         <source>Rom Change File</source>
         <translation>Rom変更ファイル</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="543"/>
+        <location filename="../app.py" line="543"/>
         <source>Unable to import changes</source>
         <translation>変更をインポートできません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="587"/>
+        <location filename="../app.py" line="587"/>
         <source>Unable to launch Dolphin</source>
         <translation>Dolphinを起動できません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="552"/>
+        <location filename="../app.py" line="552"/>
         <source>Loaded file must be a complete rom</source>
         <translation>ロードされたファイルは完全なROMでなければなりません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="554"/>
+        <location filename="../app.py" line="554"/>
         <source>Dolphin path not specified</source>
         <translation>イルカの道が指定されていません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="554"/>
+        <location filename="../app.py" line="554"/>
         <source>Go to settings to add a Dolphin path</source>
         <translation>設定に移動して、イルカのパスを追加します</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="587"/>
+        <location filename="../app.py" line="587"/>
         <source>Check the Dolphin path in the settings</source>
         <translation>設定でイルカの道を確認してください</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="626"/>
+        <location filename="../app.py" line="626"/>
         <source>Are you sure you want to overwrite your save file?</source>
         <translation>保存ファイルを上書きしてもよろしいですか？</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="629"/>
+        <location filename="../app.py" line="629"/>
         <source>Save file copied!</source>
         <translation>コピーしたファイルを保存してください！</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="631"/>
+        <location filename="../app.py" line="631"/>
         <source>Unable to copy save file</source>
         <translation>保存ファイルをコピーできません</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="635"/>
+        <location filename="../app.py" line="635"/>
         <source>Songs Saved to: Program Path</source>
         <translation>保存先の曲：プログラムパス</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="650"/>
+        <location filename="../app.py" line="650"/>
         <source>Midi-Type File</source>
         <translation>MIDIタイプのファイル</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="960"/>
+        <location filename="../app.py" line="960"/>
         <source>Songs Successfully Destroyed!!!</source>
         <translation>曲が正常に破棄されました!!!</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="962"/>
+        <location filename="../app.py" line="962"/>
         <source>Could not remove songs</source>
         <translation>曲を削除できませんでした</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1075"/>
+        <location filename="../app.py" line="1075"/>
         <source>One or more errors have occurred</source>
         <translation>1つ以上のエラーが発生しました</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="1075"/>
+        <location filename="../app.py" line="1075"/>
         <source>Could not load file</source>
         <translation>ファイルを読み込めませんでした</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="276"/>
+        <location filename="../app.py" line="276"/>
         <source>Changing Settings</source>
         <translation>設定の変更</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="277"/>
+        <location filename="../app.py" line="277"/>
         <source>Modding Wii Music</source>
         <translation>Wiiミュージックのモッディング</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="278"/>
+        <location filename="../app.py" line="278"/>
         <source>Editing Songs</source>
         <translation>曲の編集</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="279"/>
+        <location filename="../app.py" line="279"/>
         <source>Editing Styles</source>
         <translation>スタイルの編集</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="280"/>
+        <location filename="../app.py" line="280"/>
         <source>Editing Text</source>
         <translation>テキストの編集</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="281"/>
+        <location filename="../app.py" line="281"/>
         <source>Editing Default Styles</source>
         <translation>デフォルトスタイルの編集</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="282"/>
+        <location filename="../app.py" line="282"/>
         <source>Removing Songs</source>
         <translation>曲を削除する</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="283"/>
+        <location filename="../app.py" line="283"/>
         <source>Editing Sounds</source>
         <translation>サウンドの編集</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="284"/>
+        <location filename="../app.py" line="284"/>
         <source>Creating Riivolution Patch</source>
         <translation>Riivolutionパッチの作成</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="285"/>
+        <location filename="../app.py" line="285"/>
         <source>Reverting Changes</source>
         <translation>変更を元に戻す</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="286"/>
+        <location filename="../app.py" line="286"/>
         <source>Packing Rom</source>
         <translation>パッキングロム</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="287"/>
+        <location filename="../app.py" line="287"/>
         <source>Importing Changes</source>
         <translation>変更のインポート</translation>
     </message>
     <message>
-        <location filename="../WiiMusicEditorPlus.py" line="405"/>
+        <location filename="../app.py" line="405"/>
         <source>Load a Wav-Type File</source>
         <translation>Wavタイプのファイルをロードする</translation>
     </message>

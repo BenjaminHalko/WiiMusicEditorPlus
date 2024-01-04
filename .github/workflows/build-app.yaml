@@ -1,89 +1,43 @@
 name: Build App
-on: 
+on:
   workflow_dispatch:
-    inputs:
-      platform:
-        type: choice
-        description: Platform
-        options:
-        - All
-        - Windows
-        - Linux
-        - MacOS
+
+env:
+  PYTHON_VERSION: "3.12"
+
 jobs:
-  build-windows:
-    name: Build for Windows
-    runs-on: windows-latest
-    if: github.event.inputs.platform == 'All' || github.event.inputs.platform == 'Windows'
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with: 
-        python-version: '3.11'
-        architecture: 'x64'
-    - name: Install Requirements
-      run: pip install -r requirements.txt
-      shell: cmd
-    - name: Build It
-      run: pyinstaller -w --noconfirm --add-data crossplatformhelpers/Windows/Helper;Helper --icon icon/icon.ico --add-data translations/translations;translations WiiMusicEditorPlus.py
-      shell: cmd
-    - name: Upload Build
-      uses: actions/upload-artifact@v3
-      with:
-        name: WiiMusicEditorPlus-Windows
-        path: dist
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
-  build-linux:
-    name: Build for Linux
-    runs-on: ubuntu-latest
-    if: github.event.inputs.platform == 'All' || github.event.inputs.platform == 'Linux'
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with: 
-        python-version: '3.11'
-        architecture: 'x64'
-    - name: Install Requirements
-      run: pip3 install -r requirements.txt
-      shell: bash
-    - name: Build It
-      run: pyinstaller -F -w --noconfirm --add-data crossplatformhelpers/Linux/Helper:Helper --add-data translations/translations:translations --icon=Icon/icon.ico WiiMusicEditorPlus.py
-      shell: bash
-    - name: Upload Build
-      uses: actions/upload-artifact@v3
-      with:
-        name: WiiMusicEditorPlus-Linux
-        path: dist
+    - uses: actions/checkout@v4
 
-  build-mac:
-    name: Build for MacOS
-    runs-on: macos-latest
-    if: github.event.inputs.platform == 'All' || github.event.inputs.platform == 'MacOS'
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
     - name: Setup Python
       uses: actions/setup-python@v4
       with: 
-        python-version: '3.11'
+        python-version: ${{ env.PYTHON_VERSION }}
         architecture: 'x64'
+
     - name: Install Requirements
+      run: poetry install
+
+    - name: Build
+      run: poetry run build
+
+    - name: Package for MacOS
+      if: startsWith(matrix.os, 'macOS')
       run: |
-        pip3 install -r requirements.txt
         brew install platypus
-      shell: bash
-    - name: Build It
-      run: |
-        pyinstaller --noconfirm --add-data crossplatformhelpers/Mac/Helper:Helper --add-data translations/translations:translations --icon=Icon/icon.ico WiiMusicEditorPlus.py
-        platypus -y -B -R -i 'Icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh'  -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
+        platypus -y -B -R -i 'wii_music_editor_plus/res/icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh' -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
         rm -r dist/WiiMusicEditorPlus
-      shell: bash
+
     - name: Upload Build
       uses: actions/upload-artifact@v3
       with:
-        name: WiiMusicEditorPlus-Mac
+        name: WiiMusicEditorPlus-${{ matrix.os }}
         path: dist
