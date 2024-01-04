@@ -1,10 +1,12 @@
 import os
 import sys
+
 from PyQt6.QtGui import QFontDatabase, QIcon
 from PyQt6.QtWidgets import QApplication
 
 from wii_music_editor.ui.views.first_setup.first_setup import FirstSetupWindow
-from wii_music_editor.utils.helper.paths import modulePath, savePath
+from wii_music_editor.utils.paths import modulePath
+from wii_music_editor.utils.save import savePath
 from wii_music_editor.utils.translate import changeLanguage
 
 

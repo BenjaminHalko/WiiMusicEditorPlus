@@ -1,9 +1,10 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6.QtCore import Qt
+
 from wii_music_editor.ui.views.first_setup.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.loadFiles import select_rom_path, select_dolphin_path
-import wii_music_editor.utils.helper.paths as paths
-from wii_music_editor.utils.helper.save import save_setting
+import wii_music_editor.utils.paths as paths
+from wii_music_editor.utils.save import save_setting
 from wii_music_editor.utils.translate import changeLanguage
 
 
@@ -86,7 +87,7 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
 
     def LoadMainFile(self, dialog_filter):
         if select_rom_path(dialog_filter):
-            self.RomPath_Label.setText(paths.romPath)
+            self.RomPath_Label.setText(paths.loadedFilePath)
 
     def Checkmark(self, checkmark, setting):
         save_setting("Settings", setting, (checkmark.checkState() == 2))

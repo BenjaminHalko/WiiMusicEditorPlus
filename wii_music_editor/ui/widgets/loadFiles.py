@@ -1,10 +1,11 @@
 import os
+
 from PyQt6.QtWidgets import QFileDialog
 
 from wii_music_editor.ui.views.error_handler.error_handler import ShowError
-from wii_music_editor.utils.helper import paths
-from wii_music_editor.utils.helper.osUtils import choose_from_os
-from wii_music_editor.utils.helper.save import save_setting
+from wii_music_editor.utils import paths
+from wii_music_editor.utils.osUtils import choose_from_os
+from wii_music_editor.utils.save import save_setting
 from wii_music_editor.utils.translate import translator
 
 
