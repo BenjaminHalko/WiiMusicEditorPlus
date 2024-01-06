@@ -3,6 +3,25 @@ from wii_music_editor.editor.region import BasedOnRegion
 from wii_music_editor.utils.save import load_setting
 
 
+#Brsar Helper
+syO = 0x10
+inO = 0x18
+sdO = 0x0C
+sbO = 0x14
+piO = 0x1C
+ctO = 0x24
+grO = 0x2C
+scO = 0x34
+
+rseqList = [0x3364C,0x336B8,0x33744,0x343F0,0x343F8,0x359FC,0x35A04,0x35A68,0x35A70,0x35AD4,0x35ADC,0x35B40,0x35B48,0x35BCC,0x35BD4,0x35C38,0x35C40,0x35CA4,0x35CAC,0x35D30,0x35D38,0x35DBC,0x35DC4,0x35E28,0x35E30,0x35EB4,0x35EBC,0x35F20,0x35F28,0x35F8C,0x35F94,0x36018,0x36020,0x36064,0x3606C,0x360D0,0x360D8,0x3705C,0x37064,0x370E8,0x370F0,0x371F4,0x371FC,0x37340,0x37348,0x376CC,0x376D4,0x37738,0x37740,0x3374C,0x37784,0x3778C,0x379D0,0x379D8,0x37ABC,0x37AC4,0x37B48,0x37B50,0x37BB4,0x37BBC,0x37C20,0x37C28,0x37C8C,0x37C94,0x37D18,0x37D20,0x37D64,0x37D6C,0x37E70,0x37E78,0x37EBC,0x37EC4,0x37F48,0x37F50]
+rseqInfoList = [0x8,0x1C,0x20]
+
+
+def getData(file,point):
+	file.seek(point)
+	return int.from_bytes(file.read(4),"big")
+
+
 def SizeIncreaseBrsar(file,sizeDifference,startoffset):
 	groupTableOffset = dataPath(file,inO,grO)
 	file.seek(groupTableOffset)
@@ -487,3 +506,91 @@ def dataPathPoint(file, *argv):
         for i in range(2, len(argv)):
             file.seek(root + argv[i] + 8 + int.from_bytes(file.read(4), "big"))
     return file.tell()
+
+
+def ReplaceSong(positionNum, replacementArray, BrseqOrdering, BrseqInfoArray, BrseqLengthArray):
+    if (not os.path.exists(GetBrsarPath() + ".backup")): copyfile(GetBrsarPath(), GetBrsarPath() + ".backup")
+    BrsarPath = GetBrsarPath()
+    BrseqInfo = []
+    BrseqLength = []
+    for i in range(len(BrseqOrdering)):
+        BrseqInfo.append(BrseqInfoArray[BrseqOrdering[i]])
+        BrseqLength.append(BrseqLengthArray[BrseqOrdering[i]])
+    sizeDifference = 0
+    brsar = open(BrsarPath, "rb")
+    positionOffset = dataPath(brsar, inO, grO, 0x8 * (positionNum + 1)) + 0x10
+    listOffset = BrsarGetList(brsar, positionOffset)
+    replacementArray.append(getData(brsar, dataPath(brsar, inO, grO, 8 * (positionNum + 1)) + 0x28))
+    brsar.seek(positionOffset)
+    currentSpot = int.from_bytes(brsar.read(4), 'big')
+    if (listOffset != -1):
+        posOffset = []
+        lenOffset = []
+        data = []
+        for num in range(len(replacementArray) - 1):
+            brsar.seek(listOffset + 24 * replacementArray[num])
+            posOffset.append(brsar.read(4))
+            lenOffset.append(brsar.read(4))
+        brsar.seek(0)
+        data.append(brsar.read(currentSpot + int.from_bytes(posOffset[0], 'big')))
+        for num in range(len(replacementArray) - 2):
+            brsar.seek(currentSpot + int.from_bytes(posOffset[num], 'big') + int.from_bytes(lenOffset[num], 'big'))
+            data.append(brsar.read(
+                int.from_bytes(posOffset[num + 1], 'big') - int.from_bytes(posOffset[num], 'big') - int.from_bytes(
+                    lenOffset[num], 'big')))
+        brsar.seek(currentSpot + int.from_bytes(posOffset[len(posOffset) - 1], 'big') + int.from_bytes(
+            lenOffset[len(lenOffset) - 1], 'big'))
+        data.append(brsar.read())
+        brsar.close()
+        for num in range(len(replacementArray) - 1):
+            if (num == 0):
+                infoToWrite = data[num] + BrseqInfo[num]
+            else:
+                infoToWrite = infoToWrite + data[num] + BrseqInfo[num]
+        infoToWrite = infoToWrite + data[len(replacementArray) - 1]
+        brsar = open(BrsarPath, "wb")
+        brsar.write(infoToWrite)
+        brsar.close()
+        brsar = open(BrsarPath, "r+b")
+        for num in range(replacementArray[0], replacementArray[len(replacementArray) - 1]):
+            if (sizeDifference != 0):
+                brsar.seek(listOffset + 24 * num)
+                size = brsar.read(4)
+                brsar.seek(listOffset + 24 * num)
+                brsar.write((int.from_bytes(size, "big") + sizeDifference).to_bytes(4, 'big'))
+            if (num in replacementArray):
+                brsar.seek(listOffset + 4 + 24 * num)
+                sizeDifference += BrseqLength[replacementArray.index(num)] - int.from_bytes(brsar.read(4), "big")
+                brsar.seek(listOffset + 4 + 24 * num)
+                brsar.write(BrseqLength[replacementArray.index(num)].to_bytes(4, 'big'))
+
+        SizeIncreaseBrsar(brsar, sizeDifference, positionOffset)
+
+        for offset in [8, positionOffset + 4]:
+            brsar.seek(offset)
+            size = brsar.read(4)
+            brsar.seek(offset)
+            brsar.write((int.from_bytes(size, "big") + sizeDifference).to_bytes(4, 'big'))
+    else:
+        data = []
+        brsar.seek(0)
+        data.append(brsar.read(currentSpot))
+        brsar.seek(positionOffset + 4)
+        brsar.seek(currentSpot + int.from_bytes(brsar.read(4), 'big'))
+        data.append(brsar.read())
+        brsar.close()
+        brsar = open(BrsarPath, "wb")
+        brsar.write(data[0] + BrseqInfo + data[1])
+        brsar.close()
+        brsar = open(BrsarPath, "r+b")
+        brsar.seek(positionOffset + 4)
+        sizeDifference = BrseqLength - int.from_bytes(brsar.read(4), "big")
+
+        SizeIncreaseBrsar(brsar, sizeDifference, positionOffset)
+
+        for offset in [8, positionOffset + 4]:
+            brsar.seek(offset)
+            size = brsar.read(4)
+            brsar.seek(offset)
+            brsar.write((int.from_bytes(size, "big") + sizeDifference).to_bytes(4, 'big'))
+    brsar.close()

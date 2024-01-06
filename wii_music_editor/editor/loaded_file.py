@@ -20,12 +20,37 @@ class LoadType:
     Gct = 5
     RomFile = 6
 
+class RecordType:
+    Song = "song"
+    Style = "style"
+    TextSong = "textsong"
+    TextStyle = "textstyle"
+    DefaultStyle = "defaultstyle"
+    RemoveSong = "removesong"
+    MainDol = "maindol"
+
 
 loadedStyles = [[]] * len(styleList)
 loadedText = ""
 loadedRegion = 0
 loadedCodes = []
 loadedFileType = 0
+
+
+def SaveRecording(action, name, values, remove=False):
+    if (file.type == LoadType.Rom):
+        if (type(values[0]) != list):
+            values = [values]
+        section = action + "-" + str(name)
+        ini = ConfigParser()
+        ini.read(file.path + "/Changes.ini")
+        if (ini.has_section(section)): ini.remove_section(section)
+        if (not remove):
+            ini.add_section(section)
+            for value in values:
+                ini.set(section, value[0], str(value[1]))
+        with open(file.path + "/Changes.ini", 'w') as inifile:
+            ini.write(inifile)
 
 
 def GetStyles():
