@@ -679,7 +679,7 @@ QWidget[error=&quot;true&quot;]
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

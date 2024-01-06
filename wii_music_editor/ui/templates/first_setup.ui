@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>294</height>
+    <width>435</width>
+    <height>308</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1003,7 +1003,7 @@ background-color: #242424;
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>443</width>
-    <height>324</height>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -911,7 +911,7 @@ padding-bottom: 6px;
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>
