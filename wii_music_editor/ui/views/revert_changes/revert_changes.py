@@ -25,7 +25,7 @@ class RevertChangesWindow(QDialog ,Ui_Revert):
 
     def Revert(self):
         sections = []
-        if(path.isfile(editor.file.path +"/Changes.ini") and LoadSetting("Settings" ,"RemoveChangesFromChangesINI"
+        if(path.isfile(editor.file.path +"/Changes.ini") and load_setting("Settings" ,"RemoveChangesFromChangesINI"
                                                                            ,True)):
             ini = ConfigParser()
             ini.read(editor.file.pat h +"/Changes.ini")
@@ -92,7 +92,7 @@ class RevertChangesWindow(QDialog ,Ui_Revert):
                     if (RecordType.RemoveSong in section or RecordType.MainDol in section): ini.remove_section(section)
             except Exception as e:
                 ShowError(self.tr("Could not revert main.dol"), str(e), self)
-        if (path.isfile(editor.file.path + "/Changes.ini") and LoadSetting("Settings", "RemoveChangesFromChangesINI",
+        if (path.isfile(editor.file.path + "/Changes.ini") and load_setting("Settings", "RemoveChangesFromChangesINI",
                                                                            True)):
             with open(editor.file.path + "/Changes.ini", 'w') as inifile:
                 ini.write(inifile)

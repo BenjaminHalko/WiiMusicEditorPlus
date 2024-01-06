@@ -9,41 +9,14 @@ import webbrowser
 import time
 import wave
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QLocale, QTranslator
-from PyQt5.Qt import QFontDatabase
-from PyQt5.QtGui import QColor, QIcon
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
+from PyQt6.QtWidgets import QMainWindow
 
-import editor
-from editor import GetSongNames, ConvertWav, RetranslateSongNames, TranslationPath, PlayRwav, ReplaceWave, \
-    SaveRecording, GetDolphinSave, SavePath, HelperPath, ChangeName, GetBrsarPath, GetDefaultStyle, GetGeckoPath, \
-    GetMainDolPath, PatchMainDol, CreateGct, DecodeTxt, EncodeTxt, FixMessageFile, Run, GetMessagePath, GivePermission, \
-    BasedOnRegion, SaveSetting, LoadSetting, PrepareFile, LoadMidi, PatchBrsar, GetStyles, AddPatch, ChooseFromOS, \
-    currentSystem, Instruments, gctRegionOffsets, Songs, Styles, gameIds, gctRegionOffsetsStyles, savePathIds, \
-    extraSounds, languageList, StyleTypeValue, SongTypeValue, LoadType, RecordType
-
-app = QApplication([])
-
-from wiimusicplus_ui import Ui_MainWindow
-
-from update import UpdateWindow, CheckForUpdate
-from errorhandler import ShowError
-from settings import SettingsWindow
-from wii_music_editor.ui.views.dialog import RiivolutionWindow, SuccessWindow, PackRomWindow, RevertChangesWindow, ImportChangesWindow, \
-    ConfirmDialog, DownloadSongThread
-from firstsetup import FirstSetupWindow
-from pypresence import Presence
-
-_translate = QtCore.QCoreApplication.translate
-defaultStyle = ""
-
-lastExtraFileDirectory = LoadSetting("Paths", "LastExtraLoadedPath", "")
-lastFileDirectory = LoadSetting("Paths", "LastLoadedPath", "")
-
-
-def AllowType(type):
-    return (editor.file.type == LoadType.Rom or editor.file.type == type)
+from wii_music_editor.data.songs import SongTypeValue, songList
+from wii_music_editor.editor.loaded_file import loadedFileType, LoadType
+from wii_music_editor.ui.views.main_window.main_window_ui import Ui_MainWindow
+from wii_music_editor.utils import paths
+from wii_music_editor.utils.save import load_setting
+from wii_music_editor.utils.translate import tr
 
 
 # Load Places
@@ -58,23 +31,17 @@ class TAB:
 
 
 # Main Window
-class Window(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
-        global defaultStyle
         super().__init__(parent)
         self.setupUi(self)
-        defaultStyle = self.styleSheet()
         self.externalEditorOpen = False
         self.fromSongEditor = -1
-        self.discord = False
-        self.starttime = int(time.time())
-        if (LoadSetting("Settings", "Discord", True)):
-            self.DiscordPresenceConnect()
-            self.DiscordUpdate(0)
 
-        if (editor.file.path != ""):
-            if (editor.file.type == LoadType.Rom): self.MP_LoadedFile_Label.setText(self.tr('Currently Loaded Folder:'))
-            self.MP_LoadedFile_Path.setText(editor.file.path)
+        if paths.loadedFilePath != "":
+            if loadedFileType == LoadType.Rom:
+                self.MP_LoadedFile_Label.setText( f'{tr("Main Window", "Currently Loaded Folder")}:')
+            self.MP_LoadedFile_Path.setText(str(paths.loadedFilePath))
         self.menuBar().setNativeMenuBar(False)
 
         # Menu Bar Buttons
@@ -599,7 +566,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     "Go to settings to add a Dolphin path"))
             else:
                 try:
-                    if (os.path.isfile(GetGeckoPath()) and LoadSetting("Settings", "CopyCodes", True)):
+                    if (os.path.isfile(GetGeckoPath()) and load_setting("Settings", "CopyCodes", True)):
                         dir = GetDolphinSave()
                         if (os.path.isdir(dir)):
                             if (os.path.isfile(dir + "/GameSettings/" + BasedOnRegion(gameIds) + ".ini")):
@@ -609,7 +576,7 @@ class Window(QMainWindow, Ui_MainWindow):
                                              dir + "/GameSettings/" + BasedOnRegion(gameIds) + ".backup.ini")
                                 os.remove(dir + "/GameSettings/" + BasedOnRegion(gameIds) + ".ini")
                             copyfile(GetGeckoPath(), dir + "/GameSettings/" + BasedOnRegion(gameIds) + ".ini")
-                    if (LoadSetting("Settings", "DolphinEnableCheats", True)):
+                    if (load_setting("Settings", "DolphinEnableCheats", True)):
                         ini = ConfigParser()
                         if (currentSystem == "Linux"):
                             config = os.path.expanduser('~/.config/dolphin-emu/')
@@ -639,7 +606,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def MenuBar_Load_Settings(self):
         self.DiscordUpdate(-1)
         SettingsWindow(self, app, translator)
-        if ((self.discord != False) != LoadSetting("Settings", "Discord", True)):
+        if ((self.discord != False) != load_setting("Settings", "Discord", True)):
             if (self.discord == False):
                 self.DiscordPresenceConnect()
             else:
@@ -692,7 +659,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if (self.SE_Midi.isEnabled() and (
                 self.SE_Midi.isChecked() or Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Menu)):
             if (self.brseqInfo[1] == 0) or (
-                    self.brseqInfo[0] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and LoadSetting("Settings",
+                    self.brseqInfo[0] == 0 and self.SE_Midi_File_Replace_Song.isChecked() and load_setting("Settings",
                                                                                                           "LoadSongSeparately",
                                                                                                           False) and (
                             Songs[self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro)): allow = False
@@ -749,14 +716,14 @@ class Window(QMainWindow, Ui_MainWindow):
             self.SE_Midi_Length_Input.setValue(
                 round(int(self.SE_Midi_Length_Input.text()) * (3 + self.SE_Midi_TimeSignature_4.isChecked())))
 
-    def SE_SeperateSongPatching(self):
-        if LoadSetting("Settings", "LoadSongSeparately", False):
+    def SE_SeparateSongPatching(self):
+        if load_setting("Settings", "LoadSongSeparately", False):
             self.SE_Midi_File_Song_Button.show()
             self.SE_Midi_File_Song_Title.show()
             self.SE_Midi_File_Song_Label.show()
             self.SE_Midi_File_Score_Title.show()
             self.SE_Midi_File_Replace_Song.show()
-            enabled = (not self.SE_Midi.isEnabled() or Songs[
+            enabled = (not self.SE_Midi.isEnabled() or songList[
                 self.SE_SongToChange.currentRow()].SongType != SongTypeValue.Maestro)
             self.SE_Midi_File_Song_Button.setEnabled(enabled)
             self.SE_Midi_File_Song_Title.setEnabled(enabled)
@@ -788,7 +755,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.SE_Midi.setCheckable(False)
                     self.SE_Midi.setEnabled(True)
             if (AllowType(LoadType.Brsar)):
-                self.SE_SeperateSongPatching()
+                self.SE_SeparateSongPatching()
                 self.SE_StyleLabel.setEnabled(
                     Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
                 self.SE_StyleText.setEnabled(Songs[self.SE_SongToChange.currentRow()].SongType == SongTypeValue.Regular)
@@ -812,19 +779,19 @@ class Window(QMainWindow, Ui_MainWindow):
                 tmpLength = self.brseqLength.copy()
                 tmpPath = self.brseqPath.copy()
                 if ((pathlib.Path(self.brseqPath[1]).suffix == ".midi" or pathlib.Path(
-                        self.brseqPath[1]).suffix == ".mid") and LoadSetting("Settings", "NormalizeMidi", False)):
+                        self.brseqPath[1]).suffix == ".mid") and load_setting("Settings", "NormalizeMidi", False)):
                     midiInfo = LoadMidi(self.brseqPath[1], self.SE_Midi_Tempo_Input.value())
                     if (midiInfo[0] != False):
                         tmpInfo[1] = midiInfo[0]
                         tmpLength[1] = midiInfo[1]
 
-                if (not self.SE_Midi_File_Replace_Song.isChecked() or not LoadSetting("Settings", "LoadSongSeparately",
+                if (not self.SE_Midi_File_Replace_Song.isChecked() or not load_setting("Settings", "LoadSongSeparately",
                                                                                       False) or not self.SE_Midi_File_Replace_Song.isEnabled()):
                     tmpInfo[0] = tmpInfo[1]
                     tmpLength[0] = tmpLength[1]
                     tmpPath[0] = ""
                 elif ((pathlib.Path(self.brseqPath[0]).suffix == ".midi" or pathlib.Path(
-                        self.brseqPath[0]).suffix == ".mid") and LoadSetting("Settings", "NormalizeMidi", False)):
+                        self.brseqPath[0]).suffix == ".mid") and load_setting("Settings", "NormalizeMidi", False)):
                     midiInfo = LoadMidi(self.brseqPath[0], self.SE_Midi_Tempo_Input.value())
                     if (midiInfo[0] != False):
                         tmpInfo[0] = midiInfo[0]
@@ -1255,44 +1222,3 @@ class Window(QMainWindow, Ui_MainWindow):
         self.SOE_Patch.setEnabled(False)
 
 
-class ExternalEditor(QtCore.QThread):
-    done = QtCore.pyqtSignal()
-
-    def run(self):
-        GivePermission(GetMessagePath() + '/message.d/new_music_message.txt')
-        Run(ChooseFromOS(
-            ["notepad", "open -e", "gedit"]) + ' "' + GetMessagePath() + '/message.d/new_music_message.txt"')
-        self.done.emit()
-
-
-if __name__ == "__main__":
-    app.setWindowIcon(QIcon(HelperPath() + "/Extra/icon.png"))
-    QFontDatabase.addApplicationFont(HelperPath() + "/Fonts/contb.ttf")
-    QFontDatabase.addApplicationFont(HelperPath() + "/Fonts/contm.ttf")
-    lang = LoadSetting("Settings", "Language", 0)
-    translator = QTranslator()
-    if (lang != 0):
-        translator.load(QLocale(), TranslationPath() + f"/{languageList[lang]}.qm")
-        app.installTranslator(translator)
-        RetranslateSongNames()
-    if (editor.firstStart):
-        FirstSetupWindow(app, translator)
-    win = Window()
-    win.show()
-    if (editor.file.path != ""):
-        try:
-            PrepareFile()
-        except:
-            editor.file.path = ""
-    if (editor.file.path == "" and LoadSetting("Paths", "CurrentLoadedFile", "") != ""): ShowError(
-        _translate("Window", "Could not load file"), _translate("Window", "One or more errors have occurred"))
-    if (LoadSetting("Settings", "AutoUpdate", True)):
-        try:
-            version = CheckForUpdate()
-            if (version != "null"): UpdateWindow(win, version)
-        except:
-            print("Could Not Update")
-    win.SE_SeperateSongPatching()
-    app.exec()
-    if (win.discord): win.discord.close()
-    sys.exit()

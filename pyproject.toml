@@ -17,6 +17,7 @@ requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 pyinstaller = "^6.3.0"
+pyqt6rc = "^0.6.1"
 
 [tool.poetry.scripts]
 convert_ui = "utils.convert_ui:convert"

@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtWidgets
 from settings_ui import Ui_Settings
 import editor
-from editor import SaveSetting, LoadSetting, ChooseFromOS, languageList, TranslationPath, regionNames, GetSongNames, \
+from editor import SaveSetting, load_setting, ChooseFromOS, languageList, TranslationPath, regionNames, GetSongNames, \
     LoadType
 from errorhandler import ShowError
 from update import UpdateWindow, CheckForUpdate
@@ -19,15 +19,15 @@ class SettingsWindow(QDialog, Ui_Settings):
         self.app = app
         self.translator = translator
 
-        self.RegionBox.setCurrentIndex(LoadSetting("Settings", "DefaultRegion", 0))
+        self.RegionBox.setCurrentIndex(load_setting("Settings", "DefaultRegion", 0))
         self.RegionBox.currentIndexChanged.connect(self.RegionChange)
-        self.LanguageBox.setCurrentIndex(LoadSetting("Settings", "Language", 0))
+        self.LanguageBox.setCurrentIndex(load_setting("Settings", "Language", 0))
         self.LanguageBox.currentIndexChanged.connect(self.LanguageChange)
-        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[LoadSetting("Settings", "DefaultRegion", 0)])
+        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[load_setting("Settings", "DefaultRegion", 0)])
         self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
 
         self.SwitchBeta.clicked.connect(self.Button_SwitchBeta)
-        if (LoadSetting("Settings", "Beta", False)): self.SwitchBeta.setText(self.tr("Switch to Main"))
+        if (load_setting("Settings", "Beta", False)): self.SwitchBeta.setText(self.tr("Switch to Main"))
 
         self.ConnectCheckmark(self.CheckForUpdates, "AutoUpdate", True)
         self.ConnectCheckmark(self.RapperFix, "RapperFix", True)
@@ -53,8 +53,8 @@ class SettingsWindow(QDialog, Ui_Settings):
         self.exec()
 
     def Button_SwitchBeta(self):
-        SaveSetting("Settings", "Beta", not LoadSetting("Settings", "Beta", False))
-        if (LoadSetting("Settings", "Beta", False)):
+        SaveSetting("Settings", "Beta", not load_setting("Settings", "Beta", False))
+        if (load_setting("Settings", "Beta", False)):
             self.SwitchBeta.setText(self.tr("Switch to Main"))
         else:
             self.SwitchBeta.setText(self.tr("Switch to Beta"))
@@ -62,13 +62,13 @@ class SettingsWindow(QDialog, Ui_Settings):
         if (version != "null"): UpdateWindow([self.otherWindow, self], version)
 
     def ConnectCheckmark(self, checkmarkId, setting, default):
-        checkmarkId.setCheckState(LoadSetting("Settings", setting, default) * 2)
+        checkmarkId.setCheckState(load_setting("Settings", setting, default) * 2)
         checkmarkId.stateChanged.connect(lambda: self.Checkmark(checkmarkId, setting))
 
     def Checkmark(self, checkmark, setting):
         SaveSetting("Settings", setting, (checkmark.checkState() == 2))
         if (setting == "UnsafeMode"): editor.unsafeMode = (checkmark.checkState() == 2)
-        if (setting == "LoadSongSeparately"): self.otherWindow.SE_SeperateSongPatching()
+        if (setting == "LoadSongSeparately"): self.otherWindow.SE_SeparateSongPatching()
 
     def RegionChange(self):
         if (editor.file.type != LoadType.Rom):

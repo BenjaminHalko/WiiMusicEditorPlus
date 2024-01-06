@@ -133,6 +133,21 @@ files = [
 ]
 
 [[package]]
+name = "importlib-resources"
+version = "5.13.0"
+description = "Read resources from Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "importlib_resources-5.13.0-py3-none-any.whl", hash = "sha256:9f7bd0c97b79972a6cce36a366356d16d5e13b09679c11a58f1014bfdf8e64b2"},
+    {file = "importlib_resources-5.13.0.tar.gz", hash = "sha256:82d5c6cca930697dbbd86c93333bb2c2e72861d4789a11c2662b933e5ad2b528"},
+]
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+testing = ["pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
+
+[[package]]
 name = "macholib"
 version = "1.16.3"
 description = "Mach-O header analysis and editing"
@@ -404,6 +419,21 @@ files = [
 ]
 
 [[package]]
+name = "pyqt6rc"
+version = "0.6.1"
+description = "PyQt6 UI templates resource converter"
+optional = false
+python-versions = ">=3.8,<3.13"
+files = [
+    {file = "pyqt6rc-0.6.1-py3-none-any.whl", hash = "sha256:632ff3235d5fdb0e6cd3d23d6f22d9d0fe6a8df93052cce702b4178225fab3ca"},
+    {file = "pyqt6rc-0.6.1.tar.gz", hash = "sha256:fefa2f29c9bdfa269bf9b63451482022058f43deb7a473ac3d873116038a4211"},
+]
+
+[package.dependencies]
+importlib-resources = ">=5.12.0,<6.0.0"
+pyqt6 = ">=6.5.0,<7.0.0"
+
+[[package]]
 name = "pywin32-ctypes"
 version = "0.2.2"
 description = "A (partial) reimplementation of pywin32 using ctypes/cffi"
@@ -480,5 +510,5 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = ">= 3.10, < 3.13"
-content-hash = "538d5079b68fdbc9108bc83e0bbcf2f239eb0e48da3b2355800a3715c90bcb8c"
+python-versions = ">= 3.12, < 3.13"
+content-hash = "fed0abe21c3b25069276430397ce6c51e78b5277a5d3a8acc9b456c88edcaabd"

@@ -96,11 +96,11 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
 
     def LoadMainFile(self, dialog_filter):
         if select_rom_path(self, dialog_filter):
-            self.RomPath_Label.setText(paths.romPath)
+            self.RomPath_Label.setText(str(paths.romPath))
 
     def Checkmark(self, checkmark, setting):
         save_setting("Settings", setting, (checkmark.checkState() == 2))
 
     def GetDolphin(self):
         if select_dolphin_path():
-            self.DolphinPath_Label.setText(paths.dolphinPath)
+            self.DolphinPath_Label.setText(str(paths.dolphinPath))

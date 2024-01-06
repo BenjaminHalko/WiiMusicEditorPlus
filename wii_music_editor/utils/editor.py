@@ -150,7 +150,7 @@ def ReplaceSong(positionNum,replacementArray,BrseqOrdering,BrseqInfoArray,BrseqL
 
 def ConvertWav(wavPath,loopstart=-1,loopend=-1):
 	with tempfile.TemporaryDirectory() as directory:
-		if(LoadSetting("Settings","ResampleSounds",True)):
+		if(load_setting("Settings","ResampleSounds",True)):
 			s_read = wave.open(wavPath, 'r')
 			framerate = s_read.getframerate()
 
@@ -418,6 +418,6 @@ rseqInfoList = [0x8,0x1C,0x20]
 
 
 #Variables
-unsafeMode = LoadSetting("Settings","UnsafeMode",False)
+unsafeMode = load_setting("Settings","UnsafeMode",False)
 
 version = "1.0.3"

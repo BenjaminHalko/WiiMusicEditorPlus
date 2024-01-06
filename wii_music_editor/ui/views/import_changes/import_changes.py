@@ -21,7 +21,7 @@ class Import(QThread):
                 if (action == RecordType.Song):
                     brseqInfo = [0, 0]
                     brseqLength = [0, 0]
-                    if (LoadSetting("Settings", "NormalizeMidi", False)):
+                    if (load_setting("Settings", "NormalizeMidi", False)):
                         midiInfo = LoadMidi(ini.get(section, "midisong"), int(ini.get(section, "tempo")))
                     else:
                         midiInfo = LoadMidi(ini.get(section, "midisong"))
@@ -29,7 +29,7 @@ class Import(QThread):
                     brseqLength[0] = midiInfo[1]
 
                     if (ini.get(section, "midiscore") != ""):
-                        if (LoadSetting("Settings", "NormalizeMidi", False)):
+                        if (load_setting("Settings", "NormalizeMidi", False)):
                             midiInfo = LoadMidi(ini.get(section, "midiscore"), int(ini.get(section, "tempo")))
                         else:
                             midiInfo = LoadMidi(ini.get(section, "midiscore"))
