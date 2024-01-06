@@ -5,14 +5,27 @@ from wii_music_editor.data.region import regionNames, regionFullNames
 from wii_music_editor.data.songs import songList, SongTypeValue
 from wii_music_editor.data.styles import styleList
 from wii_music_editor.editor.message import DecodeTxt
+from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.views.error_handler.error_handler import ShowError
 from wii_music_editor.utils import paths
-from wii_music_editor.utils.region import regionSelected, BasedOnRegion
+from wii_music_editor.editor.region import regionSelected, BasedOnRegion
+
+
+class LoadType:
+    Rom = 0
+    Brsar = 1
+    Message = 2
+    Dol = 3
+    Midi = 4
+    Gct = 5
+    RomFile = 6
+
 
 loadedStyles = [[]] * len(styleList)
 loadedText = ""
 loadedRegion = 0
 loadedCodes = []
+loadedFileType = 0
 
 
 def GetStyles():
@@ -117,3 +130,35 @@ def GetDefaultStyle(song_id, default):
             return i
 
     return -1
+
+
+def GetFileType():
+    if paths.loadedFilePath.is_dir():
+        return LoadType.Rom
+
+    extension = paths.loadedFilePath.suffix
+    if extension == ".brsar":
+        return LoadType.Brsar
+    elif extension == ".carc":
+        return LoadType.Message
+    elif extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq":
+        return LoadType.Midi
+    elif extension == ".dol":
+        return LoadType.Dol
+    elif extension == ".gct" or extension == ".ini":
+        return LoadType.Gct
+
+    return LoadType.RomFile
+
+
+def PrepareFile():
+    global loadedFileType
+    loadedFileType = GetFileType()
+    if loadedFileType == LoadType.RomFile:
+        ConvertRom()
+    if loadedFileType == LoadType.Rom:
+        GetRegion()
+    if loadedFileType == LoadType.Rom or loadedFileType == LoadType.Message:
+        # TODO
+        # GetSongNames()
+        print("?")

@@ -10,7 +10,7 @@ translator = QTranslator()
 
 
 def tr(context, source_text):
-    if lang == 0:
+    if lang == 0 or True:
         return source_text
     return translator.translate(context, source_text)
 

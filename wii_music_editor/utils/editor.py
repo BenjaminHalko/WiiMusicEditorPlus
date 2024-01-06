@@ -29,14 +29,7 @@ class LoadedFile:
 
 RetranslateSongNames()
 
-class LoadType:
-	Rom = 0
-	Brsar = 1
-	Carc = 2
-	Dol = 3
-	Midi = 4
-	Gct = 5
-	RomFile = 6
+
 
 class RecordType:
 	Song = "song"
@@ -369,24 +362,9 @@ def LoadMidi(midiPath,defaultTempo = -1):
 
 
 
-def GetFileType():
-	if(os.path.isdir(file.path)): return LoadType.Rom
-	else:
-		extension = pathlib.Path(file.path).suffix
-		if(extension == ".brsar"): return LoadType.Brsar
-		elif(extension == ".carc"): return LoadType.Carc
-		elif(extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq"): return LoadType.Midi
-		elif(extension == ".dol"): return LoadType.Dol
-		elif(extension == ".gct" or extension == ".ini"): return LoadType.Gct
-		elif(extension == ".wbfs" or extension == ".iso"): return LoadType.RomFile
 
-def PrepareFile():
-	global file
-	global regionSelected
-	file.type = GetFileType()
-	if(file.type == LoadType.RomFile): ConvertRom()
-	if(file.type == LoadType.Rom): regionSelected = GetRegion()
-	if(file.type == LoadType.Rom or file.type == LoadType.Carc): GetSongNames()
+
+
 
 
 

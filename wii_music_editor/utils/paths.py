@@ -4,25 +4,25 @@ import subprocess
 import sys
 
 from wii_music_editor.utils.osUtils import currentSystem, choose_from_os
-from wii_music_editor.utils.region import BasedOnRegion, romLanguage
+from wii_music_editor.editor.region import BasedOnRegion, romLanguage
 from wii_music_editor.utils.save import save_setting, load_setting
 
 
-def setLoadedFilePath(loaded_file_path):
+def setLoadedFilePath():
     global romPath, mainDolPath, brsarPath, messagePath, geckoPath
 
-    romPath = None
-    mainDolPath = None
-    brsarPath = None
-    messagePath = None
-    geckoPath = None
+    romPath = ""
+    mainDolPath = ""
+    brsarPath = ""
+    messagePath = ""
+    geckoPath = ""
 
-    if os.path.isdir(loaded_file_path):
-        romPath = loaded_file_path
-        mainDolPath = Path(loaded_file_path)/"sys"/"main.dol"
-        brsarPath = Path(loaded_file_path)/"files"/"Sound"/"MusicStatic"/"rp_Music_sound.brsar"
-        messagePath = Path(loaded_file_path)/"files"/BasedOnRegion(romLanguage)/"Message"
-        geckoPath = Path(loaded_file_path)/"GeckoCodes.ini"
+    if os.path.isdir(loadedFilePath):
+        romPath = loadedFilePath
+        mainDolPath = Path(loadedFilePath)/"sys"/"main.dol"
+        brsarPath = Path(loadedFilePath)/"files"/"Sound"/"MusicStatic"/"rp_Music_sound.brsar"
+        messagePath = Path(loadedFilePath)/"files"/BasedOnRegion(romLanguage)/"Message"
+        geckoPath = Path(loadedFilePath)/"GeckoCodes.ini"
     else:
         # TODO: Add support for loading from a non folder
         temp = 0
@@ -60,14 +60,12 @@ if getattr(sys, 'frozen', False):
         modulePath = Path(sys._MEIPASS) / "wii_music_editor"
     translationPath = Path(sys._MEIPASS) / "translations"
 else:
-    programPath = Path(__file__).parent.parent.parent.parent
+    programPath = Path(__file__).parent.parent.parent
     fullPath = "NULL"
     includePath = programPath / "include" / currentSystem
     includeAllPath = programPath / "include" / "all"
     translationPath = programPath / "translations" / "translations"
     modulePath = programPath / "wii_music_editor"
-
-
 
 # Dolphin
 dolphinPath = load_setting("Paths", "Dolphin", "")
@@ -78,16 +76,17 @@ if currentSystem == "Linux" and not os.path.isfile(dolphinPath):
         save_setting("Paths", "Dolphin", dolphinPath)
 
 # Dolphin Save Path
-dolphinSavePath = None
+dolphinSavePath = ""
 setDolphinSavePath(load_setting("Paths", "DolphinSave", ""))
 
 # Loaded Rom
-romPath = None
-mainDolPath = None
-brsarPath = None
-messagePath = None
-geckoPath = None
-setLoadedFilePath(load_setting("Paths", "CurrentLoadedFile", ""))
+romPath = ""
+mainDolPath = ""
+brsarPath = ""
+messagePath = ""
+geckoPath = ""
+loadedFilePath = Path(load_setting("Paths", "CurrentLoadedFile", ""))
+setLoadedFilePath()
 
 # Last Loaded Path
-lastLoadedPath = load_setting("Paths", "LastLoadedPath", programPath)
+lastLoadedPath = Path(load_setting("Paths", "LastLoadedPath", str(programPath)))

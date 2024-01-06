@@ -1,7 +1,8 @@
 import os
 from shutil import copyfile
 
-from wii_music_editor.data.region import getGameID
+from wii_music_editor.data.region import game_ids
+from wii_music_editor.editor.region import BasedOnRegion
 from wii_music_editor.utils import paths
 from wii_music_editor.utils.save import load_setting
 
@@ -84,7 +85,7 @@ def AddPatch(patch_name, patch_info):
 
     # Copy Code to Dolphin
     if load_setting("Settings", "CopyCodes", True):
-        game_id = getGameID()
+        game_id = BasedOnRegion(game_ids)
         if paths.dolphinSavePath.is_dir():
             if (paths.dolphinPath/"GameSettings"/game_id + ".ini").is_file():
                 if not (paths.dolphinPath/"GameSettings"/game_id + ".backup.ini").is_file():

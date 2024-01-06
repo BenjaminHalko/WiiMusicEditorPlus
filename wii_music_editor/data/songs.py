@@ -1,4 +1,4 @@
-from wii_music_Song.utils.translate import tr
+from wii_music_editor.utils.translate import tr
 
 
 class SongClass:

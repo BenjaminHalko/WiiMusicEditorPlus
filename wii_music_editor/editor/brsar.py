@@ -1,5 +1,5 @@
 from wii_music_editor.editor.gecko import AddPatch
-from wii_music_editor.utils.region import BasedOnRegion
+from wii_music_editor.editor.region import BasedOnRegion
 from wii_music_editor.utils.save import load_setting
 
 

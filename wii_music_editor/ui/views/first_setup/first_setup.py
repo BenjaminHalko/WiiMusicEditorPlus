@@ -1,11 +1,13 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6.QtCore import Qt
 
+from wii_music_editor.data.region import regionNames
 from wii_music_editor.ui.views.first_setup.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.loadFiles import select_rom_path, select_dolphin_path
 import wii_music_editor.utils.paths as paths
+import wii_music_editor.editor.region as region
 from wii_music_editor.utils.save import save_setting
-from wii_music_editor.utils.translate import changeLanguage
+from wii_music_editor.utils.translate import changeLanguage, tr
 
 
 class FirstSetupWindow(QDialog, Ui_FirstSetup):
@@ -34,7 +36,7 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         if paths.dolphinPath != "":
             self.DolphinPath_Label.setText(paths.dolphinPath)
 
-        # self.RomLanguageChange()
+        self.RomLanguageChange()
 
         self.show()
         self.exec()
@@ -55,39 +57,46 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         save_setting("Settings", "Language", self.LanguageBox.currentIndex())
         changeLanguage(self.app, self.LanguageBox.currentIndex())
         self.retranslateUi(self)
+        # TODO: Translate songs
         # editor.RetranslateSongNames()
         self.RomLanguageChange()
 
     def RegionChange(self):
-        # editor.regionSelected = self.RegionBox.currentIndex()
+        region.regionSelected = self.RegionBox.currentIndex()
         save_setting("Settings", "DefaultRegion", self.RegionBox.currentIndex())
         self.RomLanguageChange()
 
     def RomLanguageChange(self):
         self.RomLanguageBox.blockSignals(True)
         self.RomLanguageBox.clear()
-        romLanguageList = [self.tr("English"), self.tr("French"), self.tr("Spanish"), self.tr("Germen"),
-                           self.tr("Italian"), self.tr("Japanese"), self.tr("Korean")]
-        if (self.RegionBox.currentIndex() > 1):
-            self.RomLanguageBox.addItem(romLanguageList[3 + self.RegionBox.currentIndex()])
+        rom_language_list = [
+            tr("Language", "English"),
+            tr("Language", "French"),
+            tr("Language", "Spanish"),
+            tr("Language", "Germen"),
+            tr("Language", "Italian"),
+            tr("Language", "Japanese"),
+            tr("Language", "Korean")
+        ]
+        if self.RegionBox.currentIndex() > 1:
+            self.RomLanguageBox.addItem(rom_language_list[3 + self.RegionBox.currentIndex()])
         else:
             for i in range(3 + 2 * self.RegionBox.currentIndex()):
-                self.RomLanguageBox.addItem(romLanguageList[i])
-        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[self.RegionBox.currentIndex()])
+                self.RomLanguageBox.addItem(rom_language_list[i])
+        self.RomLanguageBox.setCurrentIndex(region.romLanguageNumber[self.RegionBox.currentIndex()])
         self.RomLanguageBox.blockSignals(False)
 
     def RomLanguageSelect(self):
         save_setting("Settings", "RomLanguage", self.RomLanguageBox.currentIndex())
-        editor.romLanguageNumber = [self.RomLanguageBox.currentIndex()] * 4
+        region.romLanguageNumber = [self.RomLanguageBox.currentIndex()] * 4
         for i in range(4):
-            if (editor.romLanguageNumber[i] >= len(regionNames[i])):
-                editor.romLanguageNumber[i] = 0
-            editor.romLanguage[i] = regionNames[i][editor.romLanguageNumber[i]]
-        if (editor.file.type == LoadType.Rom): GetSongNames()
+            if region.romLanguageNumber[i] >= len(regionNames[i]):
+                region.romLanguageNumber[i] = 0
+            region.romLanguage[i] = regionNames[i][region.romLanguageNumber[i]]
 
     def LoadMainFile(self, dialog_filter):
-        if select_rom_path(dialog_filter):
-            self.RomPath_Label.setText(paths.loadedFilePath)
+        if select_rom_path(self, dialog_filter):
+            self.RomPath_Label.setText(paths.romPath)
 
     def Checkmark(self, checkmark, setting):
         save_setting("Settings", setting, (checkmark.checkState() == 2))
