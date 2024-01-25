@@ -1,7 +1,7 @@
 from wii_music_editor.editor.openData import LoadType, loadedFile
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.osUtils import currentSystem
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.translate import tr
 
 

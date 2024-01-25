@@ -9,7 +9,7 @@ from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.first_setup import FirstSetupWindow
 from wii_music_editor.ui.main_window import MainWindow
 from wii_music_editor.ui.update import CheckForUpdate, UpdateWindow
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import savePath, load_setting
 from wii_music_editor.utils.translate import changeLanguage, tr
 

@@ -1,15 +1,24 @@
 import platform
+from enum import Enum
+
+
+class SystemType(Enum):
+    Windows = 0,
+    Mac = 1,
+    Linux = 2
 
 
 def choose_from_os(array: list):
-    if currentSystem == "Windows":
+    if currentSystem == SystemType.Windows:
         return array[0]
-    elif currentSystem == "Mac":
+    elif currentSystem == SystemType.Mac:
         return array[1]
     else:
         return array[2]
 
 
-currentSystem = platform.system()
-if currentSystem == "Darwin":
-    currentSystem = "Mac"
+currentSystem: SystemType = SystemType.Linux
+if platform.system() == "Windows":
+    currentSystem = SystemType.Windows
+elif platform.system() == "Darwin":
+    currentSystem = SystemType.Mac

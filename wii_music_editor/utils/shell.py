@@ -3,11 +3,11 @@ import subprocess
 import stat
 
 from wii_music_editor.ui.error_handler import ShowError
-from wii_music_editor.utils.osUtils import currentSystem
+from wii_music_editor.utils.osUtils import currentSystem, SystemType
 
 
 def give_permission(file: str):
-    if currentSystem != "Windows":
+    if currentSystem != SystemType.Windows:
         try:
             os.chmod(file, os.stat(file).st_mode | stat.S_IEXEC)
         except Exception as e:
@@ -18,7 +18,7 @@ def run_shell(command: list or str):
     try:
         if type(command) is str:
             give_permission(command[0])
-        if currentSystem == "Windows":
+        if currentSystem == SystemType.Windows:
             create_no_window = 0x08000000
             subprocess.run(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
                            creationflags=create_no_window)

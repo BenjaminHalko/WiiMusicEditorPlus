@@ -1,10 +1,16 @@
-from os import path, remove
+import sys
+from os import remove
+from shutil import copyfile
+from subprocess import Popen
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog
 
 from wii_music_editor.services.update import CheckForUpdate, UpdateThread
 from wii_music_editor.ui.windows.update_ui import Ui_Update
+from wii_music_editor.utils.pathUtils import paths
+from wii_music_editor.utils.osUtils import currentSystem, SystemType
+from wii_music_editor.utils.shell import give_permission
 
 
 class UpdateWindow(QDialog, Ui_Update):
@@ -40,18 +46,19 @@ class UpdateWindow(QDialog, Ui_Update):
 
     def restart(self):
         updateExt = ".sh"
-        if (currentSystem == "Windows"): updateExt = ".bat"
-        if (path.exists(SavePath() + "/update" + updateExt)): remove(SavePath() + "/update" + updateExt)
-        copyfile(HelperPath() + "/Extra/update" + updateExt, SavePath() + "/update" + updateExt)
+        if currentSystem == SystemType.Windows:
+            updateExt = ".bat"
+        if (paths.save/f"update{updateExt}").exists():
+            remove(paths.save/f"update{updateExt}")
+        copyfile(paths.include/"update"/f"update{updateExt}", paths.save/"update"/f"update{updateExt}")
 
-        if (currentSystem == "Windows"):
-            Popen([SavePath() + "/update.bat", FullPath])
+        if currentSystem == SystemType.Windows:
+            Popen([paths.save / "update.bat", paths.full])
         else:
-            GivePermission(SavePath() + "/update.sh")
-            if (currentSystem == "Linux"): GivePermission(SavePath() + '/WiiMusicEditorPlus')
-            Popen([SavePath() + "/update.sh", FullPath])
+            give_permission(paths.save / "update.sh")
+            if currentSystem == SystemType.Linux:
+                give_permission(paths.save / "WiiMusicEditorPlus")
+            Popen([paths.save / "update.sh", paths.full])
         self.close()
         self.parent.close()
-        sys_exit()
-
-
+        sys.exit(0)

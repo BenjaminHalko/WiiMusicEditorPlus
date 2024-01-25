@@ -1,7 +1,7 @@
 from PySide6.QtCore import QTranslator, QLocale
 from PySide6.QtWidgets import QApplication
 
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import save_setting, load_setting
 
 lang = load_setting("Settings", "Language", 0)

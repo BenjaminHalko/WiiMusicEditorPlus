@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from wii_music_editor.data.region import regionNames
 from wii_music_editor.ui.windows.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.load_files import select_rom_path, select_dolphin_path
-import wii_music_editor.utils.paths as paths
+from wii_music_editor.utils.pathUtils import paths
 import wii_music_editor.editor.region as region
 from wii_music_editor.utils.save import save_setting
 from wii_music_editor.utils.translate import changeLanguage, tr

@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QThread, pyqtSignal
 
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
 from wii_music_editor.utils.shell import give_permission, run_shell
 

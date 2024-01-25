@@ -3,7 +3,7 @@ from shutil import copyfile
 
 from wii_music_editor.editor.gecko import CreateGct
 from wii_music_editor.editor.region import BasedOnRegion
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 
 
 def PatchMainDol(dol_path="", gecko_path=""):

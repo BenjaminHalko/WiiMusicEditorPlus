@@ -7,7 +7,7 @@ from tempfile import TemporaryDirectory
 import mido
 from pretty_midi import pretty_midi
 
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.shell import run_shell
 
 

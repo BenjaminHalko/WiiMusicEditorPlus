@@ -11,7 +11,7 @@ from PySide6.QtWidgets import QMainWindow
 from wii_music_editor.data.songs import SongTypeValue, songList
 from wii_music_editor.editor.openData import openData, LoadType
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import load_setting
 from wii_music_editor.utils.translate import tr
 

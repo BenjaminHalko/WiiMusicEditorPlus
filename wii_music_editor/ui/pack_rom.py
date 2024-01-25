@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QDialog, QFileDialog
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.windows.pack_rom_ui import Ui_Packrom
 from wii_music_editor.ui.success import SuccessWindow
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 
 
 class PackRomWindow(QDialog, Ui_Packrom):

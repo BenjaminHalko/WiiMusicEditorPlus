@@ -3,12 +3,13 @@ from pathlib import Path, PosixPath
 import subprocess
 import sys
 
-from wii_music_editor.utils.osUtils import currentSystem, choose_from_os
+from wii_music_editor.utils.osUtils import currentSystem, choose_from_os, SystemType
 from wii_music_editor.editor.region import BasedOnRegion, romLanguage
-from wii_music_editor.utils.save import save_setting, load_setting
+from wii_music_editor.utils.save import save_setting, load_setting, savePath
 
 
 class Paths:
+    save: Path = None
     program: Path = None
     full: Path = None
     include: Path = None
@@ -29,8 +30,9 @@ class Paths:
 
     def __init__(self):
         # System
+        self.save = Path(savePath)
         if getattr(sys, 'frozen', False):
-            if currentSystem == "Mac":
+            if currentSystem == SystemType.Mac:
                 self.program = PosixPath(sys.executable).parent.parent.parent.parent
                 self.full = PosixPath(sys.executable).parent.parent.parent
                 self.include = self.full / "Contents" / "Resources" / "app" / "include"
@@ -44,14 +46,14 @@ class Paths:
             self.translation = Path(sys._MEIPASS) / "translations"
         else:
             self.program = Path(__file__).parent.parent.parent
-            self.include = self.program / "include" / currentSystem
+            self.include = self.program / "include" / currentSystem.name.lower()
             self.includeAll = self.program / "include" / "all"
             self.translation = self.program / "translations" / "translations"
 
         # Dolphin
         tempDolphinPath = load_setting("Paths", "Dolphin", "")
         self.dolphin = Path(tempDolphinPath) if tempDolphinPath != "" else None
-        if currentSystem == "Linux" and self.dolphin is None:
+        if currentSystem == SystemType.Linux and self.dolphin is None:
             temp = subprocess.check_output("whereis dolphin-emu", shell=True).decode()
             if os.path.exists(temp[13:len(temp) - 1:1]):
                 self.dolphin = Path(temp[13:len(temp) - 1:1])

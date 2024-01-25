@@ -1,3 +1,4 @@
+from enum import Enum
 from shutil import rmtree
 
 from wii_music_editor.data.instruments import instrumentList
@@ -7,11 +8,11 @@ from wii_music_editor.data.styles import styleList
 from wii_music_editor.editor.message import DecodeTxt
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.error_handler import ShowError
-from wii_music_editor.utils.paths import paths
+from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.editor.region import regionSelected, BasedOnRegion
 
 
-class LoadType:
+class LoadType(Enum):
     Rom = 0
     Brsar = 1
     Message = 2
@@ -20,7 +21,8 @@ class LoadType:
     Gct = 5
     RomFile = 6
 
-class RecordType:
+
+class RecordType(Enum):
     Song = "song"
     Style = "style"
     TextSong = "textsong"
