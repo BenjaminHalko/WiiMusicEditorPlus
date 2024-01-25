@@ -8,85 +8,94 @@ from wii_music_editor.editor.region import BasedOnRegion, romLanguage
 from wii_music_editor.utils.save import save_setting, load_setting
 
 
-def setLoadedFilePath():
-    global romPath, mainDolPath, brsarPath, messagePath, geckoPath
+class Paths:
+    program: Path = None
+    full: Path = None
+    include: Path = None
+    includeAll: Path = None
+    module: Path = None
+    translation: Path = None
+    lastLoaded: Path = None
 
-    romPath = ""
-    mainDolPath = ""
-    brsarPath = ""
-    messagePath = ""
-    geckoPath = ""
+    loadedFile: Path = None
+    rom: Path = None
+    mainDol: Path = None
+    brsar: Path = None
+    message: Path = None
+    gecko: Path = None
 
-    if os.path.isdir(loadedFilePath):
-        romPath = loadedFilePath
-        mainDolPath = Path(loadedFilePath)/"sys"/"main.dol"
-        brsarPath = Path(loadedFilePath)/"files"/"Sound"/"MusicStatic"/"rp_Music_sound.brsar"
-        messagePath = Path(loadedFilePath)/"files"/BasedOnRegion(romLanguage)/"Message"
-        geckoPath = Path(loadedFilePath)/"GeckoCodes.ini"
-    else:
-        # TODO: Add support for loading from a non folder
-        temp = 0
+    dolphin: Path = None
+    dolphinSave: Path = None
+
+    def __init__(self):
+        # System
+        if getattr(sys, 'frozen', False):
+            if currentSystem == "Mac":
+                self.program = PosixPath(sys.executable).parent.parent.parent.parent
+                self.full = PosixPath(sys.executable).parent.parent.parent
+                self.include = self.full / "Contents" / "Resources" / "app" / "include"
+                self.includeAll = self.include
+            else:
+                self.program = Path(sys.executable).parent
+                self.full = Path(sys.executable)
+                self.include = Path(sys._MEIPASS) / "include"
+                print(self.include)
+                self.includeAll = self.include
+            self.translation = Path(sys._MEIPASS) / "translations"
+        else:
+            self.program = Path(__file__).parent.parent.parent
+            self.include = self.program / "include" / currentSystem
+            self.includeAll = self.program / "include" / "all"
+            self.translation = self.program / "translations" / "translations"
+
+        # Dolphin
+        tempDolphinPath = load_setting("Paths", "Dolphin", "")
+        self.dolphin = Path(tempDolphinPath) if tempDolphinPath != "" else None
+        if currentSystem == "Linux" and self.dolphin is None:
+            temp = subprocess.check_output("whereis dolphin-emu", shell=True).decode()
+            if os.path.exists(temp[13:len(temp) - 1:1]):
+                self.dolphin = Path(temp[13:len(temp) - 1:1])
+                save_setting("Paths", "Dolphin", str(self.dolphin))
+
+        # Dolphin Save Path
+        self.setDolphinSavePath(load_setting("Paths", "DolphinSave", ""))
+
+        # Loaded Rom
+        tempLoadedFile = load_setting("Paths", "CurrentLoadedFile", "")
+        self.loadedFile = Path(tempLoadedFile) if tempLoadedFile != "" else None
+        self.setLoadedFilePath()
+
+        # Last Loaded Path
+        self.lastLoaded = Path(load_setting("Paths", "LastLoadedPath", str(self.program)))
+
+    def setLoadedFilePath(self):
+        self.rom = None
+        self.mainDol = None
+        self.brsar = None
+        self.message = None
+        self.gecko = None
+
+        if os.path.isdir(self.loadedFile):
+            self.rom = self.loadedFile
+            self.mainDol = self.rom / "sys" / "main.dol"
+            self.brsar = self.rom / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
+            self.message = self.rom / "files" / BasedOnRegion(romLanguage) / "Message"
+            self.gecko = self.rom / "GeckoCodes.ini"
+        else:
+            # TODO: Add support for loading from a non folder
+            temp = 0
+
+    def setDolphinSavePath(self, dolphin_save_path: str):
+        if os.path.isdir(dolphin_save_path):
+            self.dolphinSave = Path(dolphin_save_path)
+        elif (self.dolphin.parent / "portable.txt").exists() and currentSystem == "Windows":
+            self.dolphinSave = self.dolphin.parent / "User"
+        else:
+            self.dolphinSave = Path(choose_from_os([
+                os.path.expanduser('~/Documents/Dolphin Emulator'),
+                os.path.expanduser('~/Library/Application Support/Dolphin'),
+                os.path.expanduser('~/.local/share/dolphin-emu')
+            ]))
 
 
-def setDolphinSavePath(dolphin_save_path):
-    global dolphinSavePath, dolphinPath
-    if os.path.isdir(dolphin_save_path):
-        dolphinSavePath = dolphin_save_path
-    elif (os.path.exists(os.path.join(os.path.dirname(dolphinPath), "portable.txt"))
-          and currentSystem == "Windows"):
-        dolphinSavePath = os.path.join(os.path.dirname(dolphinPath), "portable.txt")
-    else:
-        dolphinSavePath = choose_from_os([
-            os.path.expanduser('~/Documents/Dolphin Emulator'),
-            os.path.expanduser('~/Library/Application Support/Dolphin'),
-            os.path.expanduser('~/.local/share/dolphin-emu')
-        ])
-
-
-# System
-if getattr(sys, 'frozen', False):
-    if currentSystem == "Mac":
-        programPath = os.path.dirname(
-            PosixPath(os.path.dirname(sys.executable)).parent.parent.parent)
-        fullPath = os.path.dirname(PosixPath(os.path.dirname(sys.executable)).parent.parent)
-        includePath = os.path.join(fullPath, "Contents", "Resources", "app", "include")
-        includeAllPath = includePath
-        resPath = os.path.join(fullPath, "Contents", "Resources", "app", "res")
-    else:
-        programPath = os.path.dirname(sys.executable)
-        fullPath = sys.executable
-        includePath = Path(sys._MEIPASS) / "include"
-        includeAllPath = includePath
-        modulePath = Path(sys._MEIPASS) / "wii_music_editor"
-    translationPath = Path(sys._MEIPASS) / "translations"
-else:
-    programPath = Path(__file__).parent.parent.parent
-    fullPath = "NULL"
-    includePath = programPath / "include" / currentSystem
-    includeAllPath = programPath / "include" / "all"
-    translationPath = programPath / "translations" / "translations"
-    modulePath = programPath / "wii_music_editor"
-
-# Dolphin
-dolphinPath = load_setting("Paths", "Dolphin", "")
-if currentSystem == "Linux" and not os.path.isfile(dolphinPath):
-    temp = subprocess.check_output("whereis dolphin-emu", shell=True).decode()
-    if os.path.exists(temp[13:len(temp) - 1:1]):
-        dolphinPath = temp[13:len(temp) - 1:1]
-        save_setting("Paths", "Dolphin", dolphinPath)
-
-# Dolphin Save Path
-dolphinSavePath = ""
-setDolphinSavePath(load_setting("Paths", "DolphinSave", ""))
-
-# Loaded Rom
-romPath = ""
-mainDolPath = ""
-brsarPath = ""
-messagePath = ""
-geckoPath = ""
-loadedFilePath = Path(load_setting("Paths", "CurrentLoadedFile", ""))
-setLoadedFilePath()
-
-# Last Loaded Path
-lastLoadedPath = Path(load_setting("Paths", "LastLoadedPath", str(programPath)))
+paths = Paths()

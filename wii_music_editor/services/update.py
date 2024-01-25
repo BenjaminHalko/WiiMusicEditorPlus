@@ -4,7 +4,7 @@ from shutil import rmtree
 from zipfile import ZipFile
 
 import requests
-from PyQt6.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 
 from wii_music_editor.utils.osUtils import currentSystem
 from wii_music_editor.utils.save import load_setting, savePath
@@ -18,8 +18,8 @@ class UpdateProgress:
 
 
 class DownloadUpdate(QThread):
-    progress = pyqtSignal(int)
-    done = pyqtSignal()
+    progress = Signal(int)
+    done = Signal()
     version = "null"
 
     def run(self):

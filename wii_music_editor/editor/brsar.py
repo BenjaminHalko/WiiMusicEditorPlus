@@ -83,6 +83,75 @@ def PatchBrsar(SongSelected, BrseqInfo, BrseqLength, Tempo, Length, TimeSignatur
                                    'x').lower() + ' ' + '00000000\n'
         AddPatch(Songs[SongSelected].Name + ' Song Patch', LengthCode + LengthCode2 + MeasureCode)
 
+def ReplaceWave(startOffset, replaceNumber, rwavInfo, rwavSize):
+    if (not os.path.exists(GetBrsarPath() + ".backup")): copyfile(GetBrsarPath(), GetBrsarPath() + ".backup")
+    sizeDifference = 0
+    brsar = open(GetBrsarPath(), "r+b")
+    brsar.seek(startOffset)
+    rwarSpot = int.from_bytes(brsar.read(4), 'big')
+    brsar.seek(rwarSpot + 0x18)
+    dataSection = rwarSpot + int.from_bytes(brsar.read(4), 'big')
+    brsar.seek(rwarSpot + 0x10)
+    table = rwarSpot + int.from_bytes(brsar.read(4), 'big')
+    brsar.seek(table + 8)
+    numberOfRwavs = int.from_bytes(brsar.read(4), 'big')
+    if (numberOfRwavs == len(replaceNumber)): replaceNumber = -1
+    if (replaceNumber == -1):
+        for i in range(numberOfRwavs):
+            brsar.seek(table + 0x10 + 0xC * i)
+            tempdataSpot = int.from_bytes(brsar.read(4), 'big')
+            if (i == 0): dataSpot = tempdataSpot
+            dataSize = int.from_bytes(brsar.read(4), 'big')
+            brsar.seek(table + 0x10 + 0xC * i)
+            offset = int.from_bytes(brsar.read(4), 'big')
+            brsar.seek(table + 0x10 + 0xC * i)
+            brsar.write((offset + sizeDifference).to_bytes(4, 'big'))
+            brsar.seek(table + 0x10 + 0xC * i)
+            brsar.write((tempdataSpot + sizeDifference).to_bytes(4, 'big'))
+            sizeDifference += rwavSize - dataSize
+            brsar.seek(table + 0x10 + 0xC * i + 4)
+            brsar.write(rwavSize.to_bytes(4, 'big'))
+        brsar.seek(0)
+        data1 = brsar.read(dataSection + dataSpot)
+        brsar.seek(dataSection + dataSpot + rwavSize * numberOfRwavs - sizeDifference)
+        data2 = brsar.read()
+        brsar.seek(0)
+        brsar.write(data1 + rwavInfo * numberOfRwavs + data2)
+        brsar.truncate()
+    else:
+        for i in replaceNumber:
+            brsar.seek(table + 0x10 + 0xC * i)
+            dataSpot = int.from_bytes(brsar.read(4), 'big')
+            dataSize = int.from_bytes(brsar.read(4), 'big')
+            sizeDifference += rwavSize - dataSize
+            brsar.seek(table + 0x10 + 0xC * i + 4)
+            brsar.write(rwavSize.to_bytes(4, 'big'))
+            brsar.seek(0)
+            data1 = brsar.read(dataSection + dataSpot)
+            brsar.seek(dataSection + dataSpot + dataSize)
+            data2 = brsar.read()
+            brsar.seek(0)
+            brsar.write(data1 + rwavInfo + data2)
+            brsar.truncate()
+            for j in range(i + 1, numberOfRwavs):
+                brsar.seek(table + 0x10 + 0xC * j)
+                offset = int.from_bytes(brsar.read(4), 'big')
+                brsar.seek(table + 0x10 + 0xC * j)
+                brsar.write((offset + rwavSize - dataSize).to_bytes(4, 'big'))
+
+    for offset in [8, startOffset + 4, rwarSpot + 8]:
+        brsar.seek(offset)
+        size = brsar.read(4)
+        brsar.seek(offset)
+        brsar.write((int.from_bytes(size, "big") + sizeDifference).to_bytes(4, 'big'))
+    for offset in rseqList:
+        if (offset > startOffset):
+            brsar.seek(offset)
+            size = brsar.read(4)
+            brsar.seek(offset)
+            brsar.write((int.from_bytes(size, "big") + sizeDifference).to_bytes(4, 'big'))
+    brsar.close()
+
 
 def BrsarGetList(file, positionOffset):
     return getData(file, inO) + 0x10 + getData(file, positionOffset + 0x14) + getData(file, positionOffset + 0x18) * 8

@@ -1,6 +1,5 @@
 import os
 from configparser import ConfigParser
-from wii_music_editor.utils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
 
 # Save
@@ -13,7 +12,7 @@ if not os.path.isdir(savePath):
     os.mkdir(savePath)
 
 
-def load_setting(section, key, default):
+def load_setting(section, key, default) -> str or int or bool:
     ini = ConfigParser()
     ini.read(savePath + '/settings.ini')
     if ini.has_option(section, key):

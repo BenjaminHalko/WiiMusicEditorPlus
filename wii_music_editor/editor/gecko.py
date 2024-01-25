@@ -3,7 +3,7 @@ from shutil import copyfile
 
 from wii_music_editor.data.region import game_ids
 from wii_music_editor.editor.region import BasedOnRegion
-from wii_music_editor.utils import paths
+from wii_music_editor.utils.paths import paths
 from wii_music_editor.utils.save import load_setting
 
 

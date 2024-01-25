@@ -33,7 +33,7 @@ jobs:
       if: startsWith(matrix.os, 'macOS')
       run: |
         brew install platypus
-        platypus -y -B -R -i 'wii_music_editor_plus/res/icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh' -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
+        platypus -y -B -R -i 'include/all/icon/icon.icns'  -a 'WiiMusicEditorPlus'  -o 'None'  -p '/bin/sh' -f 'dist/WiiMusicEditorPlus' macscript.sh dist/WiiMusicEditorPlus.app
         rm -r dist/WiiMusicEditorPlus
 
     - name: Upload Build

@@ -1,7 +1,7 @@
 import platform
 
 
-def choose_from_os(array):
+def choose_from_os(array: list):
     if currentSystem == "Windows":
         return array[0]
     elif currentSystem == "Mac":

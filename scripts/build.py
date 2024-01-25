@@ -10,11 +10,12 @@ def build():
 
     args = [
         str(app_dir/'app.py'),
+        "--name", "WiiMusicEditorPlus",
         '--noconfirm',
         '--add-data', f'{path.join("translations", "translations")}:translations',
         '--add-data', f'{path.join("include", system)}:include',
         '--add-data', f'{path.join("include", "all")}:include',
-        f'--icon={app_dir/"wii_music_editor"/"res"/"icon"/"icon.ico"}'
+        f'--icon={app_dir/"include"/"all"/"icon"/"icon.ico"}',
     ]
 
     if system != 'Mac':

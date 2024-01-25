@@ -2,11 +2,11 @@ import os
 import subprocess
 import stat
 
-from wii_music_editor.ui.views.error_handler.error_handler import ShowError
+from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.osUtils import currentSystem
 
 
-def give_permission(file):
+def give_permission(file: str):
     if currentSystem != "Windows":
         try:
             os.chmod(file, os.stat(file).st_mode | stat.S_IEXEC)
@@ -14,7 +14,7 @@ def give_permission(file):
             print("Error giving permission to file:", file, "\nError:", e)
 
 
-def run_shell(command):
+def run_shell(command: list or str):
     try:
         if type(command) is str:
             give_permission(command[0])
