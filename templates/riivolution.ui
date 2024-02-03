@@ -697,7 +697,7 @@ background-color: #242424;
   </layout>
  </widget>
  <resources>
-  <include location="../res/resources.qrc"/>
+  <include location="../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

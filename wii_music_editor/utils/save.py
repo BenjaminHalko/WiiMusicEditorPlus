@@ -12,7 +12,7 @@ if not os.path.isdir(savePath):
     os.mkdir(savePath)
 
 
-def load_setting(section, key, default) -> str or int or bool:
+def load_setting(section: str, key: str, default: str or int or bool) -> str or int or bool:
     ini = ConfigParser()
     ini.read(savePath + '/settings.ini')
     if ini.has_option(section, key):
@@ -28,7 +28,7 @@ def load_setting(section, key, default) -> str or int or bool:
         return default
 
 
-def save_setting(section, key, value):
+def save_setting(section: str, key: str, value: str or int or bool):
     ini = ConfigParser()
     ini.read(savePath + '/settings.ini')
     if not ini.has_section(section):

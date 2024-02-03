@@ -5,8 +5,8 @@ from subprocess import call
 
 def convert():
     root_dir = (Path(__file__).parent / "..").resolve()
-    template_dir = root_dir / 'wii_music_editor' / 'ui' / "templates"
-    resource_dir = root_dir / 'wii_music_editor' / 'ui' / "res"
+    template_dir = root_dir / 'wii_music_editor' / "templates"
+    resource_dir = root_dir / 'wii_music_editor' / "resources"
     output_dir = root_dir / 'wii_music_editor' / 'ui' / "windows"
     for file in template_dir.iterdir():
         print("Converting file:", file)
