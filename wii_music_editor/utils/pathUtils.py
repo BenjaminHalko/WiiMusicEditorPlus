@@ -77,7 +77,7 @@ class Paths:
         self.message = None
         self.gecko = None
 
-        if os.path.isdir(self.loadedFile):
+        if self.loadedFile is not None and os.path.isdir(self.loadedFile):
             self.rom = self.loadedFile
             self.mainDol = self.rom / "sys" / "main.dol"
             self.brsar = self.rom / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
@@ -90,7 +90,7 @@ class Paths:
     def setDolphinSavePath(self, dolphin_save_path: str):
         if os.path.isdir(dolphin_save_path):
             self.dolphinSave = Path(dolphin_save_path)
-        elif (self.dolphin.parent / "portable.txt").exists() and currentSystem == "Windows":
+        elif self.dolphin is not None and (self.dolphin.parent / "portable.txt").exists() and currentSystem == "Windows":
             self.dolphinSave = self.dolphin.parent / "User"
         else:
             self.dolphinSave = Path(choose_from_os([

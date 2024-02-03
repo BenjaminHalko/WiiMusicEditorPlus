@@ -8,21 +8,29 @@ class BrsarSection:
     fileSectionOffset: int
 
     def __init__(self, parent: 'BrsarSection', offset: int):
-        print(type(self), hex(offset))
         self.parent = parent
         self.offset = offset
 
-    def getParentData(self, value: str):
-        if hasattr(self, value):
-            return getattr(self, value)
+    def rootSection(self):
+        if self.parent is self:
+            return self
         else:
-            return self.parent.getParentData(value)
+            return self.parent.rootSection()
 
-    def readBytes(self, offset: int, length: int = 4):
+    def readBytes(self, offset: int):
+        length = 4
         offset += self.offset
-        data = self.getParentData("data")
-        return int.from_bytes(data[offset:offset + length], "big")
+        rootSection = self.rootSection()
+        return int.from_bytes(rootSection.data[offset:offset + length], "big")
+
+    def updateValue(self, value: str, sizeDifference: int):
+        length = 4
+        offset = getattr(self, f"_{value}") + self.offset
+        val = getattr(self, value) + sizeDifference
+        setattr(self, value, val)
+        rootSection = self.rootSection()
+        rootSection.data[offset:offset + length] = val.to_bytes(length, "big")
 
     def sectionReference(self, offset: int):
-        infoSectionOffset = self.getParentData("infoSectionOffset")
-        return self.readBytes(offset + self._referenceValueOffset) + infoSectionOffset + 0x08
+        rootSection = self.rootSection()
+        return self.readBytes(offset + self._referenceValueOffset) + rootSection.infoSectionOffset + 0x08
