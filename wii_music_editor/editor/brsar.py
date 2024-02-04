@@ -1,7 +1,42 @@
 from pathlib import Path
 
-from wii_music_editor.editor.brsar.brsarSection import BrsarSection
-from wii_music_editor.utils.pathUtils import paths
+
+class BrsarSection:
+    _referenceValueOffset = 0x04
+    _referenceSize = 0x08
+
+    parent: 'BrsarSection'
+    offset: int
+    infoSectionOffset: int
+    fileSectionOffset: int
+
+    def __init__(self, parent: 'BrsarSection', offset: int):
+        self.parent = parent
+        self.offset = offset
+
+    def rootSection(self):
+        if self.parent is self:
+            return self
+        else:
+            return self.parent.rootSection()
+
+    def readBytes(self, offset: int):
+        length = 4
+        offset += self.offset
+        rootSection = self.rootSection()
+        return int.from_bytes(rootSection.data[offset:offset + length], "big")
+
+    def updateValue(self, value: str, sizeDifference: int):
+        length = 4
+        offset = getattr(self, f"_{value}") + self.offset
+        val = getattr(self, value) + sizeDifference
+        setattr(self, value, val)
+        rootSection = self.rootSection()
+        rootSection.data[offset:offset + length] = val.to_bytes(length, "big")
+
+    def sectionReference(self, offset: int):
+        rootSection = self.rootSection()
+        return self.readBytes(offset + self._referenceValueOffset) + rootSection.infoSectionOffset + 0x08
 
 
 class Brsar(BrsarSection):
@@ -11,6 +46,7 @@ class Brsar(BrsarSection):
     _fileSectionOffset = 0x20
     _fileSectionSize = 0x24
 
+    brsarPath: Path or str
     data: bytearray
     fileLength: int
     infoSectionOffset: int
@@ -20,9 +56,10 @@ class Brsar(BrsarSection):
     infoSection: 'InfoSection'
     fileSection: 'FileSection'
 
-    def __init__(self):
+    def __init__(self, path: Path or str):
         super().__init__(self, 0)
-        with open(paths.brsar, "rb") as file:
+        self.brsarPath = path
+        with open(str(self.brsarPath)+".backup", "rb") as file:
             self.data = bytearray(file.read())
         self.fileLength = self.readBytes(self._fileLength)
         self.infoSectionOffset = self.readBytes(self._infoSectionOffset)
@@ -33,21 +70,25 @@ class Brsar(BrsarSection):
         self.fileSection = FileSection(self, self.fileSectionOffset)
 
     def replaceSong(self, song: bytearray, index: int):
-        group = self.infoSection.groupTable.entries[index]
-        sizeDifference = len(song) - group.rseqSize
+        songGroup = self.infoSection.groupTable.entries[index]
+        sizeDifference = len(song) - songGroup.rseqSize
 
         # Replace song data
-        self.data = self.data[:group.rseqOffset]+song+self.data[group.rseqOffset+group.rseqSize:]
+        self.data = self.data[:songGroup.rseqOffset]+song+self.data[songGroup.rseqOffset+songGroup.rseqSize:]
 
         # Update Group Table
-        group.updateValue('rseqSize', sizeDifference)
-        for entry in self.infoSection.groupTable.entries[index+1:]:
-            entry.updateValue('rseqOffset', sizeDifference)
+        songGroup.updateValue('rseqSize', sizeDifference)
+        for group in self.infoSection.groupTable.entries[index+1:]:
+            group.updateValue('rseqOffset', sizeDifference)
 
         # Update Section Sizes
         self.updateValue('fileLength', sizeDifference)
         self.updateValue('fileSectionSize', sizeDifference)
         self.fileSection.updateValue('sectionSize', sizeDifference)
+
+    def save(self):
+        with open(self.brsarPath, "wb") as file:
+            file.write(self.data)
 
 
 class InfoSection(BrsarSection):
@@ -66,9 +107,9 @@ class InfoSection(BrsarSection):
     def __init__(self, parent: Brsar, offset: int):
         super().__init__(parent, offset)
 
-        # collectionTableOffset = self.sectionReference(self._collectionTable)
+        collectionTableOffset = self.sectionReference(self._collectionTable)
         groupTableOffset = self.sectionReference(self._groupTable)
-        # self.collectionTable = CollectionTable(self, collectionTableOffset)
+        self.collectionTable = CollectionTable(self, collectionTableOffset)
         self.groupTable = GroupTable(self, groupTableOffset)
 
 
@@ -92,7 +133,6 @@ class CollectionTable(BrsarSection):
 
     def __init__(self, parent: InfoSection, offset: int):
         super().__init__(parent, offset)
-        print(self._numEntries)
         numEntries = self.readBytes(self._numEntries)
         self.entries = [
             CollectionEntry(self, self.sectionReference(self._entries + i * self._referenceSize))
@@ -110,6 +150,9 @@ class CollectionEntry(BrsarSection):
 
     def __init__(self, parent: CollectionTable, offset: int):
         super().__init__(parent, offset)
+        print(hex(offset))
+        self.audioLength = self.readBytes(self._audioLength)
+        self.audioData = self.readBytes(self._audioData)
 
 
 class GroupTable(BrsarSection):
@@ -140,14 +183,4 @@ class GroupDataEntry(BrsarSection):
         super().__init__(parent, offset)
         self.rseqOffset = self.readBytes(self._rseqOffset)
         self.rseqSize = self.readBytes(self._rseqSize)
-
-
-if __name__ == "__main__":
-    paths.brsar = Path("D:/file.brsar")
-    brsar = Brsar()
-    brsar.replaceSong(bytearray(10), 1)
-
-    with open(str(paths.brsar)+".brsar", "wb") as f:
-        f.write(brsar.data)
-
     

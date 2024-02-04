@@ -11,6 +11,48 @@ from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.shell import run_shell
 
 
+class Midi:
+    midi_path: Path or str
+    data: bytearray
+    length: int
+    tempo: int = 0
+    time_signature: int = 4
+
+    def __init__(self, path: Path or str):
+        self.midi_path = path
+        with TemporaryDirectory() as directory:
+            prefix = Path(self.midi_path).suffix
+            if prefix == '.mid':
+                prefix = '.midi'
+            copyfile(self.midi_path, directory + '/z' + prefix)
+
+            if Path(directory + '/z.rseq').is_file():
+                run_shell([
+                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    'assemble', str(Path(directory) / 'z.rseq')
+                ])
+            if Path(directory + '/z.brseq').is_file():
+                run_shell([
+                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    'to_midi', str(Path(directory) / 'z.brseq')
+                ])
+            else:
+                run_shell([
+                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    'from_midi', str(Path(directory) / 'z.midi')
+                ])
+
+            mid = mido.MidiFile(directory + "/z.midi")
+            for msg in mid.tracks[0]:
+                if msg.type == 'set_tempo':
+                    self.tempo = floor(mido.tempo2bpm(msg.tempo))
+                elif msg.type == 'time_signature':
+                    self.time_signature = msg.numerator
+            self.length = ceil(mid.length * self.tempo / 60)
+            with open(directory + "/z.brseq", "rb") as Brseq:
+                self.data = bytearray(Brseq.read())
+
+
 def NormalizeMidi(midi_path, save_path, default_tempo):
     mid = mido.MidiFile(midi_path)
     for track in mid.tracks:
@@ -43,39 +85,11 @@ def NormalizeMidi(midi_path, save_path, default_tempo):
     mid.save(save_path)
 
 
-def LoadMidi(midi_path, default_tempo=-1):
-    with TemporaryDirectory() as directory:
-        prefix = Path(midi_path).suffix
-        if prefix == '.mid':
-            prefix = '.midi'
-        if default_tempo == -1:
-            copyfile(midi_path, directory + '/z' + prefix)
-        else:
-            NormalizeMidi(midi_path, directory + '/z' + prefix, default_tempo)
+def LoadMidi(midi_path) -> dict:
 
-        if Path(directory + '/z.rseq').is_file():
-            run_shell([
-                str(paths.includePath / 'SequenceCmd' / 'GotaSequenceCmd'),
-                'assemble', str(Path(directory) / 'z.rseq')])
-        if Path(directory + '/z.brseq').is_file():
-            run_shell([str(paths.includePath / 'SequenceCmd' / 'GotaSequenceCmd'),
-                       'to_midi', str(Path(directory) / 'z.brseq')])
-        else:
-            run_shell([str(paths.includePath / 'SequenceCmd' / 'GotaSequenceCmd'),
-                       'from_midi', str(Path(directory) / 'z.midi')])
-
-        mid = mido.MidiFile(directory + "/z.midi")
-        tempo = 0
-        time_signature = 4
-        for msg in mid.tracks[0]:
-            if msg.type == 'set_tempo':
-                tempo = floor(mido.tempo2bpm(msg.tempo))
-            elif msg.type == 'time_signature':
-                time_signature = msg.numerator
-        Length = ceil(mid.length * tempo / 60)
-        tempo = tempo
-        with open(directory + "/z.brseq", "rb") as Brseq:
-            Brseq.seek(0)
-            info = Brseq.read()
-        fileLength = os.stat(directory + "/z.brseq").st_size
-    return [info, fileLength, tempo, Length, time_signature]
+    return {
+        "data": data,
+        "length": length,
+        "tempo": tempo,
+        "time_signature": time_signature,
+    }
