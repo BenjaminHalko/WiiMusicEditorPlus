@@ -20,8 +20,8 @@ class __BrsarSection:
     :param parent: The `parent` attribute is the parent section of the section.
     :param offset: The `offset` attribute is the offset of the section from the start of the file.
     """
-    __referenceValueOffset = 0x04
-    referenceSize = 0x08
+    _referenceValueOffset = 0x04
+    _referenceSize = 0x08
 
     root: 'Brsar'
     parent: '__BrsarSection'
@@ -49,7 +49,7 @@ class __BrsarSection:
         :param offset: The offset from the start of the current section.
         :return:
         """
-        section_offset = self.read_bytes(offset + self.__referenceValueOffset)
+        section_offset = self.read_bytes(offset + self._referenceValueOffset)
         return section_offset + self.root.infoSectionOffset + 0x08
 
     def increment_value(self, value: str, increment: int) -> None:
@@ -193,7 +193,7 @@ class GroupDataTable(__BrsarSection):
         super().__init__(parent, offset)
         numEntries = self.read_bytes(self.__numEntries)
         self.entries = [
-            GroupDataEntry(self, self.section_reference(self.__entries + i * self.referenceSize))
+            GroupDataEntry(self, self.section_reference(self.__entries + i * self._referenceSize))
             for i in range(numEntries)
         ]
 
@@ -241,7 +241,7 @@ class GroupItemTable(__BrsarSection):
         super().__init__(parent, offset)
         numEntries = self.read_bytes(self.__numEntries)
         self.entries = [
-            GroupItemEntry(self, self.section_reference(self.__entries + i * self.referenceSize))
+            GroupItemEntry(self, self.section_reference(self.__entries + i * self._referenceSize))
             for i in range(numEntries)
         ]
 
