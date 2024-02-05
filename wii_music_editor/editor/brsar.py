@@ -15,8 +15,8 @@ class BrsarGroup:
 class __BrsarSection:
     """
     This class is a parent class for all the sections in a brsar file.
-    A list of all the sections in a brsar file can be found at https://wiki.tockdom.com/wiki/BRSAR_(File_Format).
-
+    A list of all the sections in a brsar file can be found at:
+    https://wiki.tockdom.com/wiki/BRSAR_(File_Format).
     :param parent: The `parent` attribute is the parent section of the section.
     :param offset: The `offset` attribute is the offset of the section from the start of the file.
     """
@@ -43,10 +43,10 @@ class __BrsarSection:
 
     def section_reference(self, offset: int) -> int:
         """
-        This function returns the offset of the section that the reference points to.
+        This function returns the offset to another section.
         The documentation for a data reference can be found at:
         https://wiki.tockdom.com/wiki/BRSAR_(File_Format)#Data_References.
-        :param offset: The offset from the start of the section.
+        :param offset: The offset from the start of the current section.
         :return:
         """
         section_offset = self.read_bytes(offset + self.__referenceValueOffset)
@@ -68,8 +68,7 @@ class Brsar(__BrsarSection):
     """
     This class is a representation of a brsar file.
     A list of all the sections in a brsar file can be found at https://wiki.tockdom.com/wiki/BRSAR_(File_Format).
-
-    :param path: The `path` attribute is the path to the brsar file.
+    :param path: The path to a brsar file.
     """
     _fileLength = 0x08
     _infoSectionOffset = 0x18
