@@ -14,14 +14,12 @@ def give_permission(file: str):
             print("Error giving permission to file:", file, "\nError:", e)
 
 
-def run_shell(command: list or str):
+def run_shell(command: list[str] or str):
     try:
         if type(command) is str:
             give_permission(command[0])
         if currentSystem == SystemType.Windows:
-            create_no_window = 0x08000000
-            subprocess.run(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
-                           creationflags=create_no_window)
+            subprocess.run(command)
         else:
             subprocess.run(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     except Exception as e:

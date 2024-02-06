@@ -3,9 +3,9 @@ from shutil import rmtree
 
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.region import regionNames, regionFullNames
-from wii_music_editor.data.songs import songList, SongTypeValue
+from wii_music_editor.data.songs import songList, SongType
 from wii_music_editor.data.styles import styleList
-from wii_music_editor.editor.message import DecodeTxt
+from wii_music_editor.editor.message import DecodeTxt, TextClass
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
@@ -34,10 +34,10 @@ class RecordType(Enum):
 
 class OpenData:
     styles = [[]] * len(styleList)
-    text = ""
+    text: TextClass
     region = 0
     codes = []
-    type = 0
+    type: LoadType
 
     def GetRegion(self):
         for i in range(len(regionNames)):
@@ -74,7 +74,7 @@ class OpenData:
                 self.codes = file.readlines()
 
     def GetText(self):
-        self.text = [[], [], [], []]
+        self.text = TextClass()
         DecodeTxt()
         with open(f'{paths.messagePath}/message.d/new_music_message.txt', 'rb') as message:
             textlines = message.readlines()
@@ -84,11 +84,11 @@ class OpenData:
             for SongToChange in range(len(songList) - 1):
                 text_offset = ['c8', '190', '12c']
                 number_to_change = songList[SongToChange].MemOrder
-                if songList[SongToChange].SongType == SongTypeValue.Maestro:
+                if songList[SongToChange].SongType == SongType.Maestro:
                     text_offset = ['fa', '1c2', '15e']
                     array = [0, 4, 2, 3, 1]
                     number_to_change = array[number_to_change]
-                elif songList[SongToChange].SongType == SongTypeValue.Hand_Bell:
+                elif songList[SongToChange].SongType == SongType.Hand_Bell:
                     text_offset = ['ff', '1c7', '163']
                     array = [0, 2, 3, 1, 4]
                     number_to_change = array[number_to_change]
@@ -96,12 +96,13 @@ class OpenData:
                 offset = ' ' * (4 - len(offset)) + offset + '00 @'
                 for num in range(len(textlines)):
                     if offset in str(textlines[num]):
-                        text_to_add = (loadedCodes[num][22:len(loadedCodes[num]) - 2:1]).decode("utf-8")
-                        for number in range(num + 1, len(loadedCodes)):
-                            if bytes('@', 'utf-8') in loadedCodes[number]: break
+                        text_to_add = (self.codes[num][22:len(self.codes[num]) - 2:1]).decode("utf-8")
+                        for number in range(num + 1, len(self.codes)):
+                            if bytes('@', 'utf-8') in self.codes[number]:
+                                break
                             text_to_add = text_to_add[0:len(text_to_add) - 2:1] + "\n" + (
-                                loadedCodes[number][3:len(loadedCodes[number]) - 2:1]).decode("utf-8")
-                        loadedText[i].append(text_to_add)
+                                self.codes[number][3:len(self.codes[number]) - 2:1]).decode("utf-8")
+                        self.text[i].append(text_to_add)
                         break
         text_offset = "b200"
         array = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
@@ -111,12 +112,13 @@ class OpenData:
             offset = ' ' * (4 - len(offset)) + offset + ' @'
             for num in range(len(textlines)):
                 if offset in str(textlines[num]):
-                    text_to_add = (loadedCodes[num][22:len(textlines[num]) - 2:1]).decode("utf-8")
-                    for number in range(num + 1, len(loadedCodes)):
-                        if bytes('@', 'utf-8') in loadedCodes[number]: break
+                    text_to_add = (self.codes[num][22:len(textlines[num]) - 2:1]).decode("utf-8")
+                    for number in range(num + 1, len(self.codes)):
+                        if bytes('@', 'utf-8') in self.codes[number]:
+                            break
                         text_to_add = text_to_add[0:len(text_to_add) - 2:1] + "\n" + (
-                            loadedCodes[number][3:len(loadedCodes[number]) - 2:1]).decode("utf-8")
-                    loadedText[3].append(text_to_add)
+                            self.codes[number][3:len(self.codes[number]) - 2:1]).decode("utf-8")
+                    self.text[3].append(text_to_add)
                     break
 
     def GetDefaultStyle(self, song_id, default):

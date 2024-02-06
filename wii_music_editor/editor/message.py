@@ -2,39 +2,132 @@ import os
 from pathlib import Path
 from shutil import rmtree, copyfile
 
-from wii_music_editor.data.songs import songList, SongTypeValue
+from wii_music_editor.data.songs import songList, SongType, SongClass
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.shell import run_shell
 
 
-def DecodeTxt():
-    try:
-        if (paths.messagePath / "message.d").is_dir():
-            rmtree(f"{paths.messagePath}/message.d")
-        run_shell([str(paths.includePath / 'wiimms' / 'wszst'), 'extract', str(paths.messagePath / 'message.carc')])
-        os.remove(f"{paths.messagePath}/message.d/wszst-setup.txt")
-        run_shell([str(paths.includePath / 'wiimms' / 'wbmgt'), 'decode',
-                   str(paths.messagePath / 'message.d' / 'new_music_message.bmg')])
-        os.remove(f"{paths.messagePath}/message.d/new_music_message.bmg")
-    except Exception as e:
-        ShowError("Could not decode text file", str(e))
+class TextClass:
+    __regular_offsets = [0xc8, 0x190, 0x12c]
+    __maestro_offsets = [0xfa, 0x1c2, 0x15e]
+    __hand_bell_offsets = [0xff, 0x1c7, 0x163]
+    __style_offset = 0xb200
+    __maestro_order = [0, 4, 2, 3, 1]
+    __hand_bell_order = [0, 2, 3, 1, 4]
+    __style_order = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
+    __filename: Path
 
+    songs: list[str]
+    descriptions: list[str]
+    genres: list[str]
+    styles: list[str]
+    textlines: list[bytes]
 
-def EncodeTxt():
-    try:
-        run_shell([str(paths.includePath / 'wiimms' / 'wbmgt'), 'encode',
-                   str(paths.messagePath / 'message.d' / 'new_music_message.txt')])
-        os.remove(f"{paths.messagePath}/message.d/new_music_message.txt")
-        if not Path(paths.messagePath / "message.carc.backup").exists():
-            copyfile(f"{paths.messagePath}/message.carc", f"{paths.messagePath}/message.carc.backup")
-        os.remove(f"{paths.messagePath}/message.carc")
-        run_shell([str(paths.includePath / 'wiimms' / 'wszst'), 'create', str(paths.messagePath / 'message.d'),
-                   '--dest', str(paths.messagePath / 'message.carc')])
-        rmtree(f'{paths.messagePath}/message.d')
-    except Exception as e:
-        ShowError("Could not encode text file", str(e))
+    def __init__(self, file: Path):
+        self.songs = []
+        self.descriptions = []
+        self.genres = []
+        self.styles = []
+        self.__filepath = file
 
+        # Read the text file
+        self.decode()
+
+        # Set song names, descriptions, and genres
+        for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
+            for song in songList:
+                offsets, index = self.__get_song_offset(song)
+                offset_str = format(offsets[i]+index, 'x').lower()
+                offset_str = ' ' * (4 - len(offset_str)) + offset_str + '00 @'
+                text_type.append(self.__text_at_offset(offset_str))
+
+        # Get the styles
+        for i, index in enumerate(self.__style_order):
+            offset_str = format(self.__style_offset + index, 'x').lower()
+            offset_str = ' ' * (4 - len(offset_str)) + offset_str + ' @'
+            self.styles.append(self.__text_at_offset(offset_str))
+
+    def __get_song_offset(self, song: SongClass) -> (list[int], int):
+        offset = self.__regular_offsets
+        index = song.MemOrder
+        if song.SongType == SongType.Maestro:
+            offset = self.__maestro_offsets
+            index = self.__maestro_order[index]
+        elif song.SongType == SongType.Hand_Bell:
+            offset = self.__hand_bell_offsets
+            index = self.__hand_bell_order[index]
+        return offset, index
+
+    def __text_at_offset(self, offset: str) -> str:
+        for j, text in enumerate(self.textlines):
+            if offset in text.decode("utf-8"):
+                text_to_add = (text[22:len(text) - 2:1]).decode("utf-8")
+                for text_line in self.textlines[j + 1:]:
+                    if bytes('@', 'utf-8') in text_line:
+                        break
+                    text_to_add = f"{text_to_add[:len(text_to_add) - 2]}\n"
+                    text_to_add += (text_line[3:len(text_line) - 2]).decode("utf-8")
+                return text_to_add
+        return ""
+
+    def change_name(self, item_index: int, new_text: list[str]):
+        isSong = len(new_text) == 3
+        offsets = [self.__style_offset]
+        index = self.__style_order[item_index]
+        if isSong:
+            offsets, index = self.__get_song_offset(songList[item_index])
+
+        for i in range(len(offsets)):
+            offset = format(offsets[i]+index, 'x').lower()
+            offset = ' ' * (4 - len(offset)) + offset
+            if isSong:
+                offset += '00 @'
+            else:
+                offset += ' @'
+
+            for j, text in enumerate(self.textlines):
+                if offset in text.decode("utf-8"):
+                    while bytes('@', 'utf-8') not in self.textlines[j + 1]:
+                        self.textlines.pop(j + 1)
+                    text_to_add = repr(new_text[i]).strip("'").replace(r"\'", "'").strip("\"")
+                    self.textlines[j] = bytes(f"{offset}{text.decode('utf-8')[10:22]}{text_to_add}\r\n", 'utf-8')
+                    break
+
+        os.mkdir(self.__filepath/'message.d')
+        with open(self.__filepath/'message.d'/'new_music_message.txt', 'wb') as message:
+            message.writelines(self.textlines)
+
+        self.encode()
+
+    def decode(self):
+        try:
+            if (self.__filepath / "message.d").is_dir():
+                rmtree(f"{paths.message}/message.d")
+            run_shell([str(paths.include / 'wiimms' / 'wszst'), 'extract', str(paths.message / 'message.carc')])
+            os.remove(f"{paths.message}/message.d/wszst-setup.txt")
+            run_shell([str(paths.include / 'wiimms' / 'wbmgt'), 'decode',
+                       str(paths.message / 'message.d' / 'new_music_message.bmg')])
+            os.remove(f"{paths.message}/message.d/new_music_message.bmg")
+            with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
+                self.textlines = message.readlines()
+            rmtree(self.__filepath / 'message.d')
+        except Exception as e:
+            ShowError("Could not decode text file", str(e))
+
+    def encode(self):
+        try:
+            run_shell([paths.include/'wiimms'/'wbmgt', 'encode',
+                       self.__filepath/'message.d'/'new_music_message.txt'])
+            os.remove(self.__filepath/"message.d"/"new_music_message.txt")
+            if not (self.__filepath/"message.carc.backup").exists():
+                copyfile(self.__filepath/"message.carc", self.__filepath/"message.carc.backup")
+            os.remove(self.__filepath/"message.carc")
+            run_shell([paths.include/'wiimms'/'wszst', 'create', self.__filepath/'message.d',
+                       '--dest', self.__filepath/'message.carc'])
+            rmtree(self.__filepath/'message.d')
+        except Exception as e:
+            ShowError("Could not encode text file", str(e))
 
 def FixMessageFile(textlines):
     nameIndex = romLanguageNumber[regionSelected] + (4 + max(regionSelected - 1, 0)) * (regionSelected > 1)
@@ -75,64 +168,3 @@ def FixMessageFile(textlines):
                                       nameIndex].encode("utf-8") + b'\r\n'
             break
     return textlines
-
-
-def ChangeName(song_number, new_text):
-    song_to_change = songList[song_number]
-    text_offset = []
-    if type(new_text) is not str:
-        if song_to_change.SongType == SongTypeValue.Regular:
-            text_offset = ['c8', '190', '12c']
-        elif song_to_change.SongType == SongTypeValue.Maestro:
-            text_offset = ['fa', '1c2', '15e']
-        elif song_to_change == SongTypeValue.Hand_Bell:
-            text_offset = ['ff', '1c7', '163']
-        textFromTxt[0][song_number] = new_text[0]
-        textFromTxt[1][song_number] = new_text[1]
-        textFromTxt[2][song_number] = new_text[2]
-    else:
-        text_offset = ['b200']
-    DecodeTxt()
-
-    # Write the new text to the file
-    for typeNum in range(3):
-        with open(f'{paths.messagePath}/message.d/new_music_message.txt', 'rb') as message:
-            textlines = message.readlines()
-
-        if type(new_text) is not str:
-            number_to_change = song_to_change.MemOrder
-            if song_to_change.SongType == SongTypeValue.Maestro:
-                array = [0, 4, 2, 3, 1]
-                number_to_change = array[number_to_change]
-            elif song_to_change.SongType == SongTypeValue.Hand_Bell:
-                array = [0, 2, 3, 1, 4]
-                number_to_change = array[number_to_change]
-        else:
-            array = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
-            number_to_change = array[song_number]
-
-        offset = format(int(text_offset[typeNum], 16) + number_to_change, 'x').lower()
-        if type(new_text) is not str:
-            offset = ' ' * (4 - len(offset)) + offset + '00 @'
-        else:
-            offset = ' ' * (4 - len(offset)) + offset + ' @'
-        textlines = FixMessageFile(textlines)
-        for num in range(len(textlines)):
-            if offset in str(textlines[num]):
-                while bytes('@', 'utf-8') not in textlines[num + 1]:
-                    textlines.pop(num + 1)
-
-                if type(new_text) is str:
-                    text = repr(new_text).strip("'").replace(r"\'", "'").strip("\"")
-                else:
-                    text = repr(new_text[typeNum]).strip("'").replace(r"\'", "'").strip("\"")
-                textlines[num] = bytes(offset + str(textlines[num])[10:24:1] + text + '\r\n', 'utf-8')
-                break
-
-        with open(f'{paths.messagePath}/message.d/new_music_message.txt', 'rb') as message:
-            message.writelines(textlines)
-
-        if type(new_text) is str:
-            break
-
-    EncodeTxt()
