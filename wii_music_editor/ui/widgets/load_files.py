@@ -16,7 +16,7 @@ def save_file_directory(directory: str):
         paths.lastLoaded = Path(directory[0:len(directory) - len(os.path.basename(directory)) - 1:1])
     else:
         paths.lastLoaded = Path(os.path.dirname(directory))
-    save_setting("Paths", "LastLoadedPath", str(paths.lastLoaded))
+    save_setting("Paths", "LastLoadedDir", str(paths.lastLoaded))
 
 
 def select_dolphin_path():
@@ -34,7 +34,7 @@ def select_dolphin_path():
     return False
 
 
-def select_rom_path(widget, dialog_filter):
+def select_rom_path(dialog_filter):
     try:
         file = QFileDialog()
         if dialog_filter == "":
@@ -52,7 +52,6 @@ def select_rom_path(widget, dialog_filter):
                     ShowError(
                         tr("Error", "Not a valid Wii Music folder"),
                         tr("Error", "Files and sys folder not found"),
-                        widget
                     )
                     return False
 
@@ -65,3 +64,19 @@ def select_rom_path(widget, dialog_filter):
         print(e)
 
     return False
+
+
+def get_file_path(dialog_filter: str) -> str:
+    try:
+        file = QFileDialog()
+        file.setFileMode(QFileDialog.FileMode.ExistingFile)
+        file.setNameFilter(dialog_filter)
+        file.setDirectory(str(paths.lastLoadedSubDir))
+        if file.exec():
+            paths.lastLoadedSub = Path(file.selectedFiles()[0])
+            save_setting("Paths", "LastLoadedSubDir", str(paths.loadedFile))
+            return file.selectedFiles()[0]
+    except Exception as e:
+        print(e)
+
+    return ""

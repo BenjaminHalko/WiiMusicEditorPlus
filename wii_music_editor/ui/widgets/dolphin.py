@@ -1,4 +1,4 @@
-from wii_music_editor.editor.openData import LoadType, loadedFile
+from wii_music_editor.editor.openData import openData
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.osUtils import currentSystem
 from wii_music_editor.utils.pathUtils import paths
@@ -7,9 +7,7 @@ from wii_music_editor.utils.translate import tr
 
 def LoadDolphin(menu):
     if currentSystem != "Mac":
-        if loadedFile.type != LoadType.Rom:
-            ShowError(tr("error", "Unable to launch Dolphin"), tr("error", "Loaded file must be a complete rom"))
-        elif paths.dolphin is None:
+        if paths.dolphin is None:
             ShowError(tr("error", "Unable to launch Dolphin"),
                       tr("error", "Dolphin path not specified.\nGo to settings to add a Dolphin path"))
         else:

@@ -3,23 +3,13 @@ from shutil import rmtree
 
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.region import regionNames, regionFullNames
-from wii_music_editor.data.songs import songList, SongType
+from wii_music_editor.data.songs import songList
 from wii_music_editor.data.styles import styleList
-from wii_music_editor.editor.message import DecodeTxt, TextClass
+from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.editor.region import regionSelected, BasedOnRegion
-
-
-class LoadType(Enum):
-    Rom = 0
-    Brsar = 1
-    Message = 2
-    Dol = 3
-    Midi = 4
-    Gct = 5
-    RomFile = 6
 
 
 class RecordType(Enum):
@@ -37,7 +27,6 @@ class OpenData:
     text: TextClass
     region = 0
     codes = []
-    type: LoadType
 
     def GetRegion(self):
         for i in range(len(regionNames)):
@@ -73,54 +62,6 @@ class OpenData:
             with open(str(paths.geckoPath)) as file:
                 self.codes = file.readlines()
 
-    def GetText(self):
-        self.text = TextClass()
-        DecodeTxt()
-        with open(f'{paths.messagePath}/message.d/new_music_message.txt', 'rb') as message:
-            textlines = message.readlines()
-
-        rmtree(f'{paths.messagePath}/message.d')
-        for i in range(3):
-            for SongToChange in range(len(songList) - 1):
-                text_offset = ['c8', '190', '12c']
-                number_to_change = songList[SongToChange].MemOrder
-                if songList[SongToChange].SongType == SongType.Maestro:
-                    text_offset = ['fa', '1c2', '15e']
-                    array = [0, 4, 2, 3, 1]
-                    number_to_change = array[number_to_change]
-                elif songList[SongToChange].SongType == SongType.Hand_Bell:
-                    text_offset = ['ff', '1c7', '163']
-                    array = [0, 2, 3, 1, 4]
-                    number_to_change = array[number_to_change]
-                offset = format(int(text_offset[i], 16) + number_to_change, 'x').lower()
-                offset = ' ' * (4 - len(offset)) + offset + '00 @'
-                for num in range(len(textlines)):
-                    if offset in str(textlines[num]):
-                        text_to_add = (self.codes[num][22:len(self.codes[num]) - 2:1]).decode("utf-8")
-                        for number in range(num + 1, len(self.codes)):
-                            if bytes('@', 'utf-8') in self.codes[number]:
-                                break
-                            text_to_add = text_to_add[0:len(text_to_add) - 2:1] + "\n" + (
-                                self.codes[number][3:len(self.codes[number]) - 2:1]).decode("utf-8")
-                        self.text[i].append(text_to_add)
-                        break
-        text_offset = "b200"
-        array = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
-        for i in range(11):
-            number_to_change = array[i]
-            offset = format(int(text_offset, 16) + number_to_change, 'x').lower()
-            offset = ' ' * (4 - len(offset)) + offset + ' @'
-            for num in range(len(textlines)):
-                if offset in str(textlines[num]):
-                    text_to_add = (self.codes[num][22:len(textlines[num]) - 2:1]).decode("utf-8")
-                    for number in range(num + 1, len(self.codes)):
-                        if bytes('@', 'utf-8') in self.codes[number]:
-                            break
-                        text_to_add = text_to_add[0:len(text_to_add) - 2:1] + "\n" + (
-                            self.codes[number][3:len(self.codes[number]) - 2:1]).decode("utf-8")
-                    self.text[3].append(text_to_add)
-                    break
-
     def GetDefaultStyle(self, song_id, default):
         style = songList[song_id].DefaultStyle
 
@@ -136,33 +77,10 @@ class OpenData:
         return -1
 
     def PrepareFile(self):
-        # Set file type
-        if paths.loadedFile.is_dir():
-            self.type = LoadType.Rom
-        else:
-            extension = paths.loadedFile.suffix
-            if extension == ".brsar":
-                self.type = LoadType.Brsar
-            elif extension == ".carc":
-                self.type = LoadType.Message
-            elif extension == ".midi" or extension == ".mid" or extension == ".brseq" or extension == ".rseq":
-                self.type = LoadType.Midi
-            elif extension == ".dol":
-                self.type = LoadType.Dol
-            elif extension == ".gct" or extension == ".ini":
-                self.type = LoadType.Gct
-            else:
-                self.type = LoadType.RomFile
-
-        # Load file
-        if self.type == LoadType.RomFile:
+        if not paths.loadedFile.is_dir():
             ConvertRom()
-        if self.type == LoadType.Rom:
-            self.GetRegion()
-        if self.type == LoadType.Rom or self.type == LoadType.Message:
-            # TODO
-            # GetSongNames()
-            print("?")
+        self.GetRegion()
+        self.text = TextClass(paths.message)
 
 
 def SaveRecording(action, name, values, remove=False):

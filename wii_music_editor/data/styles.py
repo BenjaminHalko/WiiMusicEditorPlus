@@ -137,4 +137,11 @@ def get_styles():
     ]
 
 
+def get_style_by_id(style_id):
+    for style in styleList:
+        if style.StyleId == style_id:
+            return style
+    return None
+
+
 styleList = get_styles()

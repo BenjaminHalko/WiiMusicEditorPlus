@@ -16,7 +16,8 @@ class Paths:
     includeAll: Path = None
     module: Path = None
     translation: Path = None
-    lastLoaded: Path = None
+    lastLoadedDir: Path = None
+    lastLoadedSubDir: Path = None
 
     loadedFile: Path = None
     rom: Path = None
@@ -68,7 +69,8 @@ class Paths:
         self.setLoadedFilePath()
 
         # Last Loaded Path
-        self.lastLoaded = Path(load_setting("Paths", "LastLoadedPath", str(self.program)))
+        self.lastLoaded = Path(load_setting("Paths", "LastLoadedDir", str(self.program)))
+        self.lastLoadedSubDir = Path(load_setting("Paths", "LastLoadedSubDir", str(self.program)))
 
     def setLoadedFilePath(self):
         self.rom = None

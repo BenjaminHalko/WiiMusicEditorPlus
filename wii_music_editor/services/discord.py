@@ -7,21 +7,21 @@ from wii_music_editor.utils.translate import tr
 
 
 class DiscordState:
-    Settings = 0,
-    ModdingWiiMusic = 1,
-    EditingSongs = 2,
-    EditingStyles = 3,
-    EditingText = 4,
-    EditingDefaultStyles = 5,
-    RemovingSongs = 6,
-    EditingSounds = 7,
-    CreatingRiivolutionPatch = 8,
-    RevertingChanges = 9,
-    PackingRom = 10,
+    Settings = 0
+    ModdingWiiMusic = 1
+    EditingSongs = 2
+    EditingStyles = 3
+    EditingText = 4
+    EditingDefaultStyles = 5
+    RemovingSongs = 6
+    EditingSounds = 7
+    CreatingRiivolutionPatch = 8
+    RevertingChanges = 9
+    PackingRom = 10
     ImportingChanges = 11
 
 
-def DiscordUpdate(state):
+def DiscordUpdate(state: int):
     if using_discord:
         state_list = [
             tr("Discord", "Changing Settings"),
@@ -37,7 +37,7 @@ def DiscordUpdate(state):
             tr("Discord", "Packing Rom"),
             tr("Discord", "Importing Changes")]
         try:
-            discord_presence.update(state=state_list[state + 1], large_image="logo", start=start_time)
+            discord_presence.update(state=state_list[state], large_image="logo", start=start_time)
         except Exception as e:
             print("Error updating discord presence:", e)
 

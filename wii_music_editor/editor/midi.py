@@ -28,17 +28,17 @@ class Midi:
 
             if Path(directory + '/z.rseq').is_file():
                 run_shell([
-                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    str(paths.include / 'sequence_cmd' / 'GotaSequenceCmd'),
                     'assemble', str(Path(directory) / 'z.rseq')
                 ])
             if Path(directory + '/z.brseq').is_file():
                 run_shell([
-                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    str(paths.include / 'sequence_cmd' / 'GotaSequenceCmd'),
                     'to_midi', str(Path(directory) / 'z.brseq')
                 ])
             else:
                 run_shell([
-                    str(paths.include / 'SequenceCmd' / 'GotaSequenceCmd'),
+                    str(paths.include / 'sequence_cmd' / 'GotaSequenceCmd'),
                     'from_midi', str(Path(directory) / 'z.midi')
                 ])
 
@@ -83,13 +83,3 @@ def NormalizeMidi(midi_path, save_path, default_tempo):
                 track[i] = mido.Message("note_off", note=track[i].note, velocity=track[i].velocity, time=track[i].time,
                                         channel=track[i].channel)
     mid.save(save_path)
-
-
-def LoadMidi(midi_path) -> dict:
-
-    return {
-        "data": data,
-        "length": length,
-        "tempo": tempo,
-        "time_signature": time_signature,
-    }
