@@ -19,13 +19,6 @@ class Paths:
     lastLoadedDir: Path = None
     lastLoadedSubDir: Path = None
 
-    loadedFile: Path = None
-    rom: Path = None
-    mainDol: Path = None
-    brsar: Path = None
-    message: Path = None
-    gecko: Path = None
-
     dolphin: Path = None
     dolphinSave: Path = None
 
@@ -63,31 +56,9 @@ class Paths:
         # Dolphin Save Path
         self.setDolphinSavePath(load_setting("Paths", "DolphinSave", ""))
 
-        # Loaded Rom
-        tempLoadedFile = load_setting("Paths", "CurrentLoadedFile", "")
-        self.loadedFile = Path(tempLoadedFile) if tempLoadedFile != "" else None
-        self.setLoadedFilePath()
-
         # Last Loaded Path
         self.lastLoaded = Path(load_setting("Paths", "LastLoadedDir", str(self.program)))
         self.lastLoadedSubDir = Path(load_setting("Paths", "LastLoadedSubDir", str(self.program)))
-
-    def setLoadedFilePath(self):
-        self.rom = None
-        self.mainDol = None
-        self.brsar = None
-        self.message = None
-        self.gecko = None
-
-        if self.loadedFile is not None and os.path.isdir(self.loadedFile):
-            self.rom = self.loadedFile
-            self.mainDol = self.rom / "sys" / "main.dol"
-            self.brsar = self.rom / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
-            self.message = self.rom / "files" / BasedOnRegion(romLanguage) / "Message"
-            self.gecko = self.rom / "GeckoCodes.ini"
-        else:
-            # TODO: Add support for loading from a non folder
-            temp = 0
 
     def setDolphinSavePath(self, dolphin_save_path: str):
         if os.path.isdir(dolphin_save_path):

@@ -1,4 +1,3 @@
-from wii_music_editor.editor.openData import openData
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.osUtils import currentSystem
 from wii_music_editor.utils.pathUtils import paths

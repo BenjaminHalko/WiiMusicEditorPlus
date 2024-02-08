@@ -1,5 +1,5 @@
 import os
-import pathlib
+from pathlib import Path
 from shutil import copyfile, copytree, rmtree
 import subprocess
 import zipfile
@@ -11,7 +11,8 @@ from PySide6.QtWidgets import QMainWindow
 from wii_music_editor.data.songs import SongType, songList
 from wii_music_editor.data.styles import styleList, get_style_by_id
 from wii_music_editor.editor.midi import Midi
-from wii_music_editor.editor.openData import openData
+
+from wii_music_editor.editor.rom_folder import RomFolder
 from wii_music_editor.services.discord import DiscordUpdate, DiscordState
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.widgets.dolphin import LoadDolphin
@@ -38,6 +39,7 @@ class TAB:
 
 # Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
+    rom_folder: RomFolder
     externalEditorOpen: bool
     fromSongEditor: int
 
@@ -46,17 +48,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     __StE_styleSelected: list[int]
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, rom_folder: RomFolder):
+        super().__init__(None)
         self.setupUi(self)
         self.externalEditorOpen = False
         self.fromSongEditor = -1
-
-        if paths.loadedFile != "":
-            self.MP_LoadedFile_Path.setText(str(paths.loadedFile))
-        self.menuBar().setNativeMenuBar(False)
+        self.rom_folder = rom_folder
 
         # Menu Bar Buttons
+        self.menuBar().setNativeMenuBar(False)
         self.MB_LoadFile.triggered.connect(self.MenuBar_Load_Rom)
         self.MB_LoadFolder.triggered.connect(self.MenuBar_Load_RomFolder)
         self.MB_Settings.triggered.connect(self.MenuBar_Load_Settings)
@@ -152,7 +152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadSongEditor(self):
         self.MainWidget.setCurrentIndex(TAB.SongEditor)
-        populate_song_list(self.SE_SongToChange)
+        populate_song_list(self.rom_folder, self.SE_SongToChange)
         self.SE_Midi.setEnabled(False)
         self.SE_Midi.setCheckable(False)
         self.SE_ChangeSongText.setEnabled(False)
@@ -169,7 +169,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadStyleEditor(self):
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
-        populate_style_list(self.StE_StyleList, self.fromSongEditor)
+        populate_style_list(self.rom_folder, self.StE_StyleList, self.fromSongEditor)
         populate_instrument_list(self.StE_InstrumentList)
         self.StE_Instruments.setEnabled(False)
         self.StE_ChangeStyleName.setEnabled(False)
@@ -463,9 +463,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         and song.SongType != SongType.Maestro)):
                 allow = False
         elif song.SongType != SongType.Menu:
-            if (self.SE_ChangeSongText_Name_Input.text() == openData.text.songs[songIndex]
-                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == openData.text.descriptions[songIndex]
-                    and self.SE_ChangeSongText_Genre_Input.text() == openData.text.genres[songIndex]):
+            if (self.SE_ChangeSongText_Name_Input.text() == self.rom_folder.text.songs[songIndex]
+                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == self.rom_folder.text.descriptions[songIndex]
+                    and self.SE_ChangeSongText_Genre_Input.text() == self.rom_folder.text.genres[songIndex]):
                 allow = False
         self.SE_Patch.setEnabled(allow)
 
@@ -473,7 +473,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             midiPath = get_file_path(f"{tr('file', 'Midi-Type File')} (*.midi *.mid *.brseq *.rseq)")
             if midiPath != "":
-                midi = Midi(midiPath)
+                midi = Midi(Path(midiPath))
                 if song:
                     self.SE_Midi_File_Song_Label.setText(os.path.basename(midiPath))
                     self.__SE_midiSong = midi
@@ -541,9 +541,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SE_Midi.setEnabled(True)
             if song.SongType != SongType.Menu:
                 self.SE_ChangeSongText.setEnabled(True)
-                self.SE_ChangeSongText_Name_Input.setText(openData.text.songs[songIndex])
-                self.SE_ChangeSongText_Desc_Input.setText(openData.text.descriptions[songIndex])
-                self.SE_ChangeSongText_Genre_Input.setText(openData.text.genres[songIndex])
+                self.SE_ChangeSongText_Name_Input.setText(self.rom_folder.text.songs[songIndex])
+                self.SE_ChangeSongText_Desc_Input.setText(self.rom_folder.text.descriptions[songIndex])
+                self.SE_ChangeSongText_Genre_Input.setText(self.rom_folder.text.genres[songIndex])
             else:
                 self.SE_ChangeSongText.setEnabled(False)
                 self.SE_ChangeSongText_Name_Input.setText("")
@@ -566,32 +566,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def Button_SE_Patch(self):
         try:
-            if (self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or Songs[
-                self.SE_SongToChange.currentRow()].SongType == SongType.Menu)):
-                tmpInfo = self.brseqInfo.copy()
-                tmpLength = self.brseqLength.copy()
-                tmpPath = self.brseqPath.copy()
-                if ((pathlib.Path(self.brseqPath[1]).suffix == ".midi" or pathlib.Path(
-                        self.brseqPath[1]).suffix == ".mid") and load_setting("Settings", "NormalizeMidi", False)):
-                    midiInfo = LoadMidi(self.brseqPath[1], self.SE_Midi_Tempo_Input.value())
-                    if (midiInfo[0] != False):
-                        tmpInfo[1] = midiInfo[0]
-                        tmpLength[1] = midiInfo[1]
+            songIndex = self.SE_SongToChange.currentRow()
+            song = songList[songIndex]
+            if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.SongType == SongType.Menu):
+                self.__SE_midiScore.tempo = self.SE_Midi_Tempo_Input.value()
+                self.__SE_midiScore.length = self.SE_Midi_Length_Input.value()
+                self.__SE_midiScore.time_signature = 3 + self.SE_Midi_TimeSignature_4.isChecked()
+                if self.SE_Midi_Length_Measures.isChecked():
+                    self.__SE_midiScore.length *= 3 + self.SE_Midi_TimeSignature_4.isChecked()
 
-                if (not self.SE_Midi_File_Replace_Song.isChecked() or not load_setting("Settings", "LoadSongSeparately",
-                                                                                      False) or not self.SE_Midi_File_Replace_Song.isEnabled()):
-                    tmpInfo[0] = tmpInfo[1]
-                    tmpLength[0] = tmpLength[1]
-                    tmpPath[0] = ""
-                elif ((pathlib.Path(self.brseqPath[0]).suffix == ".midi" or pathlib.Path(
-                        self.brseqPath[0]).suffix == ".mid") and load_setting("Settings", "NormalizeMidi", False)):
-                    midiInfo = LoadMidi(self.brseqPath[0], self.SE_Midi_Tempo_Input.value())
-                    if (midiInfo[0] != False):
-                        tmpInfo[0] = midiInfo[0]
-                        tmpLength[0] = midiInfo[1]
-                length = self.SE_Midi_Length_Input.value()
-                if (self.SE_Midi_Length_Measures.isChecked()):
-                    length *= 3 + self.SE_Midi_TimeSignature_4.isChecked()
+                if (not self.SE_Midi_File_Replace_Song.isChecked() or
+                        not preferences.separate_tracks or not self.SE_Midi_File_Replace_Song.isEnabled()):
+                    self.__SE_midiSong = self.__SE_midiScore
+
+
+                # Patch Brsar
                 PatchBrsar(self.SE_SongToChange.currentRow(), tmpInfo, tmpLength, self.SE_Midi_Tempo_Input.value(),
                            length, 3 + self.SE_Midi_TimeSignature_4.isChecked())
                 SaveRecording(RecordType.Song, self.SE_SongToChange.currentRow(), [

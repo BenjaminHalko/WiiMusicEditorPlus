@@ -1,7 +1,8 @@
-from PySide6.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog, QApplication
 from PySide6.QtCore import Qt
 
 from wii_music_editor.data.region import regionNames
+from wii_music_editor.editor.rom_folder import RomFolder
 from wii_music_editor.ui.windows.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.load_files import select_rom_path, select_dolphin_path
 from wii_music_editor.utils.pathUtils import paths
@@ -11,7 +12,9 @@ from wii_music_editor.utils.translate import changeLanguage, tr
 
 
 class FirstSetupWindow(QDialog, Ui_FirstSetup):
-    def __init__(self, app):
+    rom_folder: RomFolder
+
+    def __init__(self, app: QApplication, rom_folder: RomFolder):
         super().__init__(None)
         self.setupUi(self)
         self.setWindowFlag(Qt.WindowType.WindowContextHelpButtonHint, False)
@@ -95,7 +98,7 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
             region.romLanguage[i] = regionNames[i][region.romLanguageNumber[i]]
 
     def LoadMainFile(self, dialog_filter):
-        if select_rom_path(self, dialog_filter):
+        if select_rom_path(self.rom_folder, dialog_filter):
             self.RomPath_Label.setText(str(paths.rom))
 
     def Checkmark(self, checkmark, setting):

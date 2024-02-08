@@ -82,17 +82,17 @@ class Brsar(__BrsarSection):
     fileSectionOffset: int
     fileSectionSize: int
 
-    brsarPath: Path or str
+    brsarPath: Path
     data: bytearray
     infoSection: 'InfoSection'
     fileSection: 'FileSection'
 
-    def __init__(self, path: Path or str):
+    def __init__(self, path: Path):
         self.root = self
         super().__init__(self, 0)
         # Read the file
         self.brsarPath = path
-        with open(str(self.brsarPath), "rb") as file:
+        with open(self.brsarPath, "rb") as file:
             self.data = bytearray(file.read())
         # Read the header
         self.fileLength = self.read_bytes(self._fileLength)
@@ -135,8 +135,8 @@ class Brsar(__BrsarSection):
         # Update Section Size
         self.increment_value('fileLength', incrementAmount)
 
-    def save(self, path: Path or str):
-        with open(path, "wb") as file:
+    def save(self):
+        with open(self.brsarPath, "wb") as file:
             file.write(self.data)
 
 

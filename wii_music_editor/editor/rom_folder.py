@@ -1,4 +1,5 @@
 from enum import Enum
+from pathlib import Path
 from shutil import rmtree
 
 from wii_music_editor.data.instruments import instrumentList
@@ -9,7 +10,8 @@ from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
-from wii_music_editor.editor.region import regionSelected, BasedOnRegion
+from wii_music_editor.editor.region import regionSelected, BasedOnRegion, romLanguage
+from wii_music_editor.utils.save import load_setting
 
 
 class RecordType(Enum):
@@ -22,15 +24,40 @@ class RecordType(Enum):
     MainDol = "maindol"
 
 
-class OpenData:
+class RomFolder:
+    folderPath: Path
+    mainDolPath: Path
+    brsarPath: Path
+    messagePath: Path
+    geckoPath: Path
+
+    loaded = False
     styles = [[]] * len(styleList)
     text: TextClass
     region = 0
     codes = []
 
+    def Load(self, folder: str):
+        self.loaded = False
+        # Set Paths
+        folder_path = Path(folder)
+        if not folder_path.is_dir():
+            folder_path = ConvertRom(folder_path)
+            if folder_path is None:
+                return
+        self.folderPath = folder_path
+        self.mainDolPath = self.folderPath / "sys" / "main.dol"
+        self.brsarPath = self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
+        self.messagePath = self.folderPath / "files" / BasedOnRegion(romLanguage) / "Message"
+        self.geckoPath = self.folderPath / "GeckoCodes.ini"
+        # Load more
+        self.GetRegion()
+        self.text = TextClass(self.messagePath)
+        self.loaded = True
+
     def GetRegion(self):
         for i in range(len(regionNames)):
-            if (paths.rom / "files" / regionNames[i][0] / "Message").is_dir():
+            if (self.folderPath / "files" / regionNames[i][0] / "Message").is_dir():
                 self.region = i
                 return
         ShowError("Could not determine region", f"Using fallback region: {BasedOnRegion(regionFullNames)}")
@@ -58,14 +85,14 @@ class OpenData:
 
     def GetGecko(self):
         self.codes = []
-        if paths.geckoPath.exists():
-            with open(str(paths.geckoPath)) as file:
+        if self.geckoPath.exists():
+            with open(self.geckoPath) as file:
                 self.codes = file.readlines()
 
     def GetDefaultStyle(self, song_id, default):
         style = songList[song_id].DefaultStyle
 
-        if not default and paths.geckoPath.exists():
+        if not default and self.geckoPath.exists():
             for i in range(len(self.codes)):
                 if self.codes[i] == "$" + songList[song_id].Name + " Default Style Patch [WiiMusicEditor]\n":
                     style = self.codes[i + 1][15:17:1]
@@ -75,12 +102,6 @@ class OpenData:
                 return i
 
         return -1
-
-    def PrepareFile(self):
-        if not paths.loadedFile.is_dir():
-            ConvertRom()
-        self.GetRegion()
-        self.text = TextClass(paths.message)
 
 
 def SaveRecording(action, name, values, remove=False):
@@ -99,4 +120,4 @@ def SaveRecording(action, name, values, remove=False):
             ini.write(inifile)
 
 
-openData = OpenData()
+romFolder = RomFolder()

@@ -7,9 +7,9 @@ class SongClass:
         self.Name = name
         self.MemOrder = mem_order
         self.DefaultStyle = default_style
-        self.mem_offset = mem_offset
-        if self.mem_offset == -1:
-            self.mem_offset = 0x025a0440 + 0xBC * self.MemOrder
+        self.MemOffset = mem_offset
+        if self.MemOffset == -1:
+            self.MemOffset = 0x025a0440 + 0xBC * self.MemOrder
 
 
 class SongType:

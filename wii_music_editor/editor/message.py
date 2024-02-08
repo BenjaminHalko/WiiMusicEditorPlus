@@ -103,15 +103,15 @@ class TextClass:
     def decode(self):
         try:
             if (self.__filepath / "message.d").is_dir():
-                rmtree(f"{paths.message}/message.d")
-            run_shell([str(paths.include / 'wiimms' / 'wszst'), 'extract', str(paths.message / 'message.carc')])
-            os.remove(f"{paths.message}/message.d/wszst-setup.txt")
-            run_shell([str(paths.include / 'wiimms' / 'wbmgt'), 'decode',
-                       str(paths.message / 'message.d' / 'new_music_message.bmg')])
-            os.remove(f"{paths.message}/message.d/new_music_message.bmg")
-            with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
+                rmtree(self.__filepath / "message.d")
+            run_shell([paths.include / 'wiimms' / 'wszst', 'extract', self.__filepath / 'message.carc'])
+            os.remove(self.__filepath/"message.d"/"wszst-setup.txt")
+            run_shell([paths.include/'wiimms'/'wbmgt', 'decode',
+                       self.__filepath/'message.d'/'new_music_message.bmg'])
+            os.remove(self.__filepath/'message.d'/'new_music_message.bmg')
+            with open(self.__filepath/'message.d'/'new_music_message.txt', 'rb') as message:
                 self.textlines = message.readlines()
-            rmtree(self.__filepath / 'message.d')
+            rmtree(self.__filepath/'message.d')
         except Exception as e:
             ShowError("Could not decode text file", str(e))
 

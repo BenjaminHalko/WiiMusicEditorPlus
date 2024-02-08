@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import QFileDialog
 
-from wii_music_editor.editor.openData import openData
+from wii_music_editor.editor.rom_folder import RomFolder
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
@@ -34,7 +34,7 @@ def select_dolphin_path():
     return False
 
 
-def select_rom_path(dialog_filter):
+def select_rom_path(rom_folder: RomFolder, dialog_filter: str):
     try:
         file = QFileDialog()
         if dialog_filter == "":
@@ -54,12 +54,10 @@ def select_rom_path(dialog_filter):
                         tr("Error", "Files and sys folder not found"),
                     )
                     return False
-
-            paths.loadedFile = Path(path)
             save_file_directory(file.selectedFiles()[0])
-            openData.PrepareFile()
-            save_setting("Paths", "CurrentLoadedFile", str(paths.loadedFile))
-            return True
+            save_setting("Paths", "CurrentLoadedFile", path)
+            if rom_folder.Load(path):
+                return True
     except Exception as e:
         print(e)
 
