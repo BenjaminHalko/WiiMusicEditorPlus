@@ -52,6 +52,7 @@ class RomFolder:
         self.geckoPath = self.folderPath / "GeckoCodes.ini"
         # Load more
         self.GetRegion()
+        self.GetStyles()
         self.text = TextClass(self.messagePath)
         self.loaded = True
 
@@ -120,4 +121,4 @@ def SaveRecording(action, name, values, remove=False):
             ini.write(inifile)
 
 
-romFolder = RomFolder()
+rom_folder = RomFolder()

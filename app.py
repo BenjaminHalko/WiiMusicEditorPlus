@@ -4,7 +4,7 @@ import sys
 from PySide6.QtGui import QIcon, QFontDatabase
 from PySide6.QtWidgets import QApplication
 
-from wii_music_editor.editor.rom_folder import RomFolder
+from wii_music_editor.editor.rom_folder import RomFolder, rom_folder
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.first_setup import FirstSetupWindow
 from wii_music_editor.ui.main_window import MainWindow
@@ -23,8 +23,8 @@ def startApplication():
     return app
 
 
-def startMainWindow(rom_folder: RomFolder):
-    win = MainWindow(rom_folder)
+def startMainWindow():
+    win = MainWindow()
     win.show()
     rom_folder_path = load_setting("Paths", "CurrentLoadedFile", "")
     if rom_folder_path != "":
@@ -48,14 +48,12 @@ def startMainWindow(rom_folder: RomFolder):
 def main():
     app = startApplication()
 
-    # Load Folder
-    rom_folder = RomFolder()
     # First Setup
     if not os.path.isfile(f"{savePath}/settings.ini"):
-        FirstSetupWindow(app, rom_folder)
+        FirstSetupWindow(app)
 
     # Main Window
-    startMainWindow(rom_folder)
+    startMainWindow()
     app.exec()
 
 

@@ -10,9 +10,10 @@ from PySide6.QtWidgets import QMainWindow
 
 from wii_music_editor.data.songs import SongType, songList
 from wii_music_editor.data.styles import styleList, get_style_by_id
+from wii_music_editor.editor.editor import replace_song, replace_song_text
 from wii_music_editor.editor.midi import Midi
 
-from wii_music_editor.editor.rom_folder import RomFolder
+from wii_music_editor.editor.rom_folder import RomFolder, rom_folder
 from wii_music_editor.services.discord import DiscordUpdate, DiscordState
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.widgets.dolphin import LoadDolphin
@@ -39,7 +40,6 @@ class TAB:
 
 # Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
-    rom_folder: RomFolder
     externalEditorOpen: bool
     fromSongEditor: int
 
@@ -48,12 +48,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     __StE_styleSelected: list[int]
 
-    def __init__(self, rom_folder: RomFolder):
+    def __init__(self):
         super().__init__(None)
         self.setupUi(self)
         self.externalEditorOpen = False
         self.fromSongEditor = -1
-        self.rom_folder = rom_folder
 
         # Menu Bar Buttons
         self.menuBar().setNativeMenuBar(False)
@@ -152,7 +151,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadSongEditor(self):
         self.MainWidget.setCurrentIndex(TAB.SongEditor)
-        populate_song_list(self.rom_folder, self.SE_SongToChange)
+        populate_song_list(self.SE_SongToChange)
         self.SE_Midi.setEnabled(False)
         self.SE_Midi.setCheckable(False)
         self.SE_ChangeSongText.setEnabled(False)
@@ -169,7 +168,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadStyleEditor(self):
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
-        populate_style_list(self.rom_folder, self.StE_StyleList, self.fromSongEditor)
+        populate_style_list(self.StE_StyleList, self.fromSongEditor)
         populate_instrument_list(self.StE_InstrumentList)
         self.StE_Instruments.setEnabled(False)
         self.StE_ChangeStyleName.setEnabled(False)
@@ -463,9 +462,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         and song.SongType != SongType.Maestro)):
                 allow = False
         elif song.SongType != SongType.Menu:
-            if (self.SE_ChangeSongText_Name_Input.text() == self.rom_folder.text.songs[songIndex]
-                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == self.rom_folder.text.descriptions[songIndex]
-                    and self.SE_ChangeSongText_Genre_Input.text() == self.rom_folder.text.genres[songIndex]):
+            if (self.SE_ChangeSongText_Name_Input.text() == rom_folder.text.songs[songIndex]
+                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == rom_folder.text.descriptions[songIndex]
+                    and self.SE_ChangeSongText_Genre_Input.text() == rom_folder.text.genres[songIndex]):
                 allow = False
         self.SE_Patch.setEnabled(allow)
 
@@ -541,9 +540,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SE_Midi.setEnabled(True)
             if song.SongType != SongType.Menu:
                 self.SE_ChangeSongText.setEnabled(True)
-                self.SE_ChangeSongText_Name_Input.setText(self.rom_folder.text.songs[songIndex])
-                self.SE_ChangeSongText_Desc_Input.setText(self.rom_folder.text.descriptions[songIndex])
-                self.SE_ChangeSongText_Genre_Input.setText(self.rom_folder.text.genres[songIndex])
+                self.SE_ChangeSongText_Name_Input.setText(rom_folder.text.songs[songIndex])
+                self.SE_ChangeSongText_Desc_Input.setText(rom_folder.text.descriptions[songIndex])
+                self.SE_ChangeSongText_Genre_Input.setText(rom_folder.text.genres[songIndex])
             else:
                 self.SE_ChangeSongText.setEnabled(False)
                 self.SE_ChangeSongText_Name_Input.setText("")
@@ -579,58 +578,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         not preferences.separate_tracks or not self.SE_Midi_File_Replace_Song.isEnabled()):
                     self.__SE_midiSong = self.__SE_midiScore
 
-
                 # Patch Brsar
-                PatchBrsar(self.SE_SongToChange.currentRow(), tmpInfo, tmpLength, self.SE_Midi_Tempo_Input.value(),
-                           length, 3 + self.SE_Midi_TimeSignature_4.isChecked())
-                SaveRecording(RecordType.Song, self.SE_SongToChange.currentRow(), [
-                    ["midisong", tmpPath[0]],
-                    ["midiscore", tmpPath[1]],
-                    ["tempo", self.SE_Midi_Tempo_Input.value()],
-                    ["length", length],
-                    ["timesignature", 3 + self.SE_Midi_TimeSignature_4.isChecked()]])
+                replace_song(song, self.__SE_midiScore, self.__SE_midiSong)
 
-            if (AllowType(LoadType.Carc) and (
-                    Songs[self.SE_SongToChange.currentRow()].SongType != SongType.Menu)) and not (
-            (self.SE_ChangeSongText_Name_Input.text() == editor.textFromTxt[0][self.SE_SongToChange.currentRow()] and
-             self.SE_ChangeSongText_Desc_Input.toPlainText() == editor.textFromTxt[1][
-                 self.SE_SongToChange.currentRow()] and
-             self.SE_ChangeSongText_Genre_Input.text() == editor.textFromTxt[2][self.SE_SongToChange.currentRow()])):
-                ChangeName(self.SE_SongToChange.currentRow(),
-                           [self.SE_ChangeSongText_Name_Input.text(), self.SE_ChangeSongText_Desc_Input.toPlainText(),
-                            self.SE_ChangeSongText_Genre_Input.text()])
-                text = Songs[self.SE_SongToChange.currentRow()].Name
-                if (len(editor.textFromTxt[0]) > self.SE_SongToChange.currentRow()) and AllowType(LoadType.Carc) and (
-                        Songs[self.SE_SongToChange.currentRow()].SongType != SongType.Regular or
-                        editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[
-                            self.SE_SongToChange.currentRow()].Name) and (
-                        Songs[self.SE_SongToChange.currentRow()].SongType != SongType.Maestro or
-                        editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[
-                                                                                        self.SE_SongToChange.currentRow()].Name[
-                                                                                    0:len(Songs[
-                                                                                              self.SE_SongToChange.currentRow()].Name) - 14:1]) and (
-                        Songs[self.SE_SongToChange.currentRow()].SongType != SongType.Handbell or
-                        editor.textFromTxt[0][self.SE_SongToChange.currentRow()] != Songs[
-                                                                                        self.SE_SongToChange.currentRow()].Name[
-                                                                                    0:len(Songs[
-                                                                                              self.SE_SongToChange.currentRow()].Name) - 19:1]) and (
-                        Songs[self.SE_SongToChange.currentRow()].SongType != SongType.Menu):
-                    text = editor.textFromTxt[0][self.SE_SongToChange.currentRow()]
-                    if (Songs[
-                        self.SE_SongToChange.currentRow()].SongType == SongType.Maestro): text = text + " (" + self.tr(
-                        "Mii Maestro") + ")"
-                    if (Songs[
-                        self.SE_SongToChange.currentRow()].SongType == SongType.Handbell): text = text + " (" + self.tr(
-                        "Handbell Harmony") + ")"
-                self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(text)
-                editor.textFromTxt[0][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Name_Input.text()
-                editor.textFromTxt[1][
-                    self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Desc_Input.toPlainText()
-                editor.textFromTxt[2][self.SE_SongToChange.currentRow()] = self.SE_ChangeSongText_Genre_Input.text()
-                SaveRecording(RecordType.TextSong, self.SE_SongToChange.currentRow(), [
-                    ["name", self.SE_ChangeSongText_Name_Input.text()],
-                    ["desc", self.SE_ChangeSongText_Desc_Input.toPlainText()],
-                    ["genre", self.SE_ChangeSongText_Genre_Input.text()]])
+            # Patch Text
+            if song.SongType != SongType.Menu:
+                name = self.SE_ChangeSongText_Name_Input.text()
+                desc = self.SE_ChangeSongText_Desc_Input.toPlainText()
+                genre = self.SE_ChangeSongText_Genre_Input.text()
+                replace_song_text(songIndex, name, desc, genre)
+                if song.SongType == SongType.Maestro:
+                    name += f' ({tr("main", "Mii Maestro")})'
+                if song.SongType == SongType.Maestro:
+                    name += f' ({tr("main", "Handbell Harmony")})'
+                self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(name)
+
             self.SE_Patch.setEnabled(False)
         except Exception as e:
             ShowError(tr("error", "Could not patch songs"), str(e))

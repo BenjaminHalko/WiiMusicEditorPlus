@@ -5,12 +5,12 @@ from PySide6.QtWidgets import QListWidget, QListWidgetItem
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.songs import songList, SongType
 from wii_music_editor.data.styles import styleList
-from wii_music_editor.editor.rom_folder import RomFolder
+from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.translate import tr
 
 
-def populate_song_list(rom_folder: RomFolder, widget: QListWidget, types: list[SongType] or None = None, only_allow: int = -1):
+def populate_song_list(widget: QListWidget, types: list[SongType] or None = None, only_allow: int = -1):
     widget.clear()
     for i, song in enumerate(songList):
         if types is None or song.SongType in types:
@@ -35,7 +35,7 @@ def populate_song_list(rom_folder: RomFolder, widget: QListWidget, types: list[S
         widget.setCurrentRow(only_allow)
 
 
-def populate_style_list(rom_folder: RomFolder, widget: QListWidget, only_allow: int = -1):
+def populate_style_list(widget: QListWidget, only_allow: int = -1):
     widget.clear()
     for i, style in enumerate(styleList):
         item = QListWidgetItem()
@@ -57,7 +57,7 @@ def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu
     else:
         instruments = instrumentList[40:-1]
     normalRange = instruments
-    if preferences.unsafeMode or not percussion:
+    if preferences.unsafe_mode or not percussion:
         instruments = instrumentList
 
     for i, inst in enumerate(instruments):
