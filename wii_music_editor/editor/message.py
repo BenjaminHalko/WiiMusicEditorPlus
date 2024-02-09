@@ -25,20 +25,27 @@ class TextClass:
     textlines: list[bytes]
 
     def __init__(self, file: Path):
-        self.songs = []
-        self.descriptions = []
-        self.genres = []
-        self.styles = []
         self.__filepath = file
 
         # Read the text file
         self.decode()
+        self.read()
+
+    def read(self):
+        self.songs = []
+        self.descriptions = []
+        self.genres = []
+        self.styles = []
+
+        with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
+            self.textlines = message.readlines()
+        rmtree(self.__filepath / 'message.d')
 
         # Set song names, descriptions, and genres
         for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
             for song in songList:
                 offsets, index = self.__get_song_offset(song)
-                offset_str = format(offsets[i]+index, 'x').lower()
+                offset_str = format(offsets[i] + index, 'x').lower()
                 offset_str = ' ' * (4 - len(offset_str)) + offset_str + '00 @'
                 text_type.append(self.__text_at_offset(offset_str))
 
@@ -109,9 +116,6 @@ class TextClass:
             run_shell([paths.include/'wiimms'/'wbmgt', 'decode',
                        self.__filepath/'message.d'/'new_music_message.bmg'])
             os.remove(self.__filepath/'message.d'/'new_music_message.bmg')
-            with open(self.__filepath/'message.d'/'new_music_message.txt', 'rb') as message:
-                self.textlines = message.readlines()
-            rmtree(self.__filepath/'message.d')
         except Exception as e:
             ShowError("Could not decode text file", str(e))
 

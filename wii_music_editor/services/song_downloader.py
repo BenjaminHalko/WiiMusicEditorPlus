@@ -2,7 +2,7 @@ from os import remove
 from zipfile import ZipFile
 
 import requests
-from PyQt6.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, pyqtSignal
 
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import savePath

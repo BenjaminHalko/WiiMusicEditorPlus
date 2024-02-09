@@ -9,19 +9,19 @@ import wave
 from PySide6.QtWidgets import QMainWindow
 
 from wii_music_editor.data.songs import SongType, songList
-from wii_music_editor.data.styles import styleList, get_style_by_id
+from wii_music_editor.data.styles import get_style_by_id
 from wii_music_editor.editor.editor import replace_song, replace_song_text
 from wii_music_editor.editor.midi import Midi
 
-from wii_music_editor.editor.rom_folder import RomFolder, rom_folder
+from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.services.discord import DiscordUpdate, DiscordState
+from wii_music_editor.services.external_editor import ExternalEditor
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.widgets.dolphin import LoadDolphin
 from wii_music_editor.ui.widgets.load_files import get_file_path
 from wii_music_editor.ui.widgets.populate_list_widget import populate_song_list, populate_style_list, \
     populate_instrument_list
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
-from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.save import load_setting
 from wii_music_editor.utils.translate import tr
@@ -41,6 +41,7 @@ class TAB:
 # Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
     externalEditorOpen: bool
+    textEditor: ExternalEditor
     fromSongEditor: int
 
     __SE_midiScore: Midi or None
@@ -752,11 +753,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     #############Text Editor
     def Button_TE_Patch(self):
-        file = open(GetMessagePath() + "/message.d/new_music_message.txt", "wb")
-        file.write(self.TE_Text.toPlainText().encode("utf-8"))
-        file.close()
-        EncodeTxt()
-        self.MainWidget.setCurrentIndex(0)
+        try:
+            rom_folder.text.read()
+            rom_folder.text.encode()
+        except Exception as e:
+            print("error", str(e))
+        self.MainWidget.setCurrentIndex(TAB.MainMenu)
 
     def Button_TE_ExternalEditor(self):
         self.externalEditorOpen = True
@@ -764,19 +766,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.TE_Text.setEnabled(False)
         self.TE_Back_Button.setEnabled(False)
         self.TE_OpenExternal.setEnabled(False)
-        self.edit = ExternalEditor()
-        self.edit.done.connect(self.TE_FinishEditor)
-        self.edit.start()
+        self.textEditor = ExternalEditor()
+        self.textEditor.done.connect(self.TE_FinishEditor)
+        self.textEditor.start()
 
     def TE_FinishEditor(self):
-        file = open(GetMessagePath() + "/message.d/new_music_message.txt", "r+b")
-        self.TE_Text.setPlainText(file.read().decode("utf-8"))
-        file.close()
+        rom_folder.text.read()
+        self.TE_Text.setPlainText(rom_folder.text.decode("utf-8"))
         self.TE_Patch.setEnabled(True)
         self.TE_Text.setEnabled(True)
         self.TE_Back_Button.setEnabled(True)
         self.TE_OpenExternal.setEnabled(True)
-        self.edit.deleteLater()
+        self.textEditor.deleteLater()
 
     #############Default Style Editor
     def Button_DS_Patch(self):

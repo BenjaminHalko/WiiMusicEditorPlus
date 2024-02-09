@@ -1,6 +1,5 @@
 from enum import Enum
 from pathlib import Path
-from shutil import rmtree
 
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.region import regionNames, regionFullNames
@@ -9,9 +8,7 @@ from wii_music_editor.data.styles import styleList
 from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.error_handler import ShowError
-from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.editor.region import regionSelected, BasedOnRegion, romLanguage
-from wii_music_editor.utils.save import load_setting
 
 
 class RecordType(Enum):
