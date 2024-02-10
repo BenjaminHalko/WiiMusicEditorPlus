@@ -5,6 +5,7 @@ from wii_music_editor.data.region import game_ids
 from wii_music_editor.editor.region import BasedOnRegion
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.utils.pathUtils import paths
+from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.save import load_setting
 
 
@@ -16,6 +17,15 @@ rapperPatches = [
     '043AE47F 881C0090\n043AE483 7C090000\n043AE487 4081FFBC\n043AE48B 881C00D6\n',
     '0429CE7B 881C0090\n0429CE7F 7C090000\n0429CE83 4081FFBC\n0429CE87 881C00D6\n'
 ]
+
+
+class Patch:
+    name: str
+    info: str
+
+    def __init__(self, name: str, info: str):
+        self.name = name
+        self.info = info
 
 
 def CreateGct(path, gecko_path=""):
@@ -35,12 +45,8 @@ def CreateGct(path, gecko_path=""):
         patch.write(bytes.fromhex(codes))
 
 
-def AddPatch(patch_name: str or list[str], patch_info: str or list[str]):
-    if type(patch_name) is str:
-        patch_name = [patch_name]
-        patch_info = [patch_info]
-
-    for patchNum in range(len(patch_name)):
+def AddPatch(patches: list[Patch]):
+    for patch in patches:
         if paths.geckoPath.exists():
             with open(str(rom_folder.geckoPath), 'r') as codes:
                 line_text = codes.readlines()
@@ -52,13 +58,13 @@ def AddPatch(patch_name: str or list[str], patch_info: str or list[str]):
             for num in range(len(line_text)):
                 if line_text[num].rstrip() == '[Gecko]':
                     gecko_exists = num
-                if line_text[num].rstrip() == f'${patch_name[patchNum]} [WiiMusicEditor]':
+                if line_text[num].rstrip() == f'${patch.name} [WiiMusicEditor]':
                     song_exists = num
 
             if gecko_exists == -1:
-                line_text.insert(0, f'[Gecko]\n${patch_name[patchNum]} [WiiMusicEditor]\n{patch_info[patchNum]}')
+                line_text.insert(0, f'[Gecko]\n${patch.name} [WiiMusicEditor]\n{patch.info}')
             elif song_exists == -1:
-                line_text.insert(gecko_exists + 1, f'${patch_name[patchNum]} [WiiMusicEditor]\n{patch_info[patchNum]}')
+                line_text.insert(gecko_exists + 1, f'${patch.name} [WiiMusicEditor]\n{patch.info}')
             else:
                 while True:
                     if len(line_text) <= song_exists + 1:
@@ -67,31 +73,31 @@ def AddPatch(patch_name: str or list[str], patch_info: str or list[str]):
                         break
                     else:
                         line_text.pop(song_exists + 1)
-                line_text.insert(song_exists + 1, patch_info[patchNum])
+                line_text.insert(song_exists + 1, patch.info)
 
             for num in range(len(line_text)):
                 if line_text[num].rstrip() == '[Gecko_Enabled]':
                     gecko_enabled = num
-                if line_text[num].rstrip() == f'${patch_name[patchNum]}':
+                if line_text[num].rstrip() == f'${patch.name}':
                     song_enabled = num
 
             if gecko_enabled == -1:
-                line_text.insert(len(line_text), f'[Gecko_Enabled]\n${patch_name[patchNum]}\n')
+                line_text.insert(len(line_text), f'[Gecko_Enabled]\n${patch.name}\n')
             elif song_enabled == -1:
-                line_text.insert(gecko_enabled + 1, f'${patch_name[patchNum]}\n')
+                line_text.insert(gecko_enabled + 1, f'${patch.name}\n')
 
             with open(str(rom_folder.geckoPath), 'w') as codes:
                 codes.writelines(line_text)
         else:
             with open(str(rom_folder.geckoPath), 'w') as codes:
                 codes.write('[Gecko]\n')
-                codes.write('$' + patch_name[patchNum] + ' [WiiMusicEditor]\n')
-                codes.write(patch_info[patchNum])
+                codes.write('$' + patch.name + ' [WiiMusicEditor]\n')
+                codes.write(patch.info)
                 codes.write('[Gecko_Enabled]\n')
-                codes.write('$' + patch_name[patchNum] + '\n')
+                codes.write('$' + patch.name + '\n')
 
     # Copy Code to Dolphin
-    if load_setting("Settings", "CopyCodes", True):
+    if preferences.copy_gecko_codes:
         game_id = BasedOnRegion(game_ids)
         if paths.dolphinSavePath.is_dir():
             if (paths.dolphinPath/"GameSettings"/game_id + ".ini").is_file():

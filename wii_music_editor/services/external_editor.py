@@ -1,4 +1,4 @@
-from PySide6.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.utils.osUtils import choose_from_os
@@ -6,7 +6,7 @@ from wii_music_editor.utils.shell import give_permission, run_shell
 
 
 class ExternalEditor(QThread):
-    done = pyqtSignal()
+    done = Signal()
 
     def run(self):
         rom_folder.text.decode()
