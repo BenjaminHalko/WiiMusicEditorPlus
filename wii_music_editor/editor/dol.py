@@ -8,7 +8,10 @@ from wii_music_editor.utils.pathUtils import paths
 
 
 class MainDolOffsets:
-    songSegmentOffset = 0x59C520
+    songSegmentRegularOffset = 0x59C520
+    songSegmentMaestroOffset = 0x5A00EC
+    songSegmentHandBellOffset = 0x5A0AEC
+    songSegmentMenuOffset = 0x596DAC
     songSegmentSize = 0xBC
     songSegmentTimeSignature = 0x20
     songSegmentLength = 0x24

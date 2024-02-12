@@ -9,8 +9,8 @@ import wave
 from PySide6.QtWidgets import QMainWindow
 
 from wii_music_editor.data.instruments import instrumentList
-from wii_music_editor.data.songs import SongType, songList
-from wii_music_editor.data.styles import get_style_by_id, styleList, StyleTypeValue
+from wii_music_editor.data.songs import SongType, song_list
+from wii_music_editor.data.styles import get_style_by_id, styleList, StyleType
 from wii_music_editor.editor.editor import replace_song, replace_song_text, replace_style, replace_style_text
 from wii_music_editor.editor.midi import Midi
 
@@ -455,7 +455,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def SE_Patchable(self):
         allow = True
         songIndex = self.SE_SongToChange.currentRow()
-        song = songList[songIndex]
+        song = song_list[songIndex]
         if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.SongType == SongType.Menu):
             if (self.__SE_midiScore is None or
                     (self.__SE_midiSong is None
@@ -521,7 +521,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SE_Midi_File_Song_Label.show()
             self.SE_Midi_File_Score_Title.show()
             self.SE_Midi_File_Replace_Song.show()
-            enabled = (not self.SE_Midi.isEnabled() or songList[
+            enabled = (not self.SE_Midi.isEnabled() or song_list[
                 self.SE_SongToChange.currentRow()].SongType != SongType.Maestro)
             self.SE_Midi_File_Song_Button.setEnabled(enabled)
             self.SE_Midi_File_Song_Title.setEnabled(enabled)
@@ -537,7 +537,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def List_SE_SongToChange(self):
         try:
             songIndex = self.SE_SongToChange.currentRow()
-            song = songList[songIndex]
+            song = song_list[songIndex]
             self.SE_Midi.setCheckable(True)
             self.SE_Midi.setEnabled(True)
             if song.SongType != SongType.Menu:
@@ -568,7 +568,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def Button_SE_Patch(self):
         try:
             songIndex = self.SE_SongToChange.currentRow()
-            song = songList[songIndex]
+            song = song_list[songIndex]
             if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.SongType == SongType.Menu):
                 self.__SE_midiScore.tempo = self.SE_Midi_Tempo_Input.value()
                 self.__SE_midiScore.length = self.SE_Midi_Length_Input.value()
@@ -600,7 +600,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ShowError(tr("error", "Could not patch songs"), str(e))
 
     def Button_SE_OpenStyleEditor(self):
-        self.fromSongEditor = songList[self.SE_SongToChange.currentRow()].DefaultStyle
+        self.fromSongEditor = song_list[self.SE_SongToChange.currentRow()].DefaultStyle
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
         self.LoadStyleEditor()
 
@@ -621,7 +621,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         style = styleList[self.StE_StyleList.currentRow()]
         partIndex = self.StE_PartSelector.currentIndex()
         partIsPercussion = partIndex == 4 or partIndex == 5
-        populate_instrument_list(self.StE_InstrumentList, partIsPercussion, style.style_type == StyleTypeValue.Menu)
+        populate_instrument_list(self.StE_InstrumentList, partIsPercussion, style.style_type == StyleType.Menu)
         self.StE_SetIndex()
 
     def StE_SetIndex(self):
@@ -671,7 +671,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         partIndex = self.StE_PartSelector.currentIndex()
         self.StE_Instruments.setEnabled(True)
         self.StE_Patch.setEnabled(False)
-        if style.style_type == StyleTypeValue.Global:
+        if style.style_type == StyleType.Global:
             self.StE_ChangeStyleName.setEnabled(True)
             self.StE_ChangeStyleName_Label.setEnabled(True)
             self.StE_ChangeStyleName.setText(rom_folder.text.styles[styleIndex])

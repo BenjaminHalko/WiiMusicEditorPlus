@@ -3,7 +3,7 @@ from pathlib import Path
 
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.region import regionNames, regionFullNames
-from wii_music_editor.data.songs import songList
+from wii_music_editor.data.songs import song_list
 from wii_music_editor.data.styles import styleList
 from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
@@ -88,11 +88,11 @@ class RomFolder:
                 self.codes = file.readlines()
 
     def GetDefaultStyle(self, song_id, default):
-        style = songList[song_id].DefaultStyle
+        style = song_list[song_id].DefaultStyle
 
         if not default and self.geckoPath.exists():
             for i in range(len(self.codes)):
-                if self.codes[i] == "$" + songList[song_id].Name + " Default Style Patch [WiiMusicEditor]\n":
+                if self.codes[i] == "$" + song_list[song_id].Name + " Default Style Patch [WiiMusicEditor]\n":
                     style = self.codes[i + 1][15:17:1]
 
         for i in range(len(styleList)):

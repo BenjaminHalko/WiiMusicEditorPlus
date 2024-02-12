@@ -15,18 +15,18 @@ def replace_song(song: SongClass, score_midi: Midi, song_midi: Midi):
 
     # Patch Brsar
     brsar = Brsar(rom_folder.brsarPath)
-    if song.SongType == SongType.Regular:
-        brsar.replace_song(song_midi.data, BrsarGroup.Regular, song.MemOrder * 2)
-        brsar.replace_song(score_midi.data, BrsarGroup.Regular, song.MemOrder * 2 + 1)
-    elif song.SongType == SongType.Maestro:
-        brsar.replace_song(song_midi.data, BrsarGroup.Maestro, song.MemOrder + 2)
-    elif song.SongType == SongType.Hand_Bell:
-        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.MemOrder * 5 + 2)
-        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.MemOrder * 5 + 3)
-        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.MemOrder * 5 + 4)
-        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.MemOrder * 5 + 5)
-        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.MemOrder * 5 + 6)
-    elif song.SongType == SongType.Menu:
+    if song.song_type == SongType.Regular:
+        brsar.replace_song(song_midi.data, BrsarGroup.Regular, song.mem_order * 2)
+        brsar.replace_song(score_midi.data, BrsarGroup.Regular, song.mem_order * 2 + 1)
+    elif song.song_type == SongType.Maestro:
+        brsar.replace_song(song_midi.data, BrsarGroup.Maestro, song.mem_order + 2)
+    elif song.song_type == SongType.Hand_Bell:
+        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.mem_order * 5 + 2)
+        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.mem_order * 5 + 3)
+        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.mem_order * 5 + 4)
+        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.mem_order * 5 + 5)
+        brsar.replace_song(song_midi.data, BrsarGroup.Handbell, song.mem_order * 5 + 6)
+    elif song.song_type == SongType.Menu:
         brsar.replace_song(song_midi.data, BrsarGroup.Menu, 0)
         brsar.replace_song(score_midi.data, BrsarGroup.Menu, 1)
         brsar.replace_song(score_midi.data, BrsarGroup.Menu, 2)
@@ -37,8 +37,16 @@ def replace_song(song: SongClass, score_midi: Midi, song_midi: Midi):
     brsar.save()
 
     # Patch Main Dol
-    if song.SongType != SongType.Menu:
-        offset = MainDolOffsets.songSegmentOffset + song.MemOrder * MainDolOffsets.songSegmentSize
+    if song.song_type != SongType.Menu:
+        offset = MainDolOffsets.songSegmentRegularOffset
+        if song.song_type == SongType.Maestro:
+            offset = MainDolOffsets.songSegmentMaestroOffset
+        elif song.song_type == SongType.Hand_Bell:
+            offset = MainDolOffsets.songSegmentHandBellOffset
+        elif song.song_type == SongType.Menu:
+            offset = MainDolOffsets.songSegmentMenuOffset
+        offset += song.mem_order * MainDolOffsets.songSegmentSize
+
         dol = MainDol(rom_folder.mainDolPath)
         dol.write(score_midi.length, offset + MainDolOffsets.songSegmentLength)
         dol.write(score_midi.tempo, offset + MainDolOffsets.songSegmentTempo)

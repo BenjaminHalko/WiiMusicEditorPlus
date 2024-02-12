@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from shutil import rmtree, copyfile
 
-from wii_music_editor.data.songs import songList, SongType, SongClass
+from wii_music_editor.data.songs import song_list, SongType, SongClass
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.shell import run_shell
@@ -44,7 +44,7 @@ class TextClass:
 
         # Set song names, descriptions, and genres
         for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
-            for song in songList:
+            for song in song_list:
                 offsets, index = self.__get_song_offset(song)
                 offset_str = format(offsets[i] + index, 'x').lower()
                 offset_str = ' ' * (4 - len(offset_str)) + offset_str + '00 @'
@@ -84,7 +84,7 @@ class TextClass:
         offsets = [self.__style_offset]
         index = self.__style_order[item_index]
         if isSong:
-            offsets, index = self.__get_song_offset(songList[item_index])
+            offsets, index = self.__get_song_offset(song_list[item_index])
 
         for i in range(len(offsets)):
             offset = format(offsets[i]+index, 'x').lower()

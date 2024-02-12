@@ -29,4 +29,4 @@ if __name__ == "__main__":
     for style in styleList:
         offset = 0x8059A658 + style.style_id * MainDolOffsets.styleSegmentSize
 
-        print(f"StyleClass(StyleTypeValue.{types[style.style_type.value]}, '{style.name}', {hex(style.style_id)},\n    {getOffset(offset+MainDolOffsets.styleSegmentMelody)}, {getOffset(offset+MainDolOffsets.styleSegmentHarmony)}, {getOffset(offset+MainDolOffsets.styleSegmentChord)}, {getOffset(offset+MainDolOffsets.styleSegmentBass)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc1)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc2)}),")
+        print(f"Style(StyleType.{types[style.style_type.value]}, '{style.name}', {hex(style.style_id)},\n    {getOffset(offset+MainDolOffsets.styleSegmentMelody)}, {getOffset(offset+MainDolOffsets.styleSegmentHarmony)}, {getOffset(offset+MainDolOffsets.styleSegmentChord)}, {getOffset(offset+MainDolOffsets.styleSegmentBass)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc1)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc2)}),")
