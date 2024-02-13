@@ -3,8 +3,10 @@ from pathlib import Path
 from shutil import rmtree, copyfile
 
 from wii_music_editor.data.songs import song_list, SongType, SongClass
+from wii_music_editor.data.styles import StyleNames
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
+from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.shell import run_shell
 
 
@@ -17,6 +19,7 @@ class TextClass:
     __hand_bell_order = [0, 2, 3, 1, 4]
     __style_order = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
     __filename: Path
+    __language: int
 
     songs: list[str]
     descriptions: list[str]
@@ -26,12 +29,13 @@ class TextClass:
 
     def __init__(self, file: Path):
         self.__filepath = file
+        self.__language = preferences.language
 
         # Read the text file
         self.decode()
-        self.read(region)
+        self.read()
 
-    def read(self, region: int):
+    def read(self):
         self.songs = []
         self.descriptions = []
         self.genres = []
@@ -40,7 +44,7 @@ class TextClass:
         with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
             self.textlines = message.readlines()
         rmtree(self.__filepath / 'message.d')
-        self.fix_message_file(region)
+        self.fix_message_file()
 
         # Set song names, descriptions, and genres
         for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
@@ -58,11 +62,11 @@ class TextClass:
 
     def __get_song_offset(self, song: SongClass) -> (list[int], int):
         offset = self.__regular_offsets
-        index = song.MemOrder
-        if song.SongType == SongType.Maestro:
+        index = song.mem_order
+        if song.song_type == SongType.Maestro:
             offset = self.__maestro_offsets
             index = self.__maestro_order[index]
-        elif song.SongType == SongType.Hand_Bell:
+        elif song.song_type == SongType.Hand_Bell:
             offset = self.__hand_bell_offsets
             index = self.__hand_bell_order[index]
         return offset, index
@@ -134,49 +138,31 @@ class TextClass:
         except Exception as e:
             ShowError("Could not encode text file", str(e))
 
-    def fix_message_file(self, region: int):
+    def fix_message_file(self):
         for num in range(len(self.textlines)):
             if self.textlines[num] == b'  b200 @015f /\r\n':
-                self.textlines[num] = b'  b200 @015f [/,4b] = ' + StyleNames.default[region].encode(
+                self.textlines[num] = b'  b200 @015f [/,4b] = ' + StyleNames.default[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 1] = b'  b201 @0160 [/,4b] = ' + StyleNames.rock[region].encode(
+                self.textlines[num + 1] = b'  b201 @0160 [/,4b] = ' + StyleNames.rock[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 2] = b'  b202 @0161 [/,4b] = ' + StyleNames.march[region].encode(
+                self.textlines[num + 2] = b'  b202 @0161 [/,4b] = ' + StyleNames.march[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 3] = b'  b203 @0162 [/,4b] = ' + StyleNames.jazz[region].encode(
+                self.textlines[num + 3] = b'  b203 @0162 [/,4b] = ' + StyleNames.jazz[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 4] = b'  b204 @0163 [/,4b] = ' + StyleNames.latin[region].encode(
+                self.textlines[num + 4] = b'  b204 @0163 [/,4b] = ' + StyleNames.latin[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 5] = b'  b205 @0164 [/,4b] = ' + StyleNames.reggae[region].encode(
+                self.textlines[num + 5] = b'  b205 @0164 [/,4b] = ' + StyleNames.reggae[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 6] = b'  b206 @0165 [/,4b] = ' + StyleNames.hawaiian[region].encode(
+                self.textlines[num + 6] = b'  b206 @0165 [/,4b] = ' + StyleNames.hawaiian[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 7] = b'  b207 @0166 [/,4b] = ' + StyleNames.electronic[region].encode(
+                self.textlines[num + 7] = b'  b207 @0166 [/,4b] = ' + StyleNames.electronic[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 8] = b'  b208 @0167 [/,4b] = ' + StyleNames.classical[region].encode(
+                self.textlines[num + 8] = b'  b208 @0167 [/,4b] = ' + StyleNames.classical[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 9] = b'  b209 @0168 [/,4b] = ' + StyleNames.tango[region].encode(
+                self.textlines[num + 9] = b'  b209 @0168 [/,4b] = ' + StyleNames.tango[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 10] = b'  b20a @0169 [/,4b] = ' + StyleNames.pop[region].encode(
+                self.textlines[num + 10] = b'  b20a @0169 [/,4b] = ' + StyleNames.pop[self.__language].encode(
                     "utf-8") + b'\r\n'
-                self.textlines[num + 11] = b'  b20b @016a [/,4b] = ' + StyleNames.japanese[region].encode(
+                self.textlines[num + 11] = b'  b20b @016a [/,4b] = ' + StyleNames.japanese[self.__language].encode(
                     "utf-8") + b'\r\n'
                 break
-
-
-class StyleNames:
-    default = ["Default", "Par défaut", "Predeterm.", "Standard", "Normale", "オリジナル", "오리지널"]
-    rock = ["Rock", "Rock", "Rock", "Rock", "Rock", "ロック", "록"]
-    march = ["March", "Marche", "Marcha", "Marsch", "Marcia", "マーチ", "행진곡"]
-    jazz = ["Jazz", "Jazz", "Jazz", "Jazz", "Jazz", "ジャズ", "재즈"]
-    latin = ["Latin", "Latino", "Latino", "Latin", "Latino", "ラテン", "라틴 음악"]
-    reggae = ["Reggae", "Reggae", "Reggae", "Reggae", "Reggae", "レゲエ", "레게"]
-    hawaiian = ["Hawaiian", "Hawaïen", "Hawaiano", "Hawaii", "Hawaiano", "ハワイ風", "하와이 음악"]
-    electronic = ["Electronic", "Électronique", "Electrónico", "Elektronik", "Elettronico", "ダウンビート", "전자 음악"]
-    classical = ["Classical", "Classique", "Clásico", "Klassisch", "Classico", "室内楽", "실내악"]
-    tango = ["Tango", "Tango", "Tango", "Tango", "Tango", "タンゴ", "탱고"]
-    pop = ["Pop", "Pop", "Pop", "Pop", "Pop", "ポップス", "팝"]
-    japanese = ["Japanese", "Japonais", "Japonés", "Japanisch", "Giapponese", "和風", "일본 음악"]
-
-
-

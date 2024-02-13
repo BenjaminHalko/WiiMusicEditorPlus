@@ -12,7 +12,7 @@ from wii_music_editor.editor.region import BasedOnRegion
 from wii_music_editor.ui.success import SuccessWindow
 from wii_music_editor.ui.windows.riivolution_ui import Ui_Riivolution
 from wii_music_editor.utils.pathUtils import paths
-from wii_music_editor.utils.translate import tr
+from wii_music_editor.ui.widgets.translate import tr
 
 
 class RiivolutionWindow(QDialog, Ui_Riivolution):

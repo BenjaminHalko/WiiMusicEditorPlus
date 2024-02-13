@@ -8,7 +8,7 @@ from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
 from wii_music_editor.utils.save import save_setting
-from wii_music_editor.utils.translate import tr
+from wii_music_editor.ui.widgets.translate import tr
 
 
 def save_file_directory(directory: str):

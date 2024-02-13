@@ -1,4 +1,4 @@
-from wii_music_editor.utils.translate import tr
+from wii_music_editor.ui.widgets.translate import tr
 
 
 class InstrumentClass:

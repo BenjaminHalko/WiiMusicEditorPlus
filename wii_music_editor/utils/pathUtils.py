@@ -4,7 +4,6 @@ import subprocess
 import sys
 
 from wii_music_editor.utils.osUtils import currentSystem, choose_from_os, SystemType
-from wii_music_editor.editor.region import BasedOnRegion, romLanguage
 from wii_music_editor.utils.save import save_setting, load_setting, savePath
 
 

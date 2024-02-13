@@ -1,6 +1,21 @@
 from enum import Enum
 
 
+class StyleNames:
+    default = ("Default", "Par défaut", "Predeterm.", "Standard", "Normale", "オリジナル", "오리지널")
+    rock = ("Rock", "Rock", "Rock", "Rock", "Rock", "ロック", "록")
+    march = ("March", "Marche", "Marcha", "Marsch", "Marcia", "マーチ", "행진곡")
+    jazz = ("Jazz", "Jazz", "Jazz", "Jazz", "Jazz", "ジャズ", "재즈")
+    latin = ("Latin", "Latino", "Latino", "Latin", "Latino", "ラテン", "라틴 음악")
+    reggae = ("Reggae", "Reggae", "Reggae", "Reggae", "Reggae", "レゲエ", "레게")
+    hawaiian = ("Hawaiian", "Hawaïen", "Hawaiano", "Hawaii", "Hawaiano", "ハワイ風", "하와이 음악")
+    electronic = ("Electronic", "Électronique", "Electrónico", "Elektronik", "Elettronico", "ダウンビート", "전자 음악")
+    classical = ("Classical", "Classique", "Clásico", "Klassisch", "Classico", "室内楽", "실내악")
+    tango = ("Tango", "Tango", "Tango", "Tango", "Tango", "タンゴ", "탱고")
+    pop = ("Pop", "Pop", "Pop", "Pop", "Pop", "ポップス", "팝")
+    japanese = ("Japanese", "Japonais", "Japonés", "Japanisch", "Giapponese", "和風", "일본 음악")
+
+
 class StyleType(Enum):
     Global = 0
     SongSpecific = 1
@@ -8,20 +23,85 @@ class StyleType(Enum):
     Menu = 3
 
 
+class StyleInstruments:
+    melody: int
+    harmony: int
+    chord: int
+    bass: int
+    perc1: int
+    perc2: int
+
+    def __init__(self, melody: int, harmony: int, chord: int, bass: int, perc1: int, perc2: int):
+        self.melody = melody
+        self.harmony = harmony
+        self.chord = chord
+        self.bass = bass
+        self.perc1 = perc1
+        self.perc2 = perc2
+
+    def __eq__(self, other) -> bool:
+        return (
+            self.melody == other.melody and
+            self.harmony == other.harmony and
+            self.chord == other.chord and
+            self.bass == other.bass and
+            self.perc1 == other.perc1 and
+            self.perc2 == other.perc2
+        )
+
+    def __setitem__(self, key, value):
+        if key == 0:
+            self.melody = value
+        elif key == 1:
+            self.harmony = value
+        elif key == 2:
+            self.chord = value
+        elif key == 3:
+            self.bass = value
+        elif key == 4:
+            self.perc1 = value
+        elif key == 5:
+            self.perc2 = value
+        else:
+            raise IndexError("Index out of range")
+
+    def __getitem__(self, item):
+        if item == 0:
+            return self.melody
+        elif item == 1:
+            return self.harmony
+        elif item == 2:
+            return self.chord
+        elif item == 3:
+            return self.bass
+        elif item == 4:
+            return self.perc1
+        elif item == 5:
+            return self.perc2
+        else:
+            raise IndexError("Index out of range")
+
+    def copy(self) -> 'StyleInstruments':
+        return StyleInstruments(self.melody, self.harmony, self.chord, self.bass, self.perc1, self.perc2)
+
+
 class Style:
+    style_type: StyleType
+    name: str
+    style_id: int
+    style: StyleInstruments
+
     def __init__(self, style_type: StyleType, name, style_id: int,
                  melody: int, harmony: int, chord: int, bass: int, perc1: int, perc2: int):
         self.style_type = style_type
         self.name = name
         self.style_id = style_id
-        self.style = [
-            melody, harmony, chord, bass, perc1, perc2
-        ]
+        self.style = StyleInstruments(melody, harmony, chord, bass, perc1, perc2)
 
 
 def get_style_by_id(style_id: int) -> Style or None:
     for style in styleList:
-        if style.StyleId == style_id:
+        if style.style_id == style_id:
             return style
     return None
 
@@ -142,6 +222,3 @@ styleList = [
     Style(StyleType.Menu, 'Menu Style A Capella', 0x31,
           0x26, 0x27, 0x00, 0x27, 0x42, 0x28),
 ]
-
-
-

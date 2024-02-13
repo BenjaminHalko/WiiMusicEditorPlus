@@ -10,10 +10,9 @@ from PySide6.QtWidgets import QMainWindow
 
 from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.songs import SongType, song_list
-from wii_music_editor.data.styles import get_style_by_id, styleList, StyleType
+from wii_music_editor.data.styles import get_style_by_id, styleList, StyleType, StyleInstruments
 from wii_music_editor.editor.editor import replace_song, replace_song_text, replace_style, replace_style_text
 from wii_music_editor.editor.midi import Midi
-
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.services.discord import DiscordUpdate, DiscordState
 from wii_music_editor.services.external_editor import ExternalEditor
@@ -22,10 +21,10 @@ from wii_music_editor.ui.widgets.dolphin import LoadDolphin
 from wii_music_editor.ui.widgets.load_files import get_file_path
 from wii_music_editor.ui.widgets.populate_list_widget import populate_song_list, populate_style_list, \
     populate_instrument_list
+from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.save import load_setting
-from wii_music_editor.utils.translate import tr
 
 
 # Load Places
@@ -48,7 +47,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     __SE_midiScore: Midi or None
     __SE_midiSong: Midi or None
 
-    __StE_styleSelected: list[int]
+    __StE_styleSelected: StyleInstruments
 
     def __init__(self):
         super().__init__(None)
@@ -177,8 +176,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_ChangeStyleName_Label.setEnabled(False)
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patch.setEnabled(False)
-        self.__StE_styleSelected = []
         DiscordUpdate(DiscordState.EditingStyles)
+        if self.fromSongEditor != -1:
+            self.StE_StyleList.setCurrentRow(self.fromSongEditor)
+            self.List_StE_StyleList()
 
     def LoadTextEditor(self):
         if (AllowType(LoadType.Carc)):
@@ -456,7 +457,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         allow = True
         songIndex = self.SE_SongToChange.currentRow()
         song = song_list[songIndex]
-        if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.SongType == SongType.Menu):
+        if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.song_type == SongType.Menu):
             if (self.__SE_midiScore is None or
                     (self.__SE_midiSong is None
                         and self.SE_Midi_File_Replace_Song.isChecked()
@@ -522,7 +523,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SE_Midi_File_Score_Title.show()
             self.SE_Midi_File_Replace_Song.show()
             enabled = (not self.SE_Midi.isEnabled() or song_list[
-                self.SE_SongToChange.currentRow()].SongType != SongType.Maestro)
+                self.SE_SongToChange.currentRow()].song_type != SongType.Maestro)
             self.SE_Midi_File_Song_Button.setEnabled(enabled)
             self.SE_Midi_File_Song_Title.setEnabled(enabled)
             self.SE_Midi_File_Song_Label.setEnabled(enabled)
@@ -540,7 +541,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             song = song_list[songIndex]
             self.SE_Midi.setCheckable(True)
             self.SE_Midi.setEnabled(True)
-            if song.SongType != SongType.Menu:
+            if song.song_type != SongType.Menu:
                 self.SE_ChangeSongText.setEnabled(True)
                 self.SE_ChangeSongText_Name_Input.setText(rom_folder.text.songs[songIndex])
                 self.SE_ChangeSongText_Desc_Input.setText(rom_folder.text.descriptions[songIndex])
@@ -553,14 +554,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.SE_Midi.setCheckable(False)
                 self.SE_Midi.setEnabled(True)
             self.SE_SeparateSongPatching()
-            self.SE_StyleLabel.setEnabled(song.SongType == SongType.Regular)
-            self.SE_StyleText.setEnabled(song.SongType == SongType.Regular)
-            self.SE_OpenDefaultStyleEditor.setEnabled(song.SongType == SongType.Regular)
-            self.SE_OpenStyleEditor.setEnabled(song == SongType.Regular)
-            if song.SongType != SongType.Regular:
+            self.SE_StyleLabel.setEnabled(song.song_type == SongType.Regular)
+            self.SE_StyleText.setEnabled(song.song_type == SongType.Regular)
+            self.SE_OpenDefaultStyleEditor.setEnabled(song.song_type == SongType.Regular)
+            self.SE_OpenStyleEditor.setEnabled(song.song_type == SongType.Regular)
+            if song.song_type != SongType.Regular:
                 self.SE_StyleText.setText("")
             else:
-                self.SE_StyleText.setText(get_style_by_id(song.DefaultStyle).Name)
+                self.SE_StyleText.setText(get_style_by_id(song.default_style).name)
             self.SE_Patchable()
         except Exception as e:
             ShowError("Error", str(e))
@@ -569,7 +570,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             songIndex = self.SE_SongToChange.currentRow()
             song = song_list[songIndex]
-            if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.SongType == SongType.Menu):
+            if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.song_type == SongType.Menu):
                 self.__SE_midiScore.tempo = self.SE_Midi_Tempo_Input.value()
                 self.__SE_midiScore.length = self.SE_Midi_Length_Input.value()
                 self.__SE_midiScore.time_signature = 3 + self.SE_Midi_TimeSignature_4.isChecked()
@@ -584,14 +585,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 replace_song(song, self.__SE_midiScore, self.__SE_midiSong)
 
             # Patch Text
-            if song.SongType != SongType.Menu:
+            if song.song_type != SongType.Menu:
                 name = self.SE_ChangeSongText_Name_Input.text()
                 desc = self.SE_ChangeSongText_Desc_Input.toPlainText()
                 genre = self.SE_ChangeSongText_Genre_Input.text()
                 replace_song_text(songIndex, name, desc, genre)
-                if song.SongType == SongType.Maestro:
+                if song.song_type == SongType.Maestro:
                     name += f' ({tr("main", "Mii Maestro")})'
-                if song.SongType == SongType.Maestro:
+                if song.song_type == SongType.Maestro:
                     name += f' ({tr("main", "Handbell Harmony")})'
                 self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(name)
 
@@ -600,7 +601,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ShowError(tr("error", "Could not patch songs"), str(e))
 
     def Button_SE_OpenStyleEditor(self):
-        self.fromSongEditor = song_list[self.SE_SongToChange.currentRow()].DefaultStyle
+        self.fromSongEditor = song_list[self.SE_SongToChange.currentRow()].default_style
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
         self.LoadStyleEditor()
 
@@ -683,23 +684,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_InstrumentList.setCurrentRow(-1)
         self.Button_StE_PartSelector()
         self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != style.style)
-        self.StE_Part_Melody_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][0]].Name)
-        self.StE_Part_Harmony_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][1]].Name)
-        self.StE_Part_Chords_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][2]].Name)
-        self.StE_Part_Bass_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][3]].Name)
-        self.StE_Part_Percussion1_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][4]].Name)
-        self.StE_Part_Percussion2_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][5]].Name)
+        default_style = rom_folder.styles[styleIndex]
+        self.StE_Part_Melody_Instrument.setText(instrumentList[default_style.melody].Name)
+        self.StE_Part_Harmony_Instrument.setText(instrumentList[default_style.harmony].Name)
+        self.StE_Part_Chords_Instrument.setText(instrumentList[default_style.chord].Name)
+        self.StE_Part_Bass_Instrument.setText(instrumentList[default_style.bass].Name)
+        self.StE_Part_Percussion1_Instrument.setText(instrumentList[default_style.perc1].Name)
+        self.StE_Part_Percussion2_Instrument.setText(instrumentList[default_style.perc2].Name)
 
     def Button_StE_ResetStyle(self):
         self.__StE_styleSelected = styleList[self.StE_StyleList.currentRow()].style.copy()
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patchable()
-        self.StE_Part_Melody_Instrument.setText(instrumentList[self.__StE_styleSelected[0]].Name)
-        self.StE_Part_Harmony_Instrument.setText(instrumentList[self.__StE_styleSelected[1]].Name)
-        self.StE_Part_Chords_Instrument.setText(instrumentList[self.__StE_styleSelected[2]].Name)
-        self.StE_Part_Bass_Instrument.setText(instrumentList[self.__StE_styleSelected[3]].Name)
-        self.StE_Part_Percussion1_Instrument.setText(instrumentList[self.__StE_styleSelected[4]].Name)
-        self.StE_Part_Percussion2_Instrument.setText(instrumentList[self.__StE_styleSelected[5]].Name)
+        self.StE_Part_Melody_Instrument.setText(instrumentList[self.__StE_styleSelected.melody].Name)
+        self.StE_Part_Harmony_Instrument.setText(instrumentList[self.__StE_styleSelected.harmony].Name)
+        self.StE_Part_Chords_Instrument.setText(instrumentList[self.__StE_styleSelected.chord].Name)
+        self.StE_Part_Bass_Instrument.setText(instrumentList[self.__StE_styleSelected.bass].Name)
+        self.StE_Part_Percussion1_Instrument.setText(instrumentList[self.__StE_styleSelected.perc1].Name)
+        self.StE_Part_Percussion2_Instrument.setText(instrumentList[self.__StE_styleSelected.perc2].Name)
         self.StE_SetIndex()
 
     def Button_StE_Patch(self):
