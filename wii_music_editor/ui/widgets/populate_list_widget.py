@@ -40,9 +40,12 @@ def populate_style_list(widget: QListWidget, only_allow: int = -1):
     for i, style in enumerate(styleList):
         item = QListWidgetItem()
         extraText = ""
-        if rom_folder.styles[i] != style.DefaultStyle:
+        if rom_folder.styles[i] != style.style:
             extraText = f" ~[{tr('ui', 'Replaced')}]~"
-        item.setText(style.Name + extraText)
+        if (len(rom_folder.text.styles) > i):
+            item.setText(rom_folder.text.styles[i] + extraText)
+        else:
+            item.setText(style.name + extraText)
         if only_allow != -1 and i != only_allow:
             item.setFlags(item.flags() & ~Qt.ItemIsSelectable)
         widget.addItem(item)

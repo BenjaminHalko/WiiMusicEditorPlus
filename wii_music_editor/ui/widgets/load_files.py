@@ -71,8 +71,8 @@ def get_file_path(dialog_filter: str) -> str:
         file.setNameFilter(dialog_filter)
         file.setDirectory(str(paths.lastLoadedSubDir))
         if file.exec():
-            paths.lastLoadedSub = Path(file.selectedFiles()[0])
-            save_setting("Paths", "LastLoadedSubDir", str(paths.loadedFile))
+            paths.lastLoadedSubDir = Path(file.selectedFiles()[0])
+            save_setting("Paths", "LastLoadedSubDir", str(paths.lastLoadedSubDir))
             return file.selectedFiles()[0]
     except Exception as e:
         print(e)

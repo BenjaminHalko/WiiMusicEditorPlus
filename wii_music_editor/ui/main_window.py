@@ -8,9 +8,10 @@ import wave
 
 from PySide6.QtWidgets import QMainWindow
 
+from wii_music_editor.data.instruments import instrumentList
 from wii_music_editor.data.songs import SongType, songList
-from wii_music_editor.data.styles import get_style_by_id
-from wii_music_editor.editor.editor import replace_song, replace_song_text
+from wii_music_editor.data.styles import get_style_by_id, styleList, StyleTypeValue
+from wii_music_editor.editor.editor import replace_song, replace_song_text, replace_style, replace_style_text
 from wii_music_editor.editor.midi import Midi
 
 from wii_music_editor.editor.rom_folder import rom_folder
@@ -610,146 +611,113 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     # Style Editor Buttons
     def StE_Patchable(self):
-        self.StE_Patch.setEnabled((self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]) or (
-                    self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][
-                self.StE_StyleList.currentRow()]))
+        styleIndex = self.StE_StyleList.currentRow()
+        self.StE_Patch.setEnabled((self.__StE_styleSelected != rom_folder.styles[styleIndex])
+                                  or (self.StE_ChangeStyleName.isEnabled()
+                                      and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]))
 
     def Button_StE_PartSelector(self):
         self.StE_InstrumentList.setCurrentRow(-1)
-        self.LoadInstruments(self.StE_InstrumentList,
-                             (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),
-                             Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
-        if (editor.unsafeMode):
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
-        elif (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()] - 40
+        style = styleList[self.StE_StyleList.currentRow()]
+        partIndex = self.StE_PartSelector.currentIndex()
+        partIsPercussion = partIndex == 4 or partIndex == 5
+        populate_instrument_list(self.StE_InstrumentList, partIsPercussion, style.style_type == StyleTypeValue.Menu)
+        self.StE_SetIndex()
+
+    def StE_SetIndex(self):
+        partIndex = self.StE_PartSelector.currentIndex()
+        partIsPercussion = partIndex == 4 or partIndex == 5
+        if preferences.unsafe_mode:
+            toHighlight = self.__StE_styleSelected[partIndex]
+        elif partIsPercussion:
+            toHighlight = self.__StE_styleSelected[partIndex] - 40
         else:
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
-            if (toHighlight == len(Instruments) - 1): toHighlight = 40
+            toHighlight = self.__StE_styleSelected[partIndex]
+            if toHighlight == len(instrumentList) - 1:
+                toHighlight = 40
         self.StE_InstrumentList.setCurrentRow(toHighlight)
 
     def List_StE_InstrumentList(self):
-        if (self.StE_InstrumentList.currentRow() != -1):
-            if (editor.unsafeMode):
-                songSelected = self.StE_InstrumentList.currentRow()
-            elif (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
-                songSelected = self.StE_InstrumentList.currentRow() + 40
-            else:
-                songSelected = self.StE_InstrumentList.currentRow()
-                if (songSelected == 40): songSelected = len(Instruments) - 1
-            self.styleSelected[self.StE_PartSelector.currentIndex()] = songSelected
+        styleIndex = self.StE_StyleList.currentRow()
+        partIndex = self.StE_PartSelector.currentIndex()
+        instrumentIndex = self.StE_InstrumentList.currentRow()
+        partIsPercussion = partIndex == 4 or partIndex == 5
+        if self.StE_InstrumentList.currentRow() != -1:
+            if not preferences.unsafe_mode:
+                if partIsPercussion:
+                    instrumentIndex += 40
+                else:
+                    if instrumentIndex == 40:
+                        instrumentIndex = len(instrumentList) - 1
+            self.__StE_styleSelected[partIndex] = instrumentIndex
             self.StE_Patchable()
-            if (self.StE_PartSelector.currentIndex() == 0):
-                self.StE_Part_Melody_Instrument.setText(Instruments[songSelected].Name)
-            elif (self.StE_PartSelector.currentIndex() == 1):
-                self.StE_Part_Harmony_Instrument.setText(Instruments[songSelected].Name)
-            elif (self.StE_PartSelector.currentIndex() == 2):
-                self.StE_Part_Chords_Instrument.setText(Instruments[songSelected].Name)
-            elif (self.StE_PartSelector.currentIndex() == 3):
-                self.StE_Part_Bass_Instrument.setText(Instruments[songSelected].Name)
-            elif (self.StE_PartSelector.currentIndex() == 4):
-                self.StE_Part_Percussion1_Instrument.setText(Instruments[songSelected].Name)
-            elif (self.StE_PartSelector.currentIndex() == 5):
-                self.StE_Part_Percussion2_Instrument.setText(Instruments[songSelected].Name)
-            self.StE_ResetStyle.setEnabled(self.styleSelected != Styles[self.StE_StyleList.currentRow()].DefaultStyle)
+            if partIndex == 0:
+                self.StE_Part_Melody_Instrument.setText(instrumentList[instrumentIndex].Name)
+            elif partIndex == 1:
+                self.StE_Part_Harmony_Instrument.setText(instrumentList[instrumentIndex].Name)
+            elif partIndex == 2:
+                self.StE_Part_Chords_Instrument.setText(instrumentList[instrumentIndex].Name)
+            elif partIndex == 3:
+                self.StE_Part_Bass_Instrument.setText(instrumentList[instrumentIndex].Name)
+            elif partIndex == 4:
+                self.StE_Part_Percussion1_Instrument.setText(instrumentList[instrumentIndex].Name)
+            elif partIndex == 5:
+                self.StE_Part_Percussion2_Instrument.setText(instrumentList[instrumentIndex].Name)
+            self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != styleList[styleIndex].style)
 
     def List_StE_StyleList(self):
+        styleIndex = self.StE_StyleList.currentRow()
+        style = styleList[styleIndex]
+        partIndex = self.StE_PartSelector.currentIndex()
         self.StE_Instruments.setEnabled(True)
         self.StE_Patch.setEnabled(False)
-        if (AllowType(LoadType.Carc) and (Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Global)):
+        if style.style_type == StyleTypeValue.Global:
             self.StE_ChangeStyleName.setEnabled(True)
             self.StE_ChangeStyleName_Label.setEnabled(True)
-            self.StE_ChangeStyleName.setText(editor.textFromTxt[3][self.StE_StyleList.currentRow()])
+            self.StE_ChangeStyleName.setText(rom_folder.text.styles[styleIndex])
         else:
             self.StE_ChangeStyleName.setEnabled(False)
             self.StE_ChangeStyleName_Label.setEnabled(False)
             self.StE_ChangeStyleName.setText("")
-        self.styleSelected = editor.loadedStyles[self.StE_StyleList.currentRow()].copy()
+        self.__StE_styleSelected = rom_folder.styles[styleIndex].copy()
         self.StE_InstrumentList.setCurrentRow(-1)
-        self.LoadInstruments(self.StE_InstrumentList,
-                             (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5),
-                             Styles[self.StE_StyleList.currentRow()].StyleType == StyleTypeValue.Menu)
-        if (editor.unsafeMode):
-            toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
-        elif (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
-            toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][
-                              self.StE_PartSelector.currentIndex()] - 40
-        else:
-            toHighlight = editor.loadedStyles[self.StE_StyleList.currentRow()][self.StE_PartSelector.currentIndex()]
-            if (toHighlight == len(Instruments) - 1): toHighlight = 40
-        self.StE_ResetStyle.setEnabled(self.styleSelected != Styles[self.StE_StyleList.currentRow()].DefaultStyle)
-        self.StE_InstrumentList.setCurrentRow(toHighlight)
-        self.StE_Part_Melody_Instrument.setText(
-            Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][0]].Name)
-        self.StE_Part_Harmony_Instrument.setText(
-            Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][1]].Name)
-        self.StE_Part_Chords_Instrument.setText(
-            Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][2]].Name)
-        self.StE_Part_Bass_Instrument.setText(Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][3]].Name)
-        self.StE_Part_Percussion1_Instrument.setText(
-            Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][4]].Name)
-        self.StE_Part_Percussion2_Instrument.setText(
-            Instruments[editor.loadedStyles[self.StE_StyleList.currentRow()][5]].Name)
+        self.Button_StE_PartSelector()
+        self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != style.style)
+        self.StE_Part_Melody_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][0]].Name)
+        self.StE_Part_Harmony_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][1]].Name)
+        self.StE_Part_Chords_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][2]].Name)
+        self.StE_Part_Bass_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][3]].Name)
+        self.StE_Part_Percussion1_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][4]].Name)
+        self.StE_Part_Percussion2_Instrument.setText(instrumentList[rom_folder.styles[styleIndex][5]].Name)
 
     def Button_StE_ResetStyle(self):
-        self.styleSelected = Styles[self.StE_StyleList.currentRow()].DefaultStyle.copy()
+        self.__StE_styleSelected = styleList[self.StE_StyleList.currentRow()].style.copy()
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patchable()
-        self.StE_Part_Melody_Instrument.setText(Instruments[self.styleSelected[0]].Name)
-        self.StE_Part_Harmony_Instrument.setText(Instruments[self.styleSelected[1]].Name)
-        self.StE_Part_Chords_Instrument.setText(Instruments[self.styleSelected[2]].Name)
-        self.StE_Part_Bass_Instrument.setText(Instruments[self.styleSelected[3]].Name)
-        self.StE_Part_Percussion1_Instrument.setText(Instruments[self.styleSelected[4]].Name)
-        self.StE_Part_Percussion2_Instrument.setText(Instruments[self.styleSelected[5]].Name)
-        if (editor.unsafeMode):
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
-        elif (self.StE_PartSelector.currentIndex() == 4 or self.StE_PartSelector.currentIndex() == 5):
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()] - 40
-        else:
-            toHighlight = self.styleSelected[self.StE_PartSelector.currentIndex()]
-            if (toHighlight == len(Instruments) - 1): toHighlight = 40
-        self.StE_InstrumentList.setCurrentRow(toHighlight)
+        self.StE_Part_Melody_Instrument.setText(instrumentList[self.__StE_styleSelected[0]].Name)
+        self.StE_Part_Harmony_Instrument.setText(instrumentList[self.__StE_styleSelected[1]].Name)
+        self.StE_Part_Chords_Instrument.setText(instrumentList[self.__StE_styleSelected[2]].Name)
+        self.StE_Part_Bass_Instrument.setText(instrumentList[self.__StE_styleSelected[3]].Name)
+        self.StE_Part_Percussion1_Instrument.setText(instrumentList[self.__StE_styleSelected[4]].Name)
+        self.StE_Part_Percussion2_Instrument.setText(instrumentList[self.__StE_styleSelected[5]].Name)
+        self.StE_SetIndex()
 
     def Button_StE_Patch(self):
         self.StE_Patch.setEnabled(False)
-        if (self.styleSelected != editor.loadedStyles[self.StE_StyleList.currentRow()]):
-            editor.loadedStyles[self.StE_StyleList.currentRow()] = self.styleSelected.copy()
-            if (Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected):
-                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
-                    Styles[self.StE_StyleList.currentRow()].Name)
-            else:
-                self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
-                    Styles[self.StE_StyleList.currentRow()].Name + " ~[" + self.tr("Replaced") + "]~")
-                patchInfo = '0' + format(
-                    Styles[self.StE_StyleList.currentRow()].MemOffset + BasedOnRegion(gctRegionOffsetsStyles),
-                    "x") + " 00000018\n"
-                for i in range(3):
-                    if (self.styleSelected[i * 2] == len(Instruments) - 1):
-                        num1 = "ffffffff"
-                    else:
-                        num1 = format(self.styleSelected[i * 2], "x")
-                    if (self.styleSelected[i * 2 + 1] == len(Instruments) - 1):
-                        num2 = "ffffffff"
-                    else:
-                        num2 = format(self.styleSelected[i * 2 + 1], "x")
-                    patchInfo = patchInfo + "0" * (8 - len(num1)) + num1 + " " + "0" * (8 - len(num2)) + num2 + "\n"
+        styleIndex = self.StE_StyleList.currentRow()
+        if self.__StE_styleSelected != rom_folder.styles[styleIndex]:
+            rom_folder.styles[styleIndex] = self.__StE_styleSelected.copy()
+            replace_style(styleIndex, self.__StE_styleSelected)
 
-                AddPatch(Styles[self.StE_StyleList.currentRow()].Name + " Style Patch", patchInfo)
-            SaveRecording(RecordType.Style, self.StE_StyleList.currentRow(), [
-                ["0", self.styleSelected[0]],
-                ["1", self.styleSelected[1]],
-                ["2", self.styleSelected[2]],
-                ["3", self.styleSelected[3]],
-                ["4", self.styleSelected[4]],
-                ["5", self.styleSelected[5]]],
-                          Styles[self.StE_StyleList.currentRow()].DefaultStyle == self.styleSelected)
+        if (self.StE_ChangeStyleName.isEnabled()
+                and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]):
+            replace_style_text(styleIndex, self.StE_ChangeStyleName.text())
 
-        if (self.StE_ChangeStyleName.isEnabled() and self.StE_ChangeStyleName.text() != editor.textFromTxt[3][
-            self.StE_StyleList.currentRow()]):
-            ChangeName(self.StE_StyleList.currentRow(), self.StE_ChangeStyleName.text())
-            editor.textFromTxt[3][self.StE_StyleList.currentRow()] = self.StE_ChangeStyleName.text()
-            SaveRecording(RecordType.TextStyle, self.StE_StyleList.currentRow(),
-                          ["name", self.StE_ChangeStyleName.text()])
+        if styleList[styleIndex].style == self.__StE_styleSelected:
+            self.StE_StyleList.item(styleIndex).setText(styleList[styleIndex].name)
+        else:
+            self.StE_StyleList.item(styleIndex).setText(
+                f"{styleList[styleIndex].name} ~[{tr('main', 'Replaced')}]~")
 
     #############Text Editor
     def Button_TE_Patch(self):

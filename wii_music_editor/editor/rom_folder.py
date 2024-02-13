@@ -64,7 +64,7 @@ class RomFolder:
     def GetStyles(self):
         self.styles = [[]] * len(styleList)
         for i in range(len(styleList)):
-            self.styles[i] = styleList[i].DefaultStyle
+            self.styles[i] = styleList[i].style
 
             for j in range(len(self.codes)):
                 if ("Style Patch [WiiMusicEditor]" in self.codes[

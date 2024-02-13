@@ -29,9 +29,9 @@ class TextClass:
 
         # Read the text file
         self.decode()
-        self.read()
+        self.read(region)
 
-    def read(self):
+    def read(self, region: int):
         self.songs = []
         self.descriptions = []
         self.genres = []
@@ -40,6 +40,7 @@ class TextClass:
         with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
             self.textlines = message.readlines()
         rmtree(self.__filepath / 'message.d')
+        self.fix_message_file(region)
 
         # Set song names, descriptions, and genres
         for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
@@ -133,42 +134,49 @@ class TextClass:
         except Exception as e:
             ShowError("Could not encode text file", str(e))
 
-def FixMessageFile(textlines):
-    nameIndex = romLanguageNumber[regionSelected] + (4 + max(regionSelected - 1, 0)) * (regionSelected > 1)
-    for num in range(len(textlines)):
-        if textlines[num] == b'  b200 @015f /\r\n':
-            textlines[num] = b'  b200 @015f [/,4b] = ' + \
-                             ["Default", "Par défaut", "Predeterm.", "Standard", "Normale", "オリジナル", "오리지널"][
-                                 nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 1] = b'  b201 @0160 [/,4b] = ' + ["Rock", "Rock", "Rock", "Rock", "Rock", "ロック", "록"][
-                nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 2] = b'  b202 @0161 [/,4b] = ' + \
-                                 ["March", "Marche", "Marcha", "Marsch", "Marcia", "マーチ", "행진곡"][nameIndex].encode(
-                                     "utf-8") + b'\r\n'
-            textlines[num + 3] = b'  b203 @0162 [/,4b] = ' + ["Jazz", "Jazz", "Jazz", "Jazz", "Jazz", "ジャズ", "재즈"][
-                nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 4] = b'  b204 @0163 [/,4b] = ' + \
-                                 ["Latin", "Latino", "Latino", "Latin", "Latino", "ラテン", "라틴 음악"][nameIndex].encode(
-                                     "utf-8") + b'\r\n'
-            textlines[num + 5] = b'  b205 @0164 [/,4b] = ' + \
-                                 ["Reggae", "Reggae", "Reggae", "Reggae", "Reggae", "レゲエ", "레게"][nameIndex].encode(
-                                     "utf-8") + b'\r\n'
-            textlines[num + 6] = b'  b206 @0165 [/,4b] = ' + \
-                                 ["Hawaiian", "Hawaïen", "Hawaiano", "Hawaii", "Hawaiano", "ハワイ風", "하와이 음악"][
-                                     nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 7] = b'  b207 @0166 [/,4b] = ' + \
-                                 ["Electronic", "Électronique", "Electrónico", "Elektronik", "Elettronico",
-                                  "ダウンビート", "전자 음악"][nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 8] = b'  b208 @0167 [/,4b] = ' + \
-                                 ["Classical", "Classique", "Clásico", "Klassisch", "Classico", "室内楽", "실내악"][
-                                     nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 9] = b'  b209 @0168 [/,4b] = ' + \
-                                 ["Tango", "Tango", "Tango", "Tango", "Tango", "タンゴ", "탱고"][nameIndex].encode(
-                                     "utf-8") + b'\r\n'
-            textlines[num + 10] = b'  b20a @0169 [/,4b] = ' + ["Pop", "Pop", "Pop", "Pop", "Pop", "ポップス", "팝"][
-                nameIndex].encode("utf-8") + b'\r\n'
-            textlines[num + 11] = b'  b20b @016a [/,4b] = ' + \
-                                  ["Japanese", "Japonais", "Japonés", "Japanisch", "Giapponese", "和風", "일본 음악"][
-                                      nameIndex].encode("utf-8") + b'\r\n'
-            break
-    return textlines
+    def fix_message_file(self, region: int):
+        for num in range(len(self.textlines)):
+            if self.textlines[num] == b'  b200 @015f /\r\n':
+                self.textlines[num] = b'  b200 @015f [/,4b] = ' + StyleNames.default[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 1] = b'  b201 @0160 [/,4b] = ' + StyleNames.rock[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 2] = b'  b202 @0161 [/,4b] = ' + StyleNames.march[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 3] = b'  b203 @0162 [/,4b] = ' + StyleNames.jazz[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 4] = b'  b204 @0163 [/,4b] = ' + StyleNames.latin[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 5] = b'  b205 @0164 [/,4b] = ' + StyleNames.reggae[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 6] = b'  b206 @0165 [/,4b] = ' + StyleNames.hawaiian[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 7] = b'  b207 @0166 [/,4b] = ' + StyleNames.electronic[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 8] = b'  b208 @0167 [/,4b] = ' + StyleNames.classical[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 9] = b'  b209 @0168 [/,4b] = ' + StyleNames.tango[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 10] = b'  b20a @0169 [/,4b] = ' + StyleNames.pop[region].encode(
+                    "utf-8") + b'\r\n'
+                self.textlines[num + 11] = b'  b20b @016a [/,4b] = ' + StyleNames.japanese[region].encode(
+                    "utf-8") + b'\r\n'
+                break
+
+
+class StyleNames:
+    default = ["Default", "Par défaut", "Predeterm.", "Standard", "Normale", "オリジナル", "오리지널"]
+    rock = ["Rock", "Rock", "Rock", "Rock", "Rock", "ロック", "록"]
+    march = ["March", "Marche", "Marcha", "Marsch", "Marcia", "マーチ", "행진곡"]
+    jazz = ["Jazz", "Jazz", "Jazz", "Jazz", "Jazz", "ジャズ", "재즈"]
+    latin = ["Latin", "Latino", "Latino", "Latin", "Latino", "ラテン", "라틴 음악"]
+    reggae = ["Reggae", "Reggae", "Reggae", "Reggae", "Reggae", "レゲエ", "레게"]
+    hawaiian = ["Hawaiian", "Hawaïen", "Hawaiano", "Hawaii", "Hawaiano", "ハワイ風", "하와이 음악"]
+    electronic = ["Electronic", "Électronique", "Electrónico", "Elektronik", "Elettronico", "ダウンビート", "전자 음악"]
+    classical = ["Classical", "Classique", "Clásico", "Klassisch", "Classico", "室内楽", "실내악"]
+    tango = ["Tango", "Tango", "Tango", "Tango", "Tango", "タンゴ", "탱고"]
+    pop = ["Pop", "Pop", "Pop", "Pop", "Pop", "ポップス", "팝"]
+    japanese = ["Japanese", "Japonais", "Japonés", "Japanisch", "Giapponese", "和風", "일본 음악"]
+
+
+
