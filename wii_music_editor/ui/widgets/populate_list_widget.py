@@ -13,7 +13,7 @@ from wii_music_editor.ui.widgets.translate import tr
 def populate_song_list(widget: QListWidget, types: list[SongType] or None = None, only_allow: int = -1):
     widget.clear()
     for i, song in enumerate(song_list):
-        if types is None or song.SongType in types:
+        if types is None or song.song_type in types:
             item = QListWidgetItem()
             text = song.name
             if ((len(rom_folder.text.songs) > i) and (
@@ -65,8 +65,8 @@ def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu
 
     for i, inst in enumerate(instruments):
         item = QListWidgetItem()
-        item.setText(inst.Name)
-        if menu and not inst.InMenu:
+        item.setText(inst.name)
+        if menu and not inst.in_menu:
             if preferences.unsafe_mode:
                 item.setForeground(QColor("#cf1800"))
             else:
@@ -76,7 +76,7 @@ def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu
         widget.addItem(item)
 
     item = QListWidgetItem()
-    item.setText(instrumentList[-1].Name)
+    item.setText(instrumentList[-1].name)
     if menu:
         if preferences.unsafe_mode:
             item.setForeground(QColor("#cf1800"))

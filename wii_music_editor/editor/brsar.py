@@ -104,7 +104,7 @@ class Brsar(__BrsarSection):
         self.infoSection = InfoSection(self, self.infoSectionOffset)
         self.fileSection = FileSection(self, self.fileSectionOffset)
 
-    def replace_song(self, song: bytes, group_index: int, item_index: int):
+    def replace_song(self, song: bytearray, group_index: int, item_index: int):
         """
         This function replaces a song in the brsar file.
         :param song: The bytes of the new song.
@@ -134,6 +134,18 @@ class Brsar(__BrsarSection):
 
         # Update Section Size
         self.increment_value('fileLength', incrementAmount)
+
+    def get_song(self, group_index: int, item_index: int) -> bytearray:
+        """
+        This function returns the bytes of a song in the brsar file.
+        :param group_index: The index of the group inside the group table.
+        :param item_index: The index of the song inside the item table.
+        :return: The bytes of the song.
+        """
+        songGroup = self.infoSection.groupDataTable.entries[group_index]
+        itemGroup = songGroup.itemTable.entries[item_index]
+        rseqOffset = songGroup.rseqOffset + itemGroup.rseqOffset
+        return self.data[rseqOffset:rseqOffset+itemGroup.rseqSize]
 
     def save(self):
         with open(self.brsarPath, "wb") as file:

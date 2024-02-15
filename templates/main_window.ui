@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>861</width>
-    <height>600</height>
+    <width>869</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -876,19 +876,6 @@ padding-bottom: 6px;
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="MP_ReplaceSound_Button">
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Replace Sounds</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="MP_RemoveSong_Button">
                <property name="font">
                 <font>
@@ -906,32 +893,6 @@ padding-bottom: 6px;
            <item>
             <layout class="QHBoxLayout" name="MP_Advanced2">
              <item>
-              <widget class="QPushButton" name="MP_GeckocodeConvert_Button">
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Convert Geckocode to .gct</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="MP_MainDolPatch_Button">
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Patch Main.dol with Geckocode</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="MP_Riivolution_Button">
                <property name="font">
                 <font>
@@ -941,6 +902,25 @@ padding-bottom: 6px;
                </property>
                <property name="text">
                 <string>Create Riivolution Patch</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="MP_PackRom_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Continuum Medium</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Pack Rom Filesystem</string>
                </property>
               </widget>
              </item>
@@ -986,25 +966,6 @@ padding-bottom: 6px;
                </property>
                <property name="text">
                 <string>Revert Changes</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="MP_PackRom_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Continuum Medium</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Pack Rom Filesystem</string>
                </property>
               </widget>
              </item>
@@ -1568,7 +1529,7 @@ padding-bottom: 6px;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>70</height>
+                   <height>76</height>
                   </size>
                  </property>
                  <property name="maximumSize">
@@ -1617,36 +1578,45 @@ padding-bottom: 6px;
            </layout>
           </item>
           <item>
-           <widget class="QGroupBox" name="SE_SongToChangeBox">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Song to change</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QListWidget" name="SE_SongToChange">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="SE_Style">
+           <layout class="QVBoxLayout" name="verticalLayout_23">
+            <item>
+             <widget class="QGroupBox" name="SE_SongToChangeBox">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Song to change</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
                <item>
-                <widget class="QLabel" name="SE_StyleLabel">
-                 <property name="text">
-                  <string>Style:</string>
+                <widget class="QListWidget" name="SE_SongToChange">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QPushButton" name="SE_ResetButton">
+                 <property name="text">
+                  <string>Reset to Default</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="SE_StyleBox">
+              <property name="title">
+               <string>Style</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_22">
                <item>
                 <widget class="QLabel" name="SE_StyleText">
                  <property name="sizePolicy">
@@ -1674,28 +1644,28 @@ padding-bottom: 6px;
                  </property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="SE_StyleButtons">
                <item>
-                <widget class="QPushButton" name="SE_OpenStyleEditor">
-                 <property name="text">
-                  <string>Edit in Style Editor</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="SE_OpenDefaultStyleEditor">
-                 <property name="text">
-                  <string>Change Default Style</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="SE_StyleButtons">
+                 <item>
+                  <widget class="QPushButton" name="SE_OpenStyleEditor">
+                   <property name="text">
+                    <string>Edit in Style Editor</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="SE_OpenDefaultStyleEditor">
+                   <property name="text">
+                    <string>Change Default Style</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
-             </item>
-            </layout>
-           </widget>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -2616,7 +2586,7 @@ padding-bottom: 6px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>861</width>
+     <width>869</width>
      <height>22</height>
     </rect>
    </property>

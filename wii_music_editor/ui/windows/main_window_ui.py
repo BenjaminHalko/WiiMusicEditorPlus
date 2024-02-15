@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(861, 600)
+        MainWindow.resize(869, 656)
         MainWindow.setContextMenuPolicy(Qt.NoContextMenu)
         MainWindow.setWindowTitle(u"Wii Music Editor Plus")
         MainWindow.setStyleSheet(u"QToolTip\n"
@@ -710,12 +710,6 @@ class Ui_MainWindow(object):
 
         self.MP_Advanced1.addWidget(self.MP_DefaultStyle_Button)
 
-        self.MP_ReplaceSound_Button = QPushButton(self.MP_Advanced)
-        self.MP_ReplaceSound_Button.setObjectName(u"MP_ReplaceSound_Button")
-        self.MP_ReplaceSound_Button.setFont(font3)
-
-        self.MP_Advanced1.addWidget(self.MP_ReplaceSound_Button)
-
         self.MP_RemoveSong_Button = QPushButton(self.MP_Advanced)
         self.MP_RemoveSong_Button.setObjectName(u"MP_RemoveSong_Button")
         self.MP_RemoveSong_Button.setFont(font3)
@@ -727,23 +721,18 @@ class Ui_MainWindow(object):
 
         self.MP_Advanced2 = QHBoxLayout()
         self.MP_Advanced2.setObjectName(u"MP_Advanced2")
-        self.MP_GeckocodeConvert_Button = QPushButton(self.MP_Advanced)
-        self.MP_GeckocodeConvert_Button.setObjectName(u"MP_GeckocodeConvert_Button")
-        self.MP_GeckocodeConvert_Button.setFont(font3)
-
-        self.MP_Advanced2.addWidget(self.MP_GeckocodeConvert_Button)
-
-        self.MP_MainDolPatch_Button = QPushButton(self.MP_Advanced)
-        self.MP_MainDolPatch_Button.setObjectName(u"MP_MainDolPatch_Button")
-        self.MP_MainDolPatch_Button.setFont(font3)
-
-        self.MP_Advanced2.addWidget(self.MP_MainDolPatch_Button)
-
         self.MP_Riivolution_Button = QPushButton(self.MP_Advanced)
         self.MP_Riivolution_Button.setObjectName(u"MP_Riivolution_Button")
         self.MP_Riivolution_Button.setFont(font3)
 
         self.MP_Advanced2.addWidget(self.MP_Riivolution_Button)
+
+        self.MP_PackRom_Button = QPushButton(self.MP_Advanced)
+        self.MP_PackRom_Button.setObjectName(u"MP_PackRom_Button")
+        self.MP_PackRom_Button.setMinimumSize(QSize(0, 36))
+        self.MP_PackRom_Button.setFont(font3)
+
+        self.MP_Advanced2.addWidget(self.MP_PackRom_Button)
 
 
         self.verticalLayout_11.addLayout(self.MP_Advanced2)
@@ -767,13 +756,6 @@ class Ui_MainWindow(object):
         self.MP_RevertChanges_Button.setFont(font3)
 
         self.MP_RomEditing1.addWidget(self.MP_RevertChanges_Button)
-
-        self.MP_PackRom_Button = QPushButton(self.MP_RomEditing)
-        self.MP_PackRom_Button.setObjectName(u"MP_PackRom_Button")
-        self.MP_PackRom_Button.setMinimumSize(QSize(0, 36))
-        self.MP_PackRom_Button.setFont(font3)
-
-        self.MP_RomEditing1.addWidget(self.MP_PackRom_Button)
 
 
         self.verticalLayout_18.addLayout(self.MP_RomEditing1)
@@ -1136,7 +1118,7 @@ class Ui_MainWindow(object):
 
         self.SE_ChangeSongText_Desc_Input = QTextEdit(self.SE_ChangeSongText)
         self.SE_ChangeSongText_Desc_Input.setObjectName(u"SE_ChangeSongText_Desc_Input")
-        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QSize(0, 70))
+        self.SE_ChangeSongText_Desc_Input.setMinimumSize(QSize(0, 76))
         self.SE_ChangeSongText_Desc_Input.setMaximumSize(QSize(16777215, 71))
 
         self.verticalLayout_5.addWidget(self.SE_ChangeSongText_Desc_Input)
@@ -1161,6 +1143,8 @@ class Ui_MainWindow(object):
 
         self.SE_MainLayout.addLayout(self.SE_MidiAndText)
 
+        self.verticalLayout_23 = QVBoxLayout()
+        self.verticalLayout_23.setObjectName(u"verticalLayout_23")
         self.SE_SongToChangeBox = QGroupBox(self.SongEditor)
         self.SE_SongToChangeBox.setObjectName(u"SE_SongToChangeBox")
         self.SE_SongToChangeBox.setMinimumSize(QSize(0, 0))
@@ -1176,14 +1160,19 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.SE_SongToChange)
 
-        self.SE_Style = QHBoxLayout()
-        self.SE_Style.setObjectName(u"SE_Style")
-        self.SE_StyleLabel = QLabel(self.SE_SongToChangeBox)
-        self.SE_StyleLabel.setObjectName(u"SE_StyleLabel")
+        self.SE_ResetButton = QPushButton(self.SE_SongToChangeBox)
+        self.SE_ResetButton.setObjectName(u"SE_ResetButton")
 
-        self.SE_Style.addWidget(self.SE_StyleLabel)
+        self.verticalLayout_3.addWidget(self.SE_ResetButton)
 
-        self.SE_StyleText = QLabel(self.SE_SongToChangeBox)
+
+        self.verticalLayout_23.addWidget(self.SE_SongToChangeBox)
+
+        self.SE_StyleBox = QGroupBox(self.SongEditor)
+        self.SE_StyleBox.setObjectName(u"SE_StyleBox")
+        self.verticalLayout_22 = QVBoxLayout(self.SE_StyleBox)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.SE_StyleText = QLabel(self.SE_StyleBox)
         self.SE_StyleText.setObjectName(u"SE_StyleText")
         sizePolicy1.setHeightForWidth(self.SE_StyleText.sizePolicy().hasHeightForWidth())
         self.SE_StyleText.setSizePolicy(sizePolicy1)
@@ -1198,28 +1187,28 @@ class Ui_MainWindow(object):
 "padding-bottom: 6px;\n"
 "}")
 
-        self.SE_Style.addWidget(self.SE_StyleText)
-
-
-        self.verticalLayout_3.addLayout(self.SE_Style)
+        self.verticalLayout_22.addWidget(self.SE_StyleText)
 
         self.SE_StyleButtons = QHBoxLayout()
         self.SE_StyleButtons.setObjectName(u"SE_StyleButtons")
-        self.SE_OpenStyleEditor = QPushButton(self.SE_SongToChangeBox)
+        self.SE_OpenStyleEditor = QPushButton(self.SE_StyleBox)
         self.SE_OpenStyleEditor.setObjectName(u"SE_OpenStyleEditor")
 
         self.SE_StyleButtons.addWidget(self.SE_OpenStyleEditor)
 
-        self.SE_OpenDefaultStyleEditor = QPushButton(self.SE_SongToChangeBox)
+        self.SE_OpenDefaultStyleEditor = QPushButton(self.SE_StyleBox)
         self.SE_OpenDefaultStyleEditor.setObjectName(u"SE_OpenDefaultStyleEditor")
 
         self.SE_StyleButtons.addWidget(self.SE_OpenDefaultStyleEditor)
 
 
-        self.verticalLayout_3.addLayout(self.SE_StyleButtons)
+        self.verticalLayout_22.addLayout(self.SE_StyleButtons)
 
 
-        self.SE_MainLayout.addWidget(self.SE_SongToChangeBox)
+        self.verticalLayout_23.addWidget(self.SE_StyleBox)
+
+
+        self.SE_MainLayout.addLayout(self.verticalLayout_23)
 
 
         self.verticalLayout_2.addLayout(self.SE_MainLayout)
@@ -1813,7 +1802,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 861, 22))
+        self.menubar.setGeometry(QRect(0, 0, 869, 22))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.MB_Options = QMenu(self.menubar)
@@ -1884,14 +1873,11 @@ class Ui_MainWindow(object):
         self.MP_Advanced.setTitle(QCoreApplication.translate("MainWindow", u"Advanced Features", None))
         self.MP_EditText_Button.setText(QCoreApplication.translate("MainWindow", u"Change All Text", None))
         self.MP_DefaultStyle_Button.setText(QCoreApplication.translate("MainWindow", u"Change Default Styles", None))
-        self.MP_ReplaceSound_Button.setText(QCoreApplication.translate("MainWindow", u"Replace Sounds", None))
         self.MP_RemoveSong_Button.setText(QCoreApplication.translate("MainWindow", u"Remove Song", None))
-        self.MP_GeckocodeConvert_Button.setText(QCoreApplication.translate("MainWindow", u"Convert Geckocode to .gct", None))
-        self.MP_MainDolPatch_Button.setText(QCoreApplication.translate("MainWindow", u"Patch Main.dol with Geckocode", None))
         self.MP_Riivolution_Button.setText(QCoreApplication.translate("MainWindow", u"Create Riivolution Patch", None))
+        self.MP_PackRom_Button.setText(QCoreApplication.translate("MainWindow", u"Pack Rom Filesystem", None))
         self.MP_RomEditing.setTitle(QCoreApplication.translate("MainWindow", u"Rom Editing", None))
         self.MP_RevertChanges_Button.setText(QCoreApplication.translate("MainWindow", u"Revert Changes", None))
-        self.MP_PackRom_Button.setText(QCoreApplication.translate("MainWindow", u"Pack Rom Filesystem", None))
         self.MP_ImportFiles_Button.setText(QCoreApplication.translate("MainWindow", u"Import Files", None))
         self.MP_ExportFiles_Button.setText(QCoreApplication.translate("MainWindow", u"Export Files", None))
         self.MP_ImportChanges_Button.setText(QCoreApplication.translate("MainWindow", u"Import Changes", None))
@@ -1916,7 +1902,8 @@ class Ui_MainWindow(object):
         self.SE_ChangeSongText_Desc_Label.setText(QCoreApplication.translate("MainWindow", u"Description:", None))
         self.SE_Patch.setText(QCoreApplication.translate("MainWindow", u"Patch!", None))
         self.SE_SongToChangeBox.setTitle(QCoreApplication.translate("MainWindow", u"Song to change", None))
-        self.SE_StyleLabel.setText(QCoreApplication.translate("MainWindow", u"Style:", None))
+        self.SE_ResetButton.setText(QCoreApplication.translate("MainWindow", u"Reset to Default", None))
+        self.SE_StyleBox.setTitle(QCoreApplication.translate("MainWindow", u"Style", None))
         self.SE_StyleText.setText("")
         self.SE_OpenStyleEditor.setText(QCoreApplication.translate("MainWindow", u"Edit in Style Editor", None))
         self.SE_OpenDefaultStyleEditor.setText(QCoreApplication.translate("MainWindow", u"Change Default Style", None))

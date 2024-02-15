@@ -16,7 +16,7 @@ def give_permission(file: str):
 
 def run_shell(command: list[str] or str):
     try:
-        if type(command) is str:
+        if type(command) is not str:
             give_permission(command[0])
         if currentSystem == SystemType.Windows:
             subprocess.run(command)

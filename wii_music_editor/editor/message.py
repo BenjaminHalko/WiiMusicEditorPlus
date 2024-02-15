@@ -18,7 +18,9 @@ class TextClass:
     __maestro_order = [0, 4, 2, 3, 1]
     __hand_bell_order = [0, 2, 3, 1, 4]
     __style_order = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
-    __filename: Path
+    __filepath: Path
+    __filename: str
+    __folder: str
     __language: int
 
     songs: list[str]
@@ -27,8 +29,10 @@ class TextClass:
     styles: list[str]
     textlines: list[bytes]
 
-    def __init__(self, file: Path):
+    def __init__(self, file: Path, filename: str = "message.carc"):
         self.__filepath = file
+        self.__filename = filename
+        self.__folder = str(Path(filename).with_suffix(".d"))
         self.__language = preferences.language
 
         # Read the text file
@@ -41,9 +45,9 @@ class TextClass:
         self.genres = []
         self.styles = []
 
-        with open(self.__filepath / 'message.d' / 'new_music_message.txt', 'rb') as message:
+        with open(self.__filepath / self.__folder / 'new_music_message.txt', 'rb') as message:
             self.textlines = message.readlines()
-        rmtree(self.__filepath / 'message.d')
+        rmtree(self.__filepath / self.__folder)
         self.fix_message_file()
 
         # Set song names, descriptions, and genres
@@ -85,10 +89,11 @@ class TextClass:
 
     def change_name(self, item_index: int, new_text: list[str]):
         isSong = len(new_text) == 3
-        offsets = [self.__style_offset]
-        index = self.__style_order[item_index]
         if isSong:
             offsets, index = self.__get_song_offset(song_list[item_index])
+        else:
+            offsets = [self.__style_offset]
+            index = self.__style_order[item_index]
 
         for i in range(len(offsets)):
             offset = format(offsets[i]+index, 'x').lower()
@@ -106,37 +111,37 @@ class TextClass:
                     self.textlines[j] = bytes(f"{offset}{text.decode('utf-8')[10:22]}{text_to_add}\r\n", 'utf-8')
                     break
 
-        os.mkdir(self.__filepath/'message.d')
-        with open(self.__filepath/'message.d'/'new_music_message.txt', 'wb') as message:
-            message.writelines(self.textlines)
-
         self.encode()
 
     def decode(self):
         try:
-            if (self.__filepath / "message.d").is_dir():
-                rmtree(self.__filepath / "message.d")
-            run_shell([paths.include / 'wiimms' / 'wszst', 'extract', self.__filepath / 'message.carc'])
-            os.remove(self.__filepath/"message.d"/"wszst-setup.txt")
+            if (self.__filepath / self.__folder).is_dir():
+                rmtree(self.__filepath / self.__folder)
+            run_shell([paths.include / 'wiimms' / 'wszst', 'extract', self.__filepath / self.__filename])
+            os.remove(self.__filepath/self.__folder/"wszst-setup.txt")
             run_shell([paths.include/'wiimms'/'wbmgt', 'decode',
-                       self.__filepath/'message.d'/'new_music_message.bmg'])
-            os.remove(self.__filepath/'message.d'/'new_music_message.bmg')
+                       self.__filepath/self.__folder/'new_music_message.bmg'])
+            os.remove(self.__filepath/self.__folder/'new_music_message.bmg')
         except Exception as e:
             ShowError("Could not decode text file", str(e))
 
     def encode(self):
         try:
+            os.mkdir(self.__filepath / self.__folder)
+            with open(self.__filepath / self.__folder / 'new_music_message.txt', 'wb') as message:
+                message.writelines(self.textlines)
             run_shell([paths.include/'wiimms'/'wbmgt', 'encode',
-                       self.__filepath/'message.d'/'new_music_message.txt'])
-            os.remove(self.__filepath/"message.d"/"new_music_message.txt")
-            if not (self.__filepath/"message.carc.backup").exists():
-                copyfile(self.__filepath/"message.carc", self.__filepath/"message.carc.backup")
-            os.remove(self.__filepath/"message.carc")
-            run_shell([paths.include/'wiimms'/'wszst', 'create', self.__filepath/'message.d',
-                       '--dest', self.__filepath/'message.carc'])
-            rmtree(self.__filepath/'message.d')
+                       self.__filepath/self.__folder/'new_music_message.txt'])
+            os.remove(self.__filepath/self.__folder/"new_music_message.txt")
+            os.remove(self.__filepath/self.__filename)
+            run_shell([paths.include/'wiimms'/'wszst', 'create', self.__filepath/self.__folder,
+                       '--dest', self.__filepath/self.__filename])
+            rmtree(self.__filepath/self.__folder)
         except Exception as e:
             ShowError("Could not encode text file", str(e))
+
+    def to_text(self) -> str:
+        return ''.join([text.decode('utf-8') for text in self.textlines])
 
     def fix_message_file(self):
         for num in range(len(self.textlines)):

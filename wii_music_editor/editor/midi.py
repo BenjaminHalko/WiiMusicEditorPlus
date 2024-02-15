@@ -19,14 +19,17 @@ class Midi:
     tempo: int = 0
     time_signature: int = 4
 
-    def __init__(self, path: Path):
-        self.midi_path = path
-        self.suffix = self.midi_path.suffix
-        if self.suffix == '.mid':
-            self.suffix = '.midi'
-        with TemporaryDirectory() as directory:
-            copyfile(self.midi_path, directory + '/z' + self.suffix)
-            self.convert(directory)
+    def __init__(self, path: Path or None):
+        if path is not None:
+            self.midi_path = path
+            self.suffix = self.midi_path.suffix
+            if self.suffix == '.mid':
+                self.suffix = '.midi'
+            with TemporaryDirectory() as directory:
+                copyfile(self.midi_path, directory + '/z' + self.suffix)
+                self.convert(directory)
+        else:
+            self.data = bytearray()
 
     def convert(self, directory: str):
         if Path(directory + '/z.rseq').is_file():

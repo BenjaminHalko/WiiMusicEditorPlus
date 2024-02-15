@@ -9,9 +9,11 @@ from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.utils.preferences import preferences
 
 
-def create_backup(path: Path):
-    if not Path(f"{path}.backup").exists():
-        copyfile(path, f"{path}.backup")
+def create_backup(path: Path) -> Path:
+    backup_path = Path(f"{path}.backup")
+    if not backup_path.exists():
+        copyfile(path, backup_path)
+    return backup_path
 
 
 class RomFolder:
@@ -19,6 +21,8 @@ class RomFolder:
     mainDolPath: Path
     brsarPath: Path
     messagePath: Path
+    mainDolBackupPath: Path
+    brsarBackupPath: Path
 
     loaded = False
     mainDol: MainDol
@@ -49,9 +53,9 @@ class RomFolder:
         self.messagePath = self.folderPath / "files" / get_message_type(self.region, preferences.language) / "Message"
 
         # Create backups
-        create_backup(self.mainDolPath)
-        create_backup(self.brsarPath)
-        create_backup(self.messagePath/"message.carc")
+        self.mainDolBackupPath = create_backup(self.mainDolPath)
+        self.brsarBackupPath = create_backup(self.brsarPath)
+        create_backup(self.messagePath / "message.carc")
 
         # Load Styles
         self.mainDol = MainDol(self.mainDolPath)

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from wii_music_editor.data.songs import SongClass, SongType
 from wii_music_editor.data.styles import styleList, StyleInstruments
 
 
@@ -77,3 +78,16 @@ class MainDol:
         if replaced:
             for style in styleList:
                 self.set_style(style.style_id, style.style)
+
+
+def get_song_offset(song: SongClass) -> int:
+    offset = MainDolOffsets.songSegmentRegularOffset
+    if song.song_type == SongType.Maestro:
+        offset = MainDolOffsets.songSegmentMaestroOffset
+    elif song.song_type == SongType.Hand_Bell:
+        offset = MainDolOffsets.songSegmentHandBellOffset
+    elif song.song_type == SongType.Menu:
+        offset = MainDolOffsets.songSegmentMenuOffset
+    offset += song.mem_order * MainDolOffsets.songSegmentSize
+
+    return offset

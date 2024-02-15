@@ -1,3 +1,5 @@
+import os
+
 from PySide6.QtCore import QThread, Signal
 
 from wii_music_editor.editor.rom_folder import rom_folder
@@ -9,9 +11,12 @@ class ExternalEditor(QThread):
     done = Signal()
 
     def run(self):
-        rom_folder.text.decode()
-        give_permission(f'{rom_folder.messagePath}/message.d/new_music_message.txt')
-        run_shell(f'{choose_from_os(["notepad", "open -e", "gedit"])} "${rom_folder.messagePath}/message.d/new_music_message.txt"')
-        rom_folder.text.read()
-        rom_folder.encode()
+        os.mkdir(rom_folder.messagePath/'message.d')
+        path = rom_folder.messagePath/'message.d'/'new_music_message.txt'
+        with open(path, 'wb') as file:
+            file.writelines(rom_folder.text.textlines)
+        give_permission(path)
+        print(path)
+        text_editor = choose_from_os([["notepad"], ["open", "-e"], ["gedit"]])
+        run_shell(text_editor + [path])
         self.done.emit()

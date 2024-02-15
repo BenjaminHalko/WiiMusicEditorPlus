@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import QFileDialog
 
-from wii_music_editor.editor.rom_folder import RomFolder
+from wii_music_editor.editor.rom_folder import RomFolder, rom_folder
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
@@ -34,7 +34,7 @@ def select_dolphin_path():
     return False
 
 
-def select_rom_path(rom_folder: RomFolder, dialog_filter: str):
+def select_rom_path(dialog_filter: str):
     try:
         file = QFileDialog()
         if dialog_filter == "":
@@ -42,7 +42,7 @@ def select_rom_path(rom_folder: RomFolder, dialog_filter: str):
         else:
             file.setFileMode(QFileDialog.FileMode.ExistingFile)
         file.setNameFilter(dialog_filter)
-        file.setDirectory(str(paths.lastLoadedPath))
+        file.setDirectory(str(paths.lastLoaded))
         if file.exec():
             path = file.selectedFiles()[0]
             if os.path.isdir(path):
@@ -56,7 +56,8 @@ def select_rom_path(rom_folder: RomFolder, dialog_filter: str):
                     return False
             save_file_directory(file.selectedFiles()[0])
             save_setting("Paths", "CurrentLoadedFile", path)
-            if rom_folder.Load(path):
+            rom_folder.load(path)
+            if rom_folder.loaded:
                 return True
     except Exception as e:
         print(e)
@@ -71,7 +72,7 @@ def get_file_path(dialog_filter: str) -> str:
         file.setNameFilter(dialog_filter)
         file.setDirectory(str(paths.lastLoadedSubDir))
         if file.exec():
-            paths.lastLoadedSubDir = Path(file.selectedFiles()[0])
+            paths.lastLoadedSubDir = Path(file.selectedFiles()[0]).parent
             save_setting("Paths", "LastLoadedSubDir", str(paths.lastLoadedSubDir))
             return file.selectedFiles()[0]
     except Exception as e:
