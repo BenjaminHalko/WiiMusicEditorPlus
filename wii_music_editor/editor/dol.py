@@ -1,21 +1,20 @@
 from pathlib import Path
 
-from wii_music_editor.data.songs import SongClass, SongType
-from wii_music_editor.data.styles import styleList, StyleInstruments
-
-
-class MainDolOffsets:
-    songSegmentRegularOffset = 0x59C520
-    songSegmentMaestroOffset = 0x5A00EC
-    songSegmentHandBellOffset = 0x5A0AEC
-    songSegmentMenuOffset = 0x596DAC
-    songSegmentSize = 0xBC
-    songSegmentTimeSignature = 0x20
-    songSegmentLength = 0x24
-    songSegmentTempo = 0x28
+from wii_music_editor.data.songs import SongClass, SongType, song_list
+from wii_music_editor.data.styles import style_list, StyleInstruments
 
 
 class MainDol:
+    __songSegmentRegularOffset = 0x59C520
+    __songSegmentMaestroOffset = 0x5A00EC
+    __songSegmentHandBellOffset = 0x5A0AEC
+    __songSegmentMenuOffset = 0x596DAC
+    __songSegmentSize = 0xBC
+    songSegmentTimeSignature = 0x20
+    songSegmentLength = 0x24
+    songSegmentTempo = 0x28
+    songSegmentDefaultStyle = 0x48
+
     __styleSegmentOffset = 0x596758
     __styleSegmentSize = 0x24
     __styleSegmentMelody = 0x04
@@ -27,6 +26,8 @@ class MainDol:
 
     __styleCodeBegin = 0x36F9A4
     __styleCodeEnd = 0x3701CC
+    __defaultStyleCodeBegin = 0x3d4a68
+    __defaultStyleCodeEnd = 0x3d4bf0
 
     mainDolPath: Path
     data: bytearray
@@ -35,6 +36,7 @@ class MainDol:
         self.mainDolPath = path
         with open(self.mainDolPath, "rb") as file:
             self.data = bytearray(file.read())
+        self.__remove_style_execution()
 
     def read(self, offset: int, length: int = 4) -> int:
         return int.from_bytes(self.data[offset:offset + length], "big")
@@ -66,28 +68,38 @@ class MainDol:
             self.read(offset + self.__styleSegmentPerc2)
         )
 
-    def remove_style_execution(self):
+    def __remove_code(self, min_offset: int, max_offset: int) -> bool:
         replaced = False
-
-        # Removes the style execution code
-        for i in range(self.__styleCodeBegin, self.__styleCodeEnd, 4):
-            if self.data[i] != 0x38:
-                self.data[i:i + 4] = b'\x38\x00\x00\x00'
+        for i in range(min_offset, max_offset, 4):
+            if self.data[i] >= 0x90:
+                self.data[i:i + 4] = b'\x38\x11\x00\x00'
                 replaced = True
+        return replaced
 
-        if replaced:
-            for style in styleList:
+    def __remove_style_execution(self):
+        if self.__remove_code(self.__styleCodeBegin, self.__styleCodeEnd):
+            for style in style_list:
                 self.set_style(style.style_id, style.style)
+        if self.__remove_code(self.__defaultStyleCodeBegin, self.__defaultStyleCodeEnd):
+            for song in song_list:
+                if song.default_style != -1:
+                    self.write_song_info(song, song.default_style, self.songSegmentDefaultStyle)
 
+    def __get_song_offset(self, song: SongClass) -> int:
+        song_offset = self.__songSegmentRegularOffset
+        if song.song_type == SongType.Maestro:
+            song_offset = self.__songSegmentMaestroOffset
+        elif song.song_type == SongType.Hand_Bell:
+            song_offset = self.__songSegmentHandBellOffset
+        elif song.song_type == SongType.Menu:
+            song_offset = self.__songSegmentMenuOffset
+        song_offset += song.mem_order * self.__songSegmentSize
+        return song_offset
 
-def get_song_offset(song: SongClass) -> int:
-    offset = MainDolOffsets.songSegmentRegularOffset
-    if song.song_type == SongType.Maestro:
-        offset = MainDolOffsets.songSegmentMaestroOffset
-    elif song.song_type == SongType.Hand_Bell:
-        offset = MainDolOffsets.songSegmentHandBellOffset
-    elif song.song_type == SongType.Menu:
-        offset = MainDolOffsets.songSegmentMenuOffset
-    offset += song.mem_order * MainDolOffsets.songSegmentSize
+    def write_song_info(self, song: SongClass, data: int, offset: int, length: int = 4):
+        offset += self.__get_song_offset(song)
+        self.write(data, offset, length)
 
-    return offset
+    def read_song_info(self, song: SongClass, offset: int, length: int = 4) -> int:
+        offset += self.__get_song_offset(song)
+        return self.read(offset, length)

@@ -1,100 +1,54 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog
 
+from wii_music_editor.editor.reset import revert_all, revert_all_songs, revert_all_styles, revert_all_default_styles, \
+    revert_all_text
+from wii_music_editor.services.discord import DiscordUpdate, DiscordState
 from wii_music_editor.ui.windows.revert_changes_ui import Ui_Revert
 
 
-class RevertChangesWindow(QDialog ,Ui_Revert):
+class RevertChangesWindow(QDialog, Ui_Revert):
     def __init__(self):
         super().__init__(None)
-        self.setWindowFlag(Qt.WindowType.WindowContextHelpButtonHint,False)
+        self.setWindowFlag(Qt.WindowType.WindowContextHelpButtonHint, False)
         self.setupUi(self)
 
-        self.SelectButton.clicked.connect(lambda: self.SelectAll(True))
-        self.DeselectButton.clicked.connect(lambda: self.SelectAll(False))
-        self.PatchButton.clicked.connect(self.Revert)
+        self.SelectButton.clicked.connect(lambda: self.select_all(True))
+        self.DeselectButton.clicked.connect(lambda: self.select_all(False))
+        self.PatchButton.clicked.connect(self.revert)
+        self.Songs.clicked.connect(self.is_patchable)
+        self.Styles.clicked.connect(self.is_patchable)
+        self.DefaultStyles.clicked.connect(self.is_patchable)
+        self.Text.clicked.connect(self.is_patchable)
+        self.PatchButton.setEnabled(False)
 
+        DiscordUpdate(DiscordState.RevertingChanges)
         self.show()
         self.exec()
+        DiscordUpdate(DiscordState.ModdingWiiMusic)
 
-    def SelectAll(self ,select):
+    def is_patchable(self):
+        self.PatchButton.setEnabled(self.Songs.isChecked() or self.Styles.isChecked()
+                                    or self.DefaultStyles.isChecked() or self.Text.isChecked())
+
+    def select_all(self, select):
         self.Songs.setChecked(select)
         self.Styles.setChecked(select)
+        self.DefaultStyles.setChecked(select)
         self.Text.setChecked(select)
-        self.MainDol.setChecked(select)
+        self.PatchButton.setEnabled(select)
 
-    def Revert(self):
-        sections = []
-        if(path.isfile(editor.file.path +"/Changes.ini") and load_setting("Settings" ,"RemoveChangesFromChangesINI"
-                                                                           ,True)):
-            ini = ConfigParser()
-            ini.read(editor.file.pat h +"/Changes.ini")
-            sections = ini.sections()
-
-        i f(self.Songs.isChecked()):
-            try:
-                i f(path.isfile(GetGeckoPath())):
-                    codes = open(GetGeckoPath())
-                    textlines = codes.readlines()
-                    codes.close()
-                    linenum = 0
-                    while linenum < len(textlines):
-                        i f('Song' in textlines[linenum]):
-                            textlines.pop(linenum)
-                            whil e(len(textlines) > linenum) and \
-                                    (textlines[linenum][0].isnumeric() or textlines[linenum][0].isalpha()):
-                                textlines.pop(linenum)
-                        else:
-                            linenum = linenum + 1
-                    codes = open(GetGeckoPath(), 'w')
-                    codes.writelines(textlines)
-                    codes.close()
-                copyfile(GetBrsarPath() + ".backup", GetBrsarPath())
-                for section in sections:
-                    if (RecordType.Song in section): ini.remove_section(section)
-            except Exception as e:
-                ShowError(self.tr("Could not revert songs"), str(e), self)
-        if (self.Text.isChecked()):
-            try:
-                copyfile(GetMessagePath() + "/message.carc.backup", GetMessagePath() + "/message.carc")
-                if (path.isfile(GetMessagePath() + '/message.d/new_music_message.txt')): remove(
-                    GetMessagePath() + '/message.d/new_music_message.txt')
-                GetSongNames()
-                for section in sections:
-                    if (RecordType.TextSong in section or RecordType.TextStyle in section): ini.remove_section(section)
-            except Exception as e:
-                ShowError(self.tr("Could not revert message file"), str(e), self)
-        if (self.Styles.isChecked()):
-            try:
-                codes = open(GetGeckoPath())
-                textlines = codes.readlines()
-                codes.close()
-                linenum = 0
-                while linenum < len(textlines):
-                    if ('Style' in textlines[linenum]):
-                        textlines.pop(linenum)
-                        while (len(textlines) > linenum) and (
-                                textlines[linenum][0].isnumeric() or textlines[linenum][0].isalpha()):
-                            textlines.pop(linenum)
-                    else:
-                        linenum = linenum + 1
-                codes = open(GetGeckoPath(), 'w')
-                codes.writelines(textlines)
-                codes.close()
-                for section in sections:
-                    if (RecordType.Style in section or RecordType.DefaultStyle in section): ini.remove_section(section)
-            except Exception as e:
-                ShowError(self.tr("Could not revert styles"), str(e), self)
-        if (self.MainDol.isChecked()):
-            try:
-                copyfile(GetMainDolPath() + ".backup", GetMainDolPath())
-                for section in sections:
-                    if (RecordType.RemoveSong in section or RecordType.MainDol in section): ini.remove_section(section)
-            except Exception as e:
-                ShowError(self.tr("Could not revert main.dol"), str(e), self)
-        if (path.isfile(editor.file.path + "/Changes.ini") and load_setting("Settings", "RemoveChangesFromChangesINI",
-                                                                           True)):
-            with open(editor.file.path + "/Changes.ini", 'w') as inifile:
-                ini.write(inifile)
-        self.close()
-        SuccessWindow(self.tr("Files Reverted!"))
+    def revert(self):
+        if (self.Songs.isChecked() and self.Styles.isChecked()
+                and self.DefaultStyles.isChecked() and self.Text.isChecked()):
+            revert_all()
+        else:
+            if self.Songs.isChecked():
+                revert_all_songs()
+            if self.Styles.isChecked():
+                revert_all_styles()
+            if self.DefaultStyles.isChecked():
+                revert_all_default_styles()
+            if self.Text.isChecked():
+                revert_all_text()
+        self.PatchButton.setEnabled(False)

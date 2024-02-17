@@ -2,9 +2,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QListWidget, QListWidgetItem
 
-from wii_music_editor.data.instruments import instrumentList
+from wii_music_editor.data.instruments import instrument_list
 from wii_music_editor.data.songs import song_list, SongType
-from wii_music_editor.data.styles import styleList
+from wii_music_editor.data.styles import style_list
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.ui.widgets.translate import tr
@@ -37,7 +37,7 @@ def populate_song_list(widget: QListWidget, types: list[SongType] or None = None
 
 def populate_style_list(widget: QListWidget, only_allow: int = -1):
     widget.clear()
-    for i, style in enumerate(styleList):
+    for i, style in enumerate(style_list):
         item = QListWidgetItem()
         extraText = ""
         if rom_folder.styles[i] != style.style:
@@ -56,12 +56,12 @@ def populate_style_list(widget: QListWidget, only_allow: int = -1):
 def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu: bool = False):
     widget.clear()
     if not percussion:
-        instruments = instrumentList[:40]
+        instruments = instrument_list[:40]
     else:
-        instruments = instrumentList[40:-1]
+        instruments = instrument_list[40:-1]
     normalRange = instruments
     if preferences.unsafe_mode:
-        instruments = instrumentList[:-1]
+        instruments = instrument_list[:-1]
 
     for i, inst in enumerate(instruments):
         item = QListWidgetItem()
@@ -76,7 +76,7 @@ def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu
         widget.addItem(item)
 
     item = QListWidgetItem()
-    item.setText(instrumentList[-1].name)
+    item.setText(instrument_list[-1].name)
     if menu:
         if preferences.unsafe_mode:
             item.setForeground(QColor("#cf1800"))

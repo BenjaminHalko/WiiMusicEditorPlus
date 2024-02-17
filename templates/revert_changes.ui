@@ -549,9 +549,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="MainDol">
+      <widget class="QCheckBox" name="DefaultStyles">
        <property name="text">
-        <string>Main.dol</string>
+        <string>Default Styles</string>
        </property>
       </widget>
      </item>

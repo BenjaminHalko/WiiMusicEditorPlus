@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from wii_music_editor.data.styles import styleList
+from wii_music_editor.data.styles import style_list
 from wii_music_editor.editor.dol import MainDolOffsets
 
 with open("wii_music_editor/editor/styles.txt", "r") as file:
@@ -26,7 +26,7 @@ types = [
 
 
 if __name__ == "__main__":
-    for style in styleList:
+    for style in style_list:
         offset = 0x8059A658 + style.style_id * MainDolOffsets.styleSegmentSize
 
         print(f"Style(StyleType.{types[style.style_type.value]}, '{style.name}', {hex(style.style_id)},\n    {getOffset(offset+MainDolOffsets.styleSegmentMelody)}, {getOffset(offset+MainDolOffsets.styleSegmentHarmony)}, {getOffset(offset+MainDolOffsets.styleSegmentChord)}, {getOffset(offset+MainDolOffsets.styleSegmentBass)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc1)}, {getOffset(offset+MainDolOffsets.styleSegmentPerc2)}),")

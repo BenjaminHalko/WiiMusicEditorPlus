@@ -86,10 +86,12 @@ class StyleInstruments:
 
 
 class Style:
+    __total_styles = 0
     style_type: StyleType
     name: str
     style_id: int
     style: StyleInstruments
+    list_order: int
 
     def __init__(self, style_type: StyleType, name, style_id: int,
                  melody: int, harmony: int, chord: int, bass: int, perc1: int, perc2: int):
@@ -97,16 +99,19 @@ class Style:
         self.name = name
         self.style_id = style_id
         self.style = StyleInstruments(melody, harmony, chord, bass, perc1, perc2)
+        self.list_order = Style.__total_styles
+        Style.__total_styles += 1
 
 
-def get_style_by_id(style_id: int) -> Style or None:
-    for style in styleList:
+def get_style_by_id(style_id: int) -> Style:
+    for style in style_list:
         if style.style_id == style_id:
             return style
-    return None
+    print(f"Style {style_id} not found")
+    return style_list[0]
 
 
-styleList = [
+style_list = [
     Style(StyleType.Global, 'Jazz', 0x0,
           0x1C, 0x02, 0x00, 0x10, 0x2A, 0x2D),
     Style(StyleType.Global, 'Rock', 0x1,

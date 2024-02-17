@@ -554,10 +554,10 @@ class Ui_Revert(object):
 
         self.Checkboxes2.addWidget(self.Text)
 
-        self.MainDol = QCheckBox(Revert)
-        self.MainDol.setObjectName(u"MainDol")
+        self.DefaultStyles = QCheckBox(Revert)
+        self.DefaultStyles.setObjectName(u"DefaultStyles")
 
-        self.Checkboxes2.addWidget(self.MainDol)
+        self.Checkboxes2.addWidget(self.DefaultStyles)
 
 
         self.verticalLayout.addLayout(self.Checkboxes2)
@@ -603,7 +603,7 @@ class Ui_Revert(object):
         self.Songs.setText(QCoreApplication.translate("Revert", u"Songs", None))
         self.Styles.setText(QCoreApplication.translate("Revert", u"Styles", None))
         self.Text.setText(QCoreApplication.translate("Revert", u"Text", None))
-        self.MainDol.setText(QCoreApplication.translate("Revert", u"Main.dol", None))
+        self.DefaultStyles.setText(QCoreApplication.translate("Revert", u"Default Styles", None))
         self.SelectButton.setText(QCoreApplication.translate("Revert", u"Select All", None))
         self.DeselectButton.setText(QCoreApplication.translate("Revert", u"Deselect All", None))
         self.PatchButton.setText(QCoreApplication.translate("Revert", u"Revert!", None))

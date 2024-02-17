@@ -2,7 +2,9 @@ from pathlib import Path
 from shutil import copyfile
 
 from wii_music_editor.data.region import region_messages, RegionType, get_message_type
-from wii_music_editor.data.styles import styleList, StyleInstruments
+from wii_music_editor.data.songs import song_list
+from wii_music_editor.data.styles import style_list, StyleInstruments
+from wii_music_editor.editor.brsar import Brsar
 from wii_music_editor.editor.dol import MainDol
 from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
@@ -21,13 +23,18 @@ class RomFolder:
     mainDolPath: Path
     brsarPath: Path
     messagePath: Path
-    mainDolBackupPath: Path
     brsarBackupPath: Path
+    mainDolBackupPath: Path
 
     loaded = False
+    brsar: Brsar
+    brsarBackup: Brsar
     mainDol: MainDol
-    styles: list[StyleInstruments] = [None for _ in styleList]
+    mainDolBackup: MainDol
+    styles: list[StyleInstruments] = [None for _ in style_list]
+    default_styles: list[int] = [0 for _ in song_list]
     text: TextClass
+    textBackup: TextClass
     region: int = RegionType.US
 
     def load(self, folder: str):
@@ -53,19 +60,34 @@ class RomFolder:
         self.messagePath = self.folderPath / "files" / get_message_type(self.region, preferences.language) / "Message"
 
         # Create backups
-        self.mainDolBackupPath = create_backup(self.mainDolPath)
         self.brsarBackupPath = create_backup(self.brsarPath)
+        self.mainDolBackupPath = create_backup(self.mainDolPath)
         create_backup(self.messagePath / "message.carc")
+
+        # Load Brsar
+        self.brsar = Brsar(self.brsarPath)
+        self.brsarBackup = Brsar(self.brsarBackupPath)
 
         # Load Styles
         self.mainDol = MainDol(self.mainDolPath)
-        self.mainDol.remove_style_execution()
-        for i, style in enumerate(styleList):
-            self.styles[i] = self.mainDol.get_style(style.style_id)
+        self.mainDolBackup = MainDol(self.mainDolBackupPath)
+        self.load_styles()
+        self.load_default_styles()
 
         # Load Text
         self.text = TextClass(self.messagePath)
+        self.textBackup = TextClass(self.messagePath, "message.carc.backup")
         self.loaded = True
+
+    def load_styles(self):
+        for i, style in enumerate(style_list):
+            self.styles[i] = self.mainDol.get_style(style.style_id)
+
+    def load_default_styles(self):
+        for i, song in enumerate(song_list):
+            if song.default_style != -1:
+                self.default_styles[i] = self.mainDol.read_song_info(
+                    song, self.mainDol.songSegmentDefaultStyle)
 
 
 rom_folder = RomFolder()

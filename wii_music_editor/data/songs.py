@@ -9,11 +9,20 @@ class SongType(Enum):
 
 
 class SongClass:
+    __totalSongs = 0
+    song_type: SongType
+    name: str
+    mem_order: int
+    default_style: int
+    list_order: int
+
     def __init__(self, song_type: SongType, name: str, mem_order: int, default_style: int = -1):
         self.song_type = song_type
         self.name = name
         self.mem_order = mem_order
         self.default_style = default_style
+        self.list_order = SongClass.__totalSongs
+        SongClass.__totalSongs += 1
 
 
 song_list = [
@@ -79,3 +88,11 @@ song_list = [
     SongClass(SongType.Hand_Bell, 'Sukiyaki (Handbell Harmony)', 0x04),
     SongClass(SongType.Menu, 'Menu Song', 0x00)
 ]
+
+
+def get_song_by_id(song_id: int) -> SongClass:
+    for song in song_list:
+        if song.mem_order == song_id:
+            return song
+    print(f"Song with ID {song_id} not found")
+    return song_list[0]

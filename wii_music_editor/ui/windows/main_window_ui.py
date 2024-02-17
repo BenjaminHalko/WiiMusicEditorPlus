@@ -719,26 +719,32 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_11.addLayout(self.MP_Advanced1)
 
-        self.MP_Advanced2 = QHBoxLayout()
-        self.MP_Advanced2.setObjectName(u"MP_Advanced2")
-        self.MP_Riivolution_Button = QPushButton(self.MP_Advanced)
+
+        self.verticalLayout_9.addWidget(self.MP_Advanced)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_9.addItem(self.verticalSpacer_3)
+
+        self.MP_Package = QGroupBox(self.MainPage)
+        self.MP_Package.setObjectName(u"MP_Package")
+        self.horizontalLayout_3 = QHBoxLayout(self.MP_Package)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.MP_Riivolution_Button = QPushButton(self.MP_Package)
         self.MP_Riivolution_Button.setObjectName(u"MP_Riivolution_Button")
         self.MP_Riivolution_Button.setFont(font3)
 
-        self.MP_Advanced2.addWidget(self.MP_Riivolution_Button)
+        self.horizontalLayout_3.addWidget(self.MP_Riivolution_Button)
 
-        self.MP_PackRom_Button = QPushButton(self.MP_Advanced)
+        self.MP_PackRom_Button = QPushButton(self.MP_Package)
         self.MP_PackRom_Button.setObjectName(u"MP_PackRom_Button")
         self.MP_PackRom_Button.setMinimumSize(QSize(0, 36))
         self.MP_PackRom_Button.setFont(font3)
 
-        self.MP_Advanced2.addWidget(self.MP_PackRom_Button)
+        self.horizontalLayout_3.addWidget(self.MP_PackRom_Button)
 
 
-        self.verticalLayout_11.addLayout(self.MP_Advanced2)
-
-
-        self.verticalLayout_9.addWidget(self.MP_Advanced)
+        self.verticalLayout_9.addWidget(self.MP_Package)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -1874,9 +1880,10 @@ class Ui_MainWindow(object):
         self.MP_EditText_Button.setText(QCoreApplication.translate("MainWindow", u"Change All Text", None))
         self.MP_DefaultStyle_Button.setText(QCoreApplication.translate("MainWindow", u"Change Default Styles", None))
         self.MP_RemoveSong_Button.setText(QCoreApplication.translate("MainWindow", u"Remove Song", None))
+        self.MP_Package.setTitle(QCoreApplication.translate("MainWindow", u"Package for Wii", None))
         self.MP_Riivolution_Button.setText(QCoreApplication.translate("MainWindow", u"Create Riivolution Patch", None))
         self.MP_PackRom_Button.setText(QCoreApplication.translate("MainWindow", u"Pack Rom Filesystem", None))
-        self.MP_RomEditing.setTitle(QCoreApplication.translate("MainWindow", u"Rom Editing", None))
+        self.MP_RomEditing.setTitle(QCoreApplication.translate("MainWindow", u"Reset, Import, and Export", None))
         self.MP_RevertChanges_Button.setText(QCoreApplication.translate("MainWindow", u"Revert Changes", None))
         self.MP_ImportFiles_Button.setText(QCoreApplication.translate("MainWindow", u"Import Files", None))
         self.MP_ExportFiles_Button.setText(QCoreApplication.translate("MainWindow", u"Export Files", None))

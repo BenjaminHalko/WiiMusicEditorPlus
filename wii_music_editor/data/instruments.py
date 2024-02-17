@@ -1,6 +1,3 @@
-from wii_music_editor.ui.widgets.translate import tr
-
-
 class InstrumentClass:
     def __init__(self, name, number, in_menu):
         self.name = name
@@ -8,7 +5,7 @@ class InstrumentClass:
         self.in_menu = in_menu
 
 
-instrumentList = [
+instrument_list = [
     InstrumentClass('Piano', 0, True),
     InstrumentClass('Marimba', 1, False),
     InstrumentClass('Vibraphone', 2, False),
