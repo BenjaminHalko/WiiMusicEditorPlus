@@ -1,11 +1,6 @@
 name: Build Wheels
 on:
   push:
-    paths:
-      - 'build_wheels.yaml'
-      - 'setup.py'
-      - 'pyproject.toml'
-      - 'src'
 
 jobs:
   build_wheels:
