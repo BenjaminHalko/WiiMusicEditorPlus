@@ -16,5 +16,5 @@ elif sys.platform == "darwin":
 
 setup(
     distclass=BinaryDistribution,
-    package_data={"wii_music_editor.include": ["include/all/**/*", f"include/{plat}/**/*"]},
+    package_data={"wii_music_editor": ["include/all/**/*", f"include/{plat}/**/*"]}
 )
