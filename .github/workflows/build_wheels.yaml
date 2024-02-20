@@ -1,6 +1,11 @@
 name: Build Wheels
 on:
   push:
+    paths:
+      - '/.github/workflows/build_wheels.yaml'
+      - 'setup.py'
+      - 'pyproject.toml'
+      - 'src/**'
 
 jobs:
   build_wheels:
