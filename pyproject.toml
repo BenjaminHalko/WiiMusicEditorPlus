@@ -1,27 +1,34 @@
-[tool.poetry]
+[project]
 name = "wii_music_editor"
 version = "2.0.0"
 description = "The Ultimate Wii Music modding tool"
-authors = ["Benjamin Halko"]
-license = "MIT"
+authors = [
+    { name = "Benjamin Halko" },
+]
+license = {file = "LICENSE"}
 readme = "README.md"
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    "mido",
+    "pretty-midi",
+    "psutil",
+    "pypresence",
+    "pyside6",
+    "requests"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11,<3.13"
-mido = "^1.3.2"
-pretty-midi = "^0.2.10"
-psutil = "^5.9.8"
-pypresence = "^4.3.0"
-requests = "^2.31.0"
-pyside6 = "^6.6.1"
+[project.scripts]
+wiimusiceditor = "app:main"
 
-[tool.poetry.group.dev.dependencies]
-pyinstaller = "^6.3.0"
-
-[tool.poetry.scripts]
-convert_ui = "scripts.convert_ui:convert"
-build = "scripts.build:build"
+[project.urls]
+homepage = "https://github.com/BenjaminHalko/WiiMusicEditorPlus"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+wii_music_editor = "src"
+
+[tool.cibuildwheel.windows]
+archs = "amd64"

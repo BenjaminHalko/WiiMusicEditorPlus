@@ -757,7 +757,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         <item>
          <widget class="QLabel" name="MP_LoadedFile_Label">
           <property name="text">
-           <string>Currently Loaded File:</string>
+           <string>Currently loaded folder:</string>
           </property>
          </widget>
         </item>
@@ -775,7 +775,7 @@ padding-bottom: 6px;
 }</string>
           </property>
           <property name="text">
-           <string>No File Loaded</string>
+           <string>No folder loaded</string>
           </property>
          </widget>
         </item>
@@ -844,7 +844,7 @@ padding-bottom: 6px;
         <item>
          <widget class="QGroupBox" name="MP_Advanced">
           <property name="title">
-           <string>Advanced Features</string>
+           <string>Advanced features</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>

@@ -1,7 +1,16 @@
+# Virtual Environment
+/.venv/
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyo
+
+# Build files
 /build/
 /dist/
-/.venv/
-/.idea/
+/wheelhouse/
+*.egg-info/
 *.spec
-*.pyo
+
+# PyCharm files
+/.idea/
