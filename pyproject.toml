@@ -31,7 +31,9 @@ build-backend = "setuptools.build_meta"
 wii_music_editor = "wii_music_editor"
 
 [tool.cibuildwheel]
+skip = ["*-musllinux*", "pp*", "*-win_amd64"]
 repair-wheel-command = ""
 
 [tool.cibuildwheel.linux]
-archs = ["aarch64"]
+manylinux-x86_64-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
