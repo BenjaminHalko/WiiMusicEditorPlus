@@ -1,8 +1,7 @@
 from PySide6.QtWidgets import QDialog, QApplication
 from PySide6.QtCore import Qt
 
-from data import region
-from wii_music_editor import rom_folder
+from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.ui.windows.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.load_files import select_rom_path, select_dolphin_path
 from wii_music_editor.utils.pathUtils import paths
@@ -58,8 +57,6 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         save_setting("Settings", "Language", self.LanguageBox.currentIndex())
         changeLanguage(self.app, self.LanguageBox.currentIndex())
         self.retranslateUi(self)
-        # TODO: Translate songs
-        # editor.RetranslateSongNames()
         self.RomLanguageChange()
 
     def RomLanguageChange(self):

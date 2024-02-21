@@ -1,11 +1,7 @@
 name: Build Wheels
 on:
-  push:
-    paths:
-      - '.github/workflows/build_wheels.yml'
-      - 'setup.py'
-      - 'pyproject.toml'
-      - 'src/**'
+  workflow_dispatch:
+
 
 jobs:
   make_sdist:
@@ -58,5 +54,3 @@ jobs:
           merge-multiple: true
 
       - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/

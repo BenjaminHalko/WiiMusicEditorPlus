@@ -5,6 +5,7 @@ import zipfile
 import webbrowser
 
 from PySide6.QtWidgets import QMainWindow
+from wii_music_editor.ui.update import UpdateWindow
 
 from wii_music_editor.data.instruments import instrument_list
 from wii_music_editor.data.songs import SongType, song_list
@@ -286,7 +287,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Menu Bar
 
     def MenuBar_CheckForUpdates(self):
-        UpdateWindow(self, False)
+        UpdateWindow(self)
 
 
     # Menu Bar Buttons

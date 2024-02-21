@@ -1,18 +1,21 @@
 [project]
 name = "wii_music_editor"
-version = "2.0.0-rc.1"
+version = "2.0.0dev.1"
 description = "The ultimate Wii Music modding tool"
 authors = [
     { name = "Benjamin Halko" },
 ]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
+    "importlib_metadata",
     "mido",
+    "packaging",
     "pretty-midi",
     "psutil",
     "pypresence",
+    "pypi_latest",
     "pyside6",
     "requests"
 ]
@@ -52,12 +55,13 @@ version_toml = [
 ]
 
 [tool.semantic_release.branches.main]
-match = "(main)"
+match = "main"
 prerelease = false
 
-[tool.semantic_release.branches.develop]
-match = "(refactor)"
+[tool.semantic_release.branches.refactor]
+match = "refactor"
 prerelease = true
+prerelease_token = "dev"
 
 [semantic_release.changelog.environment]
 block_start_string = "{%"
