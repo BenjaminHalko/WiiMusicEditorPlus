@@ -58,8 +58,8 @@ version_toml = [
 match = "main"
 prerelease = false
 
-[tool.semantic_release.branches.refactor]
-match = "refactor"
+[tool.semantic_release.branches.dev]
+match = "dev"
 prerelease = true
 prerelease_token = "dev"
 

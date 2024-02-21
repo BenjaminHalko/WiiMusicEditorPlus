@@ -1,12 +1,36 @@
 name: Build Wheels
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - '.github/workflows/build_wheels.yml'
+      - 'setup.py'
+      - 'pyproject.toml'
+      - 'wii_music_editor/*'
 
 jobs:
+  bump_version:
+    name: Bump version
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python Semantic Release
+        uses: python-semantic-release/python-semantic-release@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
   make_sdist:
     name: Make SDist
     runs-on: ubuntu-latest
+    if: ${{ bump_version.outputs.released }}
     steps:
       - uses: actions/checkout@v4
 
