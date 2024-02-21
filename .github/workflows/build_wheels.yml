@@ -30,7 +30,7 @@ jobs:
   make_sdist:
     name: Make SDist
     needs: bump_version
-    if: ${{ bump_version.outputs.released }}
+    # if: ${{ bump_version.outputs.released }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
     needs: bump_version
-    if: ${{ bump_version.outputs.released }}
+    # if: ${{ bump_version.outputs.released }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
