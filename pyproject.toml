@@ -32,3 +32,6 @@ wii_music_editor = "wii_music_editor"
 
 [tool.cibuildwheel]
 repair-wheel-command = ""
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
