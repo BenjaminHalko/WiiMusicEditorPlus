@@ -1,6 +1,6 @@
 [project]
 name = "wii_music_editor"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 description = "The ultimate Wii Music modding tool"
 authors = [
     { name = "Benjamin Halko" },
@@ -52,9 +52,13 @@ version_toml = [
 ]
 
 
-[tool.semantic_release.branches.mai2n]
-match = "(main|refactor)"
+[tool.semantic_release.branches.main]
+match = "(main)"
 prerelease = false
+
+[tool.semantic_release.branches.develop]
+match = "(refactor)"
+prerelease = true
 
 [semantic_release.changelog.environment]
 block_start_string = "{%"
