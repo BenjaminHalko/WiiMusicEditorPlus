@@ -1,6 +1,6 @@
 [project]
 name = "wii_music_editor"
-version = "2.0.0.dev3"
+version = "0.1.0"
 description = "The ultimate Wii Music modding tool"
 authors = [
     { name = "Benjamin Halko" },
@@ -47,16 +47,14 @@ major_on_zero = true
 tag_format = "v{version}"
 
 [tool.semantic_release]
-version_variables = ["pyproject.toml:version"]
+version_toml = [
+    "pyproject.toml:project.version",
+]
+
 
 [tool.semantic_release.branches.main]
 match = "(main|refactor)"
 prerelease = false
-
-[semantic_release.branches.refactor]
-match = "refactor"
-prerelease_token = "rc"
-prerelease = true
 
 [semantic_release.changelog.environment]
 block_start_string = "{%"
