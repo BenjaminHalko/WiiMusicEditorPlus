@@ -31,7 +31,7 @@ build-backend = "setuptools.build_meta"
 wii_music_editor = "wii_music_editor"
 
 [tool.cibuildwheel]
-skip = ["*-musllinux*", "pp*", "*-win_amd64"]
+skip = ["*-musllinux*", "pp*", "*-win32"]
 repair-wheel-command = ""
 
 [tool.cibuildwheel.linux]
@@ -50,7 +50,6 @@ tag_format = "v{version}"
 version_toml = [
     "pyproject.toml:project.version",
 ]
-
 
 [tool.semantic_release.branches.main]
 match = "(main)"
