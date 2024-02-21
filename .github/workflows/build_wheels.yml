@@ -2,7 +2,7 @@ name: Build Wheels
 on:
   push:
     paths:
-      - '.github/workflows/build_wheels.yaml'
+      - '.github/workflows/build_wheels.yml'
       - 'setup.py'
       - 'pyproject.toml'
       - 'src/**'
@@ -43,7 +43,7 @@ jobs:
 
   publish_wheels:
     name: Publish wheels
-    needs: [make-sdist, build_wheels]
+    needs: [make_sdist, build_wheels]
     environment:
       name: pypi
       url: https://pypi.org/p/<your-pypi-project-name>
