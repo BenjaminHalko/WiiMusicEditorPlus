@@ -52,7 +52,7 @@ version_toml = [
 ]
 
 
-[tool.semantic_release.branches.main]
+[tool.semantic_release.branches.mai2n]
 match = "(main|refactor)"
 prerelease = false
 
