@@ -24,24 +24,10 @@ class Paths:
     def __init__(self):
         # System
         self.save = Path(savePath)
-        if getattr(sys, 'frozen', False):
-            if currentSystem == SystemType.Mac:
-                self.program = PosixPath(sys.executable).parent.parent.parent.parent
-                self.full = PosixPath(sys.executable).parent.parent.parent
-                self.include = self.full / "Contents" / "Resources" / "app" / "include"
-                self.includeAll = self.include
-            else:
-                self.program = Path(sys.executable).parent
-                self.full = Path(sys.executable)
-                self.include = Path(sys._MEIPASS) / "include"
-                print(self.include)
-                self.includeAll = self.include
-            self.translation = Path(sys._MEIPASS) / "translations"
-        else:
-            self.program = Path(__file__).parent.parent.parent
-            self.include = self.program / "include" / currentSystem.name.lower()
-            self.includeAll = self.program / "include" / "all"
-            self.translation = self.program / "translations" / "translations"
+        self.program = Path(__file__).parent.parent
+        self.include = self.program / "include" / currentSystem.name.lower()
+        self.includeAll = self.program / "include" / "all"
+        self.translation = self.program / "translations" / "translations"
 
         # Dolphin
         tempDolphinPath = load_setting("Paths", "Dolphin", "")

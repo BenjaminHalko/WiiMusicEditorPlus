@@ -57,7 +57,3 @@ def main():
     # Main Window
     startMainWindow()
     app.exec()
-
-
-if __name__ == "__main__":
-    main()

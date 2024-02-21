@@ -1,18 +1,21 @@
 from pathlib import Path
-from subprocess import call
+import subprocess
 
 
 def convert():
     root_dir = (Path(__file__).parent / "..").resolve()
     template_dir = root_dir / "templates"
-    resource_dir = root_dir / "resources"
     output_dir = root_dir / 'wii_music_editor' / 'ui' / "windows"
     for file in template_dir.iterdir():
+        if file.suffix != ".ui":
+            continue
         print("Converting file:", file)
-        call(["pyside6-uic", file, "-o", output_dir / f"{file.stem}_ui.py"])
+        result = subprocess.run(["pyside6-uic", file],  stdout=subprocess.PIPE)
+        with open(output_dir / (file.stem + "_ui.py"), "w") as f:
+            f.write(result.stdout.decode().replace('import resources_rc', 'from . import resources_rc'))
 
     print("Converting resources")
-    call(["pyside6-rcc", resource_dir / "resources.qrc", "-o", root_dir / "resources_rc.py"])
+    subprocess.call(["pyside6-rcc", template_dir / "resources.qrc", "-o", output_dir / "resources_rc.py"])
 
 
 if __name__ == "__main__":

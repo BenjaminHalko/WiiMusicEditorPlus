@@ -597,7 +597,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
   </layout>
  </widget>
  <resources>
-  <include location="../resources/resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>
