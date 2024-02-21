@@ -1,6 +1,6 @@
 [project]
 name = "wii_music_editor"
-version = "2.0.0.dev1"
+version = "2.0.0.dev2"
 description = "The Ultimate Wii Music modding tool"
 authors = [
     { name = "Benjamin Halko" },
@@ -18,13 +18,13 @@ dependencies = [
 ]
 
 [project.scripts]
-wiimusiceditor = "wii_music_editor:main"
+wii-music-editor = "wii_music_editor:main"
 
 [project.urls]
 homepage = "https://github.com/BenjaminHalko/WiiMusicEditorPlus"
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-dir]
