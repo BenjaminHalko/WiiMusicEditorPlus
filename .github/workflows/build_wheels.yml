@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       released: ${{ steps.python_semantic_release.outputs.released }}
+      tag: ${{ steps.python_semantic_release.outputs.tag }}
     permissions:
       id-token: write
       contents: write
@@ -38,6 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.bump_version.outputs.tag }}
 
       - name: Build SDist
         run: pipx run build --sdist
@@ -58,6 +61,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ needs.bump_version.outputs.tag }}
 
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.16.5
