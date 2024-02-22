@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>388</width>
-    <height>195</height>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -627,12 +627,6 @@ padding-bottom: 6px;
         <layout class="QHBoxLayout" name="NewUpdate_Buttons">
          <item>
           <widget class="QPushButton" name="NewUpdate_Cancel">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
            <property name="text">
             <string>Cancel</string>
            </property>
@@ -640,11 +634,11 @@ padding-bottom: 6px;
          </item>
          <item>
           <widget class="QPushButton" name="NewUpdate_Update">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="text">
             <string>Close Program</string>

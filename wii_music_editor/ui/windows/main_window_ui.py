@@ -548,6 +548,7 @@ class Ui_MainWindow(object):
         self.MB_Updates.setObjectName(u"MB_Updates")
         self.MB_Settings = QAction(MainWindow)
         self.MB_Settings.setObjectName(u"MB_Settings")
+        self.MB_Settings.setEnabled(False)
         self.MB_DownloadSongs = QAction(MainWindow)
         self.MB_DownloadSongs.setObjectName(u"MB_DownloadSongs")
         self.MB_Help = QAction(MainWindow)
@@ -770,6 +771,7 @@ class Ui_MainWindow(object):
         self.MP_RomEditing2.setObjectName(u"MP_RomEditing2")
         self.MP_ImportFiles_Button = QPushButton(self.MP_RomEditing)
         self.MP_ImportFiles_Button.setObjectName(u"MP_ImportFiles_Button")
+        self.MP_ImportFiles_Button.setEnabled(False)
         self.MP_ImportFiles_Button.setMinimumSize(QSize(0, 36))
         self.MP_ImportFiles_Button.setFont(font3)
 
@@ -777,6 +779,7 @@ class Ui_MainWindow(object):
 
         self.MP_ExportFiles_Button = QPushButton(self.MP_RomEditing)
         self.MP_ExportFiles_Button.setObjectName(u"MP_ExportFiles_Button")
+        self.MP_ExportFiles_Button.setEnabled(False)
         self.MP_ExportFiles_Button.setMinimumSize(QSize(0, 36))
         self.MP_ExportFiles_Button.setFont(font3)
 
@@ -784,6 +787,7 @@ class Ui_MainWindow(object):
 
         self.MP_ImportChanges_Button = QPushButton(self.MP_RomEditing)
         self.MP_ImportChanges_Button.setObjectName(u"MP_ImportChanges_Button")
+        self.MP_ImportChanges_Button.setEnabled(False)
         self.MP_ImportChanges_Button.setMinimumSize(QSize(0, 36))
         self.MP_ImportChanges_Button.setFont(font3)
 

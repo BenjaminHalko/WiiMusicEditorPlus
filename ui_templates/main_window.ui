@@ -993,6 +993,9 @@ padding-bottom: 6px;
             <layout class="QHBoxLayout" name="MP_RomEditing2">
              <item>
               <widget class="QPushButton" name="MP_ImportFiles_Button">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1012,6 +1015,9 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_ExportFiles_Button">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1031,6 +1037,9 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_ImportChanges_Button">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2680,6 +2689,9 @@ padding-bottom: 6px;
    </property>
   </action>
   <action name="MB_Settings">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>

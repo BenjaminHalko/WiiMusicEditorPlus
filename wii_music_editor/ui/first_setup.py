@@ -6,7 +6,7 @@ from wii_music_editor.ui.windows.first_setup_ui import Ui_FirstSetup
 from wii_music_editor.ui.widgets.load_files import select_rom_path, select_dolphin_path
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import save_setting
-from wii_music_editor.ui.widgets.translate import changeLanguage, tr
+from wii_music_editor.ui.widgets.translate import tr
 
 
 class FirstSetupWindow(QDialog, Ui_FirstSetup):
@@ -21,16 +21,12 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         self.BackButton.setEnabled(False)
         self.BackButton.clicked.connect(self.Back)
         self.NextButton.clicked.connect(self.Next)
-        self.LanguageBox.currentIndexChanged.connect(self.LanguageChange)
-        self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
+        # self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
         # self.RegionBox.currentIndexChanged.connect(self.RegionChange)
 
         self.RomPath_File.clicked.connect(lambda: self.LoadMainFile("Wii Music Rom (*.wbfs *.iso)"))
         self.RomPath_Folder.clicked.connect(lambda: self.LoadMainFile(""))
 
-        self.Dolphon_Geckocodes.stateChanged.connect(lambda: self.Checkmark(self.Dolphon_Geckocodes, "CopyCodes"))
-        self.DolphinEnableCheats.stateChanged.connect(
-            lambda: self.Checkmark(self.DolphinEnableCheats, "DolphinEnableCheats"))
         self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
 
         if paths.dolphin != "":
@@ -52,12 +48,6 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         else:
             self.MainWidget.setCurrentIndex(self.MainWidget.currentIndex() + 1)
             self.BackButton.setEnabled(True)
-
-    def LanguageChange(self):
-        save_setting("Settings", "Language", self.LanguageBox.currentIndex())
-        changeLanguage(self.app, self.LanguageBox.currentIndex())
-        self.retranslateUi(self)
-        self.RomLanguageChange()
 
     def RomLanguageChange(self):
         self.RomLanguageBox.blockSignals(True)

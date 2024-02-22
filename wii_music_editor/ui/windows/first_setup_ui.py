@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGroupBox, QHBoxLayout, QLabel,
-    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QFrame,
+    QGroupBox, QHBoxLayout, QLabel, QPushButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QVBoxLayout,
+    QWidget)
 from . import resources_rc
 
 class Ui_FirstSetup(object):
@@ -547,28 +547,6 @@ class Ui_FirstSetup(object):
 
         self.verticalLayout_2.addItem(self.TitleSpacer)
 
-        self.LanguageLayout = QHBoxLayout()
-        self.LanguageLayout.setObjectName(u"LanguageLayout")
-        self.LanguageLabel = QLabel(self.Title)
-        self.LanguageLabel.setObjectName(u"LanguageLabel")
-
-        self.LanguageLayout.addWidget(self.LanguageLabel)
-
-        self.LanguageBox = QComboBox(self.Title)
-        self.LanguageBox.addItem(u"English")
-        self.LanguageBox.addItem(u"Fran\u00e7ais")
-        self.LanguageBox.addItem(u"Espa\u00f1ol")
-        self.LanguageBox.addItem(u"Deutsch")
-        self.LanguageBox.addItem(u"Italiano")
-        self.LanguageBox.addItem(u"\u65e5\u672c")
-        self.LanguageBox.addItem(u"\ud55c\uad6d\uc778")
-        self.LanguageBox.setObjectName(u"LanguageBox")
-
-        self.LanguageLayout.addWidget(self.LanguageBox)
-
-
-        self.verticalLayout_2.addLayout(self.LanguageLayout)
-
         self.MainWidget.addWidget(self.Title)
         self.Roms = QWidget()
         self.Roms.setObjectName(u"Roms")
@@ -633,6 +611,7 @@ class Ui_FirstSetup(object):
 
         self.RomSettings = QGroupBox(self.Roms)
         self.RomSettings.setObjectName(u"RomSettings")
+        self.RomSettings.setEnabled(False)
         self.verticalLayout_9 = QVBoxLayout(self.RomSettings)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.Region = QHBoxLayout()
@@ -740,25 +719,6 @@ class Ui_FirstSetup(object):
 
         self.verticalLayout_11.addWidget(self.DolphinPath_Title)
 
-        self.Dolphin_Geckocodes_Title = QGroupBox(self.Dolphin)
-        self.Dolphin_Geckocodes_Title.setObjectName(u"Dolphin_Geckocodes_Title")
-        self.verticalLayout_10 = QVBoxLayout(self.Dolphin_Geckocodes_Title)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.Dolphon_Geckocodes = QCheckBox(self.Dolphin_Geckocodes_Title)
-        self.Dolphon_Geckocodes.setObjectName(u"Dolphon_Geckocodes")
-        self.Dolphon_Geckocodes.setChecked(True)
-
-        self.verticalLayout_10.addWidget(self.Dolphon_Geckocodes)
-
-        self.DolphinEnableCheats = QCheckBox(self.Dolphin_Geckocodes_Title)
-        self.DolphinEnableCheats.setObjectName(u"DolphinEnableCheats")
-        self.DolphinEnableCheats.setChecked(True)
-
-        self.verticalLayout_10.addWidget(self.DolphinEnableCheats)
-
-
-        self.verticalLayout_11.addWidget(self.Dolphin_Geckocodes_Title)
-
         self.DolphinSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_11.addItem(self.DolphinSpacer)
@@ -845,8 +805,6 @@ class Ui_FirstSetup(object):
         self.MainTitle.setText(QCoreApplication.translate("FirstSetup", u"Thanks for downloading the\n"
 "Wii Music Editor Plus!", None))
         self.Desc.setText(QCoreApplication.translate("FirstSetup", u"Let's help you setup the essentials!", None))
-        self.LanguageLabel.setText(QCoreApplication.translate("FirstSetup", u"Language:", None))
-
         self.RomTitle.setText(QCoreApplication.translate("FirstSetup", u"Loading Roms", None))
         self.RomPath.setTitle(QCoreApplication.translate("FirstSetup", u"Rom Path", None))
         self.RomPath_Label.setText(QCoreApplication.translate("FirstSetup", u"No Specified Path", None))
@@ -864,9 +822,6 @@ class Ui_FirstSetup(object):
         self.DolphinPath_Title.setTitle(QCoreApplication.translate("FirstSetup", u"Dolphin Path", None))
         self.DolphinPath_Label.setText(QCoreApplication.translate("FirstSetup", u"No Specified Path", None))
         self.DolphinPath_Browse.setText(QCoreApplication.translate("FirstSetup", u"Browse", None))
-        self.Dolphin_Geckocodes_Title.setTitle(QCoreApplication.translate("FirstSetup", u"Gecko Codes", None))
-        self.Dolphon_Geckocodes.setText(QCoreApplication.translate("FirstSetup", u"Copy Gecko codes to Dolphin save directory", None))
-        self.DolphinEnableCheats.setText(QCoreApplication.translate("FirstSetup", u"Force Enable Cheats when launching Dolphin", None))
         self.EndTitle.setText(QCoreApplication.translate("FirstSetup", u"<html><head/><body><p align=\"center\">All Done!</p></body></html>", None))
         self.EndDesc.setText(QCoreApplication.translate("FirstSetup", u"Enjoy modding Wii Music!", None))
         self.EndLinks.setText(QCoreApplication.translate("FirstSetup", u"<html><head/><body><p>YouTube: <a href=\"https://www.youtube.com/BenjaminHalko\"><span style=\" text-decoration: underline; color:#ffaa00;\">https://www.youtube.com/BenjaminHalko</span></a></p><p>Donate: <a href=\"https://ko-fi.com/benjaminhalko\"><span style=\" text-decoration: underline; color:#ffaa00;\">https://ko-fi.com/benjaminhalko</span></a></p><p>Wiki: <a href=\"https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki\"><span style=\" text-decoration: underline; color:#ffaa00;\">https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki</span></a></p><p>Discord: <a href=\"https://discord.gg/NC3wYAeCDs\"><span style=\" text-decoration: underline; color:#ffaa00;\">https://discord.gg/NC3wYAeCDs</span></a></p></body></html>", None))

@@ -544,56 +544,6 @@ Wii Music Editor Plus!</string>
          </property>
         </spacer>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="LanguageLayout">
-         <item>
-          <widget class="QLabel" name="LanguageLabel">
-           <property name="text">
-            <string>Language:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="LanguageBox">
-           <item>
-            <property name="text">
-             <string notr="true">English</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Français</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Español</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Deutsch</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Italiano</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">日本</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">한국인</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="Roms">
@@ -683,6 +633,9 @@ background-color: #242424;
        </item>
        <item>
         <widget class="QGroupBox" name="RomSettings">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string>Rom Settings</string>
          </property>
@@ -844,35 +797,6 @@ background-color: #242424;
            <widget class="QPushButton" name="DolphinPath_Browse">
             <property name="text">
              <string>Browse</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="Dolphin_Geckocodes_Title">
-         <property name="title">
-          <string>Gecko Codes</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_10">
-          <item>
-           <widget class="QCheckBox" name="Dolphon_Geckocodes">
-            <property name="text">
-             <string>Copy Gecko codes to Dolphin save directory</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="DolphinEnableCheats">
-            <property name="text">
-             <string>Force Enable Cheats when launching Dolphin</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>

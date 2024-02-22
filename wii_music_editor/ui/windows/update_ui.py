@@ -24,7 +24,7 @@ class Ui_Update(object):
         if not Update.objectName():
             Update.setObjectName(u"Update")
         Update.setWindowModality(Qt.ApplicationModal)
-        Update.resize(388, 195)
+        Update.resize(388, 199)
         Update.setStyleSheet(u"QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -611,13 +611,16 @@ class Ui_Update(object):
         self.NewUpdate_Buttons.setObjectName(u"NewUpdate_Buttons")
         self.NewUpdate_Cancel = QPushButton(self.NewUpdate)
         self.NewUpdate_Cancel.setObjectName(u"NewUpdate_Cancel")
-        self.NewUpdate_Cancel.setMinimumSize(QSize(0, 20))
 
         self.NewUpdate_Buttons.addWidget(self.NewUpdate_Cancel)
 
         self.NewUpdate_Update = QPushButton(self.NewUpdate)
         self.NewUpdate_Update.setObjectName(u"NewUpdate_Update")
-        self.NewUpdate_Update.setMinimumSize(QSize(0, 20))
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.NewUpdate_Update.sizePolicy().hasHeightForWidth())
+        self.NewUpdate_Update.setSizePolicy(sizePolicy2)
 
         self.NewUpdate_Buttons.addWidget(self.NewUpdate_Update)
 
@@ -674,7 +677,7 @@ class Ui_Update(object):
         self.NewUpdate_Instruct.setText(QCoreApplication.translate("Update", u"To update, please close the editor and run:", None))
         self.NewUpdate_Copy.setText(QCoreApplication.translate("Update", u"Copy to clipboard", None))
         self.NewUpdate_Cancel.setText(QCoreApplication.translate("Update", u"Cancel", None))
-        self.NewUpdate_Update.setText(QCoreApplication.translate("Update", u"Close", None))
+        self.NewUpdate_Update.setText(QCoreApplication.translate("Update", u"Close Program", None))
         self.NoUpdate_Title.setText(QCoreApplication.translate("Update", u"No New Updates :(", None))
         self.NoUpdate_Button.setText(QCoreApplication.translate("Update", u"Close", None))
     # retranslateUi
