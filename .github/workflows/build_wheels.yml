@@ -14,7 +14,8 @@ jobs:
   bump_version:
     name: Bump version
     runs-on: ubuntu-latest
-    id: bump_version
+    outputs:
+      released: ${{ steps.python_semantic_release.outputs.released }}
     permissions:
       id-token: write
       contents: write
@@ -31,7 +32,7 @@ jobs:
   make_sdist:
     name: Make SDist
     needs: bump_version
-    if: ${{ steps.bump_version.outputs.released == 'true' }}
+    if: ${{ needs.bump_version.outputs.released == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,7 +48,7 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
     needs: bump_version
-    if: ${{ steps.bump_version.outputs.released == 'true' }}
+    if: ${{ needs.bump_version.outputs.released == 'true' }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
