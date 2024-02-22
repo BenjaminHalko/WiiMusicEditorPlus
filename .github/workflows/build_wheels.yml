@@ -9,6 +9,7 @@ on:
       - 'setup.py'
       - 'pyproject.toml'
       - 'wii_music_editor/*'
+      - 'wii_music_editor/**'
 
 jobs:
   bump_version:
