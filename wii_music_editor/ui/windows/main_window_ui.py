@@ -713,6 +713,7 @@ class Ui_MainWindow(object):
 
         self.MP_RemoveSong_Button = QPushButton(self.MP_Advanced)
         self.MP_RemoveSong_Button.setObjectName(u"MP_RemoveSong_Button")
+        self.MP_RemoveSong_Button.setEnabled(False)
         self.MP_RemoveSong_Button.setFont(font3)
 
         self.MP_Advanced1.addWidget(self.MP_RemoveSong_Button)

@@ -877,6 +877,9 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="MP_RemoveSong_Button">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="font">
                 <font>
                  <family>Continuum Medium</family>
