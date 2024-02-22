@@ -14,6 +14,7 @@ jobs:
   bump_version:
     name: Bump version
     runs-on: ubuntu-latest
+    id: bump_version
     permissions:
       id-token: write
       contents: write
