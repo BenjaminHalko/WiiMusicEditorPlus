@@ -11,7 +11,7 @@ class ConfirmWindow(QDialog, Ui_Confirm):
         self.setupUi(self)
         self.clicked = False
 
-        self.text.setText(self.tr(message))
+        self.text.setText(message)
         self.noButton.clicked.connect(self.close)
         self.yesButton.clicked.connect(self.Ok)
 
