@@ -1,20 +1,33 @@
-from pypi_latest import PypiLatest
+import json
+import urllib.request
 
-from wii_music_editor.version import version_info
+import importlib_metadata
 
 
-def CheckForUpdate() -> bool:
+def GetVersionNumber(version: str) -> int:
+    version = version.replace("dev", "").split(".")
+    version_number = 0
+    for i in range(len(version)):
+        version_number += int(version[i]) * (100 ** (3 - i))
+    return version_number
+
+
+def GetCurrentVersion() -> str:
     try:
-        return PypiLatest("wii-music-editor", version_info).check_latest()
-    except Exception as e:
-        print("Could Not Check For Update:", e)
-        return False
+        return str(importlib_metadata.version("wii_music_editor"))
+    except importlib_metadata.PackageNotFoundError:
+        pass
+    return ""
 
 
-def UpdateEditor() -> bool:
-    try:
-        PypiLatest("wii-music-editor", version_info).upgrade()
-        return True
-    except Exception as e:
-        print("Could Not Update:", e)
-    return False
+def GetLatestVersion() -> str:
+    req = urllib.request.Request(f"https://pypi.org/pypi/wii-music-editor/json")
+    with urllib.request.urlopen(req, timeout=1) as response:
+        contents = response.read()
+        data = json.loads(contents)
+        latest_pypi_version = data["info"]["version"]
+        return latest_pypi_version
+
+
+def CheckForUpdate(local_version: str = "", latest_version: str = "") -> bool:
+    return GetVersionNumber(local_version) < GetVersionNumber(latest_version)

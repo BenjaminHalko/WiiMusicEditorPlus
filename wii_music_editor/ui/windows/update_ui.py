@@ -16,15 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QHBoxLayout,
-    QLabel, QProgressBar, QPushButton, QSizePolicy,
-    QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
+    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QStackedWidget, QVBoxLayout, QWidget)
 
 class Ui_Update(object):
     def setupUi(self, Update):
         if not Update.objectName():
             Update.setObjectName(u"Update")
         Update.setWindowModality(Qt.ApplicationModal)
-        Update.resize(312, 115)
+        Update.resize(388, 195)
         Update.setStyleSheet(u"QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -512,14 +512,16 @@ class Ui_Update(object):
 "{\n"
 "	border: 1px solid red;\n"
 "}")
-        self.verticalLayout_4 = QVBoxLayout(Update)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout = QVBoxLayout(Update)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.MainWidget = QStackedWidget(Update)
         self.MainWidget.setObjectName(u"MainWidget")
         self.NewUpdate = QWidget()
         self.NewUpdate.setObjectName(u"NewUpdate")
         self.verticalLayout_3 = QVBoxLayout(self.NewUpdate)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.NewUpdate_Title = QLabel(self.NewUpdate)
         self.NewUpdate_Title.setObjectName(u"NewUpdate_Title")
         font = QFont()
@@ -527,7 +529,36 @@ class Ui_Update(object):
         font.setPointSize(18)
         self.NewUpdate_Title.setFont(font)
 
-        self.verticalLayout_3.addWidget(self.NewUpdate_Title)
+        self.horizontalLayout_3.addWidget(self.NewUpdate_Title)
+
+        self.NewUpdate_NewVersion = QLabel(self.NewUpdate)
+        self.NewUpdate_NewVersion.setObjectName(u"NewUpdate_NewVersion")
+        self.NewUpdate_NewVersion.setFont(font)
+
+        self.horizontalLayout_3.addWidget(self.NewUpdate_NewVersion)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.NewUpdate_Current = QLabel(self.NewUpdate)
+        self.NewUpdate_Current.setObjectName(u"NewUpdate_Current")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.NewUpdate_Current.sizePolicy().hasHeightForWidth())
+        self.NewUpdate_Current.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout_2.addWidget(self.NewUpdate_Current)
+
+        self.NewUpdate_CurrentVersion = QLabel(self.NewUpdate)
+        self.NewUpdate_CurrentVersion.setObjectName(u"NewUpdate_CurrentVersion")
+
+        self.horizontalLayout_2.addWidget(self.NewUpdate_CurrentVersion)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
 
         self.NewUpdate_Line = QFrame(self.NewUpdate)
         self.NewUpdate_Line.setObjectName(u"NewUpdate_Line")
@@ -535,6 +566,42 @@ class Ui_Update(object):
         self.NewUpdate_Line.setFrameShadow(QFrame.Sunken)
 
         self.verticalLayout_3.addWidget(self.NewUpdate_Line)
+
+        self.NewUpdate_Instruct = QLabel(self.NewUpdate)
+        self.NewUpdate_Instruct.setObjectName(u"NewUpdate_Instruct")
+
+        self.verticalLayout_3.addWidget(self.NewUpdate_Instruct)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.NewUpdate_Command = QLabel(self.NewUpdate)
+        self.NewUpdate_Command.setObjectName(u"NewUpdate_Command")
+        self.NewUpdate_Command.setStyleSheet(u"QLabel\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: #1e1e1e;\n"
+"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
+"}")
+        self.NewUpdate_Command.setText(u"pip install wii-music-editor -U")
+
+        self.horizontalLayout.addWidget(self.NewUpdate_Command)
+
+        self.NewUpdate_Copy = QPushButton(self.NewUpdate)
+        self.NewUpdate_Copy.setObjectName(u"NewUpdate_Copy")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.NewUpdate_Copy.sizePolicy().hasHeightForWidth())
+        self.NewUpdate_Copy.setSizePolicy(sizePolicy1)
+        self.NewUpdate_Copy.setMinimumSize(QSize(150, 0))
+
+        self.horizontalLayout.addWidget(self.NewUpdate_Copy)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -558,35 +625,6 @@ class Ui_Update(object):
         self.verticalLayout_3.addLayout(self.NewUpdate_Buttons)
 
         self.MainWidget.addWidget(self.NewUpdate)
-        self.Updating = QWidget()
-        self.Updating.setObjectName(u"Updating")
-        self.verticalLayout = QVBoxLayout(self.Updating)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.Update_Title = QLabel(self.Updating)
-        self.Update_Title.setObjectName(u"Update_Title")
-        self.Update_Title.setFont(font)
-
-        self.verticalLayout.addWidget(self.Update_Title)
-
-        self.Updating_Line = QFrame(self.Updating)
-        self.Updating_Line.setObjectName(u"Updating_Line")
-        self.Updating_Line.setFrameShape(QFrame.HLine)
-        self.Updating_Line.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout.addWidget(self.Updating_Line)
-
-        self.Updating_Spacer = QSpacerItem(20, 185, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.Updating_Spacer)
-
-        self.Update_Progress = QProgressBar(self.Updating)
-        self.Update_Progress.setObjectName(u"Update_Progress")
-        self.Update_Progress.setMaximum(100)
-        self.Update_Progress.setValue(0)
-
-        self.verticalLayout.addWidget(self.Update_Progress)
-
-        self.MainWidget.addWidget(self.Updating)
         self.NoUpdate = QWidget()
         self.NoUpdate.setObjectName(u"NoUpdate")
         self.verticalLayout_5 = QVBoxLayout(self.NoUpdate)
@@ -616,7 +654,7 @@ class Ui_Update(object):
 
         self.MainWidget.addWidget(self.NoUpdate)
 
-        self.verticalLayout_4.addWidget(self.MainWidget)
+        self.verticalLayout.addWidget(self.MainWidget)
 
 
         self.retranslateUi(Update)
@@ -629,10 +667,14 @@ class Ui_Update(object):
 
     def retranslateUi(self, Update):
         Update.setWindowTitle(QCoreApplication.translate("Update", u"Updater", None))
-        self.NewUpdate_Title.setText(QCoreApplication.translate("Update", u"New Update Available!", None))
+        self.NewUpdate_Title.setText(QCoreApplication.translate("Update", u"Update avaliable:", None))
+        self.NewUpdate_NewVersion.setText(QCoreApplication.translate("Update", u"v1.0.0", None))
+        self.NewUpdate_Current.setText(QCoreApplication.translate("Update", u"Current version is:", None))
+        self.NewUpdate_CurrentVersion.setText(QCoreApplication.translate("Update", u"v1.0.0", None))
+        self.NewUpdate_Instruct.setText(QCoreApplication.translate("Update", u"To update, please close the editor and run:", None))
+        self.NewUpdate_Copy.setText(QCoreApplication.translate("Update", u"Copy to clipboard", None))
         self.NewUpdate_Cancel.setText(QCoreApplication.translate("Update", u"Cancel", None))
-        self.NewUpdate_Update.setText(QCoreApplication.translate("Update", u"Update", None))
-        self.Update_Title.setText(QCoreApplication.translate("Update", u"Downloading From Github...", None))
+        self.NewUpdate_Update.setText(QCoreApplication.translate("Update", u"Close", None))
         self.NoUpdate_Title.setText(QCoreApplication.translate("Update", u"No New Updates :(", None))
         self.NoUpdate_Button.setText(QCoreApplication.translate("Update", u"Close", None))
     # retranslateUi

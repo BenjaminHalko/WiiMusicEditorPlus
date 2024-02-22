@@ -4,7 +4,7 @@ import subprocess
 
 def convert():
     root_dir = (Path(__file__).parent / "..").resolve()
-    template_dir = root_dir / "templates"
+    template_dir = root_dir / "ui_templates"
     output_dir = root_dir / 'wii_music_editor' / 'ui' / "windows"
     for file in template_dir.iterdir():
         if file.suffix != ".ui":

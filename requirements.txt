@@ -7,4 +7,3 @@ requests~=2.31.0
 pypresence~=4.3.0
 packaging~=23.2
 importlib-metadata~=7.0.1
-pypi_latest~=0.1.2

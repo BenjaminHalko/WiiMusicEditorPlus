@@ -5,7 +5,9 @@ import zipfile
 import webbrowser
 
 from PySide6.QtWidgets import QMainWindow
+
 from wii_music_editor.ui.update import UpdateWindow
+from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion, GetCurrentVersion
 
 from wii_music_editor.data.instruments import instrument_list
 from wii_music_editor.data.songs import SongType, song_list
@@ -57,6 +59,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.externalEditorOpen = False
         self.fromSongEditor = -1
+
+        # Load folder
+        rom_folder_path = load_setting("Paths", "CurrentLoadedFile", "")
+        if rom_folder_path != "":
+            try:
+                rom_folder.load(rom_folder_path)
+                if rom_folder.loaded:
+                    self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
+                else:
+                    self.MP_LoadedFile_Path.setText("Error Loading File")
+            except Exception as e:
+                ShowError(tr("Error", "Could not load file"),
+                          tr("Error", "One or more errors have occurred"))
+                print("Error loading file:", e)
 
         # Menu Bar Buttons
         self.menuBar().setNativeMenuBar(False)
@@ -136,6 +152,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.RS_RemoveCustomSongs.clicked.connect(self.Button_RS_RemoveCustomSongs)
         self.RS_Deselect_Button.clicked.connect(self.Button_RS_DeselectAll)
         self.RS_Patch.clicked.connect(self.Button_RS_Purge)
+
+        # Show Main Window
+        self.show()
+
+        # Check for updates
+        if preferences.auto_update:
+            try:
+                local_version = GetCurrentVersion()
+                latest_version = GetLatestVersion()
+                if CheckForUpdate(local_version, latest_version):
+                    UpdateWindow(self, local_version, latest_version)
+            except Exception as e:
+                print("Could Not Update:", e)
 
     def GotoMainMenu(self):
         if self.fromSongEditor != -1:
