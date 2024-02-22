@@ -2,6 +2,13 @@
 
 
 
+## v2.0.0-dev.3 (2024-02-22)
+
+### Fix
+
+* fix: disable remove song editor ([`85d2227`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/85d2227bd1327f059fffb36523861d318902bb15))
+
+
 ## v2.0.0-dev.2 (2024-02-22)
 
 ### Ci
