@@ -15,16 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QHBoxLayout,
-    QLabel, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QFrame,
+    QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 from . import resources_rc
 
 class Ui_Warning(object):
     def setupUi(self, Warning):
         if not Warning.objectName():
             Warning.setObjectName(u"Warning")
-        Warning.resize(283, 119)
+        Warning.resize(330, 121)
         Warning.setWindowTitle(u"Wii Music Editor Plus")
         Warning.setStyleSheet(u"QToolTip\n"
 "{\n"
@@ -550,15 +550,25 @@ class Ui_Warning(object):
 
         self.verticalLayout.addWidget(self.WarningText)
 
-        self.WarningSpacer = QSpacerItem(20, 1, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.WarningDisable = QCheckBox(Warning)
+        self.WarningDisable.setObjectName(u"WarningDisable")
 
-        self.verticalLayout.addItem(self.WarningSpacer)
+        self.horizontalLayout.addWidget(self.WarningDisable)
 
         self.WarningClose = QPushButton(Warning)
         self.WarningClose.setObjectName(u"WarningClose")
         self.WarningClose.setEnabled(True)
 
-        self.verticalLayout.addWidget(self.WarningClose)
+        self.horizontalLayout.addWidget(self.WarningClose)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.WarningSpacer = QSpacerItem(20, 1, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.WarningSpacer)
 
 
         self.retranslateUi(Warning)
@@ -568,6 +578,7 @@ class Ui_Warning(object):
 
     def retranslateUi(self, Warning):
         self.WarningTitle.setText(QCoreApplication.translate("Warning", u"Warning!", None))
+        self.WarningDisable.setText(QCoreApplication.translate("Warning", u"Do not show this warning again", None))
         self.WarningClose.setText(QCoreApplication.translate("Warning", u"Close", None))
         pass
     # retranslateUi

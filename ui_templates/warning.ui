@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>283</width>
-    <height>119</height>
+    <width>330</width>
+    <height>121</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -537,6 +537,27 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
     </widget>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="WarningDisable">
+       <property name="text">
+        <string>Do not show this warning again</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="WarningClose">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="WarningSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -548,16 +569,6 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
       </size>
      </property>
     </spacer>
-   </item>
-   <item>
-    <widget class="QPushButton" name="WarningClose">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

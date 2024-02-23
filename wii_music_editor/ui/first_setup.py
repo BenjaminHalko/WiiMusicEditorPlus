@@ -81,9 +81,6 @@ class FirstSetupWindow(QDialog, Ui_FirstSetup):
         if select_rom_path(dialog_filter):
             self.RomPath_Label.setText(str(rom_folder.folderPath))
 
-    def Checkmark(self, checkmark, setting):
-        save_setting("Settings", setting, (checkmark.checkState() == 2))
-
     def GetDolphin(self):
         if select_dolphin_path():
             self.DolphinPath_Label.setText(str(paths.dolphin))
