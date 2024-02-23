@@ -24,7 +24,8 @@ dependencies = [
 wii-music-editor = "wii_music_editor:main"
 
 [project.urls]
-homepage = "https://github.com/BenjaminHalko/WiiMusicEditorPlus"
+Homepage = "https://github.com/BenjaminHalko/WiiMusicEditorPlus"
+Discord = "https://discord.gg/NC3wYAeCDs"
 
 [build-system]
 requires = ["setuptools>=61.0"]
