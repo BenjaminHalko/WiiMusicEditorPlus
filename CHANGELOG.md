@@ -2,6 +2,13 @@
 
 
 
+## v2.0.0-dev.4 (2024-02-23)
+
+### Fix
+
+* fix: pass `save_id` to `get_file_path` ([`3c8110f`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/3c8110f0ab8781caaf0d85886981acb48b3ef9fd))
+
+
 ## v2.0.0-dev.3 (2024-02-22)
 
 ### Fix
