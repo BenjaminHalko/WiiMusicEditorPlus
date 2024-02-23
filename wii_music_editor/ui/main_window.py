@@ -365,7 +365,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def Button_SE_SongToChange(self, song: bool = False):
         try:
-            midiPath = get_file_path(f"{tr('file', 'Midi-Type File')} (*.midi *.mid *.brseq *.rseq)")
+            midiPath = get_file_path(f"{tr('file', 'Midi-Type File')} (*.midi *.mid *.brseq *.rseq)",
+                                     "midi")
             if midiPath != "":
                 midi = Midi(Path(midiPath))
                 if song:

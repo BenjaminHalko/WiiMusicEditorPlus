@@ -16,7 +16,8 @@ dependencies = [
     "psutil",
     "pypresence",
     "pyside6",
-    "requests"
+    "requests",
+    "setuptools"
 ]
 
 [project.scripts]
