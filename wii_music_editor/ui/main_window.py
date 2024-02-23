@@ -157,14 +157,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show()
 
         # Check for updates
-        if preferences.auto_update:
-            try:
-                local_version = GetCurrentVersion()
+        try:
+            local_version = GetCurrentVersion()
+            self.setWindowTitle(f"Wii Music Editor Plus - v{local_version}")
+            if preferences.auto_update:
                 latest_version = GetLatestVersion()
                 if CheckForUpdate(local_version, latest_version):
                     UpdateWindow(self, local_version, latest_version)
-            except Exception as e:
-                print("Could Not Update:", e)
+        except Exception as e:
+            print("Could Not Update:", e)
 
     def GotoMainMenu(self):
         if self.fromSongEditor != -1:
