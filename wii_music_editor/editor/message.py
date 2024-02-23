@@ -3,7 +3,7 @@ from pathlib import Path
 from shutil import rmtree
 
 from wii_music_editor.data.songs import song_list, SongType, SongClass
-from wii_music_editor.data.styles import StyleNames
+from wii_music_editor.data.styles import StyleNames, Style
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.preferences import preferences
@@ -87,13 +87,17 @@ class TextClass:
                 return text_to_add
         return ""
 
-    def change_name(self, item_index: int, new_text: list[str], encode: bool = True):
+    def change_name(self, item: SongClass or Style, new_text: list[str], encode: bool = True):
         isSong = len(new_text) == 3
         if isSong:
-            offsets, index = self.__get_song_offset(song_list[item_index])
+            offsets, index = self.__get_song_offset(item)
+            self.songs[item.list_order] = new_text[0]
+            self.descriptions[item.list_order] = new_text[1]
+            self.genres[item.list_order] = new_text[2]
         else:
             offsets = [self.__style_offset]
-            index = self.__style_order[item_index]
+            index = self.__style_order[item.style_id]
+            self.styles[item.list_order] = new_text[0]
 
         for i in range(len(offsets)):
             offset = format(offsets[i]+index, 'x').lower()

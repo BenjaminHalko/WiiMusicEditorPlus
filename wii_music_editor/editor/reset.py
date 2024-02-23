@@ -21,7 +21,7 @@ def revert_all_songs():
         rom_folder.mainDol.write_song_info(song, length, rom_folder.mainDol.songSegmentLength)
         rom_folder.mainDol.write_song_info(song, tempo, rom_folder.mainDol.songSegmentTempo)
         rom_folder.mainDol.write_song_info(song, time_signature, rom_folder.mainDol.songSegmentTimeSignature, 0x01)
-        rom_folder.text.change_name(song.mem_order, [name, description, genre], False)
+        rom_folder.text.change_name(song, [name, description, genre], False)
     rom_folder.text.encode()
     rom_folder.mainDol.save()
 
@@ -31,7 +31,7 @@ def revert_all_styles():
         instruments = rom_folder.mainDolBackup.get_style(style.style_id)
         if style.style_type == StyleType.Global:
             name = rom_folder.textBackup.styles[style.style_id]
-            rom_folder.text.change_name(style.style_id, [name], False)
+            rom_folder.text.change_name(style, [name], False)
         rom_folder.styles[style.list_order] = instruments.copy()
         rom_folder.mainDol.set_style(style.style_id, instruments)
     rom_folder.text.encode()

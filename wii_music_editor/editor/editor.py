@@ -11,7 +11,7 @@ def __replace_song(song: bytearray, group_index: int, item_index: int):
     if len(song) > 0:
         rom_folder.brsar.replace_song(song, group_index, item_index)
     else:
-        song = rom_folder.backup_brsar.get_song(group_index, item_index)
+        song = rom_folder.brsarBackup.get_song(group_index, item_index)
         rom_folder.brsar.replace_song(song, group_index, item_index)
 
 
@@ -56,12 +56,10 @@ def replace_song_text(song: SongClass, name: str, description: str, genre: str):
     index = song.mem_order
     if (rom_folder.text.songs[index] != name or rom_folder.text.descriptions[index] != description or
             rom_folder.text.genres[index] != genre):
-        rom_folder.text.change_name(index, [name, description, genre])
+        rom_folder.text.change_name(song, [name, description, genre])
 
 
 def get_original_song(song: SongClass) -> tuple[Midi, Midi, str, str, str, int, int, int]:
-    song = song_list[song.list_order]
-
     # Main Dol
     length = 0
     tempo = 0
@@ -75,9 +73,9 @@ def get_original_song(song: SongClass) -> tuple[Midi, Midi, str, str, str, int, 
     return (
         Midi(None),
         Midi(None),
-        rom_folder.textBackup.songs[song.mem_order],
-        rom_folder.textBackup.descriptions[song.mem_order],
-        rom_folder.textBackup.genres[song.mem_order],
+        rom_folder.textBackup.songs[song.list_order],
+        rom_folder.textBackup.descriptions[song.list_order],
+        rom_folder.textBackup.genres[song.list_order],
         length,
         tempo,
         time_signature
@@ -91,7 +89,7 @@ def replace_style(style: Style, instruments: StyleInstruments):
 
 
 def replace_style_text(style: Style, name: str):
-    rom_folder.text.change_name(style.style_id, [name])
+    rom_folder.text.change_name(style, [name])
 
 
 def replace_default_style(song: SongClass, style: Style):

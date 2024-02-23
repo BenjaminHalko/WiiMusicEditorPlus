@@ -503,7 +503,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def Button_SE_ResetSong(self):
         index = self.SE_SongToChange.currentRow()
-        self.__SE_midiScore, self.__SE_midiSong, name, desc, genre, length, tempo, time = get_original_song(index)
+        (self.__SE_midiScore, self.__SE_midiSong, name, desc,
+         genre, length, tempo, time) = get_original_song(song_list[index])
         self.SE_ChangeSongText_Name_Input.setText(name)
         self.SE_ChangeSongText_Desc_Input.setText(desc)
         self.SE_ChangeSongText_Genre_Input.setText(genre)
