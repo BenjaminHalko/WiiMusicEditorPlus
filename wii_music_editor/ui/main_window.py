@@ -6,7 +6,10 @@ import webbrowser
 
 from PySide6.QtWidgets import QMainWindow
 
+from wii_music_editor.editor.rom import ConvertRom
+from wii_music_editor.ui.settings import SettingsWindow
 from wii_music_editor.ui.update import UpdateWindow
+from wii_music_editor.ui.widgets.verify_rom import verify_rom_folder
 from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion, GetCurrentVersion
 
 from wii_music_editor.data.instruments import instrument_list
@@ -16,7 +19,7 @@ from wii_music_editor.editor.editor import replace_song, replace_song_text, repl
     get_original_song, replace_default_style
 from wii_music_editor.editor.midi import Midi
 from wii_music_editor.editor.rom_folder import rom_folder
-from wii_music_editor.services.discord import DiscordUpdate, DiscordState
+from wii_music_editor.services.discord import discord_presence, DiscordState
 from wii_music_editor.services.external_editor import ExternalEditor
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.pack_rom import PackRomWindow
@@ -64,6 +67,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         rom_folder_path = load_setting("Paths", "CurrentLoadedFile", "")
         if rom_folder_path != "":
             try:
+                rom_path = Path(rom_folder_path)
+                if rom_path.is_file():
+                    rom_folder_path = ConvertRom(rom_path)
+                verify_rom_folder()
                 rom_folder.load(rom_folder_path)
                 if rom_folder.loaded:
                     self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
@@ -173,7 +180,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.fromSongEditor = -1
         else:
             self.MainWidget.setCurrentIndex(TAB.MainMenu)
-            DiscordUpdate(DiscordState.ModdingWiiMusic)
+            discord_presence.update(DiscordState.ModdingWiiMusic)
 
     def LoadSongEditor(self):
         self.MainWidget.setCurrentIndex(TAB.SongEditor)
@@ -190,7 +197,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.SE_Midi_File_Song_Label.setText(tr("main", "Load a Midi-Type file"))
         self.__SE_midiScore = None
         self.__SE_midiSong = None
-        DiscordUpdate(DiscordState.EditingSongs)
+        discord_presence.update(DiscordState.EditingSongs)
 
     def LoadStyleEditor(self):
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
@@ -201,7 +208,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_ChangeStyleName_Label.setEnabled(False)
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patch.setEnabled(False)
-        DiscordUpdate(DiscordState.EditingStyles)
+        discord_presence.update(DiscordState.EditingStyles)
         if self.fromSongEditor != -1:
             self.StE_StyleList.setCurrentRow(self.fromSongEditor)
             self.List_StE_StyleList()
@@ -210,7 +217,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.TE_Text.setPlainText(rom_folder.text.to_text())
         self.MainWidget.setCurrentIndex(TAB.TextEditor)
         self.TE_Patch.setEnabled(False)
-        DiscordUpdate(DiscordState.EditingText)
+        discord_presence.update(DiscordState.EditingText)
 
     def LoadDefaultStyleEditor(self):
         self.MainWidget.setCurrentIndex(TAB.DefaultStyleEditor)
@@ -221,7 +228,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.fromSongEditor != -1:
             self.DS_Songs.setCurrentRow(self.fromSongEditor)
             self.List_DS_SongList()
-        DiscordUpdate(DiscordState.EditingDefaultStyles)
+        discord_presence.update(DiscordState.EditingDefaultStyles)
 
     def LoadRemoveSongEditor(self):
         if (AllowType(LoadType.Dol)):
@@ -229,7 +236,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.LoadSongs(self.RS_Songs, [SongType.Regular])
             self.RS_RemoveCustomSongs.setEnabled(editor.file.type == LoadType.Rom)
             if (self.fromSongEditor != -1): self.List_DS_SongList()
-            self.DiscordUpdate(5)
+            self.discord_presence(5)
         else:
             ShowError(self.tr("Unable to remove songs"), self.tr("Must load Wii Music Rom or Main.dol"))
 
@@ -309,7 +316,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             file.setNameFilter(self.tr("Rom Change File") + " (*.ini)")
             file.setDirectory(lastFileDirectory)
             if (file.exec()):
-                self.DiscordUpdate(10)
+                self.discord_presence(10)
                 ImportChangesWindow(file.selectedFiles()[0])
         else:
             ShowError(self.tr("Unable to import changes"), self.tr("Must load Wii Music Rom"))
@@ -319,21 +326,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def MenuBar_CheckForUpdates(self):
         UpdateWindow(self)
 
-
     # Menu Bar Buttons
     def MenuBar_Load_Settings(self):
-        self.DiscordUpdate(-1)
-        SettingsWindow(self, app, translator)
-        if ((self.discord != False) != load_setting("Settings", "Discord", True)):
-            if (self.discord == False):
-                self.DiscordPresenceConnect()
+        using_discord = preferences.using_discord
+        discord_state = discord_presence.state
+        discord_presence.update(DiscordState.Settings)
+        SettingsWindow()
+        if preferences.using_discord != using_discord:
+            if preferences.using_discord:
+                discord_presence.connect()
             else:
-                try:
-                    self.discord.close()
-                    self.discord = False
-                except Exception:
-                    self.discord = False
-        self.DiscordUpdate(self.MainWidget.currentIndex())
+                discord_presence.disconnect()
+        discord_presence.update(discord_state)
 
     def MenuBar_Load_Rom(self):
         if select_rom_path("Wii Music Rom (*.wbfs *.iso)"):

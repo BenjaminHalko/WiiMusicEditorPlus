@@ -26,7 +26,7 @@ class Ui_Settings(object):
         if not Settings.objectName():
             Settings.setObjectName(u"Settings")
         Settings.setWindowModality(Qt.ApplicationModal)
-        Settings.resize(443, 352)
+        Settings.resize(443, 272)
         Settings.setStyleSheet(u"QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -566,34 +566,22 @@ class Ui_Settings(object):
 
         self.Updates = QGroupBox(self.Tab_General)
         self.Updates.setObjectName(u"Updates")
-        self.horizontalLayout = QHBoxLayout(self.Updates)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.verticalLayout_13 = QVBoxLayout(self.Updates)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.CheckForUpdates = QCheckBox(self.Updates)
         self.CheckForUpdates.setObjectName(u"CheckForUpdates")
         self.CheckForUpdates.setChecked(True)
 
-        self.horizontalLayout.addWidget(self.CheckForUpdates)
+        self.verticalLayout_13.addWidget(self.CheckForUpdates)
 
-        self.SwitchBeta = QPushButton(self.Updates)
-        self.SwitchBeta.setObjectName(u"SwitchBeta")
-
-        self.horizontalLayout.addWidget(self.SwitchBeta)
-
-
-        self.verticalLayout_3.addWidget(self.Updates)
-
-        self.Debug = QGroupBox(self.Tab_General)
-        self.Debug.setObjectName(u"Debug")
-        self.verticalLayout_9 = QVBoxLayout(self.Debug)
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.UnsafeMode = QCheckBox(self.Debug)
+        self.UnsafeMode = QCheckBox(self.Updates)
         self.UnsafeMode.setObjectName(u"UnsafeMode")
         self.UnsafeMode.setEnabled(True)
 
-        self.verticalLayout_9.addWidget(self.UnsafeMode)
+        self.verticalLayout_13.addWidget(self.UnsafeMode)
 
 
-        self.verticalLayout_3.addWidget(self.Debug)
+        self.verticalLayout_3.addWidget(self.Updates)
 
         self.General_Spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -608,26 +596,6 @@ class Ui_Settings(object):
         self.Rom.setObjectName(u"Rom")
         self.verticalLayout_8 = QVBoxLayout(self.Rom)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.Region = QHBoxLayout()
-        self.Region.setObjectName(u"Region")
-        self.RegionLabel = QLabel(self.Rom)
-        self.RegionLabel.setObjectName(u"RegionLabel")
-
-        self.Region.addWidget(self.RegionLabel)
-
-        self.RegionBox = QComboBox(self.Rom)
-        self.RegionBox.addItem("")
-        self.RegionBox.addItem("")
-        self.RegionBox.addItem("")
-        self.RegionBox.addItem("")
-        self.RegionBox.setObjectName(u"RegionBox")
-        self.RegionBox.setMinimumSize(QSize(60, 20))
-
-        self.Region.addWidget(self.RegionBox)
-
-
-        self.verticalLayout_8.addLayout(self.Region)
-
         self.RomLanguage = QHBoxLayout()
         self.RomLanguage.setObjectName(u"RomLanguage")
         self.label = QLabel(self.Rom)
@@ -636,18 +604,18 @@ class Ui_Settings(object):
         self.RomLanguage.addWidget(self.label)
 
         self.RomLanguageBox = QComboBox(self.Rom)
+        self.RomLanguageBox.addItem("")
+        self.RomLanguageBox.addItem("")
+        self.RomLanguageBox.addItem("")
+        self.RomLanguageBox.addItem("")
+        self.RomLanguageBox.addItem("")
+        self.RomLanguageBox.addItem("")
         self.RomLanguageBox.setObjectName(u"RomLanguageBox")
 
         self.RomLanguage.addWidget(self.RomLanguageBox)
 
 
         self.verticalLayout_8.addLayout(self.RomLanguage)
-
-        self.RevertChanges = QCheckBox(self.Rom)
-        self.RevertChanges.setObjectName(u"RevertChanges")
-        self.RevertChanges.setChecked(True)
-
-        self.verticalLayout_8.addWidget(self.RevertChanges)
 
 
         self.verticalLayout_11.addWidget(self.Rom)
@@ -750,25 +718,6 @@ class Ui_Settings(object):
 
         self.verticalLayout_2.addWidget(self.DolphinSave_Title)
 
-        self.Dolphin_Geckocodes_Title = QGroupBox(self.Tab_Dolphin)
-        self.Dolphin_Geckocodes_Title.setObjectName(u"Dolphin_Geckocodes_Title")
-        self.verticalLayout_7 = QVBoxLayout(self.Dolphin_Geckocodes_Title)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.Dolphon_Geckocodes = QCheckBox(self.Dolphin_Geckocodes_Title)
-        self.Dolphon_Geckocodes.setObjectName(u"Dolphon_Geckocodes")
-        self.Dolphon_Geckocodes.setChecked(True)
-
-        self.verticalLayout_7.addWidget(self.Dolphon_Geckocodes)
-
-        self.DolphinEnableCheats = QCheckBox(self.Dolphin_Geckocodes_Title)
-        self.DolphinEnableCheats.setObjectName(u"DolphinEnableCheats")
-        self.DolphinEnableCheats.setChecked(True)
-
-        self.verticalLayout_7.addWidget(self.DolphinEnableCheats)
-
-
-        self.verticalLayout_2.addWidget(self.Dolphin_Geckocodes_Title)
-
         self.Tab_Dolphin_Spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.Tab_Dolphin_Spacer)
@@ -793,24 +742,22 @@ class Ui_Settings(object):
         self.LanguageLabel.setText(QCoreApplication.translate("Settings", u"Language:", None))
 
         self.Discord.setText(QCoreApplication.translate("Settings", u"Discord Rich Presence", None))
-        self.Updates.setTitle(QCoreApplication.translate("Settings", u"Updates", None))
+        self.Updates.setTitle(QCoreApplication.translate("Settings", u"Misc", None))
         self.CheckForUpdates.setText(QCoreApplication.translate("Settings", u"Check for Updates on Startup", None))
-        self.SwitchBeta.setText(QCoreApplication.translate("Settings", u"Switch to Beta", None))
-        self.Debug.setTitle(QCoreApplication.translate("Settings", u"Debug Options", None))
         self.UnsafeMode.setText(QCoreApplication.translate("Settings", u"Unsafe mode (Enables options that might crash the game)", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_General), QCoreApplication.translate("Settings", u"General", None))
         self.Rom.setTitle(QCoreApplication.translate("Settings", u"Rom Settings", None))
-        self.RegionLabel.setText(QCoreApplication.translate("Settings", u"Fallback Region (Used if rom region can't be determinded):", None))
-        self.RegionBox.setItemText(0, QCoreApplication.translate("Settings", u"U.S.", None))
-        self.RegionBox.setItemText(1, QCoreApplication.translate("Settings", u"Europe", None))
-        self.RegionBox.setItemText(2, QCoreApplication.translate("Settings", u"Japan", None))
-        self.RegionBox.setItemText(3, QCoreApplication.translate("Settings", u"Korea", None))
-
         self.label.setText(QCoreApplication.translate("Settings", u"Rom Language:", None))
-        self.RevertChanges.setText(QCoreApplication.translate("Settings", u"Remove changes from Changes.ini when reverting changes", None))
+        self.RomLanguageBox.setItemText(0, QCoreApplication.translate("Settings", u"English", None))
+        self.RomLanguageBox.setItemText(1, QCoreApplication.translate("Settings", u"French", None))
+        self.RomLanguageBox.setItemText(2, QCoreApplication.translate("Settings", u"Spanish", None))
+        self.RomLanguageBox.setItemText(3, QCoreApplication.translate("Settings", u"German", None))
+        self.RomLanguageBox.setItemText(4, QCoreApplication.translate("Settings", u"Japanese", None))
+        self.RomLanguageBox.setItemText(5, QCoreApplication.translate("Settings", u"Korean", None))
+
         self.SongEditor.setTitle(QCoreApplication.translate("Settings", u"Song Editor", None))
         self.SongScoreCheckbox.setText(QCoreApplication.translate("Settings", u"Load Song and Score separately", None))
-        self.RapperFix.setText(QCoreApplication.translate("Settings", u"Add the Rapper Crash fix to Gecko codes", None))
+        self.RapperFix.setText(QCoreApplication.translate("Settings", u"Add the Rapper Crash fix", None))
         self.Normalize.setText(QCoreApplication.translate("Settings", u"Normalize Midi (Makes Midis more Wii Music friendly)", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab), QCoreApplication.translate("Settings", u"Editor", None))
         self.DolphinPath_Title.setTitle(QCoreApplication.translate("Settings", u"Dolphin Path", None))
@@ -820,8 +767,5 @@ class Ui_Settings(object):
         self.DolphinSave_Label.setText(QCoreApplication.translate("Settings", u"Default Path", None))
         self.DolphinSave_Browse.setText(QCoreApplication.translate("Settings", u"Browse", None))
         self.DolphinSave_Default.setText(QCoreApplication.translate("Settings", u"Set as Default", None))
-        self.Dolphin_Geckocodes_Title.setTitle(QCoreApplication.translate("Settings", u"Gecko Codes", None))
-        self.Dolphon_Geckocodes.setText(QCoreApplication.translate("Settings", u"Copy Gecko codes to Dolphin save directory", None))
-        self.DolphinEnableCheats.setText(QCoreApplication.translate("Settings", u"Force Enable Cheats when launching Dolphin", None))
     # retranslateUi
 

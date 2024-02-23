@@ -548,7 +548,6 @@ class Ui_MainWindow(object):
         self.MB_Updates.setObjectName(u"MB_Updates")
         self.MB_Settings = QAction(MainWindow)
         self.MB_Settings.setObjectName(u"MB_Settings")
-        self.MB_Settings.setEnabled(False)
         self.MB_DownloadSongs = QAction(MainWindow)
         self.MB_DownloadSongs.setObjectName(u"MB_DownloadSongs")
         self.MB_Help = QAction(MainWindow)

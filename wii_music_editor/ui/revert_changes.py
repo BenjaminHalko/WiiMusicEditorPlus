@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QDialog
 
 from wii_music_editor.editor.reset import revert_all, revert_all_songs, revert_all_styles, revert_all_default_styles, \
     revert_all_text
-from wii_music_editor.services.discord import DiscordUpdate, DiscordState
+from wii_music_editor.services.discord import discord_presence, DiscordState
 from wii_music_editor.ui.windows.revert_changes_ui import Ui_Revert
 
 
@@ -22,10 +22,10 @@ class RevertChangesWindow(QDialog, Ui_Revert):
         self.Text.clicked.connect(self.is_patchable)
         self.PatchButton.setEnabled(False)
 
-        DiscordUpdate(DiscordState.RevertingChanges)
+        discord_presence.update(DiscordState.RevertingChanges)
         self.show()
         self.exec()
-        DiscordUpdate(DiscordState.ModdingWiiMusic)
+        discord_presence.update(DiscordState.ModdingWiiMusic)
 
     def is_patchable(self):
         self.PatchButton.setEnabled(self.Songs.isChecked() or self.Styles.isChecked()

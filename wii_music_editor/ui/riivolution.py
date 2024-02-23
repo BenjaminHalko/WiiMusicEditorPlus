@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QDialog
 from psutil import disk_partitions
 
 from wii_music_editor.editor.rom_folder import rom_folder
-from wii_music_editor.services.discord import DiscordUpdate, DiscordState
+from wii_music_editor.services.discord import discord_presence, DiscordState
 from wii_music_editor.ui.success import SuccessWindow
 from wii_music_editor.ui.windows.riivolution_ui import Ui_Riivolution
 from wii_music_editor.utils.pathUtils import paths
@@ -29,10 +29,10 @@ class RiivolutionWindow(QDialog, Ui_Riivolution):
         self.SDSelector.currentIndexChanged.connect(self.UpdateName)
         self.Patch.clicked.connect(self.CreatePatch)
 
-        DiscordUpdate(DiscordState.CreatingRiivolutionPatch)
+        discord_presence.update(DiscordState.CreatingRiivolutionPatch)
         self.show()
         self.exec()
-        DiscordUpdate(DiscordState.ModdingWiiMusic)
+        discord_presence.update(DiscordState.ModdingWiiMusic)
 
     def UpdateName(self):
         if self.SDSelector.currentIndex() == 0:

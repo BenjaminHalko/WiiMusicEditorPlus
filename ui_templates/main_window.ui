@@ -2692,9 +2692,6 @@ padding-bottom: 6px;
    </property>
   </action>
   <action name="MB_Settings">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Settings</string>
    </property>

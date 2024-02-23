@@ -2,7 +2,7 @@ import time
 
 from pypresence import Presence, DiscordNotFound
 
-from wii_music_editor.utils.save import load_setting
+from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.ui.widgets.translate import tr
 
 
@@ -21,33 +21,51 @@ class DiscordState:
     ImportingChanges = 11
 
 
-def DiscordUpdate(state: int):
-    if using_discord:
-        state_list = [
-            tr("Discord", "Changing Settings"),
-            tr("Discord", "Modding Wii Music"),
-            tr("Discord", "Editing Songs"),
-            tr("Discord", "Editing Styles"),
-            tr("Discord", "Editing Text"),
-            tr("Discord", "Editing Default Styles"),
-            tr("Discord", "Removing Songs"),
-            tr("Discord", "Editing Sounds"),
-            tr("Discord", "Creating Riivolution Patch"),
-            tr("Discord", "Reverting Changes"),
-            tr("Discord", "Packing Rom"),
-            tr("Discord", "Importing Changes")]
+class DiscordPresence:
+    state: int
+    __start_time: int
+    __discord_presence: Presence
+    __active = False
+
+    def __init__(self):
+        self.__start_time = int(time.time())
+        self.__discord_presence = Presence("932356297704226817")
+        if preferences.using_discord:
+            self.connect()
+
+    def connect(self):
         try:
-            discord_presence.update(state=state_list[state], large_image="logo", start=start_time)
-        except Exception as e:
-            print("Error updating discord presence:", e)
+            self.__discord_presence.connect()
+            self.update(DiscordState.ModdingWiiMusic)
+            self.__active = True
+        except DiscordNotFound:
+            pass
+
+    def disconnect(self):
+        self.__active = False
+        self.__discord_presence.close()
+
+    def update(self, state: int):
+        self.state = state
+        if self.__active:
+            state_list = [
+                tr("Discord", "Changing Settings"),
+                tr("Discord", "Modding Wii Music"),
+                tr("Discord", "Editing Songs"),
+                tr("Discord", "Editing Styles"),
+                tr("Discord", "Editing Text"),
+                tr("Discord", "Editing Default Styles"),
+                tr("Discord", "Removing Songs"),
+                tr("Discord", "Editing Sounds"),
+                tr("Discord", "Creating Riivolution Patch"),
+                tr("Discord", "Reverting Changes"),
+                tr("Discord", "Packing Rom"),
+                tr("Discord", "Importing Changes")
+            ]
+            try:
+                self.__discord_presence.update(state=state_list[state], large_image="logo", start=self.__start_time)
+            except Exception as e:
+                print("Error updating discord presence:", e)
 
 
-start_time = int(time.time())
-discord_presence = Presence("932356297704226817")
-using_discord = load_setting("Settings", "Discord", True)
-if using_discord:
-    try:
-        discord_presence.connect()
-        DiscordUpdate(DiscordState.ModdingWiiMusic)
-    except DiscordNotFound:
-        using_discord = False
+discord_presence = DiscordPresence()

@@ -1,82 +1,47 @@
-from os import path
 from PySide6.QtCore import Qt, QLocale, QTranslator
 from PySide6.QtWidgets import QDialog
-from PySide6 import QtWidgets
-from wii_music_editor.ui import Ui_Settings
-import editor
-from editor import SaveSetting, load_setting, ChooseFromOS, languageList, TranslationPath, regionNames, GetSongNames, \
-    LoadType
-from errorhandler import ShowError
-from update import UpdateWindow, CheckForUpdate
+from wii_music_editor.ui.widgets.checkmark import Checkmark
+from wii_music_editor.ui.widgets.load_files import select_dolphin_path, select_dolphin_save_path
+from wii_music_editor.ui.widgets.translate import tr
+from wii_music_editor.ui.windows.settings_ui import Ui_Settings
+from wii_music_editor.utils.pathUtils import paths
+from wii_music_editor.utils.preferences import preferences
+from wii_music_editor.utils.save import save_setting
 
 
 class SettingsWindow(QDialog, Ui_Settings):
-    def __init__(self, otherWindow, app, translator):
+    def __init__(self):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.setupUi(self)
-        self.otherWindow = otherWindow
-        self.app = app
-        self.translator = translator
 
-        self.RegionBox.setCurrentIndex(load_setting("Settings", "DefaultRegion", 0))
-        self.RegionBox.currentIndexChanged.connect(self.RegionChange)
-        self.LanguageBox.setCurrentIndex(load_setting("Settings", "Language", 0))
-        self.LanguageBox.currentIndexChanged.connect(self.LanguageChange)
-        self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[load_setting("Settings", "DefaultRegion", 0)])
-        self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
+        # self.LanguageBox.setCurrentIndex(load_setting("Settings", "Language", 0))
+        # self.LanguageBox.currentIndexChanged.connect(self.LanguageChange)
+        # self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[load_setting("Settings", "DefaultRegion", 0)])
+        # self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
 
-        self.SwitchBeta.clicked.connect(self.Button_SwitchBeta)
-        if (load_setting("Settings", "Beta", False)): self.SwitchBeta.setText(self.tr("Switch to Main"))
+        Checkmark(self.CheckForUpdates, "preferences", "auto_update", preferences)
+        Checkmark(self.RapperFix, "preferences", "rapper_crash_fix", preferences)
+        Checkmark(self.UnsafeMode, "preferences", "unsafe_mode", preferences)
+        Checkmark(self.SongScoreCheckbox, "preferences", "separate_tracks", preferences)
+        Checkmark(self.Normalize, "preferences", "normalize_midi", preferences)
+        Checkmark(self.Discord, "preferences", "using_discord", preferences)
 
-        self.ConnectCheckmark(self.CheckForUpdates, "AutoUpdate", True)
-        self.ConnectCheckmark(self.RapperFix, "RapperFix", True)
-        self.ConnectCheckmark(self.UnsafeMode, "UnsafeMode", False)
-        self.ConnectCheckmark(self.SongScoreCheckbox, "SongScore", False)
-        self.ConnectCheckmark(self.Dolphon_Geckocodes, "CopyCodes", True)
-        self.ConnectCheckmark(self.SongScoreCheckbox, "LoadSongSeparately", False)
-        self.ConnectCheckmark(self.DolphinEnableCheats, "DolphinEnableCheats", True)
-        self.ConnectCheckmark(self.Normalize, "NormalizeMidi", False)
-        self.ConnectCheckmark(self.RevertChanges, "RemoveChangesFromChangesINI", True)
-        self.ConnectCheckmark(self.Discord, "Discord", True)
+        self.DolphinPath_Browse.clicked.connect(self.get_dolphin)
+        self.DolphinSave_Browse.clicked.connect(self.get_dolphin_save)
+        self.DolphinSave_Default.clicked.connect(self.default_dolphin_save)
 
-        self.DolphinPath_Browse.clicked.connect(self.GetDolphin)
-        self.DolphinSave_Browse.clicked.connect(self.GetDolphinSave)
-        self.DolphinSave_Default.clicked.connect(self.DefaultDolphinSave)
+        # self.rom_langauge_change()
 
-        self.RomLanguageChange()
-
-        if (editor.dolphinPath != ""): self.DolphinPath_Label.setText(editor.dolphinPath)
-        if (editor.dolphinSavePath != ""): self.DolphinSave_Label.setText(editor.dolphinSavePath)
+        if paths.dolphin is not None:
+            self.DolphinPath_Label.setText(str(paths.dolphin))
+        if paths.dolphinSave is not None:
+            self.DolphinSave_Label.setText(str(paths.dolphinSave))
 
         self.show()
         self.exec()
 
-    def Button_SwitchBeta(self):
-        SaveSetting("Settings", "Beta", not load_setting("Settings", "Beta", False))
-        if (load_setting("Settings", "Beta", False)):
-            self.SwitchBeta.setText(self.tr("Switch to Main"))
-        else:
-            self.SwitchBeta.setText(self.tr("Switch to Beta"))
-        version = CheckForUpdate()
-        if (version != "null"): UpdateWindow([self.otherWindow, self], version)
-
-    def ConnectCheckmark(self, checkmarkId, setting, default):
-        checkmarkId.setCheckState(load_setting("Settings", setting, default) * 2)
-        checkmarkId.stateChanged.connect(lambda: self.Checkmark(checkmarkId, setting))
-
-    def Checkmark(self, checkmark, setting):
-        SaveSetting("Settings", setting, (checkmark.checkState() == 2))
-        if (setting == "UnsafeMode"): editor.unsafeMode = (checkmark.checkState() == 2)
-        if (setting == "LoadSongSeparately"): self.otherWindow.SE_SeparateSongPatching()
-
-    def RegionChange(self):
-        if (editor.file.type != LoadType.Rom):
-            editor.regionSelected = self.RegionBox.currentIndex()
-        SaveSetting("Settings", "DefaultRegion", self.RegionBox.currentIndex())
-        self.RomLanguageChange()
-
-    def RomLanguageChange(self):
+    def rom_langauge_change(self):
         self.RomLanguageBox.blockSignals(True)
         self.RomLanguageBox.clear()
         romLanguageList = [self.tr("English"), self.tr("French"), self.tr("Spanish"), self.tr("Germen"),
@@ -98,7 +63,7 @@ class SettingsWindow(QDialog, Ui_Settings):
             editor.romLanguage[i] = regionNames[i][editor.romLanguageNumber[i]]
         if (editor.file.type == LoadType.Rom): GetSongNames()
 
-    def LanguageChange(self):
+    def langauge_change(self):
         SaveSetting("Settings", "Language", self.LanguageBox.currentIndex())
         self.app.removeTranslator(self.translator)
         if (self.LanguageBox.currentIndex() != 0):
@@ -110,28 +75,17 @@ class SettingsWindow(QDialog, Ui_Settings):
         editor.RetranslateSongNames()
         self.RomLanguageChange()
 
-    def GetDolphin(self):
-        file = QtWidgets.QFileDialog()
-        file.setFileMode(QtWidgets.QFileDialog.ExistingFile)
-        file.setNameFilter(ChooseFromOS(["Dolphin (Dolphin.exe)", "Dolphin (Dolphin.app)", "Dolphin (dolphin-emu)"]))
-        if file.exec_():
-            editor.dolphinPath = file.selectedFiles()[0]
-            self.DolphinPath_Label.setText(file.selectedFiles()[0])
-            SaveSetting("Paths", "Dolphin", file.selectedFiles()[0])
+    def get_dolphin(self):
+        changed = select_dolphin_path()
+        if changed:
+            self.DolphinPath_Label.setText(str(paths.dolphin))
 
-    def DefaultDolphinSave(self):
-        self.DolphinSave_Label.setText(self.tr("Default Path"))
-        SaveSetting("Paths", "DolphinSave", "")
+    def default_dolphin_save(self):
+        self.DolphinSave_Label.setText(tr("settings", "Default Path"))
+        save_setting("Paths", "DolphinSave", "")
+        paths.setDolphinSavePath("")
 
-    def GetDolphinSave(self):
-        file = QtWidgets.QFileDialog()
-        file.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        if file.exec_():
-            if (path.isdir(file.selectedFiles()[0] + "/Wii") and path.isdir(file.selectedFiles()[0] + "/GameSettings")):
-                editor.dolphinSavePath = file.selectedFiles()[0]
-                self.DolphinSave_Label.setText(file.selectedFiles()[0])
-                SaveSetting("Paths", "DolphinSave", file.selectedFiles()[0])
-            else:
-                self.hide()
-                ShowError(self.tr("Not a Dolphin Save Directory"), self.tr("Wii and GameSettings folder not found"))
-                self.show()
+    def get_dolphin_save(self):
+        changed = select_dolphin_save_path()
+        if changed:
+            self.DolphinPath_Label.setText(str(paths.dolphin))

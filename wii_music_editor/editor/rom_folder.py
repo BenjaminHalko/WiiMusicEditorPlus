@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 from shutil import copyfile
 
@@ -19,6 +20,31 @@ def create_backup(path: Path) -> Path:
 
 
 class RomFolder:
+    __mainDolHashes = [
+        "a9ab9a8a8f14aa58d9bf4e05d72d29115ec589ab",
+        "",
+        "",
+        "",
+    ]
+    __brsarHashes = [
+        "",
+        "",
+        "",
+        "",
+    ]
+    __messageHashes = {
+        "us": "",
+        "fu": "",
+        "su": "",
+        "en": "",
+        "fr": "",
+        "sp": "",
+        "ge": "",
+        "it": "",
+        "jp": "",
+        "kr": "",
+    }
+
     folderPath: Path
     mainDolPath: Path
     brsarPath: Path
@@ -88,6 +114,22 @@ class RomFolder:
             if song.default_style != -1:
                 self.default_styles[i] = self.mainDol.read_song_info(
                     song, self.mainDol.songSegmentDefaultStyle)
+
+    def verify_main_dol(self) -> bool:
+        mainTargetHash = self.__mainDolHashes[self.region]
+        mainHash = hashlib.sha1(self.mainDolBackup.data).hexdigest()
+        return mainTargetHash == mainHash
+
+    def verify_brsar(self) -> bool:
+        brsarTargetHash = self.__brsarHashes[self.region]
+        brsarHash = hashlib.sha1(self.brsarBackup.data).hexdigest()
+        return brsarTargetHash == brsarHash
+
+    def verify_message(self) -> bool:
+        messageTargetHash = self.__messageHashes[self.messagePath.parent.stem]
+        with open(self.messagePath / "message.carc.backup", "rb") as message:
+            messageHash = hashlib.sha1(message.read()).hexdigest()
+        return messageTargetHash == messageHash
 
 
 rom_folder = RomFolder()

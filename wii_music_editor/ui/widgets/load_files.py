@@ -20,17 +20,25 @@ def save_file_directory(directory: str):
 
 
 def select_dolphin_path():
-    file = QFileDialog()
-    file.setFileMode(QFileDialog.FileMode.ExistingFiles)
-    file.setNameFilter(choose_from_os(["Dolphin (Dolphin.exe)", "Dolphin (Dolphin.app)", "Dolphin (dolphin-emu)"]))
-    if paths.dolphin is not None:
-        file.setDirectory(str(paths.dolphin))
-    else:
-        file.setDirectory(str(paths.program))
-    if file.exec():
-        paths.dolphin = Path(file.selectedFiles()[0])
-        save_setting("Paths", "Dolphin", file.selectedFiles()[0])
+    file_filter = choose_from_os(["Dolphin (Dolphin.exe)", "Dolphin (Dolphin.app)", "Dolphin (dolphin-emu)"])
+    dolphin_path = get_file_path(file_filter, "dolphin")
+    if dolphin_path != "":
+        save_setting("Paths", "Dolphin", dolphin_path)
+        paths.dolphin = Path(dolphin_path)
         return True
+    return False
+
+
+def select_dolphin_save_path():
+    dolphin_path = get_file_path("", "dolphin_save")
+    if dolphin_path != "":
+        if (Path(dolphin_path)/"Wii").is_dir():
+            save_setting("Paths", "DolphinSave", dolphin_path)
+            paths.dolphinSave = Path(dolphin_path)
+            return True
+        else:
+            ShowError(tr("error", "Not a Dolphin Save Directory"),
+                      tr("error", "Wii and GameSettings folder not found"))
     return False
 
 
@@ -80,7 +88,10 @@ def save_file(dialog_filter: str, save_id: str):
 def get_file_path(dialog_filter: str, save_id: str) -> str:
     try:
         file = QFileDialog()
-        file.setFileMode(QFileDialog.FileMode.ExistingFile)
+        if dialog_filter == "":
+            file.setFileMode(QFileDialog.FileMode.Directory)
+        else:
+            file.setFileMode(QFileDialog.FileMode.ExistingFile)
         file.setNameFilter(dialog_filter)
         file.setDirectory(load_setting("Paths", f"load_{save_id}", paths.lastLoadedDir))
         if file.exec():

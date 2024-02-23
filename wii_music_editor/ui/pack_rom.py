@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog
 
 from wii_music_editor.editor.rom_folder import rom_folder
-from wii_music_editor.services.discord import DiscordUpdate, DiscordState
+from wii_music_editor.services.discord import discord_presence, DiscordState
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.widgets.load_files import save_file
 from wii_music_editor.ui.widgets.translate import tr
@@ -21,10 +21,10 @@ class PackRomWindow(QDialog, Ui_Packrom):
         self.setWindowFlag(Qt.WindowType.WindowContextHelpButtonHint, False)
         self.setupUi(self)
         self.CreateRom.clicked.connect(self.MakeRom)
-        DiscordUpdate(DiscordState.PackingRom)
+        discord_presence.update(DiscordState.PackingRom)
         self.show()
         self.exec()
-        DiscordUpdate(DiscordState.ModdingWiiMusic)
+        discord_presence.update(DiscordState.ModdingWiiMusic)
 
     def MakeRom(self):
         if self.RomTypeWbfs.isChecked():

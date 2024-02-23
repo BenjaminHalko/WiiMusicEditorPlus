@@ -12,7 +12,7 @@ dependencies = [
     "importlib_metadata",
     "mido",
     "packaging",
-    "pretty-midi",
+    "pretty_midi",
     "psutil",
     "pypresence",
     "pyside6",
