@@ -2,6 +2,23 @@
 
 
 
+## v2.0.0-dev.5 (2024-02-23)
+
+### Chore
+
+* chore: Added version to window title ([`1cce5bc`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/1cce5bcc1740764f24a3306063bf547f94fced6b))
+
+* chore: Add links to pyproject ([`8f46036`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/8f46036dba6ef5e7a8cc3d9246603545a9532bdf))
+
+### Fix
+
+* fix: text bug ([`c35502a`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/c35502a2db09dd1dd09f7a9a592df0648ef53c02))
+
+### Unknown
+
+* Merge branch &#39;dev&#39; into refactor ([`699bd63`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/699bd6339363d18e75631893c176c209e4283c14))
+
+
 ## v2.0.0-dev.4 (2024-02-23)
 
 ### Fix
