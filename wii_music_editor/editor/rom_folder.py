@@ -9,6 +9,7 @@ from wii_music_editor.editor.brsar import Brsar
 from wii_music_editor.editor.dol import MainDol
 from wii_music_editor.editor.message import TextClass
 from wii_music_editor.editor.rom import ConvertRom
+from wii_music_editor.utils.checksum import sha1checksum
 from wii_music_editor.utils.preferences import preferences
 
 
@@ -27,15 +28,15 @@ class RomFolder:
         "",
     ]
     __brsarHashes = [
-        "",
+        "fad7f8920eb956ba1fc1000e997d150dc28a1232",
         "",
         "",
         "",
     ]
     __messageHashes = {
-        "us": "",
-        "fu": "",
-        "su": "",
+        "us": "45ac82faefe600965d863a2090502c4ffc7177f5",
+        "fu": "9b91ded8efa5b906f2ade135a993e9751451ccf5",
+        "su": "57f0539871fe6fca5d49aa6c397e5412e01aa8d9",
         "en": "",
         "fr": "",
         "sp": "",
@@ -83,7 +84,8 @@ class RomFolder:
         # Set Paths
         self.mainDolPath = self.folderPath / "sys" / "main.dol"
         self.brsarPath = self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
-        self.messagePath = self.folderPath / "files" / get_message_type(self.region, preferences.language) / "Message"
+        message_type = get_message_type(self.region, preferences.rom_language)
+        self.messagePath = self.folderPath / "files" / message_type / "Message"
 
         # Create backups
         self.brsarBackupPath = create_backup(self.brsarPath)
@@ -117,7 +119,7 @@ class RomFolder:
 
     def verify_main_dol(self) -> bool:
         mainTargetHash = self.__mainDolHashes[self.region]
-        mainHash = hashlib.sha1(self.mainDolBackup.data).hexdigest()
+        mainHash = sha1checksum(self.mainDolBackupPath)
         return mainTargetHash == mainHash
 
     def verify_brsar(self) -> bool:
@@ -126,7 +128,7 @@ class RomFolder:
         return brsarTargetHash == brsarHash
 
     def verify_message(self) -> bool:
-        messageTargetHash = self.__messageHashes[self.messagePath.parent.stem]
+        messageTargetHash = self.__messageHashes[self.messagePath.parent.stem.lower()]
         with open(self.messagePath / "message.carc.backup", "rb") as message:
             messageHash = hashlib.sha1(message.read()).hexdigest()
         return messageTargetHash == messageHash

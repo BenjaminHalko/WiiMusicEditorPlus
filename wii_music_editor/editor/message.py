@@ -33,7 +33,7 @@ class TextClass:
         self.__filepath = file
         self.__filename = filename
         self.__folder = str(Path(filename).with_suffix(".d"))
-        self.__language = preferences.language
+        self.__language = preferences.rom_language
 
         # Read the text file
         self.decode()

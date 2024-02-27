@@ -11,7 +11,7 @@ def ConvertRom(rom_path: Path) -> Path or None:
     print("Converting Rom")
     try:
         folder_path = Path(os.path.splitext(str(rom_path))[0])
-        run_shell([paths.include / 'Wiimms' / 'wit', 'cp', '--fst', rom_path, folder_path])
+        run_shell([paths.include / 'wiimms' / 'wit', 'cp', '--fst', rom_path, folder_path])
 
         if (folder_path / 'DATA').is_dir():
             folder_path = folder_path / 'DATA'

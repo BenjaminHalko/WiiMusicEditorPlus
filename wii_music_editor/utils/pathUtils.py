@@ -48,7 +48,7 @@ class Paths:
     def setDolphinSavePath(self, dolphin_save_path: str):
         if os.path.isdir(dolphin_save_path):
             self.dolphinSave = Path(dolphin_save_path)
-        elif self.dolphin is not None and (self.dolphin.parent/"portable.txt").exists() and currentSystem == "Windows":
+        elif self.dolphin is not None and (self.dolphin.parent/"portable.txt").is_file():
             self.dolphinSave = self.dolphin.parent / "User"
         else:
             self.dolphinSave = Path(choose_from_os([

@@ -10,6 +10,13 @@ from wii_music_editor.utils.save import save_setting
 
 
 class SettingsWindow(QDialog, Ui_Settings):
+    __checkUpdate: Checkmark
+    __rapperFix: Checkmark
+    __unsafeMode: Checkmark
+    __songScore: Checkmark
+    __normalize: Checkmark
+    __discord: Checkmark
+
     def __init__(self):
         super().__init__(None)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
@@ -20,12 +27,12 @@ class SettingsWindow(QDialog, Ui_Settings):
         # self.RomLanguageBox.setCurrentIndex(editor.romLanguageNumber[load_setting("Settings", "DefaultRegion", 0)])
         # self.RomLanguageBox.currentIndexChanged.connect(self.RomLanguageSelect)
 
-        Checkmark(self.CheckForUpdates, "preferences", "auto_update", preferences)
-        Checkmark(self.RapperFix, "preferences", "rapper_crash_fix", preferences)
-        Checkmark(self.UnsafeMode, "preferences", "unsafe_mode", preferences)
-        Checkmark(self.SongScoreCheckbox, "preferences", "separate_tracks", preferences)
-        Checkmark(self.Normalize, "preferences", "normalize_midi", preferences)
-        Checkmark(self.Discord, "preferences", "using_discord", preferences)
+        self.__checkUpdate = Checkmark(self.CheckForUpdates, "preferences", "auto_update", preferences)
+        self.__rapperFix = Checkmark(self.RapperFix, "preferences", "rapper_crash_fix", preferences)
+        self.__unsafeMode = Checkmark(self.UnsafeMode, "preferences", "unsafe_mode", preferences)
+        self.__songScore = Checkmark(self.SongScoreCheckbox, "preferences", "separate_tracks", preferences)
+        self.__normalize = Checkmark(self.Normalize, "preferences", "normalize_midi", preferences)
+        self.__discord = Checkmark(self.Discord, "preferences", "using_discord", preferences)
 
         self.DolphinPath_Browse.clicked.connect(self.get_dolphin)
         self.DolphinSave_Browse.clicked.connect(self.get_dolphin_save)

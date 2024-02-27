@@ -70,7 +70,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 rom_path = Path(rom_folder_path)
                 if rom_path.is_file():
                     rom_folder_path = ConvertRom(rom_path)
-                verify_rom_folder()
                 rom_folder.load(rom_folder_path)
                 if rom_folder.loaded:
                     self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
@@ -173,6 +172,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     UpdateWindow(self, local_version, latest_version)
         except Exception as e:
             print("Could Not Update:", e)
+
+        # Verify Rom Folder
+        verify_rom_folder()
 
     def GotoMainMenu(self):
         if self.fromSongEditor != -1:

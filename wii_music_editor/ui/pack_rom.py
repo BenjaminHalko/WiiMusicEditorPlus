@@ -42,7 +42,7 @@ class PackRomWindow(QDialog, Ui_Packrom):
                 if file_path.exists():
                     os.remove(file_path)
                 file_path = file_path.with_suffix(file_type)
-                args = [paths.include/'Wiimms'/'wit', 'cp', rom_folder.folderPath, file_path]
+                args = [paths.include/'wiimms'/'wit', 'cp', rom_folder.folderPath, file_path]
                 if self.RomTypeWbfs.isChecked():
                     args.append('--wbfs')
                 run_shell(args)

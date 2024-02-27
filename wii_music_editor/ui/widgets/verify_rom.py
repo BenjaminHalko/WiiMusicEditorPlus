@@ -4,12 +4,16 @@ from wii_music_editor.ui.widgets.translate import tr
 
 
 def verify_rom_folder():
-    if not rom_folder.verify_main_dol():
-        show_warning(tr("warning", "The main.dol backup has a different checksum than the original." +
-                        "It is recommended to re-dump from the .iso."), "checksum")
-    if not rom_folder.verify_brsar():
-        show_warning(tr("warning", "The brsar backup has a different checksum than the original." +
-                        "It is recommended to re-dump from the .iso."), "checksum")
-    if not rom_folder.verify_message():
-        show_warning(tr("warning", "The message backup has a different checksum than the original." +
-                        "It is recommended to re-dump from the .iso."), "checksum")
+    if rom_folder.loaded:
+        not_verified = []
+        if not rom_folder.verify_main_dol():
+            not_verified.append("main_dol")
+        if not rom_folder.verify_brsar():
+            not_verified.append("brsar")
+        if not rom_folder.verify_message():
+            not_verified.append("message")
+
+        if not_verified:
+            show_warning(tr("warning", "The following backup files have been modified:\n" +
+                            ", ".join(not_verified) + "\n" +
+                            "It is recommended to re-dump from the .iso."), "checksum")

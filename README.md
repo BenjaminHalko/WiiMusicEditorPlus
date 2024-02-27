@@ -13,7 +13,7 @@ pip install wii-music-editor
 ```
 
 ## Usage
-To run the program, open a terminal and run the following command:
+To run the program, search for `Wii Music Editor` in the start menu, or open a terminal and run the following command:
 ```bash
 wii-music-editor
 ```

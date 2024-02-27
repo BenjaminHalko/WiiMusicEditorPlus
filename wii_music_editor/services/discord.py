@@ -22,7 +22,7 @@ class DiscordState:
 
 
 class DiscordPresence:
-    state: int
+    state: int = DiscordState.ModdingWiiMusic
     __start_time: int
     __discord_presence: Presence
     __active = False

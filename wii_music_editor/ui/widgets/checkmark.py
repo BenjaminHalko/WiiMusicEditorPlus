@@ -18,15 +18,14 @@ class Checkmark:
         self.__prefObject = pref_object
         self.__callback = callback
         if pref_object is not None:
-            print(getattr(self.__prefObject, self.__setting))
             self.__widget.setChecked(getattr(self.__prefObject, self.__setting))
+
+        # On click
         self.__widget.clicked.connect(self.clicked)
 
     def clicked(self):
-        print("S")
         clicked = self.__widget.isChecked()
         save_setting(self.__category, self.__setting, clicked)
         setattr(self.__prefObject, self.__setting, clicked)
-        print(getattr(self.__prefObject, self.__setting))
         if self.__callback is not None:
             self.__callback()
