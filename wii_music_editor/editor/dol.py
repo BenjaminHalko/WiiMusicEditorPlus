@@ -26,8 +26,8 @@ class MainDol:
 
     __styleCodeBegin = 0x36F9A4
     __styleCodeEnd = 0x3701CC
-    __defaultStyleCodeBegin = 0x3d4a68
-    __defaultStyleCodeEnd = 0x3d4bf0
+    __defaultStyleCodeBegin = 0x3d4acc
+    __defaultStyleCodeEnd = 0x3d4b64
 
     mainDolPath: Path
     data: bytearray
