@@ -12,11 +12,12 @@ dependencies = [
     "importlib_metadata",
     "mido",
     "packaging",
-    "pretty_midi@git+https://github.com/BenjaminHalko/pretty-midi",
+    "pretty_midi",
     "psutil",
     "pypresence",
     "pyside6",
-    "requests"
+    "requests",
+    "setuptools",
 ]
 
 [project.scripts]
