@@ -1,6 +1,6 @@
 [project]
 name = "wii_music_editor"
-version = "2.0.0-dev.5"
+version = "2.0.0-dev.6"
 description = "The ultimate Wii Music modding tool"
 authors = [
     { name = "Benjamin Halko" },
