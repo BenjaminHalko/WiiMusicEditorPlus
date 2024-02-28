@@ -9,6 +9,7 @@ on:
       - '.github/workflows/build_wheels.yml'
       - 'setup.py'
       - 'pyproject.toml'
+      - 'requirements.txt'
       - 'wii_music_editor/*'
       - 'wii_music_editor/**'
 
