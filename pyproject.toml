@@ -8,6 +8,16 @@ authors = [
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
+dependencies = [
+    "importlib_metadata",
+    "mido",
+    "packaging",
+    "pretty_midi@git+https://github.com/BenjaminHalko/pretty-midi",
+    "psutil",
+    "pypresence",
+    "pyside6",
+    "requests"
+]
 
 [project.scripts]
 wii-music-editor = "wii_music_editor:main"
