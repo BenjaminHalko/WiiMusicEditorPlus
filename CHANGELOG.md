@@ -2,6 +2,15 @@
 
 
 
+## v2.0.0-dev.8 (2024-02-28)
+
+### Fix
+
+* fix: Set `pretty_midi` dependency correctly ([`6bc616e`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/6bc616e2eddbf00df14eaeecfb1910a9eb81e096))
+
+* fix: Specify dependencies correctly ([`c6fbf22`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/c6fbf228c082692b6732766666492c0ee74f5c1d))
+
+
 ## v2.0.0-dev.7 (2024-02-28)
 
 ### Ci
