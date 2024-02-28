@@ -2,6 +2,17 @@
 
 
 
+## v2.0.0-dev.7 (2024-02-28)
+
+### Ci
+
+* ci: Updated workflow triggers ([`722772b`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/722772baea262bb190e6cdf5e0434a402dff5902))
+
+### Fix
+
+* fix: Added `pyshortcuts` to `requirements.txt` ([`318cf1a`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/318cf1a4f1aeca581979944f4a3f2a9ad5b06b6d))
+
+
 ## v2.0.0-dev.6 (2024-02-28)
 
 ### Feature
