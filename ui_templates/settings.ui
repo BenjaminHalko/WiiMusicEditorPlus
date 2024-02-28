@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>443</width>
-    <height>272</height>
+    <height>308</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -504,60 +504,37 @@ QWidget[error=&quot;true&quot;]
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QGroupBox" name="Appearence">
+        <widget class="QGroupBox" name="SongEditor">
          <property name="title">
-          <string>Appearence</string>
+          <string>Song Editor</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_10">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <layout class="QHBoxLayout" name="LanguageLayout">
-            <item>
-             <widget class="QLabel" name="LanguageLabel">
-              <property name="text">
-               <string>Language:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="LanguageBox">
-              <item>
-               <property name="text">
-                <string notr="true">English</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Français</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Español</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Deutsch</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Italiano</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">日本</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">한국인</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QCheckBox" name="SongScoreCheckbox">
+            <property name="text">
+             <string>Load Song and Score separately</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="RapperFix">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Add the Rapper Crash fix</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="Normalize">
+            <property name="text">
+             <string>Normalize Midi (Makes Midis more Wii Music friendly)</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -612,113 +589,6 @@ QWidget[error=&quot;true&quot;]
        </item>
        <item>
         <spacer name="General_Spacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Editor</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <item>
-        <widget class="QGroupBox" name="Rom">
-         <property name="title">
-          <string>Rom Settings</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <layout class="QHBoxLayout" name="RomLanguage">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Rom Language:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="RomLanguageBox">
-              <item>
-               <property name="text">
-                <string>English</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>French</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Spanish</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>German</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Japanese</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Korean</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="SongEditor">
-         <property name="title">
-          <string>Song Editor</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QCheckBox" name="SongScoreCheckbox">
-            <property name="text">
-             <string>Load Song and Score separately</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="RapperFix">
-            <property name="text">
-             <string>Add the Rapper Crash fix</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="Normalize">
-            <property name="text">
-             <string>Normalize Midi (Makes Midis more Wii Music friendly)</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>

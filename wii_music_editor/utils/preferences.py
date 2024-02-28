@@ -1,5 +1,5 @@
 from wii_music_editor.data.region import LanguageType
-from wii_music_editor.utils.save import load_setting
+from wii_music_editor.utils.save import load_setting, save_setting
 
 
 class Preferences:
@@ -24,6 +24,11 @@ class Preferences:
 
     def __load(self, setting: str, default: int or bool):
         setattr(self, setting, load_setting("preferences", setting, default))
+
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
+        save_setting("preferences", key, value)
+        print("saved")
 
 
 preferences = Preferences()

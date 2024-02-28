@@ -25,7 +25,8 @@ region_messages = (
 
 def get_message_type(region: int, language: int) -> str:
     if region >= 2:
-        return region_messages[region][0]
+        return region_messages[region]
+    language = min(language, len(region_messages[region]) - 1)
     return region_messages[region][language]
 
 

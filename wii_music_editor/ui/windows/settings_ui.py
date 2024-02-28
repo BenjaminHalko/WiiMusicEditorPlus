@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QGroupBox, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSpacerItem, QTabWidget, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QGroupBox,
+    QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+    QSpacerItem, QTabWidget, QVBoxLayout, QWidget)
 from . import resources_rc
 
 class Ui_Settings(object):
@@ -26,7 +25,7 @@ class Ui_Settings(object):
         if not Settings.objectName():
             Settings.setObjectName(u"Settings")
         Settings.setWindowModality(Qt.ApplicationModal)
-        Settings.resize(443, 272)
+        Settings.resize(443, 308)
         Settings.setStyleSheet(u"QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -521,34 +520,29 @@ class Ui_Settings(object):
         self.Tab_General.setObjectName(u"Tab_General")
         self.verticalLayout_3 = QVBoxLayout(self.Tab_General)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.Appearence = QGroupBox(self.Tab_General)
-        self.Appearence.setObjectName(u"Appearence")
-        self.verticalLayout_10 = QVBoxLayout(self.Appearence)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.LanguageLayout = QHBoxLayout()
-        self.LanguageLayout.setObjectName(u"LanguageLayout")
-        self.LanguageLabel = QLabel(self.Appearence)
-        self.LanguageLabel.setObjectName(u"LanguageLabel")
+        self.SongEditor = QGroupBox(self.Tab_General)
+        self.SongEditor.setObjectName(u"SongEditor")
+        self.verticalLayout_4 = QVBoxLayout(self.SongEditor)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.SongScoreCheckbox = QCheckBox(self.SongEditor)
+        self.SongScoreCheckbox.setObjectName(u"SongScoreCheckbox")
 
-        self.LanguageLayout.addWidget(self.LanguageLabel)
+        self.verticalLayout_4.addWidget(self.SongScoreCheckbox)
 
-        self.LanguageBox = QComboBox(self.Appearence)
-        self.LanguageBox.addItem(u"English")
-        self.LanguageBox.addItem(u"Fran\u00e7ais")
-        self.LanguageBox.addItem(u"Espa\u00f1ol")
-        self.LanguageBox.addItem(u"Deutsch")
-        self.LanguageBox.addItem(u"Italiano")
-        self.LanguageBox.addItem(u"\u65e5\u672c")
-        self.LanguageBox.addItem(u"\ud55c\uad6d\uc778")
-        self.LanguageBox.setObjectName(u"LanguageBox")
+        self.RapperFix = QCheckBox(self.SongEditor)
+        self.RapperFix.setObjectName(u"RapperFix")
+        self.RapperFix.setEnabled(False)
+        self.RapperFix.setChecked(True)
 
-        self.LanguageLayout.addWidget(self.LanguageBox)
+        self.verticalLayout_4.addWidget(self.RapperFix)
+
+        self.Normalize = QCheckBox(self.SongEditor)
+        self.Normalize.setObjectName(u"Normalize")
+
+        self.verticalLayout_4.addWidget(self.Normalize)
 
 
-        self.verticalLayout_10.addLayout(self.LanguageLayout)
-
-
-        self.verticalLayout_3.addWidget(self.Appearence)
+        self.verticalLayout_3.addWidget(self.SongEditor)
 
         self.groupBox = QGroupBox(self.Tab_General)
         self.groupBox.setObjectName(u"groupBox")
@@ -588,66 +582,6 @@ class Ui_Settings(object):
         self.verticalLayout_3.addItem(self.General_Spacer)
 
         self.MainWidget.addTab(self.Tab_General, "")
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.verticalLayout_11 = QVBoxLayout(self.tab)
-        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.Rom = QGroupBox(self.tab)
-        self.Rom.setObjectName(u"Rom")
-        self.verticalLayout_8 = QVBoxLayout(self.Rom)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.RomLanguage = QHBoxLayout()
-        self.RomLanguage.setObjectName(u"RomLanguage")
-        self.label = QLabel(self.Rom)
-        self.label.setObjectName(u"label")
-
-        self.RomLanguage.addWidget(self.label)
-
-        self.RomLanguageBox = QComboBox(self.Rom)
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.addItem("")
-        self.RomLanguageBox.setObjectName(u"RomLanguageBox")
-
-        self.RomLanguage.addWidget(self.RomLanguageBox)
-
-
-        self.verticalLayout_8.addLayout(self.RomLanguage)
-
-
-        self.verticalLayout_11.addWidget(self.Rom)
-
-        self.SongEditor = QGroupBox(self.tab)
-        self.SongEditor.setObjectName(u"SongEditor")
-        self.verticalLayout_4 = QVBoxLayout(self.SongEditor)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.SongScoreCheckbox = QCheckBox(self.SongEditor)
-        self.SongScoreCheckbox.setObjectName(u"SongScoreCheckbox")
-
-        self.verticalLayout_4.addWidget(self.SongScoreCheckbox)
-
-        self.RapperFix = QCheckBox(self.SongEditor)
-        self.RapperFix.setObjectName(u"RapperFix")
-        self.RapperFix.setChecked(True)
-
-        self.verticalLayout_4.addWidget(self.RapperFix)
-
-        self.Normalize = QCheckBox(self.SongEditor)
-        self.Normalize.setObjectName(u"Normalize")
-
-        self.verticalLayout_4.addWidget(self.Normalize)
-
-
-        self.verticalLayout_11.addWidget(self.SongEditor)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_11.addItem(self.verticalSpacer)
-
-        self.MainWidget.addTab(self.tab, "")
         self.Tab_Dolphin = QWidget()
         self.Tab_Dolphin.setObjectName(u"Tab_Dolphin")
         self.verticalLayout_2 = QVBoxLayout(self.Tab_Dolphin)
@@ -738,28 +672,15 @@ class Ui_Settings(object):
 
     def retranslateUi(self, Settings):
         Settings.setWindowTitle(QCoreApplication.translate("Settings", u"Settings", None))
-        self.Appearence.setTitle(QCoreApplication.translate("Settings", u"Appearence", None))
-        self.LanguageLabel.setText(QCoreApplication.translate("Settings", u"Language:", None))
-
+        self.SongEditor.setTitle(QCoreApplication.translate("Settings", u"Song Editor", None))
+        self.SongScoreCheckbox.setText(QCoreApplication.translate("Settings", u"Load Song and Score separately", None))
+        self.RapperFix.setText(QCoreApplication.translate("Settings", u"Add the Rapper Crash fix", None))
+        self.Normalize.setText(QCoreApplication.translate("Settings", u"Normalize Midi (Makes Midis more Wii Music friendly)", None))
         self.Discord.setText(QCoreApplication.translate("Settings", u"Discord Rich Presence", None))
         self.Updates.setTitle(QCoreApplication.translate("Settings", u"Misc", None))
         self.CheckForUpdates.setText(QCoreApplication.translate("Settings", u"Check for Updates on Startup", None))
         self.UnsafeMode.setText(QCoreApplication.translate("Settings", u"Unsafe mode (Enables options that might crash the game)", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Tab_General), QCoreApplication.translate("Settings", u"General", None))
-        self.Rom.setTitle(QCoreApplication.translate("Settings", u"Rom Settings", None))
-        self.label.setText(QCoreApplication.translate("Settings", u"Rom Language:", None))
-        self.RomLanguageBox.setItemText(0, QCoreApplication.translate("Settings", u"English", None))
-        self.RomLanguageBox.setItemText(1, QCoreApplication.translate("Settings", u"French", None))
-        self.RomLanguageBox.setItemText(2, QCoreApplication.translate("Settings", u"Spanish", None))
-        self.RomLanguageBox.setItemText(3, QCoreApplication.translate("Settings", u"German", None))
-        self.RomLanguageBox.setItemText(4, QCoreApplication.translate("Settings", u"Japanese", None))
-        self.RomLanguageBox.setItemText(5, QCoreApplication.translate("Settings", u"Korean", None))
-
-        self.SongEditor.setTitle(QCoreApplication.translate("Settings", u"Song Editor", None))
-        self.SongScoreCheckbox.setText(QCoreApplication.translate("Settings", u"Load Song and Score separately", None))
-        self.RapperFix.setText(QCoreApplication.translate("Settings", u"Add the Rapper Crash fix", None))
-        self.Normalize.setText(QCoreApplication.translate("Settings", u"Normalize Midi (Makes Midis more Wii Music friendly)", None))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab), QCoreApplication.translate("Settings", u"Editor", None))
         self.DolphinPath_Title.setTitle(QCoreApplication.translate("Settings", u"Dolphin Path", None))
         self.DolphinPath_Label.setText(QCoreApplication.translate("Settings", u"No Specified Path", None))
         self.DolphinPath_Browse.setText(QCoreApplication.translate("Settings", u"Browse", None))

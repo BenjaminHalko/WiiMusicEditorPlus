@@ -8,17 +8,6 @@ authors = [
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
-dependencies = [
-    "importlib_metadata",
-    "mido",
-    "packaging",
-    "pretty_midi",
-    "psutil",
-    "pypresence",
-    "pyside6",
-    "requests",
-    "setuptools"
-]
 
 [project.scripts]
 wii-music-editor = "wii_music_editor:main"
@@ -38,10 +27,6 @@ wii_music_editor = "wii_music_editor"
 
 [tool.cibuildwheel]
 skip = ["*-musllinux*", "pp*", "*-win32"]
-repair-wheel-command = ""
-
-[tool.cibuildwheel.linux]
-platform = "manylinux"
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]

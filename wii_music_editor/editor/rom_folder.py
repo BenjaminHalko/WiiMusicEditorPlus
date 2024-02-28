@@ -84,13 +84,10 @@ class RomFolder:
         # Set Paths
         self.mainDolPath = self.folderPath / "sys" / "main.dol"
         self.brsarPath = self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
-        message_type = get_message_type(self.region, preferences.rom_language)
-        self.messagePath = self.folderPath / "files" / message_type / "Message"
 
         # Create backups
         self.brsarBackupPath = create_backup(self.brsarPath)
         self.mainDolBackupPath = create_backup(self.mainDolPath)
-        create_backup(self.messagePath / "message.carc")
 
         # Load Brsar
         self.brsar = Brsar(self.brsarPath)
@@ -103,9 +100,15 @@ class RomFolder:
         self.load_default_styles()
 
         # Load Text
+        self.load_text()
+        self.loaded = True
+
+    def load_text(self):
+        message_type = get_message_type(self.region, preferences.rom_language)
+        self.messagePath = self.folderPath / "files" / message_type / "Message"
+        create_backup(self.messagePath / "message.carc")
         self.text = TextClass(self.messagePath)
         self.textBackup = TextClass(self.messagePath, "message.carc.backup")
-        self.loaded = True
 
     def load_styles(self):
         for i, style in enumerate(style_list):
@@ -119,16 +122,22 @@ class RomFolder:
 
     def verify_main_dol(self) -> bool:
         mainTargetHash = self.__mainDolHashes[self.region]
+        if mainTargetHash == "":
+            return True
         mainHash = sha1checksum(self.mainDolBackupPath)
         return mainTargetHash == mainHash
 
     def verify_brsar(self) -> bool:
         brsarTargetHash = self.__brsarHashes[self.region]
+        if brsarTargetHash == "":
+            return True
         brsarHash = hashlib.sha1(self.brsarBackup.data).hexdigest()
         return brsarTargetHash == brsarHash
 
     def verify_message(self) -> bool:
         messageTargetHash = self.__messageHashes[self.messagePath.parent.stem.lower()]
+        if messageTargetHash == "":
+            return True
         with open(self.messagePath / "message.carc.backup", "rb") as message:
             messageHash = hashlib.sha1(message.read()).hexdigest()
         return messageTargetHash == messageHash

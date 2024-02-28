@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(869, 656)
+        MainWindow.resize(869, 605)
         MainWindow.setContextMenuPolicy(Qt.NoContextMenu)
         MainWindow.setWindowTitle(u"Wii Music Editor Plus")
         MainWindow.setStyleSheet(u"QToolTip\n"
@@ -637,13 +637,22 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addWidget(self.MP_vLine)
 
+        self.MP_RomInfo = QHBoxLayout()
+        self.MP_RomInfo.setObjectName(u"MP_RomInfo")
+        self.MP_RomInfo_Path = QVBoxLayout()
+        self.MP_RomInfo_Path.setObjectName(u"MP_RomInfo_Path")
         self.MP_LoadedFile_Label = QLabel(self.MainPage)
         self.MP_LoadedFile_Label.setObjectName(u"MP_LoadedFile_Label")
 
-        self.verticalLayout_9.addWidget(self.MP_LoadedFile_Label)
+        self.MP_RomInfo_Path.addWidget(self.MP_LoadedFile_Label)
 
         self.MP_LoadedFile_Path = QLabel(self.MainPage)
         self.MP_LoadedFile_Path.setObjectName(u"MP_LoadedFile_Path")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.MP_LoadedFile_Path.sizePolicy().hasHeightForWidth())
+        self.MP_LoadedFile_Path.setSizePolicy(sizePolicy)
         self.MP_LoadedFile_Path.setStyleSheet(u"QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -654,7 +663,81 @@ class Ui_MainWindow(object):
 "padding-bottom: 6px;\n"
 "}")
 
-        self.verticalLayout_9.addWidget(self.MP_LoadedFile_Path)
+        self.MP_RomInfo_Path.addWidget(self.MP_LoadedFile_Path)
+
+
+        self.MP_RomInfo.addLayout(self.MP_RomInfo_Path)
+
+        self.line_2 = QFrame(self.MainPage)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.VLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
+
+        self.MP_RomInfo.addWidget(self.line_2)
+
+        self.MP_RomInfo_Region = QVBoxLayout()
+        self.MP_RomInfo_Region.setObjectName(u"MP_RomInfo_Region")
+        self.MP_Rom_Region_Label = QLabel(self.MainPage)
+        self.MP_Rom_Region_Label.setObjectName(u"MP_Rom_Region_Label")
+        self.MP_Rom_Region_Label.setMinimumSize(QSize(150, 0))
+
+        self.MP_RomInfo_Region.addWidget(self.MP_Rom_Region_Label)
+
+        self.MP_Rom_Region = QLabel(self.MainPage)
+        self.MP_Rom_Region.setObjectName(u"MP_Rom_Region")
+        self.MP_Rom_Region.setEnabled(True)
+        self.MP_Rom_Region.setStyleSheet(u"QLabel\n"
+"{\n"
+"padding: 1px;\n"
+"border: 1px solid;\n"
+"border-color: #1e1e1e;\n"
+"background-color: #242424;\n"
+"padding-top: 6px;\n"
+"padding-bottom: 6px;\n"
+"}")
+        self.MP_Rom_Region.setText(u"")
+
+        self.MP_RomInfo_Region.addWidget(self.MP_Rom_Region)
+
+
+        self.MP_RomInfo.addLayout(self.MP_RomInfo_Region)
+
+        self.line_3 = QFrame(self.MainPage)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setFrameShape(QFrame.VLine)
+        self.line_3.setFrameShadow(QFrame.Sunken)
+
+        self.MP_RomInfo.addWidget(self.line_3)
+
+        self.MP_RomInfo_Language = QVBoxLayout()
+        self.MP_RomInfo_Language.setObjectName(u"MP_RomInfo_Language")
+        self.MP_RomInfo_Language_Label = QLabel(self.MainPage)
+        self.MP_RomInfo_Language_Label.setObjectName(u"MP_RomInfo_Language_Label")
+        self.MP_RomInfo_Language_Label.setMinimumSize(QSize(150, 0))
+
+        self.MP_RomInfo_Language.addWidget(self.MP_RomInfo_Language_Label)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 4, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+
+        self.MP_RomInfo_Language.addItem(self.verticalSpacer_4)
+
+        self.MP_Language = QComboBox(self.MainPage)
+        self.MP_Language.setObjectName(u"MP_Language")
+        self.MP_Language.setEnabled(True)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.MP_Language.sizePolicy().hasHeightForWidth())
+        self.MP_Language.setSizePolicy(sizePolicy1)
+        self.MP_Language.setCurrentText(u"")
+
+        self.MP_RomInfo_Language.addWidget(self.MP_Language)
+
+
+        self.MP_RomInfo.addLayout(self.MP_RomInfo_Language)
+
+
+        self.verticalLayout_9.addLayout(self.MP_RomInfo)
 
         self.MP_MainFeatures = QHBoxLayout()
         self.MP_MainFeatures.setObjectName(u"MP_MainFeatures")
@@ -836,11 +919,11 @@ class Ui_MainWindow(object):
         self.SE_Midi = QGroupBox(self.SongEditor)
         self.SE_Midi.setObjectName(u"SE_Midi")
         self.SE_Midi.setEnabled(True)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.SE_Midi.sizePolicy().hasHeightForWidth())
-        self.SE_Midi.setSizePolicy(sizePolicy)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.SE_Midi.sizePolicy().hasHeightForWidth())
+        self.SE_Midi.setSizePolicy(sizePolicy2)
         self.SE_Midi.setFocusPolicy(Qt.NoFocus)
         self.SE_Midi.setCheckable(True)
         self.SE_Midi.setChecked(True)
@@ -850,11 +933,11 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.SE_Midi_File_Score_Label = QLabel(self.SE_Midi)
         self.SE_Midi_File_Score_Label.setObjectName(u"SE_Midi_File_Score_Label")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Minimum)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.SE_Midi_File_Score_Label.sizePolicy().hasHeightForWidth())
-        self.SE_Midi_File_Score_Label.setSizePolicy(sizePolicy1)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Minimum)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.SE_Midi_File_Score_Label.sizePolicy().hasHeightForWidth())
+        self.SE_Midi_File_Score_Label.setSizePolicy(sizePolicy3)
         self.SE_Midi_File_Score_Label.setStyleSheet(u"QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -881,8 +964,8 @@ class Ui_MainWindow(object):
 
         self.SE_Midi_File_Song_Label = QLabel(self.SE_Midi)
         self.SE_Midi_File_Song_Label.setObjectName(u"SE_Midi_File_Song_Label")
-        sizePolicy1.setHeightForWidth(self.SE_Midi_File_Song_Label.sizePolicy().hasHeightForWidth())
-        self.SE_Midi_File_Song_Label.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.SE_Midi_File_Song_Label.sizePolicy().hasHeightForWidth())
+        self.SE_Midi_File_Song_Label.setSizePolicy(sizePolicy3)
         self.SE_Midi_File_Song_Label.setStyleSheet(u"QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -1012,11 +1095,11 @@ class Ui_MainWindow(object):
 
         self.SE_Midi_TimeSignature = QFrame(self.SE_Midi)
         self.SE_Midi_TimeSignature.setObjectName(u"SE_Midi_TimeSignature")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.SE_Midi_TimeSignature.sizePolicy().hasHeightForWidth())
-        self.SE_Midi_TimeSignature.setSizePolicy(sizePolicy2)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.SE_Midi_TimeSignature.sizePolicy().hasHeightForWidth())
+        self.SE_Midi_TimeSignature.setSizePolicy(sizePolicy4)
         self.verticalLayout_6 = QVBoxLayout(self.SE_Midi_TimeSignature)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.SE_Midi_TimeSignature_Label = QLabel(self.SE_Midi_TimeSignature)
@@ -1062,8 +1145,8 @@ class Ui_MainWindow(object):
         self.SE_ChangeSongText = QGroupBox(self.SongEditor)
         self.SE_ChangeSongText.setObjectName(u"SE_ChangeSongText")
         self.SE_ChangeSongText.setEnabled(True)
-        sizePolicy.setHeightForWidth(self.SE_ChangeSongText.sizePolicy().hasHeightForWidth())
-        self.SE_ChangeSongText.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.SE_ChangeSongText.sizePolicy().hasHeightForWidth())
+        self.SE_ChangeSongText.setSizePolicy(sizePolicy2)
         self.SE_ChangeSongText.setContextMenuPolicy(Qt.NoContextMenu)
         self.SE_ChangeSongText.setCheckable(False)
         self.SE_ChangeSongText.setChecked(False)
@@ -1162,11 +1245,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.SE_SongToChange = QListWidget(self.SE_SongToChangeBox)
         self.SE_SongToChange.setObjectName(u"SE_SongToChange")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Expanding)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.SE_SongToChange.sizePolicy().hasHeightForWidth())
-        self.SE_SongToChange.setSizePolicy(sizePolicy3)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Expanding)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.SE_SongToChange.sizePolicy().hasHeightForWidth())
+        self.SE_SongToChange.setSizePolicy(sizePolicy5)
 
         self.verticalLayout_3.addWidget(self.SE_SongToChange)
 
@@ -1184,8 +1267,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
         self.SE_StyleText = QLabel(self.SE_StyleBox)
         self.SE_StyleText.setObjectName(u"SE_StyleText")
-        sizePolicy1.setHeightForWidth(self.SE_StyleText.sizePolicy().hasHeightForWidth())
-        self.SE_StyleText.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.SE_StyleText.sizePolicy().hasHeightForWidth())
+        self.SE_StyleText.setSizePolicy(sizePolicy3)
         self.SE_StyleText.setAcceptDrops(True)
         self.SE_StyleText.setStyleSheet(u"QLabel\n"
 "{\n"
@@ -1338,11 +1421,8 @@ class Ui_MainWindow(object):
 
         self.StE_Part_Melody_Instrument = QLabel(self.StE_Parts)
         self.StE_Part_Melody_Instrument.setObjectName(u"StE_Part_Melody_Instrument")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.StE_Part_Melody_Instrument.sizePolicy().hasHeightForWidth())
-        self.StE_Part_Melody_Instrument.setSizePolicy(sizePolicy4)
+        sizePolicy.setHeightForWidth(self.StE_Part_Melody_Instrument.sizePolicy().hasHeightForWidth())
+        self.StE_Part_Melody_Instrument.setSizePolicy(sizePolicy)
         self.StE_Part_Melody_Instrument.setStyleSheet(u"padding: 1px;\n"
 "border: 1px solid;\n"
 "border-color: #1e1e1e;\n"
@@ -1666,8 +1746,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.SOE_File_Label = QLabel(self.SOE_File)
         self.SOE_File_Label.setObjectName(u"SOE_File_Label")
-        sizePolicy1.setHeightForWidth(self.SOE_File_Label.sizePolicy().hasHeightForWidth())
-        self.SOE_File_Label.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.SOE_File_Label.sizePolicy().hasHeightForWidth())
+        self.SOE_File_Label.setSizePolicy(sizePolicy3)
         self.SOE_File_Label.setStyleSheet(u"QLabel\n"
 "{\n"
 "padding: 1px;\n"
@@ -1878,6 +1958,8 @@ class Ui_MainWindow(object):
         self.MB_Donate.setText(QCoreApplication.translate("MainWindow", u"Donate", None))
         self.MP_LoadedFile_Label.setText(QCoreApplication.translate("MainWindow", u"Currently loaded folder:", None))
         self.MP_LoadedFile_Path.setText(QCoreApplication.translate("MainWindow", u"No folder loaded", None))
+        self.MP_Rom_Region_Label.setText(QCoreApplication.translate("MainWindow", u"Rom region:", None))
+        self.MP_RomInfo_Language_Label.setText(QCoreApplication.translate("MainWindow", u"Rom langauge:", None))
         self.MP_SongEditor_Button.setText(QCoreApplication.translate("MainWindow", u"Song Editor", None))
         self.MP_StyleEditor_Button.setText(QCoreApplication.translate("MainWindow", u"Style Editor", None))
         self.MP_Advanced.setTitle(QCoreApplication.translate("MainWindow", u"Advanced features", None))

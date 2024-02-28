@@ -4,11 +4,13 @@ from shutil import copyfile, rmtree
 import zipfile
 import webbrowser
 
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QComboBox
 
+from wii_music_editor.data.region import RegionType
 from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.settings import SettingsWindow
 from wii_music_editor.ui.update import UpdateWindow
+from wii_music_editor.ui.warning import show_warning
 from wii_music_editor.ui.widgets.verify_rom import verify_rom_folder
 from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion, GetCurrentVersion
 
@@ -32,7 +34,7 @@ from wii_music_editor.ui.widgets.populate_list_widget import populate_song_list,
 from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
 from wii_music_editor.utils.preferences import preferences
-from wii_music_editor.utils.save import load_setting
+from wii_music_editor.utils.save import load_setting, save_setting
 
 
 # Load Places
@@ -71,10 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if rom_path.is_file():
                     rom_folder_path = ConvertRom(rom_path)
                 rom_folder.load(rom_folder_path)
-                if rom_folder.loaded:
-                    self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
-                else:
-                    self.MP_LoadedFile_Path.setText("Error Loading File")
+                self.LoadRomInfo()
             except Exception as e:
                 ShowError(tr("Error", "Could not load file"),
                           tr("Error", "One or more errors have occurred"))
@@ -175,6 +174,55 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Verify Rom Folder
         verify_rom_folder()
+
+    def LoadRomInfo(self):
+        if rom_folder.loaded:
+            self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
+            regionNames = [
+                tr("region", "US"),
+                tr("region", "Europe"),
+                tr("region", "Japan"),
+                tr("region", "Korea"),
+            ]
+            self.MP_Rom_Region.setText(regionNames[rom_folder.region])
+            languages = [
+                tr("language", "English"),
+                tr("language", "French"),
+                tr("language", "Spanish"),
+                tr("language", "German"),
+                tr("language", "Italian"),
+                tr("language", "Japanese"),
+                tr("language", "Korean"),
+            ]
+            self.MP_Language.clear()
+            if rom_folder.region == RegionType.US:
+                self.MP_Language.addItems(languages[:3])
+                self.MP_Language.setCurrentIndex(min(preferences.rom_language, 2))
+            elif rom_folder.region == RegionType.Europe:
+                self.MP_Language.addItems(languages[:5])
+                self.MP_Language.setCurrentIndex(min(preferences.rom_language, 4))
+            elif rom_folder.region == RegionType.Japan:
+                self.MP_Language.addItem(languages[5])
+            elif rom_folder.region == RegionType.Korea:
+                self.MP_Language.addItem(languages[6])
+            self.MP_Language.currentIndexChanged.connect(self.SetLangauge)
+            self.MP_Language.setEnabled(True)
+
+            if rom_folder.region != RegionType.US:
+                show_warning("Only US rom is supported in the beta version currently."
+                             "\nSupport for other regions will be added in the future.", "us_only")
+
+        else:
+            self.MP_LoadedFile_Path.setText(tr("error", "Error Loading File"))
+            self.MP_Rom_Region.setText("")
+            self.MP_Language.clear()
+            self.MP_Language.setEnabled(False)
+
+    def SetLangauge(self):
+        if preferences.rom_language != self.MP_Language.currentIndex():
+            preferences.rom_language = self.MP_Language.currentIndex()
+            save_setting("preferences", "rom_language", self.MP_Language.currentIndex())
+            rom_folder.load_text()
 
     def GotoMainMenu(self):
         if self.fromSongEditor != -1:
@@ -324,7 +372,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ShowError(self.tr("Unable to import changes"), self.tr("Must load Wii Music Rom"))
 
     # Menu Bar
-
     def MenuBar_CheckForUpdates(self):
         UpdateWindow(self)
 
@@ -343,12 +390,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def MenuBar_Load_Rom(self):
         if select_rom_path("Wii Music Rom (*.wbfs *.iso)"):
-            self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
+            self.LoadRomInfo()
             self.GotoMainMenu()
 
     def MenuBar_Load_RomFolder(self):
         if select_rom_path(""):
-            self.MP_LoadedFile_Path.setText(str(rom_folder.folderPath))
+            self.LoadRomInfo()
             self.GotoMainMenu()
 
     # Song Editor Buttons
