@@ -5,4 +5,6 @@ packaging~=23.2
 pretty-midi@git+https://github.com/BenjaminHalko/pretty-midi
 psutil~=5.9.8
 pypresence~=4.3.0
+pyshortcuts~=1.9.0
 requests~=2.31.0
+setuptools~=69.1.1
