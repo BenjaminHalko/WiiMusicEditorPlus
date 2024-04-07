@@ -40,14 +40,10 @@ else:
     data = ["include/all/**/*", f"include/{plat}/**/*"]
 
 
-with open("requirements.txt") as f:
-    requirements = f.read().splitlines()
-
 setup(
     distclass=BinaryDistribution,
     package_data={"wii_music_editor": data},
     cmdclass={
         'install': PostInstallCommand,
     },
-    install_requires=requirements,
 )
