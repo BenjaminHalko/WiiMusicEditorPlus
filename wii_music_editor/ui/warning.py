@@ -1,3 +1,5 @@
+import logging
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog
 
@@ -9,6 +11,7 @@ from wii_music_editor.utils.save import load_setting
 def show_warning(message: str, error_id: str):
     if load_setting("warning", error_id, False):
         return
+    logging.warning(message.replace("\n", " "))
     WarningWindow(message, error_id)
 
 

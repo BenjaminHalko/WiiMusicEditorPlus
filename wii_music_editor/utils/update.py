@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-import importlib_metadata
+from wii_music_editor.utils.logger import is_debug
 
 
 def GetVersionNumber(version: str) -> int:
@@ -10,14 +10,6 @@ def GetVersionNumber(version: str) -> int:
     for i in range(len(version)):
         version_number += int(version[i]) * (100 ** (3 - i))
     return version_number
-
-
-def GetCurrentVersion() -> str:
-    try:
-        return str(importlib_metadata.version("wii_music_editor"))
-    except importlib_metadata.PackageNotFoundError:
-        pass
-    return ""
 
 
 def GetLatestVersion() -> str:
@@ -30,4 +22,4 @@ def GetLatestVersion() -> str:
 
 
 def CheckForUpdate(local_version: str = "", latest_version: str = "") -> bool:
-    return GetVersionNumber(local_version) < GetVersionNumber(latest_version)
+    return not is_debug() and GetVersionNumber(local_version) < GetVersionNumber(latest_version)

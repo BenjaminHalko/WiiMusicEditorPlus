@@ -12,7 +12,8 @@ from wii_music_editor.ui.settings import SettingsWindow
 from wii_music_editor.ui.update import UpdateWindow
 from wii_music_editor.ui.warning import show_warning
 from wii_music_editor.ui.widgets.verify_rom import verify_rom_folder
-from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion, GetCurrentVersion
+from wii_music_editor.utils.logger import is_debug
+from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion
 
 from wii_music_editor.data.instruments import instrument_list
 from wii_music_editor.data.songs import SongType, song_list
@@ -30,11 +31,12 @@ from wii_music_editor.ui.riivolution import RiivolutionWindow
 from wii_music_editor.ui.widgets.dolphin import LoadDolphin, CopySaveFileToDolphin
 from wii_music_editor.ui.widgets.load_files import get_file_path, select_rom_path
 from wii_music_editor.ui.widgets.populate_list_widget import populate_song_list, populate_style_list, \
-    populate_instrument_list
+    populate_instrument_list, get_style_list_index, set_style_list_index
 from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.save import load_setting, save_setting
+from wii_music_editor.utils.version import GetCurrentVersion
 
 
 # Load Places
@@ -68,16 +70,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Load folder
         rom_folder_path = load_setting("Paths", "CurrentLoadedFile", "")
         if rom_folder_path != "":
-            try:
-                rom_path = Path(rom_folder_path)
-                if rom_path.is_file():
-                    rom_folder_path = ConvertRom(rom_path)
-                rom_folder.load(rom_folder_path)
-                self.LoadRomInfo()
-            except Exception as e:
-                ShowError(tr("Error", "Could not load file"),
-                          tr("Error", "One or more errors have occurred"))
-                print("Error loading file:", e)
+            rom_folder.load(Path(rom_folder_path))
+            self.LoadRomInfo()
+            if not rom_folder.loaded:
+                ShowError("Error", "Unable to load rom folder")
 
         # Menu Bar Buttons
         self.menuBar().setNativeMenuBar(False)
@@ -164,7 +160,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Check for updates
         try:
             local_version = GetCurrentVersion()
-            self.setWindowTitle(f"Wii Music Editor Plus - v{local_version}")
+            if is_debug():
+                self.setWindowTitle(f"Wii Music Editor Plus - Debug Build")
+            else:
+                self.setWindowTitle(f"Wii Music Editor Plus - v{local_version}")
             if preferences.auto_update:
                 latest_version = GetLatestVersion()
                 if CheckForUpdate(local_version, latest_version):
@@ -260,7 +259,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_Patch.setEnabled(False)
         discord_presence.update(DiscordState.EditingStyles)
         if self.fromSongEditor != -1:
-            self.StE_StyleList.setCurrentRow(self.fromSongEditor)
+            set_style_list_index(self.StE_StyleList, self.fromSongEditor)
             self.List_StE_StyleList()
 
     def LoadTextEditor(self):
@@ -571,14 +570,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     # Style Editor Buttons
     def StE_Patchable(self):
-        styleIndex = self.StE_StyleList.currentRow()
+        styleIndex = get_style_list_index(self.StE_StyleList)
         self.StE_Patch.setEnabled((self.__StE_styleSelected != rom_folder.styles[styleIndex])
                                   or (self.StE_ChangeStyleName.isEnabled()
                                       and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]))
 
     def Button_StE_PartSelector(self):
         self.StE_InstrumentList.setCurrentRow(-1)
-        style = style_list[self.StE_StyleList.currentRow()]
+        style = style_list[get_style_list_index(self.StE_StyleList)]
         partIndex = self.StE_PartSelector.currentIndex()
         partIsPercussion = partIndex == 4 or partIndex == 5
         populate_instrument_list(self.StE_InstrumentList, partIsPercussion, style.style_type == StyleType.Menu)
@@ -598,7 +597,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_InstrumentList.setCurrentRow(toHighlight)
 
     def List_StE_InstrumentList(self):
-        styleIndex = self.StE_StyleList.currentRow()
+        styleIndex = get_style_list_index(self.StE_StyleList)
         partIndex = self.StE_PartSelector.currentIndex()
         instrumentIndex = self.StE_InstrumentList.currentRow()
         partIsPercussion = partIndex == 4 or partIndex == 5
@@ -626,11 +625,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != style_list[styleIndex].style)
 
     def List_StE_StyleList(self):
-        styleIndex = self.StE_StyleList.currentRow()
+        styleIndex = get_style_list_index(self.StE_StyleList)
         style = style_list[styleIndex]
         self.StE_Instruments.setEnabled(True)
         self.StE_Patch.setEnabled(False)
-        if style.style_type == StyleType.Global:
+        if style.style_type == StyleType.Global or style.style_type == StyleType.QuickJam:
             self.StE_ChangeStyleName.setEnabled(True)
             self.StE_ChangeStyleName_Label.setEnabled(True)
             self.StE_ChangeStyleName.setText(rom_folder.text.styles[styleIndex])
@@ -651,7 +650,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_Part_Percussion2_Instrument.setText(instrument_list[default_style.perc2].name)
 
     def Button_StE_ResetStyle(self):
-        self.__StE_styleSelected = style_list[self.StE_StyleList.currentRow()].style.copy()
+        self.__StE_styleSelected = style_list[get_style_list_index(self.StE_StyleList)].style.copy()
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patchable()
         self.StE_Part_Melody_Instrument.setText(instrument_list[self.__StE_styleSelected.melody].name)
@@ -664,7 +663,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def Button_StE_Patch(self):
         self.StE_Patch.setEnabled(False)
-        styleIndex = self.StE_StyleList.currentRow()
+        styleIndex = get_style_list_index(self.StE_StyleList)
         if self.__StE_styleSelected != rom_folder.styles[styleIndex]:
             replace_style(style_list[styleIndex], self.__StE_styleSelected)
 
@@ -673,10 +672,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             replace_style_text(style_list[styleIndex], self.StE_ChangeStyleName.text())
 
         if style_list[styleIndex].style == self.__StE_styleSelected:
-            self.StE_StyleList.item(styleIndex).setText(style_list[styleIndex].name)
+            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
+                rom_folder.text.styles[style_list[styleIndex].style_id])
         else:
-            self.StE_StyleList.item(styleIndex).setText(
-                f"{style_list[styleIndex].name} ~[{tr('main', 'Replaced')}]~")
+            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
+                f"{rom_folder.text.styles[style_list[styleIndex].style_id]} ~[{tr('main', 'Replaced')}]~")
 
     # Text Editor
     def Button_TE_Patch(self):
@@ -713,7 +713,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Default Style Editor
     def Button_DS_Patch(self):
         song = song_list[self.DS_Songs.currentRow()]
-        style = style_list[self.DS_Styles.currentRow()]
+        style = style_list[get_style_list_index(self.DS_Styles)]
         replace_default_style(song, style)
         self.DS_Patch.setEnabled(False)
         if self.fromSongEditor != -1:
@@ -721,16 +721,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def List_DS_SongList(self):
         self.DS_StyleBox.setEnabled(True)
-        self.DS_Styles.setCurrentRow(get_style_by_id(rom_folder.default_styles[self.DS_Songs.currentRow()]).list_order)
+        set_style_list_index(self.DS_Styles,
+                             get_style_by_id(rom_folder.default_styles[self.DS_Songs.currentRow()]).list_order)
 
     def List_DS_StyleList(self):
         song = song_list[self.DS_Songs.currentRow()]
-        style = style_list[self.DS_Styles.currentRow()]
+        style = style_list[get_style_list_index(self.DS_Styles)]
         self.DS_Patch.setEnabled(style.style_id != rom_folder.default_styles[song.list_order])
         self.DS_Reset.setEnabled(style.style_id != song.default_style)
 
     def Button_DS_Reset(self):
-        self.DS_Styles.setCurrentRow(get_style_by_id(song_list[self.DS_Songs.currentRow()].default_style).list_order)
+        set_style_list_index(self.DS_Styles, get_style_by_id(
+            song_list[self.DS_Songs.currentRow()].default_style).list_order)
         self.DS_Reset.setEnabled(False)
 
     # Remove Songs

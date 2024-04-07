@@ -1,3 +1,5 @@
+import logging
+
 from wii_music_editor.data.songs import SongClass, SongType, song_list
 from wii_music_editor.data.styles import StyleInstruments, Style
 from wii_music_editor.editor.brsar import BrsarGroup
@@ -16,6 +18,7 @@ def __replace_song(song: bytearray, group_index: int, item_index: int):
 
 
 def replace_song(song: SongClass, score_midi: Midi, song_midi: Midi):
+    logging.info(f"Replacing song: {song.name}")
     if preferences.normalize_midi:
         score_midi.normalize()
         if score_midi != song_midi:
@@ -53,6 +56,7 @@ def replace_song(song: SongClass, score_midi: Midi, song_midi: Midi):
 
 
 def replace_song_text(song: SongClass, name: str, description: str, genre: str):
+    logging.info(f"Changing text for song: {song.name}")
     index = song.mem_order
     if (rom_folder.text.songs[index] != name or rom_folder.text.descriptions[index] != description or
             rom_folder.text.genres[index] != genre):
@@ -83,16 +87,19 @@ def get_original_song(song: SongClass) -> tuple[Midi, Midi, str, str, str, int, 
 
 
 def replace_style(style: Style, instruments: StyleInstruments):
+    logging.info(f"Replacing style: {style.name}")
     rom_folder.styles[style.list_order] = instruments.copy()
     rom_folder.mainDol.set_style(style.style_id, instruments)
     rom_folder.mainDol.save()
 
 
 def replace_style_text(style: Style, name: str):
+    logging.info(f"Changing style name: {style.name}")
     rom_folder.text.change_name(style, [name])
 
 
 def replace_default_style(song: SongClass, style: Style):
+    logging.info(f"Changing default style for song '{song.name}' to '{style.name}'")
     rom_folder.default_styles[song.list_order] = style.style_id
     rom_folder.mainDol.write_song_info(song, style.style_id, rom_folder.mainDol.songSegmentDefaultStyle)
     rom_folder.mainDol.save()

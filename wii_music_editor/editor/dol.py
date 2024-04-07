@@ -91,6 +91,7 @@ class MainDol:
         if self.__remove_code(self.__styleCodeBegin, self.__styleCodeEnd):
             for style in style_list:
                 self.set_style(style.style_id, style.style)
+
         if self.__remove_code(self.__defaultStyleCodeBegin, self.__defaultStyleCodeEnd):
             for song in song_list:
                 if song.default_style != -1:

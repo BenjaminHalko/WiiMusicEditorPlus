@@ -1,4 +1,8 @@
 def main():
+    from wii_music_editor.utils.logger import setup_logger
+    setup_logger()
+
+    import logging
     from pathlib import Path
 
     from PySide6.QtGui import QIcon, QFontDatabase
@@ -16,6 +20,7 @@ def main():
 
     # First Setup
     if not Path(f"{savePath}/settings.ini").is_file():
+        logging.info("Starting First Setup")
         FirstSetupWindow(app)
 
     # Main Window

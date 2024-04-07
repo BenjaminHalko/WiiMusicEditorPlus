@@ -5,7 +5,8 @@ from PySide6.QtWidgets import QDialog, QWidget, QApplication
 
 from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.update_ui import Ui_Update
-from wii_music_editor.utils.update import CheckForUpdate, GetCurrentVersion, GetLatestVersion
+from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion
+from wii_music_editor.utils.version import GetCurrentVersion
 
 
 class UpdateWindow(QDialog, Ui_Update):

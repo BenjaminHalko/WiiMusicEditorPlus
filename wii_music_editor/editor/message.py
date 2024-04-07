@@ -1,9 +1,10 @@
+import logging
 import os
 from pathlib import Path
 from shutil import rmtree
 
 from wii_music_editor.data.songs import song_list, SongType, SongClass
-from wii_music_editor.data.styles import StyleNames, Style
+from wii_music_editor.data.styles import StyleNames, Style, StyleType, style_list
 from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.preferences import preferences
@@ -14,7 +15,8 @@ class TextClass:
     __regular_offsets = [0xc8, 0x190, 0x12c]
     __maestro_offsets = [0xfa, 0x1c2, 0x15e]
     __hand_bell_offsets = [0xff, 0x1c7, 0x163]
-    __style_offset = 0xb200
+    __style_offset = 0xb100
+    __style_offset_custom_jam = 0xb200
     __maestro_order = [0, 4, 2, 3, 1]
     __hand_bell_order = [0, 2, 3, 1, 4]
     __style_order = [3, 1, 4, 2, 7, 10, 11, 9, 8, 6, 5]
@@ -54,15 +56,16 @@ class TextClass:
         for i, text_type in enumerate([self.songs, self.descriptions, self.genres]):
             for song in song_list:
                 offsets, index = self.__get_song_offset(song)
-                offset_str = format(offsets[i] + index, 'x').lower()
+                offset_str = format(offsets[i] + index[i], 'x').lower()
                 offset_str = ' ' * (4 - len(offset_str)) + offset_str + '00 @'
                 text_type.append(self.__text_at_offset(offset_str))
 
         # Get the styles
-        for i, index in enumerate(self.__style_order):
-            offset_str = format(self.__style_offset + index, 'x').lower()
-            offset_str = ' ' * (4 - len(offset_str)) + offset_str + ' @'
-            self.styles.append(self.__text_at_offset(offset_str))
+        for style in style_list:
+            if style.style_type == StyleType.Global or style.style_type == StyleType.QuickJam:
+                offset_str = format(self.__style_offset + style.style_id, 'x').lower()
+                offset_str = ' ' * (4 - len(offset_str)) + offset_str + ' @'
+                self.styles.append(self.__text_at_offset(offset_str))
 
     def __get_song_offset(self, song: SongClass) -> (list[int], int):
         offset = self.__regular_offsets
@@ -73,7 +76,7 @@ class TextClass:
         elif song.song_type == SongType.Hand_Bell:
             offset = self.__hand_bell_offsets
             index = self.__hand_bell_order[index]
-        return offset, index
+        return offset, [index]*3
 
     def __text_at_offset(self, offset: str) -> str:
         for j, text in enumerate(self.textlines):
@@ -96,11 +99,15 @@ class TextClass:
             self.genres[item.list_order] = new_text[2]
         else:
             offsets = [self.__style_offset]
-            index = self.__style_order[item.style_id]
+            index = [item.style_id]
             self.styles[item.list_order] = new_text[0]
+            if item.style_type == StyleType.Global:
+                offsets.append(self.__style_offset_custom_jam)
+                index.append(self.__style_order[item.style_id])
+                new_text.append(new_text[0])
 
         for i in range(len(offsets)):
-            offset = format(offsets[i]+index, 'x').lower()
+            offset = format(offsets[i]+index[i], 'x').lower()
             offset = ' ' * (4 - len(offset)) + offset
             if isSong:
                 offset += '00 @'
@@ -122,10 +129,11 @@ class TextClass:
         try:
             if (self.__filepath / self.__folder).is_dir():
                 rmtree(self.__filepath / self.__folder)
-            run_shell([paths.include / 'wiimms' / 'wszst', 'extract', self.__filepath / self.__filename])
+            run_shell([paths.include / 'wiimms' / 'wszst', 'extract', self.__filepath / self.__filename],
+                      logging_level=logging.DEBUG)
             os.remove(self.__filepath/self.__folder/"wszst-setup.txt")
             run_shell([paths.include/'wiimms'/'wbmgt', 'decode',
-                       self.__filepath/self.__folder/'new_music_message.bmg'])
+                       self.__filepath/self.__folder/'new_music_message.bmg'], logging_level=logging.DEBUG)
             os.remove(self.__filepath/self.__folder/'new_music_message.bmg')
         except Exception as e:
             ShowError("Could not decode text file", str(e))
@@ -136,11 +144,11 @@ class TextClass:
             with open(self.__filepath / self.__folder / 'new_music_message.txt', 'wb') as message:
                 message.writelines(self.textlines)
             run_shell([paths.include/'wiimms'/'wbmgt', 'encode',
-                       self.__filepath/self.__folder/'new_music_message.txt'])
+                       self.__filepath/self.__folder/'new_music_message.txt'], logging_level=logging.DEBUG)
             os.remove(self.__filepath/self.__folder/"new_music_message.txt")
             os.remove(self.__filepath/self.__filename)
             run_shell([paths.include/'wiimms'/'wszst', 'create', self.__filepath/self.__folder,
-                       '--dest', self.__filepath/self.__filename])
+                       '--dest', self.__filepath/self.__filename], logging_level=logging.DEBUG)
             rmtree(self.__filepath/self.__folder)
         except Exception as e:
             ShowError("Could not encode text file", str(e))

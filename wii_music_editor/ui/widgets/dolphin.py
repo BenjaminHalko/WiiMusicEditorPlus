@@ -1,3 +1,4 @@
+import logging
 import os
 import subprocess
 from shutil import copytree
@@ -25,6 +26,7 @@ def LoadDolphin(menu):
                 env = os.environ
                 if currentSystem == SystemType.Windows:
                     env["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.dirname(paths.dolphin) + '/QtPlugins/platforms/'
+                logging.info("Starting Dolphin...")
                 subprocess.Popen(cmd, env=env)
             except Exception as e:
                 ShowError(tr("error", "Unable to launch Dolphin"),
@@ -41,8 +43,9 @@ def CopySaveFileToDolphin():
     else:
         try:
             if ConfirmDialog(tr("confirm", "Are you sure you want to overwrite your save file?")):
+                logging.info("Copying save file to Dolphin")
                 path = paths.dolphinSave/"title"/"00010000"/dolphin_save_ids[rom_folder.region]/"data"
-                copytree(paths.includeAll/"save", path)
+                copytree(paths.includeAll/"save", path, dirs_exist_ok=True)
                 SuccessWindow(tr("success", "Save file successfully added to Dolphin"))
         except Exception as e:
             ShowError(tr("error", "Unable to add save file"), str(e))

@@ -1,3 +1,5 @@
+import logging
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog
 from wii_music_editor.ui.windows.error_handler_ui import Ui_Error
@@ -19,6 +21,7 @@ class ShowError(QDialog, Ui_Error):
             self.ErrorClose_GC.clicked.connect(self.close)
             self.ErrorCreate_GC.clicked.connect(self.GeckoCodeCreate)
             self.MainWidget.setCurrentIndex(1)
+        logging.error(f"{error}: {message}")
         self.show()
         self.exec()
 

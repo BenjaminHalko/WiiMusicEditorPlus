@@ -1,8 +1,8 @@
+import logging
 import os
 import subprocess
 import stat
 
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.osUtils import currentSystem, SystemType
 
 
@@ -14,13 +14,17 @@ def give_permission(file: str):
             print("Error giving permission to file:", file, "\nError:", e)
 
 
-def run_shell(command: list[str] or str):
+def run_shell(command: list[str] or str, logging_level: int = logging.INFO):
     try:
         if type(command) is not str:
             give_permission(command[0])
-        if currentSystem == SystemType.Windows:
-            subprocess.run(command)
-        else:
-            subprocess.run(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        with process.stdout:
+            try:
+                for line in iter(process.stdout.readline, b''):
+                    logging.log(logging_level, line.decode().strip())
+            except subprocess.CalledProcessError as e:
+                logging.error(f"{e}")
+        process.wait()
     except Exception as e:
-        ShowError(f"Could not execute command:", f"Command: {command}\nError: {e}")
+        logging.error(f"Error running shell command: {command}\nError: {e}")

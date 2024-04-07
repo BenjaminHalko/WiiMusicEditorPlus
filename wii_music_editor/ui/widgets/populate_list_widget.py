@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QListWidget, QListWidgetItem
 
 from wii_music_editor.data.instruments import instrument_list
 from wii_music_editor.data.songs import song_list, SongType
-from wii_music_editor.data.styles import style_list
+from wii_music_editor.data.styles import style_list, Style
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.ui.widgets.translate import tr
@@ -36,8 +36,22 @@ def populate_song_list(widget: QListWidget, types: list[SongType] or None = None
 
 
 def populate_style_list(widget: QListWidget, only_allow: int = -1):
+    style_type_names = [
+        tr('style_type_names', 'Global'),
+        tr('style_type_names', 'Quick Jam'),
+        tr('style_type_names', 'Song Specific'),
+        tr('style_type_names', 'Menu'),
+        tr('style_type_names', 'Unused')
+    ]
     widget.clear()
     for i, style in enumerate(style_list):
+
+        if i == 0 or style.style_type != style_list[i-1].style_type:
+            item = QListWidgetItem()
+            item.setText(f"-------- {style_type_names[style.style_type.value]} --------")
+            item.setFlags(item.flags() & Qt.ItemIsSelectable)
+            widget.addItem(item)
+
         item = QListWidgetItem()
         extraText = ""
         if rom_folder.styles[i] != style.style:
@@ -51,6 +65,26 @@ def populate_style_list(widget: QListWidget, only_allow: int = -1):
         widget.addItem(item)
     if only_allow != -1:
         widget.setCurrentRow(only_allow)
+
+
+def get_style_list_index(widget: QListWidget):
+    index = widget.currentRow()
+    index_to_check = 0
+    for i, value in enumerate(Style.total_style_types):
+        if widget.currentRow() > index_to_check:
+            index -= 1
+        index_to_check += value
+    return index
+
+
+def set_style_list_index(widget: QListWidget, index: int):
+    index_to_return = index
+    index_to_check = 0
+    for i, value in enumerate(Style.total_style_types):
+        if index >= index_to_check:
+            index_to_return += 1
+        index_to_check += value
+    widget.setCurrentRow(index_to_return)
 
 
 def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu: bool = False):

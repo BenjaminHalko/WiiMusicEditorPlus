@@ -1,4 +1,5 @@
 import hashlib
+import logging
 from pathlib import Path
 from shutil import copyfile
 
@@ -17,6 +18,7 @@ def create_backup(path: Path) -> Path:
     backup_path = Path(f"{path}.backup")
     if not backup_path.exists():
         copyfile(path, backup_path)
+        logging.info(f"Created backup: {backup_path}")
     return backup_path
 
 
@@ -62,16 +64,18 @@ class RomFolder:
     default_styles: list[int] = [0 for _ in song_list]
     text: TextClass
     textBackup: TextClass
-    region: int = RegionType.US
+    region: int = -1
 
     def load(self, folder: str):
+        logging.info(f"Loading Rom: {folder}")
         self.loaded = False
         # Set Rom Folder
         folder_path = Path(folder)
         if not folder_path.is_dir():
-            folder_path = ConvertRom(folder_path)
-            if folder_path is None:
-                print("Could not convert rom")
+            try:
+                folder_path = ConvertRom(folder_path)
+            except Exception as e:
+                logging.error(f"Could not convert rom: {e}")
                 return
         self.folderPath = folder_path
 
@@ -79,6 +83,7 @@ class RomFolder:
         for i, region in enumerate(region_messages):
             if (self.folderPath / "files" / region[0] / "Message").is_dir():
                 self.region = i
+                logging.info(f"Region: {region[0]}")
                 break
 
         # Set Paths
@@ -86,25 +91,43 @@ class RomFolder:
         self.brsarPath = self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
 
         # Create backups
-        self.brsarBackupPath = create_backup(self.brsarPath)
-        self.mainDolBackupPath = create_backup(self.mainDolPath)
+        try:
+            self.brsarBackupPath = create_backup(self.brsarPath)
+            self.mainDolBackupPath = create_backup(self.mainDolPath)
+        except Exception as e:
+            logging.error(f"Error creating backups: {e}")
+            return
 
         # Load Brsar
-        self.brsar = Brsar(self.brsarPath)
-        self.brsarBackup = Brsar(self.brsarBackupPath)
+        try:
+            self.brsar = Brsar(self.brsarPath)
+            self.brsarBackup = Brsar(self.brsarBackupPath)
+        except Exception as e:
+            logging.error(f"Error loading brsar: {e}")
+            return
 
         # Load Styles
-        self.mainDol = MainDol(self.mainDolPath)
-        self.mainDolBackup = MainDol(self.mainDolBackupPath)
-        self.load_styles()
-        self.load_default_styles()
+        try:
+            self.mainDol = MainDol(self.mainDolPath)
+            self.mainDolBackup = MainDol(self.mainDolBackupPath)
+            self.load_styles()
+            self.load_default_styles()
+        except Exception as e:
+            logging.error(f"Error loading main.dol: {e}")
+            return
 
         # Load Text
         self.load_text()
+        try:
+            self.load_text()
+        except Exception as e:
+            logging.error(f"Error loading text: {e}")
+            return
         self.loaded = True
 
     def load_text(self):
         message_type = get_message_type(self.region, preferences.rom_language)
+        logging.info(f"Loaded langauge: {message_type}")
         self.messagePath = self.folderPath / "files" / message_type / "Message"
         create_backup(self.messagePath / "message.carc")
         self.text = TextClass(self.messagePath)

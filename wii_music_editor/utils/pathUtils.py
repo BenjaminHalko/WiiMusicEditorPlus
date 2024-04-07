@@ -1,7 +1,6 @@
 import os
-from pathlib import Path, PosixPath
+from pathlib import Path
 import subprocess
-import sys
 
 from wii_music_editor.utils.osUtils import currentSystem, choose_from_os, SystemType
 from wii_music_editor.utils.save import save_setting, load_setting, savePath
@@ -23,11 +22,10 @@ class Paths:
 
     def __init__(self):
         # System
-        self.save = Path(savePath)
+        self.save = savePath
         self.program = Path(__file__).parent.parent
         self.include = self.program / "include" / currentSystem.name.lower()
         self.includeAll = self.program / "include" / "all"
-        self.translation = self.program / "translations" / "translations"
 
         # Dolphin
         tempDolphinPath = load_setting("Paths", "Dolphin", "")
@@ -52,10 +50,10 @@ class Paths:
             self.dolphinSave = self.dolphin.parent / "User"
         else:
             self.dolphinSave = Path(choose_from_os([
-                os.path.expanduser('~/Documents/Dolphin Emulator'),
-                os.path.expanduser('~/Library/Application Support/Dolphin'),
-                os.path.expanduser('~/.local/share/dolphin-emu')
-            ]))
+                '~/Documents/Dolphin Emulator',
+                '~/Library/Application Support/Dolphin',
+                '~/.local/share/dolphin-emu'
+            ])).expanduser()
 
 
 paths = Paths()

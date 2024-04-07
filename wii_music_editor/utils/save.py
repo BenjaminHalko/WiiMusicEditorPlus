@@ -1,20 +1,22 @@
 import os
 from configparser import ConfigParser
+from pathlib import Path
+
 from wii_music_editor.utils.osUtils import choose_from_os
 
 # Save
-savePath = choose_from_os([
-    os.path.expanduser('~/AppData/Local/WiiMusicEditorPlus'),
-    os.path.expanduser('~/Library/Application Support/WiiMusicEditorPlus'),
-    os.path.expanduser('~/.local/share/WiiMusicEditorPlus')
-])
-if not os.path.isdir(savePath):
+savePath = Path(choose_from_os([
+    '~/AppData/Local/WiiMusicEditorPlus',
+    '~/Library/Application Support/WiiMusicEditorPlus',
+    '~/.local/share/WiiMusicEditorPlus'
+])).expanduser()
+if not savePath.is_dir():
     os.mkdir(savePath)
 
 
 def load_setting(section: str, key: str, default: str or int or bool) -> str or int or bool:
     ini = ConfigParser()
-    ini.read(savePath + '/settings.ini')
+    ini.read(savePath/'settings.ini')
     if ini.has_option(section, key):
         if type(default) is not int and type(default) is not bool:
             return ini[section][key]
@@ -30,9 +32,9 @@ def load_setting(section: str, key: str, default: str or int or bool) -> str or 
 
 def save_setting(section: str, key: str, value: str or int or bool):
     ini = ConfigParser()
-    ini.read(savePath + '/settings.ini')
+    ini.read(savePath/'settings.ini')
     if not ini.has_section(section):
         ini.add_section(section)
     ini.set(section, key, str(value))
-    with open(savePath + '/settings.ini', 'w') as inifile:
+    with open(savePath/'settings.ini', 'w') as inifile:
         ini.write(inifile)
