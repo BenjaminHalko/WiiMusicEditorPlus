@@ -2,6 +2,13 @@
 
 
 
+## v2.0.0-dev.10 (2024-04-08)
+
+### Fix
+
+* fix: Re-added main ([`2b78c1a`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/2b78c1a5269805e19f41d405aab74caabdd7c259))
+
+
 ## v2.0.0-dev.9 (2024-04-08)
 
 ### Feature
