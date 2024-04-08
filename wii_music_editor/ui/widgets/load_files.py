@@ -1,10 +1,10 @@
+import logging
 import os
 from pathlib import Path
 
 from PySide6.QtWidgets import QFileDialog
 
 from wii_music_editor.editor.rom_folder import rom_folder
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.osUtils import choose_from_os
 from wii_music_editor.utils.save import save_setting, load_setting
@@ -37,8 +37,7 @@ def select_dolphin_save_path():
             paths.dolphinSave = Path(dolphin_path)
             return True
         else:
-            ShowError(tr("error", "Not a Dolphin Save Directory"),
-                      tr("error", "Wii and GameSettings folder not found"))
+            logging.warning("Not a valid Dolphin save folder. Wii folder not found")
     return False
 
 
@@ -57,10 +56,7 @@ def select_rom_path(dialog_filter: str):
                 if not os.path.exists(path + "/files") or not os.path.exists(path + "/sys"):
                     path = path + "/DATA"
                 if not os.path.exists(path + "/files") or not os.path.exists(path + "/sys"):
-                    ShowError(
-                        tr("Error", "Not a valid Wii Music folder"),
-                        tr("Error", "Files and sys folder not found"),
-                    )
+                    logging.error("Not a valid Wii Music folder: files and sys folders not found")
                     return False
             save_file_directory(file.selectedFiles()[0])
             save_setting("Paths", "CurrentLoadedFile", path)
@@ -68,7 +64,7 @@ def select_rom_path(dialog_filter: str):
             if rom_folder.loaded:
                 return True
     except Exception as e:
-        print(e)
+        logging.error(f"Error loading rom: {e}")
 
     return False
 

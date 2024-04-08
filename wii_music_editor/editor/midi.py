@@ -59,6 +59,7 @@ class Midi:
             self.data = bytearray(Brseq.read())
 
     def normalize(self):
+        logging.info("Normalizing midi")
         with TemporaryDirectory() as directory:
             save_path = directory + "/z.midi"
             mid = mido.MidiFile(self.midi_path)
@@ -68,7 +69,7 @@ class Midi:
                         if not msg.is_meta and msg.channel != 0:
                             track[num] = msg.copy(channel=0)
                     except Exception as e:
-                        print("Error:", str(e))
+                        logging.error(f"Error normalizing midi: {e}")
             mid.save(save_path)
             midi_data = pretty_midi.PrettyMIDI(save_path)
             new_midi = pretty_midi.PrettyMIDI(initial_tempo=self.tempo, resolution=2000)

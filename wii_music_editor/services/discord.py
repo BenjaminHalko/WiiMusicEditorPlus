@@ -30,8 +30,6 @@ class DiscordPresence:
     def __init__(self):
         self.__start_time = int(time.time())
         self.__discord_presence = Presence("932356297704226817")
-        if preferences.using_discord:
-            self.connect()
 
     def connect(self):
         try:
