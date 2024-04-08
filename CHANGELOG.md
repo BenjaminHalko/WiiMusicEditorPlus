@@ -2,6 +2,13 @@
 
 
 
+## v2.0.0-dev.9 (2024-04-08)
+
+### Feature
+
+* feat: Add all remaining styles ([`88ea876`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/88ea876f74785d6daa6b899144ec1bb7172f5cde))
+
+
 ## v2.0.0-dev.8 (2024-02-28)
 
 ### Fix
