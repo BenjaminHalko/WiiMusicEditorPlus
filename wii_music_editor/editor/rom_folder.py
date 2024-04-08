@@ -117,7 +117,6 @@ class RomFolder:
             return
 
         # Load Text
-        self.load_text()
         try:
             self.load_text()
         except Exception as e:

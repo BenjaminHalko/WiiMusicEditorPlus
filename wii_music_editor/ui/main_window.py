@@ -667,16 +667,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.__StE_styleSelected != rom_folder.styles[styleIndex]:
             replace_style(style_list[styleIndex], self.__StE_styleSelected)
 
+        name = style_list[styleIndex].name
         if (self.StE_ChangeStyleName.isEnabled()
                 and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]):
             replace_style_text(style_list[styleIndex], self.StE_ChangeStyleName.text())
-
+            name = rom_folder.text.styles[styleIndex]
         if style_list[styleIndex].style == self.__StE_styleSelected:
-            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
-                rom_folder.text.styles[style_list[styleIndex].style_id])
+            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(name)
         else:
-            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(
-                f"{rom_folder.text.styles[style_list[styleIndex].style_id]} ~[{tr('main', 'Replaced')}]~")
+            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(f"{name} ~[{tr('main', 'Replaced')}]~")
 
     # Text Editor
     def Button_TE_Patch(self):
