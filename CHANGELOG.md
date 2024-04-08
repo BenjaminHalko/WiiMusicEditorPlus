@@ -2,6 +2,13 @@
 
 
 
+## v2.0.0-dev.11 (2024-04-08)
+
+### Fix
+
+* fix: Correctly change style names ([`14f58bd`](https://github.com/BenjaminHalko/WiiMusicEditorPlus/commit/14f58bdfa9dcc14f9a7fd390607e4f94942a138a))
+
+
 ## v2.0.0-dev.10 (2024-04-08)
 
 ### Fix
