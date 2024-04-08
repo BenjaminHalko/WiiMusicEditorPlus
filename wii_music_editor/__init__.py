@@ -1,8 +1,11 @@
 def main():
+    print("Starting Wii Music Editor...")
+
     from wii_music_editor.utils.logger import setup_logger
     setup_logger()
 
     import logging
+    import signal
     from pathlib import Path
 
     from PySide6.QtGui import QIcon, QFontDatabase
@@ -14,6 +17,7 @@ def main():
     from wii_music_editor.utils.save import savePath
 
     app = QApplication()
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
     app.setWindowIcon(QIcon(str(paths.includeAll / "icon" / "icon.png")))
     QFontDatabase.addApplicationFont(str(paths.includeAll / "fonts" / "contb.ttf"))
     QFontDatabase.addApplicationFont(str(paths.includeAll / "fonts" / "contm.ttf"))

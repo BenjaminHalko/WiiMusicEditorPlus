@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'error_handler.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.6.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QHBoxLayout,
     QLabel, QPushButton, QSizePolicy, QSpacerItem,
-    QStackedWidget, QVBoxLayout, QWidget)
+    QVBoxLayout, QWidget)
 from . import resources_rc
 
 class Ui_Error(object):
@@ -26,7 +26,7 @@ class Ui_Error(object):
             Error.setObjectName(u"Error")
         Error.setWindowModality(Qt.ApplicationModal)
         Error.setEnabled(True)
-        Error.resize(281, 139)
+        Error.resize(281, 119)
         Error.setStyleSheet(u"QToolTip\n"
 "{\n"
 "     border: 1px solid black;\n"
@@ -518,22 +518,16 @@ class Ui_Error(object):
         Error.setModal(False)
         self.verticalLayout = QVBoxLayout(Error)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.MainWidget = QStackedWidget(Error)
-        self.MainWidget.setObjectName(u"MainWidget")
-        self.ErrorNormal = QWidget()
-        self.ErrorNormal.setObjectName(u"ErrorNormal")
-        self.verticalLayout_2 = QVBoxLayout(self.ErrorNormal)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.Title = QHBoxLayout()
         self.Title.setObjectName(u"Title")
-        self.ErrorSymbol = QLabel(self.ErrorNormal)
+        self.ErrorSymbol = QLabel(Error)
         self.ErrorSymbol.setObjectName(u"ErrorSymbol")
         self.ErrorSymbol.setMaximumSize(QSize(32, 16777215))
         self.ErrorSymbol.setText(u"<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>")
 
         self.Title.addWidget(self.ErrorSymbol)
 
-        self.ErrorTitle = QLabel(self.ErrorNormal)
+        self.ErrorTitle = QLabel(Error)
         self.ErrorTitle.setObjectName(u"ErrorTitle")
         font = QFont()
         font.setFamilies([u"Continuum Medium"])
@@ -544,16 +538,16 @@ class Ui_Error(object):
         self.Title.addWidget(self.ErrorTitle)
 
 
-        self.verticalLayout_2.addLayout(self.Title)
+        self.verticalLayout.addLayout(self.Title)
 
-        self.hLine = QFrame(self.ErrorNormal)
+        self.hLine = QFrame(Error)
         self.hLine.setObjectName(u"hLine")
         self.hLine.setFrameShape(QFrame.HLine)
         self.hLine.setFrameShadow(QFrame.Sunken)
 
-        self.verticalLayout_2.addWidget(self.hLine)
+        self.verticalLayout.addWidget(self.hLine)
 
-        self.ErrorMessage = QLabel(self.ErrorNormal)
+        self.ErrorMessage = QLabel(Error)
         self.ErrorMessage.setObjectName(u"ErrorMessage")
         font1 = QFont()
         font1.setPointSize(9)
@@ -561,85 +555,20 @@ class Ui_Error(object):
         self.ErrorMessage.setText(u"ErrorText")
         self.ErrorMessage.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_2.addWidget(self.ErrorMessage)
+        self.verticalLayout.addWidget(self.ErrorMessage)
 
-        self.ErrorSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.ErrorSpacer = QSpacerItem(20, 18, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.ErrorSpacer)
+        self.verticalLayout.addItem(self.ErrorSpacer)
 
-        self.ErrorClose = QPushButton(self.ErrorNormal)
+        self.ErrorClose = QPushButton(Error)
         self.ErrorClose.setObjectName(u"ErrorClose")
         self.ErrorClose.setEnabled(True)
 
-        self.verticalLayout_2.addWidget(self.ErrorClose)
-
-        self.MainWidget.addWidget(self.ErrorNormal)
-        self.ErrorGct = QWidget()
-        self.ErrorGct.setObjectName(u"ErrorGct")
-        self.verticalLayout_3 = QVBoxLayout(self.ErrorGct)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.Title_GC = QHBoxLayout()
-        self.Title_GC.setObjectName(u"Title_GC")
-        self.ErrorSymbol_GC = QLabel(self.ErrorGct)
-        self.ErrorSymbol_GC.setObjectName(u"ErrorSymbol_GC")
-        self.ErrorSymbol_GC.setMaximumSize(QSize(32, 16777215))
-        self.ErrorSymbol_GC.setText(u"<html><head/><body><p><img src=\":/images/images/Error.png\"/></p></body></html>")
-
-        self.Title_GC.addWidget(self.ErrorSymbol_GC)
-
-        self.ErrorTitle_GC = QLabel(self.ErrorGct)
-        self.ErrorTitle_GC.setObjectName(u"ErrorTitle_GC")
-        self.ErrorTitle_GC.setFont(font)
-        self.ErrorTitle_GC.setText(u"Error")
-
-        self.Title_GC.addWidget(self.ErrorTitle_GC)
-
-
-        self.verticalLayout_3.addLayout(self.Title_GC)
-
-        self.hLine_GC = QFrame(self.ErrorGct)
-        self.hLine_GC.setObjectName(u"hLine_GC")
-        self.hLine_GC.setFrameShape(QFrame.HLine)
-        self.hLine_GC.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_3.addWidget(self.hLine_GC)
-
-        self.ErrorMessage_GC = QLabel(self.ErrorGct)
-        self.ErrorMessage_GC.setObjectName(u"ErrorMessage_GC")
-        self.ErrorMessage_GC.setFont(font1)
-        self.ErrorMessage_GC.setText(u"ErrorText")
-
-        self.verticalLayout_3.addWidget(self.ErrorMessage_GC)
-
-        self.ErrorSpacer_GC = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_3.addItem(self.ErrorSpacer_GC)
-
-        self.Buttons_GC = QHBoxLayout()
-        self.Buttons_GC.setObjectName(u"Buttons_GC")
-        self.ErrorClose_GC = QPushButton(self.ErrorGct)
-        self.ErrorClose_GC.setObjectName(u"ErrorClose_GC")
-        self.ErrorClose_GC.setEnabled(True)
-
-        self.Buttons_GC.addWidget(self.ErrorClose_GC)
-
-        self.ErrorCreate_GC = QPushButton(self.ErrorGct)
-        self.ErrorCreate_GC.setObjectName(u"ErrorCreate_GC")
-
-        self.Buttons_GC.addWidget(self.ErrorCreate_GC)
-
-
-        self.verticalLayout_3.addLayout(self.Buttons_GC)
-
-        self.MainWidget.addWidget(self.ErrorGct)
-
-        self.verticalLayout.addWidget(self.MainWidget)
+        self.verticalLayout.addWidget(self.ErrorClose)
 
 
         self.retranslateUi(Error)
-
-        self.MainWidget.setCurrentIndex(0)
-
 
         QMetaObject.connectSlotsByName(Error)
     # setupUi
@@ -647,7 +576,5 @@ class Ui_Error(object):
     def retranslateUi(self, Error):
         Error.setWindowTitle(QCoreApplication.translate("Error", u"Wii Music Editor Plus - Error", None))
         self.ErrorClose.setText(QCoreApplication.translate("Error", u"Close", None))
-        self.ErrorClose_GC.setText(QCoreApplication.translate("Error", u"Close", None))
-        self.ErrorCreate_GC.setText(QCoreApplication.translate("Error", u"Create Geckocode", None))
     # retranslateUi
 

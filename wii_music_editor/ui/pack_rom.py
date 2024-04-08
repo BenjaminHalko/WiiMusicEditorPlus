@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -6,7 +7,6 @@ from PySide6.QtWidgets import QDialog
 
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.services.discord import discord_presence, DiscordState
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.widgets.load_files import save_file
 from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.pack_rom_ui import Ui_Packrom
@@ -50,4 +50,4 @@ class PackRomWindow(QDialog, Ui_Packrom):
                 SuccessWindow(tr("rom", "Rom Successfuly Packed!"))
             except Exception as e:
                 self.close()
-                ShowError(tr("rom", "Could not pack rom."), str(e))
+                logging.error(f"Error packing rom: {e}")

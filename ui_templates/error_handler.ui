@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>139</height>
+    <height>119</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -504,176 +504,78 @@ QWidget[error=&quot;true&quot;]
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QStackedWidget" name="MainWidget">
-     <property name="currentIndex">
-      <number>0</number>
+    <layout class="QHBoxLayout" name="Title">
+     <item>
+      <widget class="QLabel" name="ErrorSymbol">
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="ErrorTitle">
+       <property name="font">
+        <font>
+         <family>Continuum Medium</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string notr="true">Error</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="hLine">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="ErrorNormal">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QHBoxLayout" name="Title">
-         <item>
-          <widget class="QLabel" name="ErrorSymbol">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ErrorTitle">
-           <property name="font">
-            <font>
-             <family>Continuum Medium</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string notr="true">Error</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="hLine">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="ErrorMessage">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string notr="true">ErrorText</string>
-         </property>
-         <property name="textInteractionFlags">
-          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ErrorSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ErrorClose">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Close</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="ErrorGct">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="Title_GC">
-         <item>
-          <widget class="QLabel" name="ErrorSymbol_GC">
-           <property name="maximumSize">
-            <size>
-             <width>32</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/Error.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="ErrorTitle_GC">
-           <property name="font">
-            <font>
-             <family>Continuum Medium</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string notr="true">Error</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="hLine_GC">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="ErrorMessage_GC">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string notr="true">ErrorText</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ErrorSpacer_GC">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="Buttons_GC">
-         <item>
-          <widget class="QPushButton" name="ErrorClose_GC">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Close</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ErrorCreate_GC">
-           <property name="text">
-            <string>Create Geckocode</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="ErrorMessage">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string notr="true">ErrorText</string>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="ErrorSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>18</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="ErrorClose">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Close</string>
+     </property>
     </widget>
    </item>
   </layout>

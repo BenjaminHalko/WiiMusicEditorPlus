@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.save import save_setting
 from wii_music_editor.utils.shell import run_shell

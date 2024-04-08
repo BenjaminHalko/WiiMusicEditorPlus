@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 from shutil import copyfile, rmtree
@@ -24,7 +25,6 @@ from wii_music_editor.editor.midi import Midi
 from wii_music_editor.editor.rom_folder import rom_folder
 from wii_music_editor.services.discord import discord_presence, DiscordState
 from wii_music_editor.services.external_editor import ExternalEditor
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.ui.pack_rom import PackRomWindow
 from wii_music_editor.ui.revert_changes import RevertChangesWindow
 from wii_music_editor.ui.riivolution import RiivolutionWindow
@@ -72,8 +72,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if rom_folder_path != "":
             rom_folder.load(Path(rom_folder_path))
             self.LoadRomInfo()
-            if not rom_folder.loaded:
-                ShowError("Error", "Unable to load rom folder")
 
         # Menu Bar Buttons
         self.menuBar().setNativeMenuBar(False)
@@ -445,7 +443,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.__SE_midiScore = midi
                 self.SE_Patchable()
         except Exception as e:
-            ShowError("Error", str(e))
+            logging.error(f"Error loading midi: {e}")
 
     def Button_SE_Midi_TimeSignature(self):
         if self.SE_Midi_Length_Measures.isChecked():
@@ -510,7 +508,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.SE_StyleText.setText(get_style_by_id(rom_folder.default_styles[songIndex]).name)
             self.SE_Patchable()
         except Exception as e:
-            ShowError("Error", str(e))
+            logging.error(f"Error loading song: {e}")
 
     def Button_SE_Patch(self):
         songIndex = self.SE_SongToChange.currentRow()

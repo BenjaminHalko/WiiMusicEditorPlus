@@ -5,7 +5,6 @@ from shutil import rmtree
 
 from wii_music_editor.data.songs import song_list, SongType, SongClass
 from wii_music_editor.data.styles import StyleNames, Style, StyleType, style_list
-from wii_music_editor.ui.error_handler import ShowError
 from wii_music_editor.utils.pathUtils import paths
 from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.utils.shell import run_shell
@@ -136,7 +135,7 @@ class TextClass:
                        self.__filepath/self.__folder/'new_music_message.bmg'], logging_level=logging.DEBUG)
             os.remove(self.__filepath/self.__folder/'new_music_message.bmg')
         except Exception as e:
-            ShowError("Could not decode text file", str(e))
+            logging.error(f"Could not decode text file: {e}")
 
     def encode(self):
         try:
@@ -151,7 +150,7 @@ class TextClass:
                        '--dest', self.__filepath/self.__filename], logging_level=logging.DEBUG)
             rmtree(self.__filepath/self.__folder)
         except Exception as e:
-            ShowError("Could not encode text file", str(e))
+            logging.error(f"Could not encode text file: {e}")
 
     def to_text(self) -> str:
         return ''.join([text.decode('utf-8') for text in self.textlines])
