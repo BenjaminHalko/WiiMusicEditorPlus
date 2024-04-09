@@ -3,9 +3,9 @@ from enum import Enum
 
 class SongType(Enum):
     Regular = 0
-    Menu = 1
-    Maestro = 2
-    Hand_Bell = 3
+    Maestro = 1
+    Hand_Bell = 2
+    Menu = 3
 
 
 class SongClass:
@@ -76,16 +76,16 @@ song_list = [
     SongClass(SongType.Regular, 'Wii Sports', 0x2F, 0x1A),
     SongClass(SongType.Regular, 'Woman', 0x2B, 0x17),
     SongClass(SongType.Regular, 'Yankee Doodle', 0x0D, 0x0C),
-    SongClass(SongType.Maestro, 'Twinkle, Twinkle, Little Star (Mii Maestro)', 0x02),
-    SongClass(SongType.Maestro, 'Carmen (Mii Maestro)', 0x00),
-    SongClass(SongType.Maestro, 'The Four Seasons -- Spring (Mii Maestro)', 0x04),
-    SongClass(SongType.Maestro, 'Ode to Joy (Mii Maestro)', 0x03),
-    SongClass(SongType.Maestro, 'The Legend of Zelda (Mii Maestro)', 0x01),
-    SongClass(SongType.Hand_Bell, 'O Christmas Tree (Handbell Harmony)', 0x00),
-    SongClass(SongType.Hand_Bell, 'Hum, Hum, Hum (Handbell Harmony)', 0x02),
-    SongClass(SongType.Hand_Bell, 'My Grandfather\'s Clock (Handbell Harmony)', 0x03),
-    SongClass(SongType.Hand_Bell, 'Do-Re-Mi (Handbell Harmony)', 0x01),
-    SongClass(SongType.Hand_Bell, 'Sukiyaki (Handbell Harmony)', 0x04),
+    SongClass(SongType.Maestro, 'Twinkle, Twinkle, Little Star', 0x02),
+    SongClass(SongType.Maestro, 'Carmen', 0x00),
+    SongClass(SongType.Maestro, 'The Four Seasons -- Spring', 0x04),
+    SongClass(SongType.Maestro, 'Ode to Joy', 0x03),
+    SongClass(SongType.Maestro, 'The Legend of Zelda', 0x01),
+    SongClass(SongType.Hand_Bell, 'O Christmas Tree', 0x00),
+    SongClass(SongType.Hand_Bell, 'Hum, Hum, Hum', 0x02),
+    SongClass(SongType.Hand_Bell, 'My Grandfather\'s Clock', 0x03),
+    SongClass(SongType.Hand_Bell, 'Do-Re-Mi', 0x01),
+    SongClass(SongType.Hand_Bell, 'Sukiyaki', 0x04),
     SongClass(SongType.Menu, 'Menu Song', 0x00)
 ]
 

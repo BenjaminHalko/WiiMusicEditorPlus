@@ -1,7 +1,7 @@
 class InstrumentClass:
     def __init__(self, name, number, in_menu):
         self.name = name
-        self.number = number
+        self.instrument_id = number
         self.in_menu = in_menu
 
 

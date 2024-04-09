@@ -5,13 +5,16 @@ from shutil import copyfile, rmtree
 import zipfile
 import webbrowser
 
-from PySide6.QtWidgets import QMainWindow, QComboBox
+from PySide6.QtWidgets import QMainWindow
 
 from wii_music_editor.data.region import RegionType
-from wii_music_editor.editor.rom import ConvertRom
 from wii_music_editor.ui.settings import SettingsWindow
 from wii_music_editor.ui.update import UpdateWindow
 from wii_music_editor.ui.warning import show_warning
+from wii_music_editor.ui.widgets.list_song import SongListWidget
+
+from wii_music_editor.ui.widgets.list_style import StyleListWidget
+from wii_music_editor.ui.widgets.list_instrument import InstrumentListWidget
 from wii_music_editor.ui.widgets.verify_rom import verify_rom_folder
 from wii_music_editor.utils.logger import is_debug
 from wii_music_editor.utils.update import CheckForUpdate, GetLatestVersion
@@ -30,8 +33,6 @@ from wii_music_editor.ui.revert_changes import RevertChangesWindow
 from wii_music_editor.ui.riivolution import RiivolutionWindow
 from wii_music_editor.ui.widgets.dolphin import LoadDolphin, CopySaveFileToDolphin
 from wii_music_editor.ui.widgets.load_files import get_file_path, select_rom_path
-from wii_music_editor.ui.widgets.populate_list_widget import populate_song_list, populate_style_list, \
-    populate_instrument_list, get_style_list_index, set_style_list_index
 from wii_music_editor.ui.widgets.translate import tr
 from wii_music_editor.ui.windows.main_window_ui import Ui_MainWindow
 from wii_music_editor.utils.preferences import preferences
@@ -106,11 +107,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.MP_ImportChanges_Button.clicked.connect(self.ImportChanges)
 
         # Song Editor Buttons
+        self.SE_SongToChange = SongListWidget(self.SE_SongToChange)
         self.SE_Midi_File_Score_Button.clicked.connect(self.Button_SE_SongToChange)
         self.SE_Midi_File_Song_Button.clicked.connect(lambda: self.Button_SE_SongToChange(True))
         self.SE_Midi_TimeSignature_4.toggled.connect(self.Button_SE_Midi_TimeSignature)
         self.SE_Midi_Length_Measures.toggled.connect(self.Button_SE_Midi_Length)
-        self.SE_SongToChange.itemSelectionChanged.connect(self.List_SE_SongToChange)
+        self.SE_SongToChange.widget.itemSelectionChanged.connect(self.List_SE_SongToChange)
         self.SE_Midi_Tempo_Input.valueChanged.connect(self.SE_Patchable)
         self.SE_Midi_Length_Input.valueChanged.connect(self.SE_Patchable)
         self.SE_Midi_File_Replace_Song.toggled.connect(self.SE_Patchable)
@@ -125,10 +127,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.SE_ResetButton.clicked.connect(self.Button_SE_ResetSong)
 
         # Style Editor Buttons
+        self.StE_StyleList = StyleListWidget(self.StE_StyleList)
+        self.StE_InstrumentList = InstrumentListWidget(self.StE_InstrumentList)
         self.StE_Back_Button.clicked.connect(self.GotoMainMenu)
         self.StE_PartSelector.currentIndexChanged.connect(self.Button_StE_PartSelector)
-        self.StE_InstrumentList.itemSelectionChanged.connect(self.List_StE_InstrumentList)
-        self.StE_StyleList.itemSelectionChanged.connect(self.List_StE_StyleList)
+        self.StE_InstrumentList.widget.itemSelectionChanged.connect(self.List_StE_InstrumentList)
+        self.StE_StyleList.widget.itemSelectionChanged.connect(self.List_StE_StyleList)
         self.StE_ResetStyle.clicked.connect(self.Button_StE_ResetStyle)
         self.StE_Patch.clicked.connect(self.Button_StE_Patch)
         self.StE_ChangeStyleName.textEdited.connect(self.StE_Patchable)
@@ -231,7 +235,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadSongEditor(self):
         self.MainWidget.setCurrentIndex(TAB.SongEditor)
-        populate_song_list(self.SE_SongToChange)
+        self.SE_SongToChange.reset()
         self.SE_Midi.setEnabled(False)
         self.SE_Midi.setCheckable(False)
         self.SE_ChangeSongText.setEnabled(False)
@@ -248,8 +252,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadStyleEditor(self):
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
-        populate_style_list(self.StE_StyleList, self.fromSongEditor)
-        populate_instrument_list(self.StE_InstrumentList)
+        self.StE_StyleList.reset()
+        self.StE_InstrumentList.reset()
         self.StE_Instruments.setEnabled(False)
         self.StE_ChangeStyleName.setEnabled(False)
         self.StE_ChangeStyleName_Label.setEnabled(False)
@@ -257,7 +261,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_Patch.setEnabled(False)
         discord_presence.update(DiscordState.EditingStyles)
         if self.fromSongEditor != -1:
-            set_style_list_index(self.StE_StyleList, self.fromSongEditor)
+            self.StE_StyleList.reset(self.fromSongEditor)
             self.List_StE_StyleList()
 
     def LoadTextEditor(self):
@@ -398,8 +402,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Song Editor Buttons
     def SE_Patchable(self):
         allow = True
-        songIndex = self.SE_SongToChange.currentRow()
-        song = song_list[songIndex]
+        song = self.SE_SongToChange.getSong()
         if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.song_type == SongType.Menu):
             if (self.__SE_midiScore is None or
                     (self.__SE_midiSong is None
@@ -408,9 +411,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         and song.song_type != SongType.Maestro)):
                 allow = False
         elif song.song_type != SongType.Menu:
-            if (self.SE_ChangeSongText_Name_Input.text() == rom_folder.text.songs[songIndex]
-                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == rom_folder.text.descriptions[songIndex]
-                    and self.SE_ChangeSongText_Genre_Input.text() == rom_folder.text.genres[songIndex]):
+            if (self.SE_ChangeSongText_Name_Input.text() == rom_folder.text.songs[song.list_order]
+                    and self.SE_ChangeSongText_Desc_Input.toPlainText() == rom_folder.text.descriptions[song.list_order]
+                    and self.SE_ChangeSongText_Genre_Input.text() == rom_folder.text.genres[song.list_order]):
                 allow = False
         self.SE_Patch.setEnabled(allow)
 
@@ -466,8 +469,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SE_Midi_File_Song_Label.show()
             self.SE_Midi_File_Score_Title.show()
             self.SE_Midi_File_Replace_Song.show()
-            enabled = (not self.SE_Midi.isEnabled() or song_list[
-                self.SE_SongToChange.currentRow()].song_type != SongType.Maestro)
+            enabled = (not self.SE_Midi.isEnabled() or self.SE_SongToChange.getSong().song_type != SongType.Maestro)
             self.SE_Midi_File_Song_Button.setEnabled(enabled)
             self.SE_Midi_File_Song_Title.setEnabled(enabled)
             self.SE_Midi_File_Song_Label.setEnabled(enabled)
@@ -481,8 +483,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def List_SE_SongToChange(self):
         try:
-            songIndex = self.SE_SongToChange.currentRow()
-            song = song_list[songIndex]
+            song = self.SE_SongToChange.getSong()
+            songIndex = song.list_order
             self.SE_Midi.setCheckable(True)
             self.SE_Midi.setEnabled(True)
             if song.song_type != SongType.Menu:
@@ -511,8 +513,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             logging.error(f"Error loading song: {e}")
 
     def Button_SE_Patch(self):
-        songIndex = self.SE_SongToChange.currentRow()
-        song = song_list[songIndex]
+        song = self.SE_SongToChange.getSong()
         if self.SE_Midi.isEnabled() and (self.SE_Midi.isChecked() or song.song_type == SongType.Menu):
             self.__SE_midiScore.tempo = self.SE_Midi_Tempo_Input.value()
             self.__SE_midiScore.length = self.SE_Midi_Length_Input.value()
@@ -533,28 +534,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             desc = self.SE_ChangeSongText_Desc_Input.toPlainText()
             genre = self.SE_ChangeSongText_Genre_Input.text()
             replace_song_text(song, name, desc, genre)
-            if song.song_type == SongType.Maestro:
-                name += f' ({tr("main", "Mii Maestro")})'
-            if song.song_type == SongType.Maestro:
-                name += f' ({tr("main", "Handbell Harmony")})'
-            self.SE_SongToChange.item(self.SE_SongToChange.currentRow()).setText(name)
+            self.SE_SongToChange.widget.item(self.SE_SongToChange.widget.currentRow()).setText(name)
 
         self.SE_Patch.setEnabled(False)
 
     def Button_SE_OpenStyleEditor(self):
-        self.fromSongEditor = get_style_by_id(rom_folder.default_styles[self.SE_SongToChange.currentRow()]).list_order
+        self.fromSongEditor = get_style_by_id(
+            rom_folder.default_styles[self.SE_SongToChange.getSong().list_order]).list_order
         self.MainWidget.setCurrentIndex(TAB.StyleEditor)
         self.LoadStyleEditor()
 
     def Button_SE_OpenDefaultStyleEditor(self):
-        self.fromSongEditor = self.SE_SongToChange.currentRow()
+        self.fromSongEditor = self.SE_SongToChange.getSong().list_order
         self.MainWidget.setCurrentIndex(TAB.DefaultStyleEditor)
         self.LoadDefaultStyleEditor()
 
     def Button_SE_ResetSong(self):
-        index = self.SE_SongToChange.currentRow()
+        songIndex = self.SE_SongToChange.getSong().list_order
         (self.__SE_midiScore, self.__SE_midiSong, name, desc,
-         genre, length, tempo, time) = get_original_song(song_list[index])
+         genre, length, tempo, time) = get_original_song(song_list[songIndex])
         self.SE_ChangeSongText_Name_Input.setText(name)
         self.SE_ChangeSongText_Desc_Input.setText(desc)
         self.SE_ChangeSongText_Genre_Input.setText(genre)
@@ -568,17 +566,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     # Style Editor Buttons
     def StE_Patchable(self):
-        styleIndex = get_style_list_index(self.StE_StyleList)
-        self.StE_Patch.setEnabled((self.__StE_styleSelected != rom_folder.styles[styleIndex])
+        styleID = self.StE_StyleList.getStyle().style_id
+        self.StE_Patch.setEnabled((self.__StE_styleSelected != rom_folder.styles[styleID])
                                   or (self.StE_ChangeStyleName.isEnabled()
-                                      and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]))
+                                      and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleID]))
 
     def Button_StE_PartSelector(self):
-        self.StE_InstrumentList.setCurrentRow(-1)
-        style = style_list[get_style_list_index(self.StE_StyleList)]
+        self.StE_InstrumentList.setRow(-1)
+        style = self.StE_StyleList.getStyle()
         partIndex = self.StE_PartSelector.currentIndex()
         partIsPercussion = partIndex == 4 or partIndex == 5
-        populate_instrument_list(self.StE_InstrumentList, partIsPercussion, style.style_type == StyleType.Menu)
+        self.StE_InstrumentList.reset(partIsPercussion, style.style_type == StyleType.Menu)
         self.StE_SetIndex()
 
     def StE_SetIndex(self):
@@ -592,54 +590,46 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             toHighlight = self.__StE_styleSelected[partIndex]
             if toHighlight == len(instrument_list) - 1:
                 toHighlight = 40
-        self.StE_InstrumentList.setCurrentRow(toHighlight)
+        self.StE_InstrumentList.setRow(toHighlight)
 
     def List_StE_InstrumentList(self):
-        styleIndex = get_style_list_index(self.StE_StyleList)
         partIndex = self.StE_PartSelector.currentIndex()
-        instrumentIndex = self.StE_InstrumentList.currentRow()
-        partIsPercussion = partIndex == 4 or partIndex == 5
-        if self.StE_InstrumentList.currentRow() != -1:
-            if not preferences.unsafe_mode:
-                if partIsPercussion:
-                    instrumentIndex += 40
-                else:
-                    if instrumentIndex == 40:
-                        instrumentIndex = len(instrument_list) - 1
-            self.__StE_styleSelected[partIndex] = instrumentIndex
+        instrument = self.StE_InstrumentList.getInstrument()
+        if self.StE_InstrumentList.widget.currentRow() != -1:
+            self.__StE_styleSelected[partIndex] = instrument.instrument_id
             self.StE_Patchable()
             if partIndex == 0:
-                self.StE_Part_Melody_Instrument.setText(instrument_list[instrumentIndex].name)
+                self.StE_Part_Melody_Instrument.setText(instrument.name)
             elif partIndex == 1:
-                self.StE_Part_Harmony_Instrument.setText(instrument_list[instrumentIndex].name)
+                self.StE_Part_Harmony_Instrument.setText(instrument.name)
             elif partIndex == 2:
-                self.StE_Part_Chords_Instrument.setText(instrument_list[instrumentIndex].name)
+                self.StE_Part_Chords_Instrument.setText(instrument.name)
             elif partIndex == 3:
-                self.StE_Part_Bass_Instrument.setText(instrument_list[instrumentIndex].name)
+                self.StE_Part_Bass_Instrument.setText(instrument.name)
             elif partIndex == 4:
-                self.StE_Part_Percussion1_Instrument.setText(instrument_list[instrumentIndex].name)
+                self.StE_Part_Percussion1_Instrument.setText(instrument.name)
             elif partIndex == 5:
-                self.StE_Part_Percussion2_Instrument.setText(instrument_list[instrumentIndex].name)
-            self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != style_list[styleIndex].style)
+                self.StE_Part_Percussion2_Instrument.setText(instrument.name)
+            self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != self.StE_StyleList.getStyle().style)
 
     def List_StE_StyleList(self):
-        styleIndex = get_style_list_index(self.StE_StyleList)
-        style = style_list[styleIndex]
+        style = self.StE_StyleList.getStyle()
+        styleID = style.style_id
         self.StE_Instruments.setEnabled(True)
         self.StE_Patch.setEnabled(False)
         if style.style_type == StyleType.Global or style.style_type == StyleType.QuickJam:
             self.StE_ChangeStyleName.setEnabled(True)
             self.StE_ChangeStyleName_Label.setEnabled(True)
-            self.StE_ChangeStyleName.setText(rom_folder.text.styles[styleIndex])
+            self.StE_ChangeStyleName.setText(rom_folder.text.styles[style.list_order])
         else:
             self.StE_ChangeStyleName.setEnabled(False)
             self.StE_ChangeStyleName_Label.setEnabled(False)
             self.StE_ChangeStyleName.setText("")
-        self.__StE_styleSelected = rom_folder.styles[styleIndex].copy()
-        self.StE_InstrumentList.setCurrentRow(-1)
+        self.__StE_styleSelected = rom_folder.styles[style.list_order].copy()
+        self.StE_InstrumentList.setRow(-1)
         self.Button_StE_PartSelector()
         self.StE_ResetStyle.setEnabled(self.__StE_styleSelected != style.style)
-        default_style = rom_folder.styles[styleIndex]
+        default_style = rom_folder.styles[styleID]
         self.StE_Part_Melody_Instrument.setText(instrument_list[default_style.melody].name)
         self.StE_Part_Harmony_Instrument.setText(instrument_list[default_style.harmony].name)
         self.StE_Part_Chords_Instrument.setText(instrument_list[default_style.chord].name)
@@ -648,7 +638,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StE_Part_Percussion2_Instrument.setText(instrument_list[default_style.perc2].name)
 
     def Button_StE_ResetStyle(self):
-        self.__StE_styleSelected = style_list[get_style_list_index(self.StE_StyleList)].style.copy()
+        self.__StE_styleSelected = self.StE_StyleList.getStyle().style.copy()
         self.StE_ResetStyle.setEnabled(False)
         self.StE_Patchable()
         self.StE_Part_Melody_Instrument.setText(instrument_list[self.__StE_styleSelected.melody].name)
@@ -661,19 +651,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def Button_StE_Patch(self):
         self.StE_Patch.setEnabled(False)
-        styleIndex = get_style_list_index(self.StE_StyleList)
-        if self.__StE_styleSelected != rom_folder.styles[styleIndex]:
-            replace_style(style_list[styleIndex], self.__StE_styleSelected)
+        style = self.StE_StyleList.getStyle()
+        if self.__StE_styleSelected != rom_folder.styles[style.style_id]:
+            replace_style(style, self.__StE_styleSelected)
 
-        name = style_list[styleIndex].name
+        name = style.name
         if (self.StE_ChangeStyleName.isEnabled()
-                and self.StE_ChangeStyleName.text() != rom_folder.text.styles[styleIndex]):
-            replace_style_text(style_list[styleIndex], self.StE_ChangeStyleName.text())
-            name = rom_folder.text.styles[styleIndex]
-        if style_list[styleIndex].style == self.__StE_styleSelected:
-            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(name)
+                and self.StE_ChangeStyleName.text() != rom_folder.text.styles[style.style_id]):
+            replace_style_text(style, self.StE_ChangeStyleName.text())
+            name = rom_folder.text.styles[style.style_id]
+        if style.style == self.__StE_styleSelected:
+            self.StE_StyleList.widget.item(self.StE_StyleList.widget.currentRow()).setText(name)
         else:
-            self.StE_StyleList.item(self.StE_StyleList.currentRow()).setText(f"{name} ~[{tr('main', 'Replaced')}]~")
+            self.StE_StyleList.widget.item(self.StE_StyleList.widget.currentRow()).setText(
+                f"{name} ~[{tr('main', 'Replaced')}]~")
 
     # Text Editor
     def Button_TE_Patch(self):
