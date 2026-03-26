@@ -78,6 +78,20 @@ Use the `?` operator for error propagation. All fallible operations in `wm_core`
 
 ## 5. Binary Parsing Conventions
 
+### Hex Literals (Non-Negotiable)
+All values with binary significance MUST be written in hex. This includes offsets, magic numbers, sizes, masks, flags, and sentinel values.
+```rust
+// CORRECT
+const SONG_SEGMENT_OFFSET: u32 = 0x59C5_20;
+const BRSAR_MAGIC: u32 = 0x5253_4152; // "RSAR"
+const NO_INSTRUMENT: u32 = 0xFFFF_FFFF;
+
+// WRONG — never use decimal for binary values
+const SONG_SEGMENT_OFFSET: u32 = 5883168;
+const NO_INSTRUMENT: u32 = 4294967295;
+```
+Decimal is only acceptable for pure counts/indices with no binary significance (e.g. `SONG_COUNT: usize = 61`).
+
 ### Byte Order (Non-Negotiable)
 Wii (PowerPC) is big-endian. All `binrw` structs MUST use the `#[br(big)]` attribute.
 - **Check:** Double-check every struct for `#[br(big)]` or `#[binrw::br(big)]`.

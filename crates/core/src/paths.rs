@@ -1,16 +1,18 @@
 use std::path::PathBuf;
 
-/// Resolved filesystem paths passed from the editor to `wm_core` at startup.
-/// The editor constructs this using compile-time env vars (dev) or
-/// exe-relative paths (release). `wm_core` never resolves paths itself.
+/// Resolved filesystem paths passed into `wm_core` at startup.
+/// `tools_dir` must already point to the platform-specific tool folder —
+/// in dev this means `workspace/tools/{platform}/`, in release the packager
+/// has already placed only the current platform's tools in `tools/`.
+/// `wm_core` never detects the current platform itself.
 #[derive(Clone, Debug)]
 pub struct WmPaths {
-    /// Directory containing platform tool binaries (`wit`, `wszst`, `wbmgt`, `GotaSequenceCmd`).
-    /// Layout: `tools/{platform}/{wiimms,sequence_cmd}/`
+    /// Platform-specific tool directory containing `wiimms/` and `sequence_cmd/`
+    /// subdirectories. Caller is responsible for platform resolution.
     pub tools_dir: PathBuf,
-    /// Directory containing shared assets (save/, fonts/, icons/).
+    /// Directory containing shared assets (`save/`, `fonts/`, `icons/`).
     pub res_dir: PathBuf,
-    /// Directory for config files (settings.ini).
+    /// Directory for config files (`settings.ini`).
     pub config_dir: PathBuf,
 }
 
@@ -27,22 +29,12 @@ impl WmPaths {
         }
     }
 
-    /// Path to a specific tool binary by name (e.g. `"wszst"`, `"wit"`, `"wbmgt"`, `"GotaSequenceCmd"`).
-    /// Searches `wiimms/` then `sequence_cmd/` subdirectories.
+    /// Path to a tool binary. `name` must include the subfolder prefix,
+    /// e.g. `"wiimms/wszst"` or `"sequence_cmd/GotaSequenceCmd"`.
+    /// `.exe` is appended automatically on Windows.
     #[must_use]
     pub fn tool(&self, name: &str) -> PathBuf {
-        let platform = current_platform();
-        let binary = tool_binary(name);
-
-        let wiimms = self.tools_dir.join(platform).join("wiimms").join(&binary);
-        if wiimms.exists() {
-            return wiimms;
-        }
-
-        self.tools_dir
-            .join(platform)
-            .join("sequence_cmd")
-            .join(binary)
+        self.tools_dir.join(tool_binary(name))
     }
 
     /// Path to a save template file by name (e.g. `"RPMusic.dat"`).
@@ -58,8 +50,13 @@ impl WmPaths {
     }
 }
 
-/// Returns the platform subdirectory name used under tools/.
-fn current_platform() -> &'static str {
+/// In dev builds, returns the platform-specific subdirectory under `workspace/tools/`.
+/// Use this when constructing `WmPaths` in dev mode — the caller passes the result as `tools_dir`.
+///
+/// In release builds the packager already placed only the current platform's tools
+/// in `tools/`, so no subdirectory is needed.
+#[must_use]
+pub fn dev_platform_tools_subdir() -> &'static str {
     if cfg!(target_os = "windows") {
         "windows"
     } else if cfg!(target_os = "macos") {
@@ -69,8 +66,9 @@ fn current_platform() -> &'static str {
     }
 }
 
-/// Appends .exe on Windows.
-fn tool_binary(name: &str) -> String {
+/// Appends `.exe` on Windows, returns name unchanged on other platforms.
+#[must_use]
+pub fn tool_binary(name: &str) -> String {
     if cfg!(target_os = "windows") {
         format!("{name}.exe")
     } else {
@@ -101,22 +99,22 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_platform_name() {
-        let p = current_platform();
+    fn test_platform_subdir_valid() {
+        let p = dev_platform_tools_subdir();
         assert!(["windows", "macos", "linux"].contains(&p));
     }
 
     #[test]
-    fn test_tool_path_structure() {
+    fn test_tool_path_is_simple_join() {
         let paths = WmPaths::new("/tools", "/res", "/config");
-        let wszst = paths.tool("wszst");
-        let path = wszst.to_str().unwrap();
-        assert!(path.contains("wiimms") || path.contains("sequence_cmd"));
+        let wszst = paths.tool("wiimms/wszst");
+        let s = wszst.to_str().unwrap();
+        assert!(s.contains("wiimms"));
+        assert!(s.contains("wszst"));
     }
 
     #[test]
     fn test_config_dir_not_empty() {
-        let dir = default_config_dir();
-        assert!(!dir.as_os_str().is_empty());
+        assert!(!default_config_dir().as_os_str().is_empty());
     }
 }
