@@ -21,40 +21,20 @@ The project is organized as a Cargo workspace with two main crates:
 ## Workspace Structure
 
 ```
-crates/
-├── core/                    # wm_core library
-│   ├── src/
-│   │   ├── brsar.rs         # BRSAR binary archive parser
-│   │   ├── dol.rs           # main.dol reader/writer
-│   │   ├── midi.rs          # MIDI normalization + GotaSequenceCmd
-│   │   ├── message.rs       # BMG text via wszst/wbmgt
-│   │   ├── rom.rs           # ROM extraction via wit
-│   │   ├── rom_folder.rs    # Central state struct
-│   │   ├── editor.rs        # High-level edit orchestration
-│   │   ├── reset.rs         # Revert operations
-│   │   ├── data.rs          # Song/style/instrument constants
-│   │   ├── types.rs         # Domain types + WmError
-│   │   ├── settings.rs      # INI settings persistence
-│   │   ├── paths.rs         # Platform-specific path resolution
-│   │   ├── shell.rs         # External tool execution
-│   │   ├── checksum.rs      # SHA1 verification
-│   │   ├── discord.rs       # Discord Rich Presence
-│   │   ├── updater.rs       # Auto-update via GitHub Releases
-│   │   ├── riivolution.rs   # Riivolution XML generation
-│   │   ├── archive.rs       # ZIP import/export
-│   │   └── external_editor.rs # Launch text editor
-│   └── resources/
-│       ├── tools/{windows,macos,linux}/{wiimms,sequence_cmd}/
-│       └── assets/{save,fonts}/
-└── editor/                  # editor binary
-    ├── src/
-    │   ├── main.rs
-    │   ├── app.rs           # Iced Application, state, messages
-    │   ├── views/           # Page views (song_editor, style_editor, etc.)
-    │   ├── dialogs/         # Dialog components
-    │   └── i18n.rs          # Fluent i18n setup
-    ├── resources/icons/
-    └── i18n/en-US/ui.ftl
+rust-rewrite/
+  res/
+  │   ├── tools/{windows,macos,linux}/{wiimms,sequence_cmd}/
+  │   ├── icons/
+  │   ├── fonts/
+  │   └── save/
+  crates/
+  ├── core/
+  │   ├── build.rs             # Bakes WME_RES_DIR env var (dev path to res/)
+  │   └── src/
+  │       └── paths.rs         # env!("WME_RES_DIR") dev, exe-relative release
+  └── editor/
+      ├── i18n/en-US/ui.ftl    # Fluent translations (rust-embed, not in res/)
+      └── src/
 ```
 
 ## BRSAR Format Reference
