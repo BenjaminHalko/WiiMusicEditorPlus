@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - rust-dev
     paths:
       - crates/editor/i18n/en-US/ui.ftl
       - crowdin.yml
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
