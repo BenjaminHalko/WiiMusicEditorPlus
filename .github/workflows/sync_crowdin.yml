@@ -26,6 +26,7 @@ jobs:
           upload_sources: true
           upload_translations: false
           download_translations: true
+          skip_untranslated_files: true
           push_translations: false
           push_sources: false
         env:
