@@ -6,10 +6,23 @@ from pyshortcuts import make_shortcut
 from setuptools import setup, Distribution
 from setuptools.command.install import install
 
+try:
+    from setuptools.command.bdist_wheel import bdist_wheel
+except ImportError:
+    from wheel.bdist_wheel import bdist_wheel
+
 
 class BinaryDistribution(Distribution):
     def has_ext_modules(self):
         return True
+
+
+class PlatformWheel(bdist_wheel):
+    """Tag wheel as py3-none-{platform} instead of cpXX-cpXX-{platform}."""
+
+    def get_tag(self):
+        _, _, plat = super().get_tag()
+        return "py3", "none", plat
 
 
 class PostInstallCommand(install):
@@ -48,6 +61,7 @@ setup(
     distclass=BinaryDistribution,
     package_data={"wii_music_editor": data},
     cmdclass={
+        "bdist_wheel": PlatformWheel,
         "install": PostInstallCommand,
     },
 )

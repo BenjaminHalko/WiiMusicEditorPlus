@@ -37,6 +37,7 @@ build-backend = "setuptools.build_meta"
 wii_music_editor = "wii_music_editor"
 
 [tool.cibuildwheel]
+build = ["cp312-*"]
 skip = ["*-musllinux*", "pp*", "*-win32"]
 
 [tool.semantic_release]
