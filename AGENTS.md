@@ -22,19 +22,15 @@ The project is organized as a Cargo workspace with two main crates:
 
 ```
 rust-rewrite/
-  res/
-  │   ├── tools/{windows,macos,linux}/{wiimms,sequence_cmd}/
-  │   ├── icons/
-  │   ├── fonts/
-  │   └── save/
+  tools/{windows,macos,linux}/{wiimms,sequence_cmd}/
+  res/{icons,fonts,save}/
+  i18n/en-US/ui.ftl
   crates/
-  ├── core/
-  │   ├── build.rs             # Bakes WME_RES_DIR env var (dev path to res/)
-  │   └── src/
-  │       └── paths.rs         # env!("WME_RES_DIR") dev, exe-relative release
-  └── editor/
-      ├── i18n/en-US/ui.ftl    # Fluent translations (rust-embed, not in res/)
-      └── src/
+    core/
+      build.rs     # bakes WME_TOOLS_DIR + WME_RES_DIR at compile time
+      src/
+    editor/
+      src/
 ```
 
 ## BRSAR Format Reference
