@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - rust-dev
+      - dev-rust
   pull_request:
 
 jobs:

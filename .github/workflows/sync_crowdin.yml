@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - rust-dev
+      - dev-rust
     paths:
       - i18n/en-US/ui.ftl
       - crowdin.yml
