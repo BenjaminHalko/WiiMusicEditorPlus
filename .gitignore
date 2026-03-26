@@ -1,8 +1,14 @@
-/.sisyphus
 /target
-**/*.swp
-.DS_Store
-# Never commit copyrighted game files
+
+# IDE
+.idea
+.vscode
+.zed
+
+# AI Tools
+.sisyphus
+
+# Wii Music Files
 *.wbfs
 *.iso
 *.gcm
