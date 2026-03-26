@@ -1,17 +1,9 @@
-# Virtual Environment
-/.venv/
-/venv/
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.pyo
-
-# Build files
-/build/
-/dist/
-/wheelhouse/
-*.egg-info/
-*.spec
-
-# PyCharm files
-/.idea/
+/target
+**/*.swp
+.DS_Store
+# Never commit copyrighted game files
+*.wbfs
+*.iso
+*.gcm
+R64E01/
+*.backup_rom

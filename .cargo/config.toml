@@ -1,0 +1,2 @@
+[alias]
+check-all = "check --workspace --all-targets"

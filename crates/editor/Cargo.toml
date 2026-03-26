@@ -1,0 +1,21 @@
+[package]
+name = "editor"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "wii-music-editor"
+path = "src/main.rs"
+
+[dependencies]
+wm_core = { path = "../core" }
+iced = { workspace = true }
+i18n-embed = { workspace = true }
+i18n-embed-fl = { workspace = true }
+rust-embed = { workspace = true }
+unic-langid = { workspace = true }
+rfd = { workspace = true }
+log = { workspace = true }
+
+[lints]
+workspace = true

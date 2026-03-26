@@ -1,0 +1,20 @@
+[package]
+name = "wm_core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+binrw = { workspace = true }
+midly = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+tempfile = { workspace = true }
+sha1 = { workspace = true }
+ini = { workspace = true }
+zip = { workspace = true }
+sysinfo = { workspace = true }
+discord-rich-presence = { workspace = true }
+self_update = { workspace = true }
+
+[lints]
+workspace = true
