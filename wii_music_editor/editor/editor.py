@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 from wii_music_editor.data.songs import SongClass, SongType, song_list
@@ -51,19 +53,26 @@ def replace_song(song: SongClass, score_midi: Midi, song_midi: Midi):
         dol = MainDol(rom_folder.mainDolPath)
         dol.write_song_info(song, score_midi.length, dol.songSegmentLength)
         dol.write_song_info(song, score_midi.tempo, dol.songSegmentTempo)
-        dol.write_song_info(song, score_midi.time_signature, dol.songSegmentTimeSignature, 0x01)
+        dol.write_song_info(
+            song, score_midi.time_signature, dol.songSegmentTimeSignature, 0x01
+        )
         dol.save()
 
 
 def replace_song_text(song: SongClass, name: str, description: str, genre: str):
     logging.info(f"Changing text for song: {song.name}")
     index = song.mem_order
-    if (rom_folder.text.songs[index] != name or rom_folder.text.descriptions[index] != description or
-            rom_folder.text.genres[index] != genre):
+    if (
+        rom_folder.text.songs[index] != name
+        or rom_folder.text.descriptions[index] != description
+        or rom_folder.text.genres[index] != genre
+    ):
         rom_folder.text.change_name(song, [name, description, genre])
 
 
-def get_original_song(song: SongClass) -> tuple[Midi, Midi, str, str, str, int, int, int]:
+def get_original_song(
+    song: SongClass,
+) -> tuple[Midi, Midi, str, str, str, int, int, int]:
     # Main Dol
     length = 0
     tempo = 0
@@ -82,7 +91,7 @@ def get_original_song(song: SongClass) -> tuple[Midi, Midi, str, str, str, int, 
         rom_folder.textBackup.genres[song.list_order],
         length,
         tempo,
-        time_signature
+        time_signature,
     )
 
 
@@ -101,5 +110,7 @@ def replace_style_text(style: Style, name: str):
 def replace_default_style(song: SongClass, style: Style):
     logging.info(f"Changing default style for song '{song.name}' to '{style.name}'")
     rom_folder.default_styles[song.list_order] = style.style_id
-    rom_folder.mainDol.write_song_info(song, style.style_id, rom_folder.mainDol.songSegmentDefaultStyle)
+    rom_folder.mainDol.write_song_info(
+        song, style.style_id, rom_folder.mainDol.songSegmentDefaultStyle
+    )
     rom_folder.mainDol.save()

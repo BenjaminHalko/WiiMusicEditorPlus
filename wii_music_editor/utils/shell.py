@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import os
 import subprocess
@@ -18,10 +20,12 @@ def run_shell(command: list[str] or str, logging_level: int = logging.INFO):
     try:
         if type(command) is not str:
             give_permission(command[0])
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
         with process.stdout:
             try:
-                for line in iter(process.stdout.readline, b''):
+                for line in iter(process.stdout.readline, b""):
                     logging.log(logging_level, line.decode().strip())
             except subprocess.CalledProcessError as e:
                 logging.error(f"{e}")

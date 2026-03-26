@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 
@@ -6,6 +8,7 @@ class BrsarGroup:
     Each group in a brsar file holds a list of songs.
     Different groups are used for different types of songs.
     """
+
     Regular = 2
     Maestro = 21
     Handbell = 23
@@ -20,14 +23,15 @@ class __BrsarSection:
     :param parent: The `parent` attribute is the parent section of the section.
     :param offset: The `offset` attribute is the offset of the section from the start of the file.
     """
+
     _referenceValueOffset = 0x04
     _referenceSize = 0x08
 
-    root: 'Brsar'
-    parent: '__BrsarSection'
+    root: "Brsar"
+    parent: "__BrsarSection"
     offset: int
 
-    def __init__(self, parent: '__BrsarSection', offset: int):
+    def __init__(self, parent: "__BrsarSection", offset: int):
         self.parent = parent
         self.root = parent.root
         self.offset = offset
@@ -39,7 +43,7 @@ class __BrsarSection:
         """
         length = 4
         offset += self.offset
-        return int.from_bytes(self.root.data[offset:offset + length], "big")
+        return int.from_bytes(self.root.data[offset : offset + length], "big")
 
     def section_reference(self, offset: int) -> int:
         """
@@ -61,7 +65,7 @@ class __BrsarSection:
         offset = getattr(self, f"_{value}") + self.offset
         val = getattr(self, value) + increment
         setattr(self, value, val)
-        self.root.data[offset:offset + length] = val.to_bytes(length, "big")
+        self.root.data[offset : offset + length] = val.to_bytes(length, "big")
 
 
 class Brsar(__BrsarSection):
@@ -70,6 +74,7 @@ class Brsar(__BrsarSection):
     A list of all the sections in a brsar file can be found at https://wiki.tockdom.com/wiki/BRSAR_(File_Format).
     :param path: The path to a brsar file.
     """
+
     _fileLength = 0x08
     _infoSectionOffset = 0x18
     _infoSectionSize = 0x1C
@@ -84,8 +89,8 @@ class Brsar(__BrsarSection):
 
     brsarPath: Path
     data: bytearray
-    infoSection: 'InfoSection'
-    fileSection: 'FileSection'
+    infoSection: "InfoSection"
+    fileSection: "FileSection"
 
     def __init__(self, path: Path):
         self.root = self
@@ -118,22 +123,24 @@ class Brsar(__BrsarSection):
         incrementAmount = len(song) - itemGroup.rseqSize
 
         # Replace song data
-        self.data = self.data[:rseqOffset]+song+self.data[rseqOffset+itemGroup.rseqSize:]
+        self.data = (
+            self.data[:rseqOffset] + song + self.data[rseqOffset + itemGroup.rseqSize :]
+        )
 
         # Update Group Table
-        songGroup.increment_value('rseqSize', incrementAmount)
-        songGroup.increment_value('rwarOffset', incrementAmount)
-        itemGroup.increment_value('rseqSize', incrementAmount)
-        for item in songGroup.itemTable.entries[item_index+1:]:
-            item.increment_value('rseqOffset', incrementAmount)
+        songGroup.increment_value("rseqSize", incrementAmount)
+        songGroup.increment_value("rwarOffset", incrementAmount)
+        itemGroup.increment_value("rseqSize", incrementAmount)
+        for item in songGroup.itemTable.entries[item_index + 1 :]:
+            item.increment_value("rseqOffset", incrementAmount)
 
         # Update other group tables
-        for group in self.infoSection.groupDataTable.entries[group_index+1:]:
-            group.increment_value('rseqOffset', incrementAmount)
-            group.increment_value('rwarOffset', incrementAmount)
+        for group in self.infoSection.groupDataTable.entries[group_index + 1 :]:
+            group.increment_value("rseqOffset", incrementAmount)
+            group.increment_value("rwarOffset", incrementAmount)
 
         # Update Section Size
-        self.increment_value('fileLength', incrementAmount)
+        self.increment_value("fileLength", incrementAmount)
 
     def get_song(self, group_index: int, item_index: int) -> bytearray:
         """
@@ -145,7 +152,7 @@ class Brsar(__BrsarSection):
         songGroup = self.infoSection.groupDataTable.entries[group_index]
         itemGroup = songGroup.itemTable.entries[item_index]
         rseqOffset = songGroup.rseqOffset + itemGroup.rseqOffset
-        return self.data[rseqOffset:rseqOffset+itemGroup.rseqSize]
+        return self.data[rseqOffset : rseqOffset + itemGroup.rseqSize]
 
     def save(self):
         with open(self.brsarPath, "wb") as file:
@@ -159,10 +166,11 @@ class InfoSection(__BrsarSection):
     :param parent: A reference to the brsar header.
     :param offset: The `offset` attribute is the offset of the section from the start of the file.
     """
+
     _groupTable = 0x28
 
     parent: Brsar
-    groupDataTable: 'GroupDataTable'
+    groupDataTable: "GroupDataTable"
 
     def __init__(self, parent: Brsar, offset: int):
         super().__init__(parent, offset)
@@ -177,6 +185,7 @@ class FileSection(__BrsarSection):
     :param parent: A reference to the brsar header.
     :param offset: The offset from the start of the file.
     """
+
     _sectionSize = 0x04
 
     parent: Brsar
@@ -195,17 +204,20 @@ class GroupDataTable(__BrsarSection):
     :param parent: A reference to the info section.
     :param offset: The offset from the start of the file.
     """
+
     __numEntries = 0x00
     __entries = 0x04
 
     parent: InfoSection
-    entries: list['GroupDataEntry']
+    entries: list["GroupDataEntry"]
 
     def __init__(self, parent: InfoSection, offset: int):
         super().__init__(parent, offset)
         numEntries = self.read_bytes(self.__numEntries)
         self.entries = [
-            GroupDataEntry(self, self.section_reference(self.__entries + i * self._referenceSize))
+            GroupDataEntry(
+                self, self.section_reference(self.__entries + i * self._referenceSize)
+            )
             for i in range(numEntries)
         ]
 
@@ -219,20 +231,23 @@ class GroupDataEntry(__BrsarSection):
     :param parent: A reference to the group data table.
     :param offset: The offset from the start of the file.
     """
+
     _rseqOffset = 0x10
     _rseqSize = 0x14
     _rwarOffset = 0x18
     _groupItemEntry = 0x20
 
     parent: GroupDataTable
-    itemTable: 'GroupItemTable'
+    itemTable: "GroupItemTable"
 
     def __init__(self, parent: GroupDataTable, offset: int):
         super().__init__(parent, offset)
         self.rseqOffset = self.read_bytes(self._rseqOffset)
         self.rseqSize = self.read_bytes(self._rseqSize)
         self.rwarOffset = self.read_bytes(self._rwarOffset)
-        self.itemTable = GroupItemTable(self, self.section_reference(self._groupItemEntry))
+        self.itemTable = GroupItemTable(
+            self, self.section_reference(self._groupItemEntry)
+        )
 
 
 class GroupItemTable(__BrsarSection):
@@ -243,17 +258,20 @@ class GroupItemTable(__BrsarSection):
     :param parent: A reference to the group data entry.
     :param offset: The offset from the start of the file.
     """
+
     __numEntries = 0x00
     __entries = 0x04
 
     parent: GroupDataEntry
-    entries: list['GroupItemEntry']
+    entries: list["GroupItemEntry"]
 
     def __init__(self, parent: GroupDataEntry, offset: int):
         super().__init__(parent, offset)
         numEntries = self.read_bytes(self.__numEntries)
         self.entries = [
-            GroupItemEntry(self, self.section_reference(self.__entries + i * self._referenceSize))
+            GroupItemEntry(
+                self, self.section_reference(self.__entries + i * self._referenceSize)
+            )
             for i in range(numEntries)
         ]
 
@@ -265,6 +283,7 @@ class GroupItemEntry(__BrsarSection):
     Each rseqOffset is relative to the group offset.
     https://wiki.tockdom.com/wiki/BRSAR_(File_Format)#Group_Item_Info_Entry
     """
+
     _rseqOffset = 0x04
     _rseqSize = 0x08
 
@@ -276,4 +295,3 @@ class GroupItemEntry(__BrsarSection):
         super().__init__(parent, offset)
         self.rseqOffset = self.read_bytes(self._rseqOffset)
         self.rseqSize = self.read_bytes(self._rseqSize)
-    

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QListWidget, QListWidgetItem
@@ -10,18 +12,30 @@ from wii_music_editor.utils.preferences import preferences
 from wii_music_editor.ui.widgets.translate import tr
 
 
-def populate_song_list(widget: QListWidget, types: list[SongType] or None = None, only_allow: int = -1):
+def populate_song_list(
+    widget: QListWidget, types: list[SongType] or None = None, only_allow: int = -1
+):
     widget.clear()
     for i, song in enumerate(song_list):
         if types is None or song.song_type in types:
             item = QListWidgetItem()
             text = song.name
-            if ((len(rom_folder.text.songs) > i) and (
-                    song.song_type != SongType.Regular or rom_folder.text.songs[i] != text) and (
-                    song.song_type != SongType.Maestro or
-                    rom_folder.text.songs[i] != text[:-14]) and (
-                    song.song_type != SongType.Hand_Bell or rom_folder.text.songs[i] != text[:-19])
-                    and (song.song_type != SongType.Menu)):
+            if (
+                (len(rom_folder.text.songs) > i)
+                and (
+                    song.song_type != SongType.Regular
+                    or rom_folder.text.songs[i] != text
+                )
+                and (
+                    song.song_type != SongType.Maestro
+                    or rom_folder.text.songs[i] != text[:-14]
+                )
+                and (
+                    song.song_type != SongType.Hand_Bell
+                    or rom_folder.text.songs[i] != text[:-19]
+                )
+                and (song.song_type != SongType.Menu)
+            ):
                 text = rom_folder.text.songs[i]
                 if song.song_type == SongType.Maestro:
                     text = f"{text} ({tr('ui', 'Mii Maestro')})"
@@ -37,18 +51,19 @@ def populate_song_list(widget: QListWidget, types: list[SongType] or None = None
 
 def populate_style_list(widget: QListWidget, only_allow: int = -1):
     style_type_names = [
-        tr('style_type_names', 'Global'),
-        tr('style_type_names', 'Quick Jam'),
-        tr('style_type_names', 'Song Specific'),
-        tr('style_type_names', 'Menu'),
-        tr('style_type_names', 'Unused')
+        tr("style_type_names", "Global"),
+        tr("style_type_names", "Quick Jam"),
+        tr("style_type_names", "Song Specific"),
+        tr("style_type_names", "Menu"),
+        tr("style_type_names", "Unused"),
     ]
     widget.clear()
     for i, style in enumerate(style_list):
-
-        if i == 0 or style.style_type != style_list[i-1].style_type:
+        if i == 0 or style.style_type != style_list[i - 1].style_type:
             item = QListWidgetItem()
-            item.setText(f"-------- {style_type_names[style.style_type.value]} --------")
+            item.setText(
+                f"-------- {style_type_names[style.style_type.value]} --------"
+            )
             item.setFlags(item.flags() & Qt.ItemIsSelectable)
             widget.addItem(item)
 
@@ -87,7 +102,9 @@ def set_style_list_index(widget: QListWidget, index: int):
     widget.setCurrentRow(index_to_return)
 
 
-def populate_instrument_list(widget: QListWidget, percussion: bool = False, menu: bool = False):
+def populate_instrument_list(
+    widget: QListWidget, percussion: bool = False, menu: bool = False
+):
     widget.clear()
     if not percussion:
         instruments = instrument_list[:40]

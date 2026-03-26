@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import hashlib
 import logging
 from pathlib import Path
@@ -88,7 +90,9 @@ class RomFolder:
 
         # Set Paths
         self.mainDolPath = self.folderPath / "sys" / "main.dol"
-        self.brsarPath = self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
+        self.brsarPath = (
+            self.folderPath / "files" / "Sound" / "MusicStatic" / "rp_Music_sound.brsar"
+        )
 
         # Create backups
         try:
@@ -140,7 +144,8 @@ class RomFolder:
         for i, song in enumerate(song_list):
             if song.default_style != -1:
                 self.default_styles[i] = self.mainDol.read_song_info(
-                    song, self.mainDol.songSegmentDefaultStyle)
+                    song, self.mainDol.songSegmentDefaultStyle
+                )
 
     def verify_main_dol(self) -> bool:
         mainTargetHash = self.__mainDolHashes[self.region]

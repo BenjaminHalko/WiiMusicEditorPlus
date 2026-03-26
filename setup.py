@@ -15,8 +15,12 @@ class BinaryDistribution(Distribution):
 class PostInstallCommand(install):
     def run(self):
         install.run(self)
-        install_site = site.getsitepackages()[1]
-        if not (Path(install_site) / "wii_music_editor").is_dir():
+        install_site = None
+        for sp in site.getsitepackages():
+            if (Path(sp) / "wii_music_editor").is_dir():
+                install_site = sp
+                break
+        if install_site is None:
             install_site = self.install_usersite
         make_shortcut(
             f"{install_site}/wii_music_editor/__main__.py",
@@ -44,6 +48,6 @@ setup(
     distclass=BinaryDistribution,
     package_data={"wii_music_editor": data},
     cmdclass={
-        'install': PostInstallCommand,
+        "install": PostInstallCommand,
     },
 )
