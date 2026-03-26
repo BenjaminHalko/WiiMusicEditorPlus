@@ -1,6 +1,6 @@
-# Coding Guidelines: Wii Music Editor Plus
+# Coding Guidelines: Wii Music Editor
 
-This document defines the architectural and stylistic standards for the Wii Music Editor Plus Rust rewrite. Adherence ensures consistency, safety, and reliability when handling legacy binary formats.
+This document defines the architectural and stylistic standards for the Wii Music Editor Rust rewrite. Adherence ensures consistency, safety, and reliability when handling legacy binary formats.
 
 ## 1. Naming Conventions
 

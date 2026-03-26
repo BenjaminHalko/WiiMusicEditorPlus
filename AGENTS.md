@@ -1,10 +1,10 @@
-# AI Agent Reference: Wii Music Editor Plus
+# AI Agent Reference: Wii Music Editor
 
-This document serves as a guide for AI agents and developers working on the Rust rewrite of Wii Music Editor Plus. It outlines the project's domain, architecture, and core binary formats.
+This document serves as a guide for AI agents and developers working on the Rust rewrite of Wii Music Editor. It outlines the project's domain, architecture, and core binary formats.
 
 ## Project Overview
 
-Wii Music Editor Plus is a desktop application written in Rust using the Iced framework. It is designed for modding the 2008 Nintendo Wii title "Wii Music".
+Wii Music Editor is a desktop application written in Rust using the Iced framework. It is designed for modding the 2008 Nintendo Wii title "Wii Music".
 
 **Core Capabilities:**
 - Replacing in-game songs with custom MIDI files.

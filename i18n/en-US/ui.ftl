@@ -88,7 +88,7 @@ unused-style = Unused
 
 ## Settings
 first-setup = First Setup
-thanks-for-downloading = Thanks for downloading the Wii Music Editor Plus!
+thanks-for-downloading = Thanks for downloading Wii Music Editor!
 lets-help-you-setup-the-essentials = Let's help you setup the essentials!
 language = Language:
 loading-roms = Loading Roms
@@ -110,10 +110,7 @@ copy-gecko-codes-to-dolphin-save-directory = Copy Gecko codes to Dolphin save di
 force-enable-cheats-when-launching-dolphin = Force Enable Cheats when launching Dolphin
 all-done = All Done!
 enjoy-modding-wii-music = Enjoy modding Wii Music!
-link-youtube = https://www.youtube.com/BenjaminHalko
-link-donate = https://ko-fi.com/benjaminhalko
-link-wiki = https://github.com/BenjaminHalko/WiiMusicEditorPlus/wiki
-link-discord = https://discord.gg/NC3wYAeCDs
+setup-links = YouTube: { $youtube } • Donate: { $donate } • Wiki: { $wiki } • Discord: { $discord }
 english = English
 french = French
 spanish = Spanish
@@ -168,8 +165,8 @@ finished-importing-changes = Finished Importing Changes
 could-not-import-change = Could not import change { $section }
 
 ## Messages
-wii-music-editor-plus = Wii Music Editor Plus
-wii-music-editor-plus-error = Wii Music Editor Plus - Error
+wii-music-editor = Wii Music Editor
+wii-music-editor-error = Wii Music Editor - Error
 create-geckocode = Create Geckocode
 mii-maestro = Mii Maestro
 files-successfully-imported = Files Successfully Imported!

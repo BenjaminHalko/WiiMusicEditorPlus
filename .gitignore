@@ -1,3 +1,4 @@
+/.sisyphus
 /target
 **/*.swp
 .DS_Store

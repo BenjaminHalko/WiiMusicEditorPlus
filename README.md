@@ -3,6 +3,7 @@
 [![Discord](https://img.shields.io/discord/931335263509151846?color=5865F2&label=discord&logo=discord&logoColor=white)](https://discord.gg/NC3wYAeCDs)
 ![Current Version](https://img.shields.io/badge/dynamic/json?label=version&query=%24.0.tag_name&url=https%3A%2F%2Fapi.github.com%2Frepos%2FBenjaminHalko%2FWiiMusicEditorPlus%2Freleases)
 ![Downloads](https://img.shields.io/pepy/dt/wii-music-editor)
+[![Crowdin](https://badges.crowdin.net/wii-music-editor/localized.svg)](https://crowdin.com/project/wii-music-editor)
 
 ## Installation
 [Download](https://www.python.org/downloads/) and install Python 3.8 or later.
