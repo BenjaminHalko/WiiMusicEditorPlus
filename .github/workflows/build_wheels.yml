@@ -1,16 +1,6 @@
 name: Build Wheels
 on:
-  workflow_dispatch: 
-  push:
-    branches:
-      - main
-      - dev
-    paths:
-      - .github/workflows/build_wheels.yml
-      - setup.py
-      - pyproject.toml
-      - ui_templates/**
-      - wii_music_editor/**
+  workflow_dispatch:
 
 jobs:
   bump_version:
@@ -58,21 +48,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-latest, macos-latest, ubuntu-latest ]
+        os: [windows-latest, macos-latest, ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: ${{ needs.bump_version.outputs.tag }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.bump_version.outputs.tag }}
 
-    - name: Build wheels
-      uses: pypa/cibuildwheel@v2.16.5
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.16.5
 
-    - name: Upload wheels
-      uses: actions/upload-artifact@v4
-      with:
-        name: cibw-wheels-${{ matrix.os }}
-        path: wheelhouse/*.whl
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
 
   publish_wheels:
     name: Publish wheels
