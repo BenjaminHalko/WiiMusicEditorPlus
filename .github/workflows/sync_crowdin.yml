@@ -37,25 +37,13 @@ jobs:
           slint-tr-extractor --no-default-translation-context crates/editor/ui/*.slint -o crates/editor/i18n/editor.pot
           msgcat --no-location -o crates/editor/i18n/editor.pot crates/editor/i18n/editor.pot
 
-      - name: Check if .pot changed
-        id: pot-changed
-        run: |
-          status=$(git status --porcelain crates/editor/i18n/editor.pot)
-          if [ -z "$status" ]; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Sync translations with Crowdin
-        if: steps.pot-changed.outputs.changed == 'true'
         uses: crowdin/github-action@v2
         with:
           config: crowdin.yml
           upload_sources: true
           upload_translations: false
           download_translations: true
-          skip_untranslated_files: true
           push_translations: false
           push_sources: false
         env:
@@ -63,7 +51,6 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Commit translations
-        if: steps.pot-changed.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "i18n: sync translations from Crowdin"
