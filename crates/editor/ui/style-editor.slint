@@ -1,0 +1,264 @@
+import { Button, LineEdit, ListView, ComboBox } from "std-widgets.slint";
+
+export struct StyleItem {
+    name: string,
+    modified: bool,
+}
+
+export struct InstrumentItem {
+    name: string,
+}
+
+export component StyleEditor inherits Rectangle {
+    background: #F2F2F2;
+
+    in property <[StyleItem]> styles;
+    in-out property <int> current-style: -1;
+
+    in property <[InstrumentItem]> instruments;
+    in-out property <int> current-instrument: -1;
+
+    // Currently selected part (0=Melody 1=Harmony 2=Chords 3=Bass 4=Perc1 5=Perc2)
+    in-out property <int> current-part: 0;
+
+    // Instrument names for each part
+    in property <string> part-melody;
+    in property <string> part-harmony;
+    in property <string> part-chords;
+    in property <string> part-bass;
+    in property <string> part-perc1;
+    in property <string> part-perc2;
+
+    in-out property <string> style-name;
+    in property <bool> name-enabled: false;
+    in property <bool> patch-enabled: false;
+    in property <bool> reset-enabled: false;
+    in property <bool> instruments-enabled: false;
+
+    callback style-selected(int);
+    callback part-selected(int);
+    callback instrument-selected(int);
+    callback name-changed(string);
+    callback reset();
+    callback patch();
+
+    HorizontalLayout {
+        padding: 12px;
+        spacing: 12px;
+
+        // ── Left: style list ─────────────────────────────────────────────────
+        VerticalLayout {
+            width: 240px;
+            spacing: 8px;
+
+            Text {
+                text: @tr("Styles");
+                font-family: "FOT-RodinNTLG Pro DB";
+                font-size: 11px;
+                color: #888888;
+            }
+
+            Rectangle {
+                vertical-stretch: 1;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #FFFFFF;
+                clip: true;
+
+                ListView {
+                    width: parent.width;
+                    height: parent.height;
+
+                    for style[i] in root.styles: Rectangle {
+                        height: 32px;
+                        background: i == root.current-style
+                            ? #34BEED
+                            : (ta.has-hover ? #EEF8FD : #FFFFFF);
+
+                        HorizontalLayout {
+                            padding-left: 10px;
+                            padding-right: 6px;
+                            Text {
+                                horizontal-stretch: 1;
+                                text: style.name;
+                                font-family: "FOT-RodinNTLG Pro DB";
+                                font-size: 13px;
+                                color: i == root.current-style ? #FFFFFF : #333333;
+                                vertical-alignment: center;
+                                overflow: elide;
+                            }
+                            if style.modified: Text {
+                                text: "~";
+                                font-size: 13px;
+                                color: i == root.current-style ? #CCFFFF : #34BEED;
+                                vertical-alignment: center;
+                            }
+                        }
+                        ta := TouchArea {
+                            clicked => {
+                                root.current-style = i;
+                                root.style-selected(i);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // ── Right: controls ──────────────────────────────────────────────────
+        VerticalLayout {
+            vertical-stretch: 1;
+            spacing: 10px;
+
+            // Style name
+            HorizontalLayout {
+                height: 36px;
+                spacing: 8px;
+                Text {
+                    text: @tr("Style Name");
+                    font-family: "FOT-RodinNTLG Pro DB";
+                    font-size: 12px;
+                    color: #555555;
+                    vertical-alignment: center;
+                    width: 80px;
+                }
+                LineEdit {
+                    horizontal-stretch: 1;
+                    text: root.style-name;
+                    enabled: root.name-enabled;
+                    edited(v) => { root.name-changed(v); }
+                }
+            }
+
+            // Part overview — 6 rows showing current instrument per part
+            Rectangle {
+                height: 180px;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #EBEBEB;
+                clip: true;
+
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 4px;
+
+                    Text { text: @tr("Current Instruments"); font-size: 11px; color: #888888; }
+
+                    for part-info in [
+                        { label: @tr("Melody"),  value: root.part-melody,   idx: 0 },
+                        { label: @tr("Harmony"), value: root.part-harmony,  idx: 1 },
+                        { label: @tr("Chords"),  value: root.part-chords,   idx: 2 },
+                        { label: @tr("Bass"),    value: root.part-bass,     idx: 3 },
+                        { label: @tr("Perc 1"),  value: root.part-perc1,    idx: 4 },
+                        { label: @tr("Perc 2"),  value: root.part-perc2,    idx: 5 },
+                    ]: Rectangle {
+                        height: 24px;
+                        border-radius: 3px;
+                        background: root.current-part == part-info.idx
+                            ? #D4EFF8
+                            : (ta2.has-hover ? #E8E8E8 : transparent);
+
+                        HorizontalLayout {
+                            padding-left: 6px; padding-right: 6px;
+                            Text {
+                                width: 64px;
+                                text: part-info.label;
+                                font-family: "FOT-RodinNTLG Pro DB";
+                                font-size: 12px;
+                                color: #555555;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                horizontal-stretch: 1;
+                                text: part-info.value;
+                                font-size: 12px;
+                                color: #333333;
+                                vertical-alignment: center;
+                                overflow: elide;
+                            }
+                        }
+                        ta2 := TouchArea {
+                            enabled: root.instruments-enabled;
+                            clicked => {
+                                root.current-part = part-info.idx;
+                                root.part-selected(part-info.idx);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Part selector header
+            HorizontalLayout {
+                height: 28px;
+                spacing: 8px;
+                Text {
+                    text: @tr("Editing: ");
+                    font-size: 12px;
+                    color: #555555;
+                    vertical-alignment: center;
+                }
+                Text {
+                    text: root.current-part == 0 ? @tr("Melody")
+                        : root.current-part == 1 ? @tr("Harmony")
+                        : root.current-part == 2 ? @tr("Chords")
+                        : root.current-part == 3 ? @tr("Bass")
+                        : root.current-part == 4 ? @tr("Perc 1")
+                        : @tr("Perc 2");
+                    font-family: "FOT-RodinNTLG Pro DB";
+                    font-size: 13px;
+                    color: #34BEED;
+                    vertical-alignment: center;
+                }
+            }
+
+            // Instrument list
+            Rectangle {
+                vertical-stretch: 1;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #FFFFFF;
+                clip: true;
+
+                ListView {
+                    width: parent.width;
+                    height: parent.height;
+
+                    for instr[i] in root.instruments: Rectangle {
+                        height: 28px;
+                        background: i == root.current-instrument
+                            ? #34BEED
+                            : (ta3.has-hover ? #EEF8FD : #FFFFFF);
+
+                        Text {
+                            x: 10px;
+                            y: (parent.height - self.height) / 2;
+                            text: instr.name;
+                            font-size: 12px;
+                            color: i == root.current-instrument ? #FFFFFF : #333333;
+                        }
+                        ta3 := TouchArea {
+                            enabled: root.instruments-enabled;
+                            clicked => {
+                                root.current-instrument = i;
+                                root.instrument-selected(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Action row
+            HorizontalLayout {
+                height: 36px;
+                spacing: 8px;
+                Rectangle { horizontal-stretch: 1; }
+                Button { text: @tr("Reset Style"); enabled: root.reset-enabled; clicked => { root.reset(); } }
+                Button { text: @tr("Patch");       enabled: root.patch-enabled; clicked => { root.patch(); } }
+            }
+        }
+    }
+}

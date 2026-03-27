@@ -1,0 +1,54 @@
+export component ChannelTile inherits Rectangle {
+    in property <string> icon;
+    in property <string> label;
+    callback clicked;
+
+    width: 260px;
+    height: 148px;
+    border-radius: 16px;
+    background: ta.pressed ? #BEBEBE : (ta.has-hover ? #D4D4D4 : #CBCBCB);
+    border-width: 3px;
+    border-color: #B4B4B4;
+    drop-shadow-color: rgba(0, 0, 0, 0.20);
+    drop-shadow-offset-y: 3px;
+    drop-shadow-blur: 8px;
+    clip: true;
+
+    // Icon area — top 65%
+    Text {
+        x: 0;
+        y: 0;
+        width: parent.width;
+        height: parent.height * 65%;
+        text: root.icon;
+        font-family: "FOT-RodinNTLG Pro DB";
+        font-size: 44px;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+        color: #555555;
+    }
+
+    // Label band — bottom 35% with subtle dark overlay
+    Rectangle {
+        x: 0;
+        y: parent.height * 65%;
+        width: parent.width;
+        height: parent.height * 35%;
+        background: rgba(0, 0, 0, 0.08);
+
+        Text {
+            width: parent.width;
+            height: parent.height;
+            text: root.label;
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 13px;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+            color: #555555;
+        }
+    }
+
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}

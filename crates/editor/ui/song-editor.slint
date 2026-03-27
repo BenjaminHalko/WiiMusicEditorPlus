@@ -1,0 +1,337 @@
+import { Button, LineEdit, ListView, SpinBox, CheckBox, TextEdit, ScrollView } from "std-widgets.slint";
+
+export struct SongItem {
+    name: string,
+    song-type: int,  // 0=Regular 1=Maestro 2=Handbell 3=Menu
+}
+
+component FilterBtn inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback clicked;
+
+    width: 72px;
+    height: 26px;
+    border-radius: 4px;
+    background: root.active ? #34BEED : (ta.has-hover ? #E0E0E0 : #EBEBEB);
+    border-width: 1px;
+    border-color: root.active ? #2AAAD0 : #CCCCCC;
+
+    Text {
+        width: parent.width; height: parent.height;
+        text: root.label;
+        font-family: "FOT-RodinNTLG Pro DB";
+        font-size: 11px;
+        color: root.active ? #FFFFFF : #555555;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea { clicked => { root.clicked(); } }
+}
+
+component SigBtn inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback clicked;
+
+    width: 52px; height: 28px;
+    border-radius: 4px;
+    background: root.active ? #34BEED : (ta.has-hover ? #E0E0E0 : #EBEBEB);
+    border-width: 1px;
+    border-color: root.active ? #2AAAD0 : #CCCCCC;
+    Text {
+        width: parent.width; height: parent.height;
+        text: root.label;
+        font-family: "FOT-RodinNTLG Pro DB";
+        font-size: 13px;
+        color: root.active ? #FFFFFF : #555555;
+        horizontal-alignment: center; vertical-alignment: center;
+    }
+    ta := TouchArea { clicked => { root.clicked(); } }
+}
+
+export component SongEditor inherits Rectangle {
+    background: #F2F2F2;
+
+    // Song list model
+    in property <[SongItem]> songs;
+    in-out property <int> current-song: -1;
+    in-out property <int> filter-type: 0;   // 0=All 1=Regular 2=Maestro 3=Handbell 4=Menu
+
+    // Selected song data (set from Rust)
+    in property <int> song-type: 0;
+    in-out property <string> song-name;
+    in-out property <string> song-genre;
+    in-out property <string> song-description;
+    in-out property <string> midi-score-label: @tr("No file loaded");
+    in-out property <string> midi-song-label: @tr("No file loaded");
+    in-out property <int> tempo: 120;
+    in-out property <int> length: 8;
+    in-out property <bool> use-beats: true;
+    in-out property <int> time-sig: 4;
+    in-out property <bool> replace-midi: false;
+    in-out property <bool> show-song-file: false;
+
+    // Button states (Rust controls enablement)
+    in property <bool> patch-enabled: false;
+    in property <bool> reset-enabled: false;
+    in property <bool> midi-enabled: false;
+    in property <bool> text-enabled: false;
+    in property <bool> style-enabled: false;
+
+    // Callbacks
+    callback song-selected(int);
+    callback filter-changed(int);
+    callback load-midi-score();
+    callback load-midi-song();
+    callback replace-midi-changed(bool);
+    callback tempo-changed(int);
+    callback length-changed(int);
+    callback use-beats-changed(bool);
+    callback time-sig-changed(int);
+    callback name-changed(string);
+    callback genre-changed(string);
+    callback description-changed(string);
+    callback open-style-editor();
+    callback open-default-style-editor();
+    callback reset();
+    callback patch();
+
+    HorizontalLayout {
+        padding: 12px;
+        spacing: 12px;
+
+        // ── Left panel: filter + song list ──────────────────────────────────
+        VerticalLayout {
+            width: 260px;
+            spacing: 8px;
+
+            // Filter row
+            HorizontalLayout {
+                spacing: 4px;
+                FilterBtn { label: @tr("All");      active: root.filter-type == 0; clicked => { root.filter-type = 0; root.filter-changed(0); } }
+                FilterBtn { label: @tr("Regular");  active: root.filter-type == 1; clicked => { root.filter-type = 1; root.filter-changed(1); } }
+                FilterBtn { label: @tr("Maestro");  active: root.filter-type == 2; clicked => { root.filter-type = 2; root.filter-changed(2); } }
+            }
+            HorizontalLayout {
+                spacing: 4px;
+                FilterBtn { label: @tr("Handbell"); active: root.filter-type == 3; clicked => { root.filter-type = 3; root.filter-changed(3); } }
+                FilterBtn { label: @tr("Menu");     active: root.filter-type == 4; clicked => { root.filter-type = 4; root.filter-changed(4); } }
+            }
+
+            // Song list
+            Rectangle {
+                vertical-stretch: 1;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #FFFFFF;
+                clip: true;
+
+                ListView {
+                    width: parent.width;
+                    height: parent.height;
+
+                    for song[i] in root.songs: Rectangle {
+                        height: (root.filter-type == 0 || song.song-type == root.filter-type - 1) ? 32px : 0px;
+                        visible: root.filter-type == 0 || song.song-type == root.filter-type - 1;
+                        background: i == root.current-song
+                            ? #34BEED
+                            : (ta.has-hover ? #EEF8FD : #FFFFFF);
+
+                        Text {
+                            x: 10px;
+                            y: (parent.height - self.height) / 2;
+                            text: song.name;
+                            font-family: "FOT-RodinNTLG Pro DB";
+                            font-size: 13px;
+                            color: i == root.current-song ? #FFFFFF : #333333;
+                        }
+                        ta := TouchArea {
+                            clicked => {
+                                root.current-song = i;
+                                root.song-selected(i);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // ── Right panel: controls ────────────────────────────────────────────
+        VerticalLayout {
+            vertical-stretch: 1;
+            spacing: 10px;
+
+            // MIDI section
+            Rectangle {
+                height: root.show-song-file ? 160px : 120px;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #EBEBEB;
+                clip: true;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 6px;
+
+                    Text {
+                        text: @tr("MIDI File");
+                        font-family: "FOT-RodinNTLG Pro DB";
+                        font-size: 11px;
+                        color: #888888;
+                    }
+
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Button {
+                            text: @tr("Score");
+                            enabled: root.midi-enabled;
+                            clicked => { root.load-midi-score(); }
+                        }
+                        Text {
+                            vertical-stretch: 1;
+                            text: root.midi-score-label;
+                            font-size: 12px;
+                            color: #555555;
+                            vertical-alignment: center;
+                            overflow: elide;
+                        }
+                    }
+
+                    if root.show-song-file: HorizontalLayout {
+                        spacing: 8px;
+                        Button {
+                            text: @tr("Song");
+                            enabled: root.midi-enabled && root.replace-midi;
+                            clicked => { root.load-midi-song(); }
+                        }
+                        Text {
+                            vertical-stretch: 1;
+                            text: root.midi-song-label;
+                            font-size: 12px;
+                            color: #555555;
+                            vertical-alignment: center;
+                            overflow: elide;
+                        }
+                    }
+
+                    HorizontalLayout {
+                        spacing: 16px;
+                        CheckBox {
+                            text: @tr("Replace Song");
+                            checked: root.replace-midi;
+                            enabled: root.midi-enabled;
+                            toggled => { root.replace-midi-changed(self.checked); }
+                        }
+                    }
+                }
+            }
+
+            // Tempo / Length / Time signature
+            Rectangle {
+                height: 110px;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #EBEBEB;
+                clip: true;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 8px;
+
+                    HorizontalLayout {
+                        spacing: 16px;
+                        alignment: start;
+                        VerticalLayout {
+                            spacing: 4px;
+                            Text { text: @tr("Tempo"); font-size: 11px; color: #888888; }
+                            SpinBox {
+                                value: root.tempo;
+                                minimum: 1; maximum: 500;
+                                enabled: root.midi-enabled;
+                                edited(v) => { root.tempo-changed(v); }
+                            }
+                        }
+                        VerticalLayout {
+                            spacing: 4px;
+                            Text { text: @tr("Length"); font-size: 11px; color: #888888; }
+                            SpinBox {
+                                value: root.length;
+                                minimum: 1; maximum: 9999;
+                                enabled: root.midi-enabled;
+                                edited(v) => { root.length-changed(v); }
+                            }
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        alignment: start;
+                        SigBtn { label: @tr("♩/4"); active: root.time-sig == 4; clicked => { root.time-sig-changed(4); } }
+                        SigBtn { label: @tr("♩/3"); active: root.time-sig == 3; clicked => { root.time-sig-changed(3); } }
+                        SigBtn { label: @tr("Beats");    active: root.use-beats;  clicked => { root.use-beats-changed(true); } }
+                        SigBtn { label: @tr("Measures"); active: !root.use-beats; clicked => { root.use-beats-changed(false); } }
+                    }
+                }
+            }
+
+            // Song text
+            Rectangle {
+                vertical-stretch: 1;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: #CCCCCC;
+                background: #EBEBEB;
+                clip: true;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 8px;
+
+                    Text { text: @tr("Song Text"); font-size: 11px; color: #888888; }
+
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text { text: @tr("Name"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
+                        LineEdit {
+                            horizontal-stretch: 1;
+                            text: root.song-name;
+                            enabled: root.text-enabled;
+                            edited(v) => { root.name-changed(v); }
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text { text: @tr("Genre"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
+                        LineEdit {
+                            horizontal-stretch: 1;
+                            text: root.song-genre;
+                            enabled: root.text-enabled;
+                            edited(v) => { root.genre-changed(v); }
+                        }
+                    }
+                    Text { text: @tr("Description"); font-size: 11px; color: #888888; }
+                    TextEdit {
+                        vertical-stretch: 1;
+                        text: root.song-description;
+                        enabled: root.text-enabled;
+                        edited(v) => { root.description-changed(v); }
+                    }
+                }
+            }
+
+            // Action row
+            HorizontalLayout {
+                spacing: 8px;
+                height: 36px;
+                Button { text: @tr("Style Editor");   enabled: root.style-enabled; clicked => { root.open-style-editor(); } }
+                Button { text: @tr("Default Style");  enabled: root.style-enabled; clicked => { root.open-default-style-editor(); } }
+                Rectangle { horizontal-stretch: 1; }
+                Button { text: @tr("Reset");  enabled: root.reset-enabled;  clicked => { root.reset(); } }
+                Button { text: @tr("Patch");  enabled: root.patch-enabled;  clicked => { root.patch(); } }
+            }
+        }
+    }
+}

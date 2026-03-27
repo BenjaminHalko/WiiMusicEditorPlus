@@ -4,5 +4,5 @@ api_token_env: "CROWDIN_PERSONAL_TOKEN"
 preserve_hierarchy: false
 
 files:
-  - source: /i18n/en-US/ui.ftl
-    translation: /i18n/%locale%/ui.ftl
+  - source: /crates/editor/i18n/editor.pot
+    translation: /crates/editor/i18n/%locale%/LC_MESSAGES/editor.po

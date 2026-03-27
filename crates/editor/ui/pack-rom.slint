@@ -1,0 +1,52 @@
+import { Button, LineEdit, ComboBox } from "std-widgets.slint";
+
+export component PackRom inherits Rectangle {
+    background: #F2F2F2;
+
+    in-out property <string> output-path;
+    in-out property <int> output-type: 0;  // 0=ISO 1=WBFS
+    in property <bool> pack-enabled: false;
+
+    callback browse-output();
+    callback type-changed(int);
+    callback pack();
+
+    VerticalLayout {
+        padding: 24px;
+        spacing: 16px;
+        alignment: start;
+
+        Text {
+            text: @tr("Pack the ROM filesystem into an ISO or WBFS file.");
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 13px;
+            color: #555555;
+        }
+
+        HorizontalLayout {
+            spacing: 8px;
+            height: 36px;
+            Text { text: @tr("Output Path"); font-size: 12px; color: #555555; vertical-alignment: center; width: 100px; }
+            LineEdit { horizontal-stretch: 1; text: root.output-path; read-only: true; }
+            Button { text: @tr("Browse"); clicked => { root.browse-output(); } }
+        }
+
+        HorizontalLayout {
+            spacing: 8px;
+            height: 36px;
+            Text { text: @tr("Output Type"); font-size: 12px; color: #555555; vertical-alignment: center; width: 100px; }
+            ComboBox {
+                width: 160px;
+                model: ["ISO", "WBFS"];
+                current-index: root.output-type;
+                selected(v) => { root.type-changed(self.current-index); }
+            }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            Rectangle { horizontal-stretch: 1; }
+            Button { text: @tr("Pack ROM"); enabled: root.pack-enabled; clicked => { root.pack(); } }
+        }
+    }
+}

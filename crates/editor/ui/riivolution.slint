@@ -1,0 +1,53 @@
+import { Button, LineEdit } from "std-widgets.slint";
+
+export component Riivolution inherits Rectangle {
+    background: #F2F2F2;
+
+    in-out property <string> patch-name;
+    in-out property <string> patch-author;
+    in-out property <string> patch-version;
+    in property <bool> create-enabled: false;
+
+    callback name-changed(string);
+    callback author-changed(string);
+    callback version-changed(string);
+    callback create();
+
+    VerticalLayout {
+        padding: 24px;
+        spacing: 16px;
+        alignment: start;
+
+        Text {
+            text: @tr("Create a Riivolution patch for your changes.");
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 13px;
+            color: #555555;
+        }
+
+        for field in [
+            { label: @tr("Patch Name"),   value: root.patch-name },
+            { label: @tr("Author"),       value: root.patch-author },
+            { label: @tr("Version"),      value: root.patch-version },
+        ]: HorizontalLayout {
+            height: 36px;
+            spacing: 8px;
+            Text { text: field.label; font-size: 12px; color: #555555; vertical-alignment: center; width: 110px; }
+            LineEdit {
+                horizontal-stretch: 1;
+                text: field.value;
+                edited(v) => {
+                    if (field.label == @tr("Patch Name"))  { root.name-changed(v); }
+                    if (field.label == @tr("Author"))      { root.author-changed(v); }
+                    if (field.label == @tr("Version"))     { root.version-changed(v); }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            Rectangle { horizontal-stretch: 1; }
+            Button { text: @tr("Create Patch"); enabled: root.create-enabled; clicked => { root.create(); } }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+import { Button, TextEdit } from "std-widgets.slint";
+
+export component TextEditor inherits Rectangle {
+    background: #F2F2F2;
+
+    in-out property <string> text;
+    in property <bool> patch-enabled: false;
+    in property <bool> open-external-enabled: false;
+
+    callback text-changed(string);
+    callback open-external();
+    callback patch();
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        TextEdit {
+            vertical-stretch: 1;
+            text: root.text;
+            edited(v) => { root.text-changed(v); }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            spacing: 8px;
+            Button {
+                text: @tr("Open in External Editor");
+                enabled: root.open-external-enabled;
+                clicked => { root.open-external(); }
+            }
+            Rectangle { horizontal-stretch: 1; }
+            Button {
+                text: @tr("Patch");
+                enabled: root.patch-enabled;
+                clicked => { root.patch(); }
+            }
+        }
+    }
+}

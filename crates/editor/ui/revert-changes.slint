@@ -1,0 +1,51 @@
+import { Button, CheckBox } from "std-widgets.slint";
+
+export component RevertChanges inherits Rectangle {
+    background: #F2F2F2;
+
+    in-out property <bool> revert-songs: false;
+    in-out property <bool> revert-styles: false;
+    in-out property <bool> revert-text: false;
+    in-out property <bool> revert-main-dol: false;
+    in-out property <bool> revert-brsar: false;
+
+    callback revert();
+
+    pure function any-selected() -> bool {
+        root.revert-songs || root.revert-styles || root.revert-text
+            || root.revert-main-dol || root.revert-brsar
+    }
+
+    VerticalLayout {
+        padding: 24px;
+        spacing: 16px;
+        alignment: start;
+
+        Text {
+            text: @tr("Select what you want to revert. All changes to the selected items will be lost!");
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 13px;
+            color: #CC4400;
+            wrap: word-wrap;
+        }
+
+        VerticalLayout {
+            spacing: 10px;
+            CheckBox { text: @tr("Songs (BRSAR)");  checked: root.revert-songs;    toggled => { root.revert-songs = self.checked; } }
+            CheckBox { text: @tr("Styles");          checked: root.revert-styles;   toggled => { root.revert-styles = self.checked; } }
+            CheckBox { text: @tr("Text");            checked: root.revert-text;     toggled => { root.revert-text = self.checked; } }
+            CheckBox { text: @tr("Main.dol");        checked: root.revert-main-dol; toggled => { root.revert-main-dol = self.checked; } }
+            CheckBox { text: @tr("BRSAR");           checked: root.revert-brsar;    toggled => { root.revert-brsar = self.checked; } }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            Rectangle { horizontal-stretch: 1; }
+            Button {
+                text: @tr("Revert");
+                enabled: root.any-selected();
+                clicked => { root.revert(); }
+            }
+        }
+    }
+}

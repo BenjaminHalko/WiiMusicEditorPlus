@@ -1,0 +1,74 @@
+export component BottomBar inherits Rectangle {
+    in property <bool> is-main-menu: true;
+    in property <string> rom-label;
+    in property <string> screen-title;
+    callback back();
+
+    height: 80px;
+    background: #E1E2E6;
+
+    // Accent top border
+    Rectangle {
+        x: 0;
+        y: 0;
+        width: parent.width;
+        height: 2px;
+        background: #34BEED;
+    }
+
+    // Circle button — WME on main menu, ← on editor screens
+    btn := Rectangle {
+        x: 40px;
+        y: (parent.height - self.height) / 2;
+        width: 42px;
+        height: 42px;
+        border-radius: 21px;
+        background: #D9D9D9;
+        border-width: 3px;
+        border-color: #34BEED;
+        drop-shadow-color: rgba(188, 189, 195, 0.5);
+        drop-shadow-offset-x: 5px;
+        drop-shadow-offset-y: 5px;
+        drop-shadow-blur: 3px;
+
+        Text {
+            width: parent.width;
+            height: parent.height;
+            text: root.is-main-menu ? "WME" : "←";
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: root.is-main-menu ? 9px : 18px;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+            color: #A1A0A4;
+        }
+
+        TouchArea {
+            clicked => {
+                if (!root.is-main-menu) { root.back(); }
+            }
+        }
+    }
+
+    // Center — ROM path or screen title
+    Text {
+        x: 100px;
+        y: (parent.height - self.height) / 2;
+        width: parent.width - 200px;
+        text: root.is-main-menu ? root.rom-label : root.screen-title;
+        font-family: "FOT-RodinNTLG Pro DB";
+        font-size: root.is-main-menu ? 11px : 18px;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+        color: root.is-main-menu ? #999999 : #555555;
+    }
+
+    // Nav arrows — main menu only
+    if root.is-main-menu: Text {
+        x: parent.width - self.width - 40px;
+        y: (parent.height - self.height) / 2;
+        text: "◄  ►";
+        font-family: "FOT-RodinNTLG Pro DB";
+        font-size: 20px;
+        color: #555555;
+    }
+}

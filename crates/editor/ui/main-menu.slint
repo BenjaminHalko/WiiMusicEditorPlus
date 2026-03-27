@@ -1,0 +1,74 @@
+import { ChannelTile } from "channel-tile.slint";
+
+export component MainMenu inherits Rectangle {
+    background: transparent;
+
+    callback open-channel(int);
+
+    // Logo — centred, 18 px from top
+    Rectangle {
+        x: 0;
+        y: 18px;
+        width: parent.width;
+        height: 40px;
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 2px;
+
+            Text {
+                text: "Wii";
+                font-family: "FOT-RodinNTLG Pro DB";
+                font-size: 30px;
+                color: #888888;
+                vertical-alignment: center;
+            }
+            Text {
+                text: "Music";
+                font-family: "FOT-RodinNTLG Pro DB";
+                font-size: 30px;
+                color: #FF8C00;
+                vertical-alignment: center;
+            }
+            Text {
+                text: " EDITOR";
+                font-family: "FOT-RodinNTLG Pro DB";
+                font-size: 22px;
+                color: #777777;
+                vertical-alignment: center;
+            }
+        }
+    }
+
+    // 3 × 3 channel grid — vertically centred in remaining space
+    VerticalLayout {
+        x: 0;
+        y: 70px;
+        width: parent.width;
+        height: parent.height - 70px;
+        alignment: center;
+        spacing: 17px;
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 17px;
+            ChannelTile { icon: "♪"; label: @tr("Song Editor");           clicked => { root.open-channel(0); } }
+            ChannelTile { icon: "◈"; label: @tr("Style Editor");          clicked => { root.open-channel(1); } }
+            ChannelTile { icon: "✎"; label: @tr("Text Editor");           clicked => { root.open-channel(2); } }
+        }
+        HorizontalLayout {
+            alignment: center;
+            spacing: 17px;
+            ChannelTile { icon: "★"; label: @tr("Default Style Editor");  clicked => { root.open-channel(3); } }
+            ChannelTile { icon: "✕"; label: @tr("Remove Songs");          clicked => { root.open-channel(4); } }
+            ChannelTile { icon: "⊡"; label: @tr("Pack ROM");              clicked => { root.open-channel(5); } }
+        }
+        HorizontalLayout {
+            alignment: center;
+            spacing: 17px;
+            ChannelTile { icon: "R"; label: @tr("Riivolution");           clicked => { root.open-channel(6); } }
+            ChannelTile { icon: "↺"; label: @tr("Revert Changes");        clicked => { root.open-channel(7); } }
+            ChannelTile { icon: "⚙"; label: @tr("Settings");              clicked => { root.open-channel(8); } }
+        }
+    }
+}

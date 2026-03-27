@@ -10,7 +10,6 @@ pub enum DiscordState {
     StyleEditor,
     TextEditor,
     DefaultStyleEditor,
-    RemoveSongEditor,
     CreatingRiivolutionPatch,
 }
 
@@ -23,7 +22,6 @@ impl DiscordState {
             Self::StyleEditor => "StyleEditor",
             Self::TextEditor => "TextEditor",
             Self::DefaultStyleEditor => "DefaultStyleEditor",
-            Self::RemoveSongEditor => "RemoveSongEditor",
             Self::CreatingRiivolutionPatch => "CreatingRiivolutionPatch",
         }
     }

@@ -7,7 +7,7 @@ on:
       - main
       - dev-rust
     paths:
-      - i18n/en-US/ui.ftl
+      - crates/editor/ui/**/*.slint
       - crowdin.yml
       - .github/workflows/sync_crowdin.yml
 
@@ -19,7 +19,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install slint-tr-extractor
+        run: cargo install slint-tr-extractor
+
+      - name: Install gettext tools
+        run: sudo apt-get install -y gettext
+
+      - name: Extract translation strings
+        run: |
+          mkdir -p crates/editor/i18n
+          slint-tr-extractor --no-default-translation-context crates/editor/ui/*.slint -o crates/editor/i18n/editor.pot
+          msgcat --no-location -o crates/editor/i18n/editor.pot crates/editor/i18n/editor.pot
+
+      - name: Check if .pot changed
+        id: pot-changed
+        run: |
+          status=$(git status --porcelain crates/editor/i18n/editor.pot)
+          if [ -z "$status" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Sync translations with Crowdin
+        if: steps.pot-changed.outputs.changed == 'true'
         uses: crowdin/github-action@v2
         with:
           config: crowdin.yml
@@ -34,6 +63,7 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Commit translations
+        if: steps.pot-changed.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "i18n: sync translations from Crowdin"

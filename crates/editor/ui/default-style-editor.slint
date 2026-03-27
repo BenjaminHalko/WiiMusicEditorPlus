@@ -1,0 +1,116 @@
+import { Button, ListView } from "std-widgets.slint";
+
+export component DefaultStyleEditor inherits Rectangle {
+    background: #F2F2F2;
+
+    in property <[string]> songs;
+    in property <[string]> styles;
+    in-out property <int> current-song: -1;
+    in-out property <int> current-style: -1;
+
+    in property <bool> patch-enabled: false;
+    in property <bool> reset-enabled: false;
+    in property <bool> style-list-enabled: false;
+
+    callback song-selected(int);
+    callback style-selected(int);
+    callback reset();
+    callback patch();
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        HorizontalLayout {
+            vertical-stretch: 1;
+            spacing: 12px;
+
+            // Song list
+            VerticalLayout {
+                horizontal-stretch: 1;
+                spacing: 6px;
+                Text {
+                    text: @tr("Song");
+                    font-family: "FOT-RodinNTLG Pro DB";
+                    font-size: 11px;
+                    color: #888888;
+                }
+                Rectangle {
+                    vertical-stretch: 1;
+                    border-radius: 6px;
+                    border-width: 1px;
+                    border-color: #CCCCCC;
+                    background: #FFFFFF;
+                    clip: true;
+
+                    ListView {
+                        width: parent.width;
+                        height: parent.height;
+                        for song[i] in root.songs: Rectangle {
+                            height: 32px;
+                            background: i == root.current-song ? #34BEED : (ta.has-hover ? #EEF8FD : #FFFFFF);
+                            Text {
+                                x: 10px; y: (parent.height - self.height) / 2;
+                                text: song;
+                                font-family: "FOT-RodinNTLG Pro DB";
+                                font-size: 13px;
+                                color: i == root.current-song ? #FFFFFF : #333333;
+                            }
+                            ta := TouchArea {
+                                clicked => { root.current-song = i; root.song-selected(i); }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Style list
+            VerticalLayout {
+                horizontal-stretch: 1;
+                spacing: 6px;
+                Text {
+                    text: @tr("Default Style");
+                    font-family: "FOT-RodinNTLG Pro DB";
+                    font-size: 11px;
+                    color: #888888;
+                }
+                Rectangle {
+                    vertical-stretch: 1;
+                    border-radius: 6px;
+                    border-width: 1px;
+                    border-color: #CCCCCC;
+                    background: root.style-list-enabled ? #FFFFFF : #F5F5F5;
+                    clip: true;
+
+                    ListView {
+                        width: parent.width;
+                        height: parent.height;
+                        for style[i] in root.styles: Rectangle {
+                            height: 32px;
+                            background: i == root.current-style ? #34BEED : (ta2.has-hover && root.style-list-enabled ? #EEF8FD : #FFFFFF);
+                            Text {
+                                x: 10px; y: (parent.height - self.height) / 2;
+                                text: style;
+                                font-family: "FOT-RodinNTLG Pro DB";
+                                font-size: 13px;
+                                color: i == root.current-style ? #FFFFFF : (root.style-list-enabled ? #333333 : #AAAAAA);
+                            }
+                            ta2 := TouchArea {
+                                enabled: root.style-list-enabled;
+                                clicked => { root.current-style = i; root.style-selected(i); }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            spacing: 8px;
+            Rectangle { horizontal-stretch: 1; }
+            Button { text: @tr("Reset to Default"); enabled: root.reset-enabled; clicked => { root.reset(); } }
+            Button { text: @tr("Patch");            enabled: root.patch-enabled; clicked => { root.patch(); } }
+        }
+    }
+}

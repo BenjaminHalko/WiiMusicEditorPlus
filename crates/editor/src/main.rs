@@ -1,3 +1,5 @@
+slint::include_modules!();
+
 #[allow(dead_code)]
 mod discord;
 #[allow(dead_code)]
@@ -6,6 +8,9 @@ mod settings;
 #[allow(dead_code)]
 mod updater;
 
-fn main() {
-    println!("Wii Music Editor");
+fn main() -> Result<(), slint::PlatformError> {
+    slint::init_translations!(concat!(env!("CARGO_MANIFEST_DIR"), "/i18n/"));
+
+    let app = AppWindow::new()?;
+    app.run()
 }

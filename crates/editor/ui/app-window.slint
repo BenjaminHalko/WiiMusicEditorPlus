@@ -1,0 +1,363 @@
+import "../res/fonts/rodin.otf";
+
+import { MainMenu }           from "main-menu.slint";
+import { BottomBar }          from "bottom-bar.slint";
+import { SongEditor, SongItem }                from "song-editor.slint";
+import { StyleEditor, StyleItem, InstrumentItem } from "style-editor.slint";
+import { TextEditor }         from "text-editor.slint";
+import { DefaultStyleEditor } from "default-style-editor.slint";
+import { RemoveSongs, RemovableSong }          from "remove-songs.slint";
+import { PackRom }            from "pack-rom.slint";
+import { Riivolution }        from "riivolution.slint";
+import { RevertChanges }      from "revert-changes.slint";
+import { AppSettings }        from "app-settings.slint";
+
+export { SongItem, StyleItem, InstrumentItem, RemovableSong }
+
+export enum Screen {
+    MainMenu,
+    FirstSetup,
+    SongEditor,
+    StyleEditor,
+    TextEditor,
+    DefaultStyleEditor,
+    RemoveSongEditor,
+    PackRom,
+    Riivolution,
+    RevertChanges,
+    AppSettings,
+}
+
+export component AppWindow inherits Window {
+    title: @tr("Wii Music Editor");
+    preferred-width: 1200px;
+    preferred-height: 780px;
+    background: #F2F2F2;
+
+    // ── Navigation ──────────────────────────────────────────────────────────
+    in-out property <Screen> current-screen: Screen.MainMenu;
+    in property <string> rom-label: @tr("No Specified Path");
+
+    pure function is-home() -> bool {
+        root.current-screen == Screen.MainMenu || root.current-screen == Screen.FirstSetup
+    }
+    pure function screen-title() -> string {
+        if (root.current-screen == Screen.SongEditor)         { return @tr("Song Editor"); }
+        if (root.current-screen == Screen.StyleEditor)        { return @tr("Style Editor"); }
+        if (root.current-screen == Screen.TextEditor)         { return @tr("Text Editor"); }
+        if (root.current-screen == Screen.DefaultStyleEditor) { return @tr("Default Style Editor"); }
+        if (root.current-screen == Screen.RemoveSongEditor)   { return @tr("Remove Songs"); }
+        if (root.current-screen == Screen.PackRom)            { return @tr("Pack ROM"); }
+        if (root.current-screen == Screen.Riivolution)        { return @tr("Riivolution"); }
+        if (root.current-screen == Screen.RevertChanges)      { return @tr("Revert Changes"); }
+        if (root.current-screen == Screen.AppSettings)        { return @tr("Settings"); }
+        return "";
+    }
+
+    // ── Song Editor properties ───────────────────────────────────────────────
+    in property <[SongItem]> songs;
+    in-out property <int> se-current-song: -1;
+    in-out property <int> se-filter-type: 0;
+    in property <int> se-song-type: 0;
+    in-out property <string> se-song-name;
+    in-out property <string> se-song-genre;
+    in-out property <string> se-song-description;
+    in-out property <string> se-midi-score-label: @tr("No file loaded");
+    in-out property <string> se-midi-song-label: @tr("No file loaded");
+    in-out property <int> se-tempo: 120;
+    in-out property <int> se-length: 8;
+    in-out property <bool> se-use-beats: true;
+    in-out property <int> se-time-sig: 4;
+    in-out property <bool> se-replace-midi: false;
+    in-out property <bool> se-show-song-file: false;
+    in property <bool> se-patch-enabled: false;
+    in property <bool> se-reset-enabled: false;
+    in property <bool> se-midi-enabled: false;
+    in property <bool> se-text-enabled: false;
+    in property <bool> se-style-enabled: false;
+    callback se-song-selected(int);
+    callback se-filter-changed(int);
+    callback se-load-midi-score();
+    callback se-load-midi-song();
+    callback se-replace-midi-changed(bool);
+    callback se-tempo-changed(int);
+    callback se-length-changed(int);
+    callback se-use-beats-changed(bool);
+    callback se-time-sig-changed(int);
+    callback se-name-changed(string);
+    callback se-genre-changed(string);
+    callback se-description-changed(string);
+    callback se-open-style-editor();
+    callback se-open-default-style-editor();
+    callback se-reset();
+    callback se-patch();
+
+    // ── Style Editor properties ──────────────────────────────────────────────
+    in property <[StyleItem]> styles;
+    in property <[InstrumentItem]> instruments;
+    in-out property <int> ste-current-style: -1;
+    in-out property <int> ste-current-instrument: -1;
+    in-out property <int> ste-current-part: 0;
+    in property <string> ste-part-melody;
+    in property <string> ste-part-harmony;
+    in property <string> ste-part-chords;
+    in property <string> ste-part-bass;
+    in property <string> ste-part-perc1;
+    in property <string> ste-part-perc2;
+    in-out property <string> ste-style-name;
+    in property <bool> ste-name-enabled: false;
+    in property <bool> ste-patch-enabled: false;
+    in property <bool> ste-reset-enabled: false;
+    in property <bool> ste-instruments-enabled: false;
+    callback ste-style-selected(int);
+    callback ste-part-selected(int);
+    callback ste-instrument-selected(int);
+    callback ste-name-changed(string);
+    callback ste-reset();
+    callback ste-patch();
+
+    // ── Text Editor properties ───────────────────────────────────────────────
+    in-out property <string> te-text;
+    in property <bool> te-patch-enabled: false;
+    in property <bool> te-external-enabled: false;
+    callback te-text-changed(string);
+    callback te-open-external();
+    callback te-patch();
+
+    // ── Default Style Editor ─────────────────────────────────────────────────
+    in property <[string]> ds-songs;
+    in property <[string]> ds-styles;
+    in-out property <int> ds-current-song: -1;
+    in-out property <int> ds-current-style: -1;
+    in property <bool> ds-patch-enabled: false;
+    in property <bool> ds-reset-enabled: false;
+    in property <bool> ds-style-list-enabled: false;
+    callback ds-song-selected(int);
+    callback ds-style-selected(int);
+    callback ds-reset();
+    callback ds-patch();
+
+    // ── Remove Songs ─────────────────────────────────────────────────────────
+    in property <[RemovableSong]> rs-songs;
+    in property <bool> rs-patch-enabled: false;
+    callback rs-song-toggled(int, bool);
+    callback rs-deselect-all();
+    callback rs-patch();
+
+    // ── Pack ROM ─────────────────────────────────────────────────────────────
+    in-out property <string> pr-output-path;
+    in-out property <int> pr-output-type: 0;
+    in property <bool> pr-pack-enabled: false;
+    callback pr-browse-output();
+    callback pr-type-changed(int);
+    callback pr-pack();
+
+    // ── Riivolution ──────────────────────────────────────────────────────────
+    in-out property <string> rv-patch-name;
+    in-out property <string> rv-patch-author;
+    in-out property <string> rv-patch-version;
+    in property <bool> rv-create-enabled: false;
+    callback rv-name-changed(string);
+    callback rv-author-changed(string);
+    callback rv-version-changed(string);
+    callback rv-create();
+
+    // ── Revert Changes ───────────────────────────────────────────────────────
+    in-out property <bool> rc-songs: false;
+    in-out property <bool> rc-styles: false;
+    in-out property <bool> rc-text: false;
+    in-out property <bool> rc-main-dol: false;
+    in-out property <bool> rc-brsar: false;
+    callback rc-revert();
+
+    // ── Settings ─────────────────────────────────────────────────────────────
+    in-out property <string> cfg-rom-path;
+    in-out property <string> cfg-dolphin-path;
+    in-out property <int> cfg-language: 0;
+    in-out property <int> cfg-fallback-region: 0;
+    in-out property <bool> cfg-discord-rpc: false;
+    in-out property <bool> cfg-unsafe-mode: false;
+    in-out property <bool> cfg-normalize-midi: false;
+    callback cfg-browse-rom();
+    callback cfg-browse-dolphin();
+    callback cfg-language-changed(int);
+    callback cfg-region-changed(int);
+    callback cfg-save();
+
+    // ── Content area ─────────────────────────────────────────────────────────
+    if root.is-home(): MainMenu {
+        x: 0; y: 0;
+        width: parent.width;
+        height: parent.height - bar.height;
+        open-channel(index) => {
+            if      (index == 0) { root.current-screen = Screen.SongEditor; }
+            else if (index == 1) { root.current-screen = Screen.StyleEditor; }
+            else if (index == 2) { root.current-screen = Screen.TextEditor; }
+            else if (index == 3) { root.current-screen = Screen.DefaultStyleEditor; }
+            else if (index == 4) { root.current-screen = Screen.RemoveSongEditor; }
+            else if (index == 5) { root.current-screen = Screen.PackRom; }
+            else if (index == 6) { root.current-screen = Screen.Riivolution; }
+            else if (index == 7) { root.current-screen = Screen.RevertChanges; }
+            else if (index == 8) { root.current-screen = Screen.AppSettings; }
+        }
+    }
+
+    if root.current-screen == Screen.SongEditor: SongEditor {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        songs: root.songs;
+        current-song <=> root.se-current-song;
+        filter-type <=> root.se-filter-type;
+        song-type: root.se-song-type;
+        song-name <=> root.se-song-name;
+        song-genre <=> root.se-song-genre;
+        song-description <=> root.se-song-description;
+        midi-score-label <=> root.se-midi-score-label;
+        midi-song-label <=> root.se-midi-song-label;
+        tempo <=> root.se-tempo;
+        length <=> root.se-length;
+        use-beats <=> root.se-use-beats;
+        time-sig <=> root.se-time-sig;
+        replace-midi <=> root.se-replace-midi;
+        show-song-file <=> root.se-show-song-file;
+        patch-enabled: root.se-patch-enabled;
+        reset-enabled: root.se-reset-enabled;
+        midi-enabled: root.se-midi-enabled;
+        text-enabled: root.se-text-enabled;
+        style-enabled: root.se-style-enabled;
+        song-selected(i)           => { root.se-song-selected(i); }
+        filter-changed(t)          => { root.se-filter-changed(t); }
+        load-midi-score            => { root.se-load-midi-score(); }
+        load-midi-song             => { root.se-load-midi-song(); }
+        replace-midi-changed(v)    => { root.se-replace-midi-changed(v); }
+        tempo-changed(v)           => { root.se-tempo-changed(v); }
+        length-changed(v)          => { root.se-length-changed(v); }
+        use-beats-changed(v)       => { root.se-use-beats-changed(v); }
+        time-sig-changed(v)        => { root.se-time-sig-changed(v); }
+        name-changed(v)            => { root.se-name-changed(v); }
+        genre-changed(v)           => { root.se-genre-changed(v); }
+        description-changed(v)     => { root.se-description-changed(v); }
+        open-style-editor          => { root.se-open-style-editor(); }
+        open-default-style-editor  => { root.se-open-default-style-editor(); }
+        reset                      => { root.se-reset(); }
+        patch                      => { root.se-patch(); }
+    }
+
+    if root.current-screen == Screen.StyleEditor: StyleEditor {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        styles: root.styles;
+        instruments: root.instruments;
+        current-style <=> root.ste-current-style;
+        current-instrument <=> root.ste-current-instrument;
+        current-part <=> root.ste-current-part;
+        part-melody: root.ste-part-melody;
+        part-harmony: root.ste-part-harmony;
+        part-chords: root.ste-part-chords;
+        part-bass: root.ste-part-bass;
+        part-perc1: root.ste-part-perc1;
+        part-perc2: root.ste-part-perc2;
+        style-name <=> root.ste-style-name;
+        name-enabled: root.ste-name-enabled;
+        patch-enabled: root.ste-patch-enabled;
+        reset-enabled: root.ste-reset-enabled;
+        instruments-enabled: root.ste-instruments-enabled;
+        style-selected(i)      => { root.ste-style-selected(i); }
+        part-selected(i)       => { root.ste-part-selected(i); }
+        instrument-selected(i) => { root.ste-instrument-selected(i); }
+        name-changed(v)        => { root.ste-name-changed(v); }
+        reset                  => { root.ste-reset(); }
+        patch                  => { root.ste-patch(); }
+    }
+
+    if root.current-screen == Screen.TextEditor: TextEditor {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        text <=> root.te-text;
+        patch-enabled: root.te-patch-enabled;
+        open-external-enabled: root.te-external-enabled;
+        text-changed(v) => { root.te-text-changed(v); }
+        open-external   => { root.te-open-external(); }
+        patch           => { root.te-patch(); }
+    }
+
+    if root.current-screen == Screen.DefaultStyleEditor: DefaultStyleEditor {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        songs: root.ds-songs;
+        styles: root.ds-styles;
+        current-song <=> root.ds-current-song;
+        current-style <=> root.ds-current-style;
+        patch-enabled: root.ds-patch-enabled;
+        reset-enabled: root.ds-reset-enabled;
+        style-list-enabled: root.ds-style-list-enabled;
+        song-selected(i)  => { root.ds-song-selected(i); }
+        style-selected(i) => { root.ds-style-selected(i); }
+        reset             => { root.ds-reset(); }
+        patch             => { root.ds-patch(); }
+    }
+
+    if root.current-screen == Screen.RemoveSongEditor: RemoveSongs {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        songs: root.rs-songs;
+        patch-enabled: root.rs-patch-enabled;
+        song-toggled(i, v) => { root.rs-song-toggled(i, v); }
+        deselect-all       => { root.rs-deselect-all(); }
+        patch              => { root.rs-patch(); }
+    }
+
+    if root.current-screen == Screen.PackRom: PackRom {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        output-path <=> root.pr-output-path;
+        output-type <=> root.pr-output-type;
+        pack-enabled: root.pr-pack-enabled;
+        browse-output  => { root.pr-browse-output(); }
+        type-changed(v) => { root.pr-type-changed(v); }
+        pack           => { root.pr-pack(); }
+    }
+
+    if root.current-screen == Screen.Riivolution: Riivolution {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        patch-name <=> root.rv-patch-name;
+        patch-author <=> root.rv-patch-author;
+        patch-version <=> root.rv-patch-version;
+        create-enabled: root.rv-create-enabled;
+        name-changed(v)   => { root.rv-name-changed(v); }
+        author-changed(v) => { root.rv-author-changed(v); }
+        version-changed(v) => { root.rv-version-changed(v); }
+        create            => { root.rv-create(); }
+    }
+
+    if root.current-screen == Screen.RevertChanges: RevertChanges {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        revert-songs <=> root.rc-songs;
+        revert-styles <=> root.rc-styles;
+        revert-text <=> root.rc-text;
+        revert-main-dol <=> root.rc-main-dol;
+        revert-brsar <=> root.rc-brsar;
+        revert => { root.rc-revert(); }
+    }
+
+    if root.current-screen == Screen.AppSettings: AppSettings {
+        x: 0; y: 0; width: parent.width; height: parent.height - bar.height;
+        rom-path <=> root.cfg-rom-path;
+        dolphin-path <=> root.cfg-dolphin-path;
+        language <=> root.cfg-language;
+        fallback-region <=> root.cfg-fallback-region;
+        discord-rpc <=> root.cfg-discord-rpc;
+        unsafe-mode <=> root.cfg-unsafe-mode;
+        normalize-midi <=> root.cfg-normalize-midi;
+        browse-rom        => { root.cfg-browse-rom(); }
+        browse-dolphin    => { root.cfg-browse-dolphin(); }
+        language-changed(v) => { root.cfg-language-changed(v); }
+        region-changed(v)  => { root.cfg-region-changed(v); }
+        save              => { root.cfg-save(); }
+    }
+
+    // ── Bottom bar — always at the bottom ───────────────────────────────────
+    bar := BottomBar {
+        x: 0;
+        y: parent.height - self.height;
+        width: parent.width;
+        is-main-menu: root.is-home();
+        rom-label: root.rom-label;
+        screen-title: root.screen-title();
+        back => { root.current-screen = Screen.MainMenu; }
+    }
+}

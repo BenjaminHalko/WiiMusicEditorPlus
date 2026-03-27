@@ -1,0 +1,502 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-03-27 22:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#: crates/editor/ui/app-settings.slint:27
+msgctxt "AppSettings"
+msgid "ROM Path"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:29
+#: crates/editor/ui/app-settings.slint:29
+msgctxt "AppSettings"
+msgid "Browse"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:34
+msgctxt "AppSettings"
+msgid "Dolphin Path"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:41
+msgctxt "AppSettings"
+msgid "Language"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:52
+msgctxt "AppSettings"
+msgid "Fallback Region"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:55
+msgctxt "AppSettings"
+msgid "U.S."
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:55
+msgctxt "AppSettings"
+msgid "Europe"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:55
+msgctxt "AppSettings"
+msgid "Japan"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:55
+msgctxt "AppSettings"
+msgid "Korea"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:64
+msgctxt "AppSettings"
+msgid "Discord RPC"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:65
+msgctxt "AppSettings"
+msgid "Unsafe Mode"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:66
+msgctxt "AppSettings"
+msgid "Normalize MIDI"
+msgstr ""
+
+#: crates/editor/ui/app-settings.slint:72
+msgctxt "AppSettings"
+msgid "Save"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:32
+msgctxt "AppWindow"
+msgid "Wii Music Editor"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:39
+msgctxt "AppWindow"
+msgid "No Specified Path"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:45
+msgctxt "AppWindow"
+msgid "Song Editor"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:46
+msgctxt "AppWindow"
+msgid "Style Editor"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:47
+msgctxt "AppWindow"
+msgid "Text Editor"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:48
+msgctxt "AppWindow"
+msgid "Default Style Editor"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:49
+msgctxt "AppWindow"
+msgid "Remove Songs"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:50
+msgctxt "AppWindow"
+msgid "Pack ROM"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:51
+msgctxt "AppWindow"
+msgid "Riivolution"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:52
+msgctxt "AppWindow"
+msgid "Revert Changes"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:53
+msgctxt "AppWindow"
+msgid "Settings"
+msgstr ""
+
+#: crates/editor/ui/app-window.slint:65 crates/editor/ui/app-window.slint:66
+msgctxt "AppWindow"
+msgid "No file loaded"
+msgstr ""
+
+#: crates/editor/ui/default-style-editor.slint:33
+msgctxt "DefaultStyleEditor"
+msgid "Song"
+msgstr ""
+
+#: crates/editor/ui/default-style-editor.slint:72
+msgctxt "DefaultStyleEditor"
+msgid "Default Style"
+msgstr ""
+
+#: crates/editor/ui/default-style-editor.slint:112
+msgctxt "DefaultStyleEditor"
+msgid "Reset to Default"
+msgstr ""
+
+#: crates/editor/ui/default-style-editor.slint:113
+msgctxt "DefaultStyleEditor"
+msgid "Patch"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:55
+msgctxt "MainMenu"
+msgid "Song Editor"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:56
+msgctxt "MainMenu"
+msgid "Style Editor"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:57
+msgctxt "MainMenu"
+msgid "Text Editor"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:62
+msgctxt "MainMenu"
+msgid "Default Style Editor"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:63
+msgctxt "MainMenu"
+msgid "Remove Songs"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:64
+msgctxt "MainMenu"
+msgid "Pack ROM"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:69
+msgctxt "MainMenu"
+msgid "Riivolution"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:70
+msgctxt "MainMenu"
+msgid "Revert Changes"
+msgstr ""
+
+#: crates/editor/ui/main-menu.slint:71
+msgctxt "MainMenu"
+msgid "Settings"
+msgstr ""
+
+#: crates/editor/ui/pack-rom.slint:20
+msgctxt "PackRom"
+msgid "Pack the ROM filesystem into an ISO or WBFS file."
+msgstr ""
+
+#: crates/editor/ui/pack-rom.slint:29
+msgctxt "PackRom"
+msgid "Output Path"
+msgstr ""
+
+#: crates/editor/ui/pack-rom.slint:31
+msgctxt "PackRom"
+msgid "Browse"
+msgstr ""
+
+#: crates/editor/ui/pack-rom.slint:37
+msgctxt "PackRom"
+msgid "Output Type"
+msgstr ""
+
+#: crates/editor/ui/pack-rom.slint:49
+msgctxt "PackRom"
+msgid "Pack ROM"
+msgstr ""
+
+#: crates/editor/ui/remove-songs.slint:23
+msgctxt "RemoveSongs"
+msgid "Select songs to remove from the game:"
+msgstr ""
+
+#: crates/editor/ui/remove-songs.slint:70
+msgctxt "RemoveSongs"
+msgid "Deselect All"
+msgstr ""
+
+#: crates/editor/ui/remove-songs.slint:73
+msgctxt "RemoveSongs"
+msgid "Remove Selected Songs"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:25
+msgctxt "RevertChanges"
+msgid ""
+"Select what you want to revert. All changes to the selected items will be "
+"lost!"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:34
+msgctxt "RevertChanges"
+msgid "Songs (BRSAR)"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:35
+msgctxt "RevertChanges"
+msgid "Styles"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:36
+msgctxt "RevertChanges"
+msgid "Text"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:37
+msgctxt "RevertChanges"
+msgid "Main.dol"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:38
+msgctxt "RevertChanges"
+msgid "BRSAR"
+msgstr ""
+
+#: crates/editor/ui/revert-changes.slint:45
+msgctxt "RevertChanges"
+msgid "Revert"
+msgstr ""
+
+#: crates/editor/ui/riivolution.slint:22
+msgctxt "Riivolution"
+msgid "Create a Riivolution patch for your changes."
+msgstr ""
+
+#: crates/editor/ui/riivolution.slint:29 crates/editor/ui/riivolution.slint:40
+msgctxt "Riivolution"
+msgid "Patch Name"
+msgstr ""
+
+#: crates/editor/ui/riivolution.slint:30 crates/editor/ui/riivolution.slint:41
+msgctxt "Riivolution"
+msgid "Author"
+msgstr ""
+
+#: crates/editor/ui/riivolution.slint:31 crates/editor/ui/riivolution.slint:42
+msgctxt "Riivolution"
+msgid "Version"
+msgstr ""
+
+#: crates/editor/ui/riivolution.slint:50
+msgctxt "Riivolution"
+msgid "Create Patch"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:66 crates/editor/ui/song-editor.slint:67
+msgctxt "SongEditor"
+msgid "No file loaded"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:112
+msgctxt "SongEditor"
+msgid "All"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:113
+msgctxt "SongEditor"
+msgid "Regular"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:114
+msgctxt "SongEditor"
+msgid "Maestro"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:118
+msgctxt "SongEditor"
+msgid "Handbell"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:119
+msgctxt "SongEditor"
+msgid "Menu"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:180
+msgctxt "SongEditor"
+msgid "MIDI File"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:189
+msgctxt "SongEditor"
+msgid "Score"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:206
+msgctxt "SongEditor"
+msgid "Song"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:223
+msgctxt "SongEditor"
+msgid "Replace Song"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:250
+msgctxt "SongEditor"
+msgid "Tempo"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:260
+msgctxt "SongEditor"
+msgid "Length"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:272
+msgctxt "SongEditor"
+msgid "♩/4"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:273
+msgctxt "SongEditor"
+msgid "♩/3"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:274
+msgctxt "SongEditor"
+msgid "Beats"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:275
+msgctxt "SongEditor"
+msgid "Measures"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:293
+msgctxt "SongEditor"
+msgid "Song Text"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:297
+msgctxt "SongEditor"
+msgid "Name"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:307
+msgctxt "SongEditor"
+msgid "Genre"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:315
+msgctxt "SongEditor"
+msgid "Description"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:329
+msgctxt "SongEditor"
+msgid "Style Editor"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:330
+msgctxt "SongEditor"
+msgid "Default Style"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:332
+msgctxt "SongEditor"
+msgid "Reset"
+msgstr ""
+
+#: crates/editor/ui/song-editor.slint:333
+msgctxt "SongEditor"
+msgid "Patch"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:55
+msgctxt "StyleEditor"
+msgid "Styles"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:119
+msgctxt "StyleEditor"
+msgid "Style Name"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:147
+msgctxt "StyleEditor"
+msgid "Current Instruments"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:150
+#: crates/editor/ui/style-editor.slint:150
+msgctxt "StyleEditor"
+msgid "Melody"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:151
+#: crates/editor/ui/style-editor.slint:151
+msgctxt "StyleEditor"
+msgid "Harmony"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:152
+#: crates/editor/ui/style-editor.slint:152
+msgctxt "StyleEditor"
+msgid "Chords"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:153
+#: crates/editor/ui/style-editor.slint:153
+msgctxt "StyleEditor"
+msgid "Bass"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:154
+#: crates/editor/ui/style-editor.slint:154
+msgctxt "StyleEditor"
+msgid "Perc 1"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:155
+#: crates/editor/ui/style-editor.slint:155
+msgctxt "StyleEditor"
+msgid "Perc 2"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:198
+msgctxt "StyleEditor"
+msgid "Editing: "
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:259
+msgctxt "StyleEditor"
+msgid "Reset Style"
+msgstr ""
+
+#: crates/editor/ui/style-editor.slint:260
+msgctxt "StyleEditor"
+msgid "Patch"
+msgstr ""
+
+#: crates/editor/ui/text-editor.slint:28
+msgctxt "TextEditor"
+msgid "Open in External Editor"
+msgstr ""
+
+#: crates/editor/ui/text-editor.slint:34
+msgctxt "TextEditor"
+msgid "Patch"
+msgstr ""

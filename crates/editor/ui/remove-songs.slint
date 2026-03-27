@@ -1,0 +1,79 @@
+import { Button, CheckBox, ListView } from "std-widgets.slint";
+
+export struct RemovableSong {
+    name: string,
+    checked: bool,
+}
+
+export component RemoveSongs inherits Rectangle {
+    background: #F2F2F2;
+
+    in property <[RemovableSong]> songs;
+    in property <bool> patch-enabled: false;
+
+    callback song-toggled(int, bool);
+    callback deselect-all();
+    callback patch();
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        Text {
+            text: @tr("Select songs to remove from the game:");
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 13px;
+            color: #555555;
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+            border-radius: 6px;
+            border-width: 1px;
+            border-color: #CCCCCC;
+            background: #FFFFFF;
+            clip: true;
+
+            ListView {
+                width: parent.width;
+                height: parent.height;
+                for song[i] in root.songs: Rectangle {
+                    height: 34px;
+                    background: ta.has-hover ? #F5F5F5 : #FFFFFF;
+
+                    HorizontalLayout {
+                        padding-left: 10px;
+                        spacing: 10px;
+                        CheckBox {
+                            checked: song.checked;
+                            toggled => { root.song-toggled(i, self.checked); }
+                        }
+                        Text {
+                            horizontal-stretch: 1;
+                            text: song.name;
+                            font-family: "FOT-RodinNTLG Pro DB";
+                            font-size: 13px;
+                            color: #333333;
+                            vertical-alignment: center;
+                        }
+                    }
+                    ta := TouchArea {
+                        clicked => { root.song-toggled(i, !song.checked); }
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            height: 36px;
+            spacing: 8px;
+            Button { text: @tr("Deselect All"); clicked => { root.deselect-all(); } }
+            Rectangle { horizontal-stretch: 1; }
+            Button {
+                text: @tr("Remove Selected Songs");
+                enabled: root.patch-enabled;
+                clicked => { root.patch(); }
+            }
+        }
+    }
+}
