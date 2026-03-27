@@ -1,28 +1,32 @@
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2026-03-27 22:58+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: wii-music-editor\n"
+"POT-Creation-Date: 2026-03-27 22:51+0000\n"
+"PO-Revision-Date: 2026-03-27 22:58\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: wii-music-editor\n"
+"X-Crowdin-Project-ID: 884526\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: editor.pot\n"
+"X-Crowdin-File-ID: 48\n"
 
 msgid "ROM Path"
 msgstr ""
 
 msgid "Browse"
-msgstr ""
+msgstr "Navegar"
 
 msgid "Dolphin Path"
-msgstr ""
+msgstr "Ruta de Dolphin"
 
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 msgid "Fallback Region"
 msgstr ""
@@ -31,37 +35,37 @@ msgid "U.S."
 msgstr ""
 
 msgid "Europe"
-msgstr ""
+msgstr "Europa"
 
 msgid "Japan"
-msgstr ""
+msgstr "Japón"
 
 msgid "Korea"
-msgstr ""
+msgstr "Corea"
 
 msgid "Discord RPC"
 msgstr ""
 
 msgid "Unsafe Mode"
-msgstr ""
+msgstr "Modo inseguro"
 
 msgid "Normalize MIDI"
 msgstr ""
 
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 msgid "Wii Music Editor"
-msgstr ""
+msgstr "Wii Music Editor Plus"
 
 msgid "No Specified Path"
-msgstr ""
+msgstr "No hay una ruta especificada"
 
 msgid "Song Editor"
-msgstr ""
+msgstr "Editor de Canciones"
 
 msgid "Style Editor"
-msgstr ""
+msgstr "Editor de Estilos"
 
 msgid "Text Editor"
 msgstr ""
@@ -79,10 +83,10 @@ msgid "Riivolution"
 msgstr ""
 
 msgid "Revert Changes"
-msgstr ""
+msgstr "Revertir Cambios"
 
 msgid "Settings"
-msgstr ""
+msgstr "Ajustes"
 
 msgid "No file loaded"
 msgstr ""
@@ -94,7 +98,7 @@ msgid "Default Style"
 msgstr ""
 
 msgid "Reset to Default"
-msgstr ""
+msgstr "Reiniciar Valores Predeterminados"
 
 msgid "Patch"
 msgstr ""
@@ -117,19 +121,17 @@ msgstr ""
 msgid "Remove Selected Songs"
 msgstr ""
 
-msgid ""
-"Select what you want to revert. All changes to the selected items will be "
-"lost!"
-msgstr ""
+msgid "Select what you want to revert. All changes to the selected items will be lost!"
+msgstr "Selecciona lo que quieras revertir. ¡Todos los cambios en los elementos seleccionados se perderán!"
 
 msgid "Songs (BRSAR)"
 msgstr ""
 
 msgid "Styles"
-msgstr ""
+msgstr "Estilos"
 
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 msgid "Main.dol"
 msgstr ""
@@ -138,22 +140,22 @@ msgid "BRSAR"
 msgstr ""
 
 msgid "Revert"
-msgstr ""
+msgstr "Revertir"
 
 msgid "Create a Riivolution patch for your changes."
-msgstr ""
+msgstr "Crear un parche Riivolution para tus cambios."
 
 msgid "Patch Name"
-msgstr ""
+msgstr "Nombre del Parche"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 msgid "Create Patch"
-msgstr ""
+msgstr "Crear Parche"
 
 msgid "All"
 msgstr ""
@@ -168,7 +170,7 @@ msgid "Handbell"
 msgstr ""
 
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 msgid "MIDI File"
 msgstr ""
@@ -177,13 +179,13 @@ msgid "Score"
 msgstr ""
 
 msgid "Replace Song"
-msgstr ""
+msgstr "Reemplazar Canción"
 
 msgid "Tempo"
 msgstr ""
 
 msgid "Length"
-msgstr ""
+msgstr "Duración"
 
 msgid "♩/4"
 msgstr ""
@@ -192,25 +194,25 @@ msgid "♩/3"
 msgstr ""
 
 msgid "Beats"
-msgstr ""
+msgstr "Ritmos"
 
 msgid "Measures"
-msgstr ""
+msgstr "Compases"
 
 msgid "Song Text"
 msgstr ""
 
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 msgid "Genre"
-msgstr ""
+msgstr "Género"
 
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 msgid "Reset"
-msgstr ""
+msgstr "Reiniciar"
 
 msgid "Style Name"
 msgstr ""
@@ -219,22 +221,22 @@ msgid "Current Instruments"
 msgstr ""
 
 msgid "Melody"
-msgstr ""
+msgstr "Melodía"
 
 msgid "Harmony"
-msgstr ""
+msgstr "Armonía"
 
 msgid "Chords"
-msgstr ""
+msgstr "Acordes"
 
 msgid "Bass"
-msgstr ""
+msgstr "Bajo"
 
 msgid "Perc 1"
-msgstr ""
+msgstr "Percu 1"
 
 msgid "Perc 2"
-msgstr ""
+msgstr "Percu 2"
 
 msgid "Editing: "
 msgstr ""
@@ -244,3 +246,4 @@ msgstr ""
 
 msgid "Open in External Editor"
 msgstr ""
+
