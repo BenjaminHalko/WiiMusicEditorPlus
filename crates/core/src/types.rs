@@ -8,12 +8,45 @@ pub enum SongType {
     Menu,
 }
 
+// Lookup tables mapping mem_order → effective BMG index for Maestro/Handbell songs.
+const MAESTRO_ORDER: [u8; 5] = [0, 4, 2, 3, 1];
+const HANDBELL_ORDER: [u8; 5] = [0, 2, 3, 1, 4];
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Song {
     pub name: &'static str,
     pub song_type: SongType,
     pub mem_order: u8,
-    pub default_style: u8,
+}
+
+impl Song {
+    const fn bmg_id(&self, regular: u32, maestro: u32, handbell: u32) -> u32 {
+        let mem = self.mem_order as u32;
+        match self.song_type {
+            SongType::Regular => (regular + mem) << 8,
+            SongType::Maestro => (maestro + MAESTRO_ORDER[self.mem_order as usize] as u32) << 8,
+            SongType::Handbell => (handbell + HANDBELL_ORDER[self.mem_order as usize] as u32) << 8,
+            SongType::Menu => 0,
+        }
+    }
+
+    /// BMG entry ID for this song's name in `message.carc`. `0` = no entry (Menu).
+    #[must_use]
+    pub const fn bmg_name_id(&self) -> u32 {
+        self.bmg_id(0xC8, 0xFA, 0xFF)
+    }
+
+    /// BMG entry ID for this song's description. `0` = no entry (Menu).
+    #[must_use]
+    pub const fn bmg_desc_id(&self) -> u32 {
+        self.bmg_id(0x190, 0x1C2, 0x1C7)
+    }
+
+    /// BMG entry ID for this song's genre. `0` = no entry (Menu).
+    #[must_use]
+    pub const fn bmg_genre_id(&self) -> u32 {
+        self.bmg_id(0x12C, 0x15E, 0x163)
+    }
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -120,18 +153,14 @@ pub enum WmError {
         offset: usize,
         message: String,
     },
-    #[error("Tool '{tool}' failed: {stderr}")]
-    Tool { tool: String, stderr: String },
-    #[error("Settings error: {0}")]
-    Settings(String),
-    #[error("Update error: {0}")]
-    Update(String),
     #[error("Checksum mismatch: expected {expected}, got {actual}")]
     ChecksumMismatch { expected: String, actual: String },
     #[error("Region not supported: {0}")]
     UnsupportedRegion(String),
     #[error("Invalid instrument index: {0}")]
     InvalidInstrument(u8),
+    #[error("BRSAR error: {0}")]
+    Brsar(#[from] brsar::BrsarError),
 }
 
 #[cfg(test)]

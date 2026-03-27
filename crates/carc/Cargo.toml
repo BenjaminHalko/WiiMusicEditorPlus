@@ -1,0 +1,13 @@
+[package]
+name = "carc"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+szs = "0.3.7"
+binrw = { workspace = true }
+thiserror = { workspace = true }
+indexmap = { version = "2", features = ["std"] }
+
+[lints]
+workspace = true

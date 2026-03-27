@@ -10,45 +10,36 @@ Wii Music Editor is a desktop application written in Rust using the Iced framewo
 - Replacing in-game songs with custom MIDI files.
 - Editing style and instrument configurations.
 - Modifying in-game text (BMG format).
-- Extracting and patching game ROMs via `wit`.
+- Extracting game ROMs natively using the `nod` crate.
 - Exporting Riivolution patches for console playback.
 
-**Workspace Architecture:**
-The project is organized as a Cargo workspace with two main crates:
-- `wm_core`: The logic library containing binary parsers, external tool wrappers, and domain models.
-- `editor`: The GUI binary producing the `wii-music-editor` executable.
+## Workspace Architecture
 
-## Workspace Structure
+The project is organized as a Cargo workspace with five crates:
 
-```
-rust-rewrite/
-  tools/{windows,macos,linux}/{wiimms,sequence_cmd}/
-  res/{icons,fonts,save}/
-  i18n/en-US/ui.ftl
-  crates/
-    core/
-      build.rs     # bakes WME_TOOLS_DIR + WME_RES_DIR at compile time
-      src/
-    editor/
-      src/
-```
+- **`carc`**: Low-level Yaz0/U8 (CARC) and BMG message format handlers.
+- **`brsar`**: BRSAR sound archive and RSEQ binary sequence handlers, including MIDI↔RSEQ conversion.
+- **`iso`**: Wii/GC disc image extraction wrapper for the `nod` crate.
+- **`wm_core`**: The logic library containing binary parsers and domain models. No GUI or hardcoded runtime paths.
+- **`editor`**: The Iced GUI binary producing the `wii-music-editor` executable.
 
 ## BRSAR Format Reference
 
-The BRSAR (`RARC` container variation) is the primary sound archive for Wii Music. It uses big-endian (PowerPC) byte order.
+The BRSAR is the primary sound archive for Wii Music. It uses big-endian (PowerPC) byte order.
 
 ### Navigation Hierarchy
+
 The file structure follows a reference-based tree:
 `Root` → `Groups` → `Collections` → `Sounds` → `Files`
 
 ### Core Operations
-- **Section References:** Use `section_reference(offset)` to read the 4-byte big-endian value at a given location to jump to the next structure.
-- **Offset Shifting:** When replacing data (e.g., a song), all downstream offsets must be updated. Use `increment_value(offset, delta)` to shift these values.
-- **Song Indices:** Item indices are calculated based on song category:
+
+- **Section References**: Use `section_reference(offset)` to read the 4-byte big-endian value at a given location to jump to the next structure.
+- **Offset Shifting**: When replacing data (e.g., a song), all downstream offsets must be updated. Use `increment_value(offset, delta)` to shift these values.
+- **Song Indices**: Item indices are calculated based on song category:
   - Regular Songs: `mem_order * 2`
   - Maestro Songs: `mem_order + 2`
   - Handbell Songs: `mem_order * 5 + 2`
-  - Menu Music: Fixed index based on internal list.
 
 All structures must be parsed with `#[br(big)]` to ensure correct byte order.
 
@@ -57,6 +48,7 @@ All structures must be parsed with `#[br(big)]` to ensure correct byte order.
 The `main.dol` file contains the game's executable code and static data.
 
 ### Important Offsets
+
 - `0x59C520`: Song Segment (Regular)
 - `0x5A00EC`: Song Segment (Maestro)
 - `0x5A0AEC`: Song Segment (Handbell)
@@ -66,37 +58,37 @@ The `main.dol` file contains the game's executable code and static data.
 - `0x3D4ACC` to `0x3D4B64`: Default Style Code Range
 
 ### Data Offsets within Segments
+
 - `+0x20`: Time Signature
 - `+0x24`: Song Length
 - `+0x28`: Tempo
 - `+0x48`: Default Style
 
 ### Style Patching
+
 The `remove_style_execution()` function is critical for allowing custom styles. It scans the range `0x36F9A4`–`0x3701CC` and replaces any byte `>= 0x90` with `0x38110000` (`li r0, 0` in PowerPC), effectively NOP-ing the dynamic style logic so the editor's static values take precedence.
 
 ## MIDI Pipeline
 
-1. **Import:** Read user `.mid` via `midly`.
-2. **Normalize:**
-   - Map all channels to 0.
-   - Merge all tracks into a single track.
-   - Convert `NoteOn` with 0 velocity to `NoteOff`.
-3. **Export:** Save temporary MIDI.
-4. **Convert:** Shell out to `GotaSequenceCmd` to produce the `.brseq` format used by the game.
+1. **Import**: Read user `.mid` via `midly`.
+2. **Normalize**: Map all channels to 0, merge tracks into a single track, and convert `NoteOn` with 0 velocity to `NoteOff`.
+3. **Convert**: Native conversion to `.brseq` format via `brsar::Rseq::from_midi()`.
 
 ## Text Pipeline
 
-1. **Extract:** Use `wszst` to extract `message.carc` into a `.bmg` file.
-2. **Decode:** Use `wbmgt` to decode `.bmg` into a custom text format.
-3. **Parse:** Lines follow the pattern `[hex_id] @[offset] [text]`. Use position-based parsing.
-4. **Pack:** Re-encode via `wbmgt` and re-pack into `.carc` via `wszst`.
+1. **Extract**: Load `message.carc` using `carc::WiiMessages::from_bytes()`.
+2. **Access**: Programmatic editing via `entries()` or exporting to Wiimms text format via `to_text()`.
+3. **Parse**: Lines follow the pattern `  [id_hex] @[attr_hex] [text]`. IDs range from 4 to 8 hex digits. Use " @" for parsing.
+4. **Pack**: Encode modified entries back to `.carc` via `carc::WiiMessages::to_bytes()`.
 
 ## Development Conventions
 
-- **Byte Order:** Always big-endian (`#[br(big)]`).
-- **Safety:** Library code returns `Result<T, WmError>`. No `unwrap()`.
-- **Sentinels:** Instrument `67` is represented as `0xFFFFFFFF` in the DOL.
-- **Backups:** Create `.backup` files once; never overwrite an existing backup to avoid data loss.
+- **Byte Order**: Always big-endian (`#[br(big)]`) for binary formats.
+- **Hex Literals**: All binary values use hex literals (`0x59C520` not `5883168`). Decimal is for counts or loop indices only.
+- **Safety**: Library code returns `Result<T, WmError>`. No `unwrap()`.
+- **Documentation**: All public `Result`-returning functions require an `# Errors` documentation section.
+- **Path Handling**: `WmPaths` or `RomFolder` handles runtime paths. Core logic should not bake in local file system paths.
+- **Backups**: Create `.backup` files once. Never overwrite an existing backup to avoid data loss.
 
 ## Key Commands
 
@@ -106,4 +98,5 @@ cargo test                         # Execute test suite
 cargo clippy -- -Dwarnings         # Run lints (strict)
 cargo fmt -- --check               # Verify formatting
 cargo run -p editor                # Launch the application
+cargo run -p wm_core --bin validate # Run developer validation tool
 ```

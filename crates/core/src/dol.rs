@@ -150,7 +150,7 @@ impl MainDol {
         );
     }
 
-    pub fn remove_style_execution(&mut self) {
+    pub fn remove_style_execution(&mut self, backup: &MainDol) {
         if self.remove_code(STYLE_CODE_BEGIN, STYLE_CODE_END) {
             for (index, style) in STYLE_LIST.iter().enumerate() {
                 self.write_style_instruments(index, &style.instruments);
@@ -159,12 +159,9 @@ impl MainDol {
 
         if self.remove_code(DEFAULT_STYLE_CODE_BEGIN, DEFAULT_STYLE_CODE_END) {
             for song in SONG_LIST {
-                if song.default_style != u8::MAX {
-                    self.write_song_info(
-                        song,
-                        SONG_SEGMENT_DEFAULT_STYLE as u8,
-                        u32::from(song.default_style),
-                    );
+                if song.song_type != SongType::Menu {
+                    let style = backup.read_song_info(song, SONG_SEGMENT_DEFAULT_STYLE as u8);
+                    self.write_song_info(song, SONG_SEGMENT_DEFAULT_STYLE as u8, style);
                 }
             }
         }
@@ -291,5 +288,52 @@ mod tests {
             ),
             0xFFFF_FFFF
         );
+    }
+
+    #[test]
+    fn remove_style_execution_patches_code_and_writes_styles() {
+        use crate::data::STYLE_LIST;
+
+        let size = usize_from_u32(SONG_HANDBELL_OFFSET) + 0x2000;
+        let mut data = vec![0x00_u8; size];
+
+        let begin = usize_from_u32(STYLE_CODE_BEGIN);
+        let end = usize_from_u32(STYLE_CODE_END).min(size);
+        for offset in (begin..end).step_by(0x04) {
+            data[offset] = 0x90;
+        }
+
+        let mut dol = MainDol::parse(data);
+        let backup = MainDol::parse(vec![0x00_u8; size]);
+
+        assert!(dol.read_u32(usize_from_u32(STYLE_CODE_BEGIN)) >= 0x9000_0000);
+
+        dol.remove_style_execution(&backup);
+
+        assert_eq!(
+            dol.read_u32(usize_from_u32(STYLE_CODE_BEGIN)),
+            STYLE_EXECUTION_PATCH
+        );
+
+        for (index, style) in STYLE_LIST.iter().enumerate() {
+            assert_eq!(
+                dol.read_style_instruments(index),
+                style.instruments,
+                "style {index} '{}' mismatch after patch",
+                style.name
+            );
+        }
+
+        let backup2 = dol.clone();
+        dol.remove_style_execution(&backup2);
+
+        for (index, style) in STYLE_LIST.iter().enumerate() {
+            assert_eq!(
+                dol.read_style_instruments(index),
+                style.instruments,
+                "style {index} '{}' changed on second call",
+                style.name
+            );
+        }
     }
 }

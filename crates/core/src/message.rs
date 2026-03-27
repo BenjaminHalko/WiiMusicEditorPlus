@@ -1,15 +1,29 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use crate::paths::WmPaths;
-use crate::shell::run_tool;
 use crate::types::WmError;
 
 const MESSAGE_ARCHIVE_NAME: &str = "message.carc";
+
+/// Finds the first `message.carc` under a `files/` directory (any region).
+///
+/// # Errors
+/// Returns `WmError::Parse` if no `message.carc` is found.
+pub(crate) fn find_message_carc(files_dir: &Path) -> Result<PathBuf, WmError> {
+    for entry in fs::read_dir(files_dir)? {
+        let candidate = entry?.path().join("Message").join(MESSAGE_ARCHIVE_NAME);
+        if candidate.is_file() {
+            return Ok(candidate);
+        }
+    }
+    Err(WmError::Parse {
+        file: files_dir.display().to_string(),
+        offset: 0,
+        message: "message.carc not found".to_string(),
+    })
+}
 const MESSAGE_FOLDER_NAME: &str = "message.d";
-const MESSAGE_BMG_NAME: &str = "new_music_message.bmg";
 const MESSAGE_TEXT_NAME: &str = "new_music_message.txt";
-const WSZST_SETUP_NAME: &str = "wszst-setup.txt";
 const CUSTOM_QUICKJAM_NEEDLE: &str = "  b200 @015f /\r\n";
 const CUSTOM_QUICKJAM_PATCHES: [&str; 12] = [
     "  b200 @015f [/,4b] = Default\r\n",
@@ -36,9 +50,9 @@ pub struct TextEntry {
 /// Extracts and decodes `message.carc` into `message.d/new_music_message.txt`.
 ///
 /// # Errors
-/// Returns an error if the message directory cannot be resolved, external tools
-/// fail, or filesystem operations fail.
-pub fn extract(paths: &WmPaths, rom_folder: &Path) -> Result<(), WmError> {
+/// Returns an error if the message directory cannot be resolved or
+/// filesystem operations fail.
+pub fn extract(rom_folder: &Path) -> Result<(), WmError> {
     let message_dir = resolve_message_dir(rom_folder)?;
     let message_archive = message_dir.join(MESSAGE_ARCHIVE_NAME);
     let extracted_dir = message_dir.join(MESSAGE_FOLDER_NAME);
@@ -47,49 +61,41 @@ pub fn extract(paths: &WmPaths, rom_folder: &Path) -> Result<(), WmError> {
         fs::remove_dir_all(&extracted_dir)?;
     }
 
-    let message_archive_arg = message_archive.to_string_lossy().into_owned();
-    let wszst_args = ["extract", message_archive_arg.as_str()];
-    run_tool(paths, "wiimms/wszst", &wszst_args)?;
+    let carc_bytes = fs::read(&message_archive)?;
+    let messages = carc::WiiMessages::from_bytes(&carc_bytes)
+        .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))?;
 
-    let setup_file = extracted_dir.join(WSZST_SETUP_NAME);
-    remove_if_exists(&setup_file)?;
+    fs::create_dir_all(&extracted_dir)?;
+    let txt_path = extracted_dir.join(MESSAGE_TEXT_NAME);
+    fs::write(&txt_path, messages.to_text())?;
 
-    let message_bmg = extracted_dir.join(MESSAGE_BMG_NAME);
-    let message_bmg_arg = message_bmg.to_string_lossy().into_owned();
-    let wbmgt_args = ["decode", message_bmg_arg.as_str()];
-    run_tool(paths, "wiimms/wbmgt", &wbmgt_args)?;
-
-    remove_if_exists(&message_bmg)?;
     Ok(())
 }
 
 /// Encodes `message.d/new_music_message.txt` and recreates `message.carc`.
 ///
 /// # Errors
-/// Returns an error if the message directory cannot be resolved, external tools
-/// fail, or filesystem operations fail.
-pub fn encode(paths: &WmPaths, rom_folder: &Path) -> Result<(), WmError> {
+/// Returns an error if the message directory cannot be resolved or
+/// filesystem operations fail.
+pub fn encode(rom_folder: &Path) -> Result<(), WmError> {
     let message_dir = resolve_message_dir(rom_folder)?;
     let extracted_dir = message_dir.join(MESSAGE_FOLDER_NAME);
     let message_txt = extracted_dir.join(MESSAGE_TEXT_NAME);
     let message_archive = message_dir.join(MESSAGE_ARCHIVE_NAME);
 
-    let message_txt_arg = message_txt.to_string_lossy().into_owned();
-    let wbmgt_args = ["encode", message_txt_arg.as_str()];
-    run_tool(paths, "wiimms/wbmgt", &wbmgt_args)?;
-
-    remove_if_exists(&message_txt)?;
-    remove_if_exists(&message_archive)?;
-
-    let extracted_dir_arg = extracted_dir.to_string_lossy().into_owned();
-    let message_archive_arg = message_archive.to_string_lossy().into_owned();
-    let wszst_args = [
-        "create",
-        extracted_dir_arg.as_str(),
-        "--dest",
-        message_archive_arg.as_str(),
-    ];
-    run_tool(paths, "wiimms/wszst", &wszst_args)?;
+    let txt = fs::read_to_string(&message_txt)?;
+    let carc_bytes = fs::read(&message_archive)?;
+    let mut messages = carc::WiiMessages::from_bytes(&carc_bytes)
+        .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))?;
+    messages
+        .set_from_text(&txt)
+        .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))?;
+    fs::write(
+        &message_archive,
+        messages
+            .to_bytes()
+            .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))?,
+    )?;
 
     if extracted_dir.is_dir() {
         fs::remove_dir_all(extracted_dir)?;
@@ -160,39 +166,29 @@ pub fn fix_message_file(path: &Path) -> Result<(), WmError> {
 }
 
 fn parse_line(line: &str) -> Option<TextEntry> {
-    if line.len() < 16 {
-        return None;
-    }
-
     let bytes = line.as_bytes();
-    if bytes[0] != b' '
-        || bytes[1] != b' '
-        || bytes[8] != b' '
-        || bytes[9] != b'@'
-        || bytes[14] != b' '
-    {
+    if bytes.len() < 9 || bytes[0] != b' ' || bytes[1] != b' ' {
         return None;
     }
-
-    if !bytes[2..8].iter().all(u8::is_ascii_hexdigit) {
+    let at_rel = line[2..].find(" @")?;
+    let id_end = 2 + at_rel;
+    let id_hex = &line[2..id_end];
+    if id_hex.is_empty() || !id_hex.bytes().all(|b| b.is_ascii_hexdigit()) {
         return None;
     }
-    if !bytes[10..14].iter().all(u8::is_ascii_hexdigit) {
+    let rest = &line[id_end + 1..]; // starts at '@'
+    if rest.len() < 6 || rest.as_bytes()[5] != b' ' {
         return None;
     }
-
+    let attr = &rest[..5]; // "@YYYY"
+    if !rest[1..5].bytes().all(|b| b.is_ascii_hexdigit()) {
+        return None;
+    }
     Some(TextEntry {
-        offset: line[2..8].to_string(),
-        attr: line[9..14].to_string(),
-        text: line[15..].to_string(),
+        offset: id_hex.to_string(),
+        attr: attr.to_string(),
+        text: rest[6..].to_string(),
     })
-}
-
-fn remove_if_exists(path: &Path) -> Result<(), WmError> {
-    if path.exists() {
-        fs::remove_file(path)?;
-    }
-    Ok(())
 }
 
 fn resolve_message_dir(rom_folder: &Path) -> Result<PathBuf, WmError> {

@@ -111,7 +111,7 @@ const SONG_REGULAR_OFFSET: u32 = 0x59C520;
 ## 6. UI Patterns (Iced)
 
 ### View Decomposition
-Break the UI into small, reusable view functions or components in `editor/src/views/`.
+Break the UI into small, reusable view functions or components.
 - Each page (Song, Style, Text) gets its own module.
 - Use `Message` enum variants that accurately describe user intent.
 - Avoid passing around the entire `App` state; pass only the required slice.
@@ -147,8 +147,10 @@ mod tests {
 ```
 
 ### Integration and Hardware Tests
-Tests requiring external tools (`wszst`, `wit`) or real game files should be marked with `#[ignore]` to prevent CI failure on standard runners.
-- Use synthetic, minimal binary fixtures for standard tests.
+Tests requiring real game data belong in the `validate` developer binary, not in `#[cfg(test)]` modules.
+- Unit tests use only synthetic, minimal binary fixtures — never real game files.
+- **No `#[ignore]`** — if a test cannot run without external data, it goes in `validate` instead.
+- Run integration tests via: `cargo run -p wm_core --bin validate -- <ROM_FOLDER>`.
 - **Never commit copyrighted game files to the repository.**
 
 ### Edge Cases
@@ -160,14 +162,11 @@ Always test:
 
 ## 9. Workspace and Dependencies
 
-### Centralized Versions
-Manage all dependency versions in the root `Cargo.toml` under `[workspace.dependencies]`.
-- Crates should use `{ workspace = true }`.
-- Lint levels should also be inherited: `[lints] workspace = true`.
-
-### Visibility
-- Avoid `pub use crate::*`. Be explicit about what is re-exported from `wm_core` to the `editor` binary.
-- Use `pub(crate)` for internal logic that shouldn't be exposed to the UI layer.
+- Add a dependency to a **crate's own `Cargo.toml`** unless two or more crates share it.
+- Only promote a dependency to `[workspace.dependencies]` when it is used by multiple crates.
+- Lint levels are inherited workspace-wide: `[lints] workspace = true`.
+- Avoid `pub use crate::*`. Be explicit about re-exports.
+- Use `pub(crate)` for internal logic not intended for the UI layer.
 
 ## 10. DOL Patching Specifics
 
@@ -177,13 +176,14 @@ When patching executable code in `main.dol` (e.g., style execution removal), ens
 ### Instrumentation
 Instrument 67 is a sentinel value (`0xFFFFFFFF`). Ensure the `InstrumentId` type handles this conversion safely without overflow or sign-extension bugs.
 
-## 11. External Tool Integration
+## 11. Native Format Crates
 
-### Wrapper Patterns
-External tools like `wit` or `wszst` should be wrapped in a trait-like interface in `wm_core/src/shell.rs`.
-- Standardize on `std::process::Command` with proper error capturing.
-- Log both stdout and stderr when a tool fails.
-- Check for the existence of tools in the `resources/tools` directory before execution.
+All game format operations use native Rust crates — no external tool binaries:
+- **`iso`**: Wii disc extraction via the `nod` crate.
+- **`carc`**: Yaz0/U8 archive and BMG message format.
+- **`brsar`**: BRSAR sound archive and MIDI→RSEQ conversion.
+
+Do not add shell-out calls or external tool dependencies. If a format operation is missing, implement it natively in the appropriate crate.
 
 ## 12. Patch Generation (Riivolution)
 

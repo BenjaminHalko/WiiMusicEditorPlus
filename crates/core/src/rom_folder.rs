@@ -1,12 +1,10 @@
 use crate::{
     checksum::verify_checksum,
-    paths::WmPaths,
     rom::{detect_region, extract_rom},
     types::{Region, WmError},
 };
 use std::path::{Path, PathBuf};
 
-const DATA_DIR: &str = "DATA";
 const SYS_DIR: &str = "sys";
 const FILES_DIR: &str = "files";
 const SOUND_DIR: &str = "Sound";
@@ -29,25 +27,33 @@ const WBFS_EXT: &str = "wbfs";
 #[derive(Clone, Debug)]
 pub struct RomFolder {
     pub path: PathBuf,
+    pub base: PathBuf,
     pub region: Region,
     pub brsar: Vec<u8>,
     pub main_dol: Vec<u8>,
     pub text_dir: PathBuf,
-    source_rom_path: Option<PathBuf>,
+    pub(crate) source_rom_path: Option<PathBuf>,
 }
 
 impl RomFolder {
-    pub fn load(path: &Path, paths: &WmPaths) -> Result<Self, WmError> {
+    /// Loads a ROM folder or extracts a ROM image into one first.
+    ///
+    /// # Errors
+    /// Returns `WmError::Io` if required ROM files are missing or cannot be
+    /// read, and propagates extraction or region-detection failures.
+    pub fn load(path: &Path) -> Result<Self, WmError> {
         let (folder_path, source_rom_path) = if path.is_file() {
             let output_dir = path.with_extension("");
-            extract_rom(paths, path, &output_dir)?;
+            extract_rom(path, &output_dir)?;
             (output_dir, Some(path.to_path_buf()))
         } else {
             (path.to_path_buf(), None)
         };
 
-        let main_dol_path = Self::main_dol_path(&folder_path);
-        let brsar_path = Self::brsar_path(&folder_path);
+        let base = resolve_base(&folder_path);
+        let main_dol_path = Self::main_dol_path(&base);
+        let brsar_path = Self::brsar_path(&base);
+        let text_dir = Self::files_dir(&base);
 
         if !main_dol_path.is_file() || !brsar_path.is_file() {
             return Err(WmError::Io(std::io::Error::new(
@@ -65,18 +71,23 @@ impl RomFolder {
         let main_dol = std::fs::read(&main_dol_path)?;
 
         Ok(Self {
-            path: folder_path.clone(),
+            path: folder_path,
+            base,
             region,
             brsar,
             main_dol,
-            text_dir: folder_path.join(DATA_DIR).join(FILES_DIR),
+            text_dir,
             source_rom_path,
         })
     }
 
+    /// Creates backup copies of the active ROM files if they do not exist.
+    ///
+    /// # Errors
+    /// Returns `WmError::Io` if either backup file cannot be copied.
     pub fn create_backups(&self) -> Result<(), WmError> {
-        let main_dol_path = Self::main_dol_path(&self.path);
-        let brsar_path = Self::brsar_path(&self.path);
+        let main_dol_path = Self::main_dol_path(&self.base);
+        let brsar_path = Self::brsar_path(&self.base);
         let dol_backup_path = self.dol_backup_path();
         let brsar_backup_path = self.brsar_backup_path();
 
@@ -91,6 +102,11 @@ impl RomFolder {
         Ok(())
     }
 
+    /// Verifies the source ROM image against an expected SHA1 hash.
+    ///
+    /// # Errors
+    /// Returns `WmError::Io` if no ROM image path is available or the checksum
+    /// file cannot be read.
     pub fn verify(&self, expected_hash: &str) -> Result<bool, WmError> {
         let rom_image_path = self
             .source_rom_path
@@ -109,25 +125,27 @@ impl RomFolder {
 
     #[must_use]
     pub fn brsar_backup_path(&self) -> PathBuf {
-        Self::brsar_path(&self.path).with_file_name(format!("{BRSAR_NAME}{BACKUP_SUFFIX}"))
+        Self::brsar_path(&self.base).with_file_name(format!("{BRSAR_NAME}{BACKUP_SUFFIX}"))
     }
 
     #[must_use]
     pub fn dol_backup_path(&self) -> PathBuf {
-        Self::main_dol_path(&self.path).with_file_name(format!("{MAIN_DOL_NAME}{BACKUP_SUFFIX}"))
+        Self::main_dol_path(&self.base).with_file_name(format!("{MAIN_DOL_NAME}{BACKUP_SUFFIX}"))
     }
 
-    fn main_dol_path(rom_folder: &Path) -> PathBuf {
-        rom_folder.join(DATA_DIR).join(SYS_DIR).join(MAIN_DOL_NAME)
+    pub(crate) fn main_dol_path(base: &Path) -> PathBuf {
+        base.join(SYS_DIR).join(MAIN_DOL_NAME)
     }
 
-    fn brsar_path(rom_folder: &Path) -> PathBuf {
-        rom_folder
-            .join(DATA_DIR)
-            .join(FILES_DIR)
+    pub(crate) fn brsar_path(base: &Path) -> PathBuf {
+        base.join(FILES_DIR)
             .join(SOUND_DIR)
             .join(MUSIC_STATIC_DIR)
             .join(BRSAR_NAME)
+    }
+
+    fn files_dir(base: &Path) -> PathBuf {
+        base.join(FILES_DIR)
     }
 
     fn rom_image_candidate(path: &Path) -> Option<&Path> {
@@ -142,6 +160,19 @@ impl RomFolder {
     }
 }
 
+pub(crate) fn resolve_base(path: &Path) -> PathBuf {
+    if path.join(SYS_DIR).join(MAIN_DOL_NAME).exists() {
+        return path.to_path_buf();
+    }
+
+    let data = path.join("DATA");
+    if data.join(SYS_DIR).join(MAIN_DOL_NAME).exists() {
+        return data;
+    }
+
+    path.to_path_buf()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -152,24 +183,23 @@ mod tests {
         let temp = tempfile::tempdir().expect("tempdir should be created");
         let rom = RomFolder {
             path: temp.path().to_path_buf(),
+            base: temp.path().to_path_buf(),
             region: Region::US,
             brsar: Vec::new(),
             main_dol: Vec::new(),
-            text_dir: temp.path().join(DATA_DIR).join(FILES_DIR),
+            text_dir: temp.path().join(FILES_DIR),
             source_rom_path: None,
         };
 
         assert_eq!(
             rom.dol_backup_path(),
             temp.path()
-                .join(DATA_DIR)
                 .join(SYS_DIR)
                 .join(format!("{MAIN_DOL_NAME}{BACKUP_SUFFIX}"))
         );
         assert_eq!(
             rom.brsar_backup_path(),
             temp.path()
-                .join(DATA_DIR)
                 .join(FILES_DIR)
                 .join(SOUND_DIR)
                 .join(MUSIC_STATIC_DIR)
@@ -180,10 +210,9 @@ mod tests {
     #[test]
     fn test_create_backups_does_not_overwrite_existing() {
         let temp = tempfile::tempdir().expect("tempdir should be created");
-        let main_dol_path = temp.path().join(DATA_DIR).join(SYS_DIR).join(MAIN_DOL_NAME);
+        let main_dol_path = temp.path().join(SYS_DIR).join(MAIN_DOL_NAME);
         let brsar_path = temp
             .path()
-            .join(DATA_DIR)
             .join(FILES_DIR)
             .join(SOUND_DIR)
             .join(MUSIC_STATIC_DIR)
@@ -203,10 +232,11 @@ mod tests {
 
         let rom = RomFolder {
             path: temp.path().to_path_buf(),
+            base: temp.path().to_path_buf(),
             region: Region::US,
             brsar: Vec::new(),
             main_dol: Vec::new(),
-            text_dir: temp.path().join(DATA_DIR).join(FILES_DIR),
+            text_dir: temp.path().join(FILES_DIR),
             source_rom_path: None,
         };
 

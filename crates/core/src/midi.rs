@@ -5,8 +5,6 @@ use midly::num::u7;
 use midly::{Format, MidiMessage, Smf, TrackEventKind};
 use tempfile::{Builder, NamedTempFile};
 
-use crate::paths::WmPaths;
-use crate::shell::run_tool;
 use crate::types::WmError;
 
 /// Loads a MIDI file and fixes common compatibility issues:
@@ -36,7 +34,10 @@ pub fn prepare_midi(input: &Path) -> Result<NamedTempFile, WmError> {
                 && u8::from(*vel) == 0x00
             {
                 let k = *key;
-                *message = MidiMessage::NoteOff { key: k, vel: u7::from(0) };
+                *message = MidiMessage::NoteOff {
+                    key: k,
+                    vel: u7::from(0),
+                };
             }
         }
     }
@@ -45,47 +46,42 @@ pub fn prepare_midi(input: &Path) -> Result<NamedTempFile, WmError> {
     smf.tracks = vec![merged_track];
 
     let mut out = Builder::new().suffix(".mid").tempfile()?;
-    smf.write_std(out.as_file_mut()).map_err(|e| WmError::Parse {
-        file: input.to_string_lossy().into_owned(),
-        offset: 0x0,
-        message: e.to_string(),
-    })?;
+    smf.write_std(out.as_file_mut())
+        .map_err(|e| WmError::Parse {
+            file: input.to_string_lossy().into_owned(),
+            offset: 0x0,
+            message: e.to_string(),
+        })?;
     out.as_file_mut().flush()?;
     Ok(out)
 }
 
 /// Runs the MIDI through [`prepare_midi`] first to fix compatibility issues,
-/// then converts to a Wii Music sequence file via `GotaSequenceCmd`.
+/// then converts to a Wii Music BRSEQ sequence file.
 /// The original MIDI is never modified.
 ///
 /// # Errors
-/// Returns [`WmError`] if preparation, tool execution, or file copy fails.
-pub fn convert_to_sequence(paths: &WmPaths, midi: &Path, output: &Path) -> Result<(), WmError> {
+/// Returns [`WmError`] if preparation, conversion, or file I/O fails.
+pub fn convert_to_sequence(midi: &Path, output: &Path) -> Result<(), WmError> {
     let prepared = prepare_midi(midi)?;
-    run_sequence_cmd(paths, prepared.path(), output)
+    midi_to_brseq(prepared.path(), output)
 }
 
-/// Converts a MIDI file directly to a Wii Music sequence file via `GotaSequenceCmd`,
+/// Converts a MIDI file directly to a Wii Music BRSEQ sequence file,
 /// skipping any preparation or modification. Use when the MIDI is already
 /// compatible and you want to preserve it exactly as-is.
-/// A temporary copy is used internally so the original file is never touched.
 ///
 /// # Errors
-/// Returns [`WmError`] if file copy, tool execution, or output copy fails.
-pub fn convert_to_sequence_raw(paths: &WmPaths, midi: &Path, output: &Path) -> Result<(), WmError> {
-    // Copy to tempfile — GotaSequenceCmd writes alongside its input
-    let mut tmp = Builder::new().suffix(".mid").tempfile()?;
-    let bytes = std::fs::read(midi)?;
-    tmp.write_all(&bytes)?;
-    tmp.as_file_mut().flush()?;
-    run_sequence_cmd(paths, tmp.path(), output)
+/// Returns [`WmError`] if conversion or file I/O fails.
+pub fn convert_to_sequence_raw(midi: &Path, output: &Path) -> Result<(), WmError> {
+    midi_to_brseq(midi, output)
 }
 
-fn run_sequence_cmd(paths: &WmPaths, midi: &Path, output: &Path) -> Result<(), WmError> {
-    let midi_str = midi.to_string_lossy().into_owned();
-    run_tool(paths, "sequence_cmd/GotaSequenceCmd", &["from_midi", &midi_str])?;
-    let generated = midi.with_extension("brseq");
-    std::fs::copy(&generated, output)?;
+fn midi_to_brseq(midi: &Path, output: &Path) -> Result<(), WmError> {
+    let midi_bytes = std::fs::read(midi)?;
+    let rseq = brsar::Rseq::from_midi(&midi_bytes)?;
+    let brseq_bytes = rseq.to_bytes()?;
+    std::fs::write(output, &brseq_bytes)?;
     Ok(())
 }
 
@@ -108,14 +104,20 @@ mod tests {
                         delta: u28::from(0),
                         kind: TrackEventKind::Midi {
                             channel: u4::from(1),
-                            message: MidiMessage::NoteOn { key: u7::from(60), vel: u7::from(100) },
+                            message: MidiMessage::NoteOn {
+                                key: u7::from(60),
+                                vel: u7::from(100),
+                            },
                         },
                     },
                     TrackEvent {
                         delta: u28::from(0x78),
                         kind: TrackEventKind::Midi {
                             channel: u4::from(1),
-                            message: MidiMessage::NoteOn { key: u7::from(60), vel: u7::from(0) },
+                            message: MidiMessage::NoteOn {
+                                key: u7::from(60),
+                                vel: u7::from(0),
+                            },
                         },
                     },
                     TrackEvent {
@@ -128,7 +130,10 @@ mod tests {
                         delta: u28::from(0),
                         kind: TrackEventKind::Midi {
                             channel: u4::from(2),
-                            message: MidiMessage::NoteOn { key: u7::from(64), vel: u7::from(90) },
+                            message: MidiMessage::NoteOn {
+                                key: u7::from(64),
+                                vel: u7::from(90),
+                            },
                         },
                     },
                     TrackEvent {
@@ -187,7 +192,11 @@ mod tests {
         let bytes = two_track_midi();
         let f = write_midi_tempfile(&bytes);
         let _out = prepare_midi(f.path())?;
-        assert_eq!(std::fs::read(f.path())?, bytes, "original file must be unchanged");
+        assert_eq!(
+            std::fs::read(f.path())?,
+            bytes,
+            "original file must be unchanged"
+        );
         Ok(())
     }
 }

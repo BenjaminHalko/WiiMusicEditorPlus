@@ -1,30 +1,29 @@
-use crate::{
-    paths::WmPaths,
-    shell::run_tool,
-    types::{Region, WmError},
-};
+use crate::types::{Region, WmError};
 use std::path::Path;
 
-const BOOT_BIN_REL_PATH: &str = "DATA/sys/boot.bin";
+use crate::rom_folder::resolve_base;
+
+const BOOT_BIN_REL_PATH: &str = "sys/boot.bin";
 const GAME_ID_LENGTH: usize = 0x06;
 const REGION_PREFIX_LENGTH: usize = 0x04;
 
+/// Extracts a Wii disc image (ISO/WBFS) into a folder.
+///
 /// # Errors
-/// Returns `WmError::Tool` if wit fails, `WmError::Io` on filesystem errors.
-pub fn extract_rom(paths: &WmPaths, iso_path: &Path, output_dir: &Path) -> Result<(), WmError> {
-    let iso = iso_path.to_string_lossy().into_owned();
-    let output = output_dir.to_string_lossy().into_owned();
-    run_tool(paths, "wiimms/wit", &["cp", "--fst", &iso, &output])?;
-    Ok(())
+/// Returns `WmError::Io` if extraction or filesystem operations fail.
+pub fn extract_rom(iso_path: &Path, output_dir: &Path) -> Result<(), WmError> {
+    iso::extract(iso_path, output_dir)
+        .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))
 }
 
 /// Detect game region from the extracted ROM folder's disc header.
-/// Reads the game ID from DATA/sys/boot.bin (first 6 bytes).
+/// Reads the game ID from sys/boot.bin (first 6 bytes).
 ///
 /// # Errors
 /// Returns `WmError::Io` if boot.bin can't be read, `WmError::UnsupportedRegion` for unknown IDs.
 pub fn detect_region(rom_folder: &Path) -> Result<Region, WmError> {
-    let boot_bin_path = rom_folder.join(BOOT_BIN_REL_PATH);
+    let base = resolve_base(rom_folder);
+    let boot_bin_path = base.join(BOOT_BIN_REL_PATH);
     let boot_bin = std::fs::read(boot_bin_path)?;
     detect_region_from_bytes(&boot_bin)
 }

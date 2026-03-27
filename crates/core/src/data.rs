@@ -5,367 +5,306 @@ pub const SONG_LIST: &[Song] = &[
         name: "A Little Night Music",
         song_type: SongType::Regular,
         mem_order: 6,
-        default_style: 33,
     },
     Song {
         name: "American Patrol",
         song_type: SongType::Regular,
         mem_order: 11,
-        default_style: 3,
     },
     Song {
         name: "Animal Crossing",
         song_type: SongType::Regular,
         mem_order: 48,
-        default_style: 27,
     },
     Song {
         name: "Animal Crossing -- K.K. Blues",
         song_type: SongType::Regular,
         mem_order: 26,
-        default_style: 35,
     },
     Song {
         name: "Bridal Chorus",
         song_type: SongType::Regular,
         mem_order: 1,
-        default_style: 8,
     },
     Song {
         name: "Carmen",
         song_type: SongType::Regular,
         mem_order: 3,
-        default_style: 15,
     },
     Song {
         name: "Chariots of Fire",
         song_type: SongType::Regular,
         mem_order: 35,
-        default_style: 19,
     },
     Song {
         name: "Daydream Believer",
         song_type: SongType::Regular,
         mem_order: 33,
-        default_style: 0,
     },
     Song {
         name: "Do-Re-Mi",
         song_type: SongType::Regular,
         mem_order: 9,
-        default_style: 1,
     },
     Song {
         name: "Every Breath You Take",
         song_type: SongType::Regular,
         mem_order: 34,
-        default_style: 18,
     },
     Song {
         name: "F-Zero -- Mute City Theme",
         song_type: SongType::Regular,
         mem_order: 49,
-        default_style: 1,
     },
     Song {
         name: "Frère Jacques",
         song_type: SongType::Regular,
         mem_order: 22,
-        default_style: 4,
     },
     Song {
         name: "From Santurtzi to Bilbao",
         song_type: SongType::Regular,
         mem_order: 27,
-        default_style: 32,
     },
     Song {
         name: "From the New World",
         song_type: SongType::Regular,
         mem_order: 16,
-        default_style: 2,
     },
     Song {
         name: "Happy Birthday to You",
         song_type: SongType::Regular,
         mem_order: 8,
-        default_style: 30,
     },
     Song {
         name: "I'll Be There",
         song_type: SongType::Regular,
         mem_order: 40,
-        default_style: 22,
     },
     Song {
         name: "I've Never Been to Me",
         song_type: SongType::Regular,
         mem_order: 44,
-        default_style: 24,
     },
     Song {
         name: "Jingle Bell Rock",
         song_type: SongType::Regular,
         mem_order: 41,
-        default_style: 0,
     },
     Song {
         name: "La Bamba",
         song_type: SongType::Regular,
         mem_order: 17,
-        default_style: 10,
     },
     Song {
         name: "La Cucaracha",
         song_type: SongType::Regular,
         mem_order: 29,
-        default_style: 31,
     },
     Song {
         name: "Little Hans",
         song_type: SongType::Regular,
         mem_order: 25,
-        default_style: 4,
     },
     Song {
         name: "Long, Long Ago",
         song_type: SongType::Regular,
         mem_order: 19,
-        default_style: 8,
     },
     Song {
         name: "Material Girl",
         song_type: SongType::Regular,
         mem_order: 38,
-        default_style: 21,
     },
     Song {
         name: "Minuet in G Major",
         song_type: SongType::Regular,
         mem_order: 7,
-        default_style: 28,
     },
     Song {
         name: "My Grandfather's Clock",
         song_type: SongType::Regular,
         mem_order: 15,
-        default_style: 5,
     },
     Song {
         name: "O Christmas Tree",
         song_type: SongType::Regular,
         mem_order: 24,
-        default_style: 16,
     },
     Song {
         name: "Ode to Joy",
         song_type: SongType::Regular,
         mem_order: 0,
-        default_style: 2,
     },
     Song {
         name: "Oh, My Darling Clementine",
         song_type: SongType::Regular,
         mem_order: 14,
-        default_style: 13,
     },
     Song {
         name: "Over the Waves",
         song_type: SongType::Regular,
         mem_order: 30,
-        default_style: 17,
     },
     Song {
         name: "Please Mr. Postman",
         song_type: SongType::Regular,
         mem_order: 37,
-        default_style: 9,
     },
     Song {
         name: "Sakura Sakura",
         song_type: SongType::Regular,
         mem_order: 31,
-        default_style: 6,
     },
     Song {
         name: "Scarborough Fair",
         song_type: SongType::Regular,
         mem_order: 18,
-        default_style: 14,
     },
     Song {
         name: "September",
         song_type: SongType::Regular,
         mem_order: 36,
-        default_style: 20,
     },
     Song {
         name: "Sukiyaki",
         song_type: SongType::Regular,
         mem_order: 32,
-        default_style: 10,
     },
     Song {
         name: "Super Mario Bros.",
         song_type: SongType::Regular,
         mem_order: 45,
-        default_style: 44,
     },
     Song {
         name: "Sur le pont d'Avignon",
         song_type: SongType::Regular,
         mem_order: 21,
-        default_style: 9,
     },
     Song {
         name: "Swan Lake",
         song_type: SongType::Regular,
         mem_order: 2,
-        default_style: 7,
     },
     Song {
         name: "The Blue Danube",
         song_type: SongType::Regular,
         mem_order: 5,
-        default_style: 34,
     },
     Song {
         name: "The Entertainer",
         song_type: SongType::Regular,
         mem_order: 10,
-        default_style: 29,
     },
     Song {
         name: "The Flea Waltz",
         song_type: SongType::Regular,
         mem_order: 23,
-        default_style: 3,
     },
     Song {
         name: "The Legend of Zelda",
         song_type: SongType::Regular,
         mem_order: 46,
-        default_style: 25,
     },
     Song {
         name: "The Loco-Motion",
         song_type: SongType::Regular,
         mem_order: 39,
-        default_style: 5,
     },
     Song {
         name: "Troika",
         song_type: SongType::Regular,
         mem_order: 28,
-        default_style: 7,
     },
     Song {
         name: "Turkey in the Straw",
         song_type: SongType::Regular,
         mem_order: 12,
-        default_style: 6,
     },
     Song {
         name: "Twinkle, Twinkle, Little Star",
         song_type: SongType::Regular,
         mem_order: 20,
-        default_style: 11,
     },
     Song {
         name: "Wake Me Up Before You Go-Go",
         song_type: SongType::Regular,
         mem_order: 42,
-        default_style: 23,
     },
     Song {
         name: "Wii Music",
         song_type: SongType::Regular,
         mem_order: 4,
-        default_style: 36,
     },
     Song {
         name: "Wii Sports",
         song_type: SongType::Regular,
         mem_order: 47,
-        default_style: 26,
     },
     Song {
         name: "Woman",
         song_type: SongType::Regular,
         mem_order: 43,
-        default_style: 23,
     },
     Song {
         name: "Yankee Doodle",
         song_type: SongType::Regular,
         mem_order: 13,
-        default_style: 12,
     },
     Song {
-        name: "Twinkle, Twinkle, Little Star (Mii Maestro)",
+        name: "Twinkle, Twinkle, Little Star",
         song_type: SongType::Maestro,
         mem_order: 2,
-        default_style: 0,
     },
     Song {
-        name: "Carmen (Mii Maestro)",
+        name: "Carmen",
         song_type: SongType::Maestro,
         mem_order: 0,
-        default_style: 0,
     },
     Song {
-        name: "The Four Seasons -- Spring (Mii Maestro)",
+        name: "The Four Seasons -- Spring",
         song_type: SongType::Maestro,
         mem_order: 4,
-        default_style: 0,
     },
     Song {
-        name: "Ode to Joy (Mii Maestro)",
+        name: "Ode to Joy",
         song_type: SongType::Maestro,
         mem_order: 3,
-        default_style: 0,
     },
     Song {
-        name: "The Legend of Zelda (Mii Maestro)",
+        name: "The Legend of Zelda",
         song_type: SongType::Maestro,
         mem_order: 1,
-        default_style: 0,
     },
     Song {
-        name: "O Christmas Tree (Handbell Harmony)",
+        name: "O Christmas Tree",
         song_type: SongType::Handbell,
         mem_order: 0,
-        default_style: 0,
     },
     Song {
-        name: "Hum, Hum, Hum (Handbell Harmony)",
+        name: "Hum, Hum, Hum",
         song_type: SongType::Handbell,
         mem_order: 2,
-        default_style: 0,
     },
     Song {
-        name: "My Grandfather's Clock (Handbell Harmony)",
+        name: "My Grandfather's Clock",
         song_type: SongType::Handbell,
         mem_order: 3,
-        default_style: 0,
     },
     Song {
-        name: "Do-Re-Mi (Handbell Harmony)",
+        name: "Do-Re-Mi",
         song_type: SongType::Handbell,
         mem_order: 1,
-        default_style: 0,
     },
     Song {
-        name: "Sukiyaki (Handbell Harmony)",
+        name: "Sukiyaki",
         song_type: SongType::Handbell,
         mem_order: 4,
-        default_style: 0,
     },
     Song {
         name: "Menu Song",
         song_type: SongType::Menu,
         mem_order: 0,
-        default_style: 0,
     },
 ];
 
@@ -1090,18 +1029,6 @@ mod tests {
         assert_unique_mem_orders(SongType::Regular, "Regular");
         assert_unique_mem_orders(SongType::Maestro, "Maestro");
         assert_unique_mem_orders(SongType::Handbell, "Handbell");
-    }
-
-    #[test]
-    fn default_styles_valid() {
-        for song in SONG_LIST {
-            assert!(
-                (song.default_style as usize) < STYLE_LIST.len(),
-                "Song '{}' has invalid default_style {}",
-                song.name,
-                song.default_style
-            );
-        }
     }
 
     #[test]
