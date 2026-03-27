@@ -128,8 +128,8 @@ pub enum WmError {
     Update(String),
     #[error("Checksum mismatch: expected {expected}, got {actual}")]
     ChecksumMismatch { expected: String, actual: String },
-    #[error("Region not supported: {0:?}")]
-    UnsupportedRegion(Region),
+    #[error("Region not supported: {0}")]
+    UnsupportedRegion(String),
     #[error("Invalid instrument index: {0}")]
     InvalidInstrument(u8),
 }
