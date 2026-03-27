@@ -34,7 +34,6 @@ change-all-text = Change All Text
 change-default-styles = Change Default Styles
 replace-sounds = Replace Sounds
 remove-song = Remove Song
-convert-geckocode-to-gct = Convert Geckocode to .gct
 patch-main-dol-with-geckocode = Patch Main.dol with Geckocode
 create-riivolution-patch = Create Riivolution Patch
 rom-editing = Rom Editing
