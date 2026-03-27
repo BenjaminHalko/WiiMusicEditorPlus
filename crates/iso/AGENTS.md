@@ -9,11 +9,18 @@ Purpose: Wii/GC disc image extraction (WBFS/ISO) wrapping the `nod` crate.
 
 ## Output Layout
 
-Extraction produces two primary directories in the destination:
+Extraction produces a Dolphin-compatible directory structure:
 
-- **`dest/sys/`**: Contains core disc metadata and executable data.
+- **`dest/disc/`**: Physical disc-level metadata.
+  - `header.bin` — raw disc header.
+  - `region.bin` — Wii region data (Wii only).
+- **`dest/sys/`**: Core partition executable data.
   - `boot.bin`, `bi2.bin`, `apploader.img`, `main.dol`, `fst.bin`.
-- **`dest/files/`**: Contains the full game FST filesystem content.
+- **`dest/ticket.bin`**: Partition ticket (Wii only).
+- **`dest/tmd.bin`**: Title metadata (Wii only).
+- **`dest/cert.bin`**: Certificate chain (Wii only).
+- **`dest/h3.bin`**: H3 hash table (Wii only).
+- **`dest/files/`**: Full game FST filesystem content.
 
 ## Dependency
 
