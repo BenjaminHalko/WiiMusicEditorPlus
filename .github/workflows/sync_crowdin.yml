@@ -28,14 +28,9 @@ jobs:
       - name: Install slint-tr-extractor
         run: cargo install slint-tr-extractor
 
-      - name: Install gettext tools
-        run: sudo apt-get install -y gettext
-
       - name: Extract translation strings
         run: |
-          mkdir -p crates/editor/i18n
-          slint-tr-extractor --no-default-translation-context crates/editor/ui/*.slint -o crates/editor/i18n/editor.pot
-          msgcat --no-location -o crates/editor/i18n/editor.pot crates/editor/i18n/editor.pot
+          slint-tr-extractor crates/editor/ui/*.slint -o crates/editor/i18n/editor.pot
 
       - name: Sync translations with Crowdin
         uses: crowdin/github-action@v2
