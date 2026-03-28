@@ -1,6 +1,6 @@
 use std::{
     fs,
-    io::{self, copy, Read, Seek},
+    io::{self, Read, Seek, copy},
     path::Path,
 };
 
