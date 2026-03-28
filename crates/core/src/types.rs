@@ -109,8 +109,9 @@ impl Region {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
 pub enum Language {
+    #[default]
     English,
     French,
     Spanish,
@@ -118,6 +119,39 @@ pub enum Language {
     Italian,
     Japanese,
     Korean,
+}
+
+impl Language {
+    /// Returns the ROM filesystem folder name for this language
+    /// (e.g. `files/US/`, `files/FR/`).
+    #[must_use]
+    pub fn folder_name(self) -> &'static str {
+        match self {
+            Self::English => "US",
+            Self::French => "FR",
+            Self::Spanish => "SP",
+            Self::German => "GE",
+            Self::Italian => "IT",
+            Self::Japanese => "JP",
+            Self::Korean => "KO",
+        }
+    }
+
+    /// Converts a 0-based settings index to a `Language`.
+    /// Out-of-range values fall back to `English`.
+    #[must_use]
+    pub fn from_index(index: i32) -> Self {
+        match index {
+            0 => Self::English,
+            1 => Self::French,
+            2 => Self::Spanish,
+            3 => Self::German,
+            4 => Self::Italian,
+            5 => Self::Japanese,
+            6 => Self::Korean,
+            _ => Self::English,
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]

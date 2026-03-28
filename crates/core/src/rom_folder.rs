@@ -1,7 +1,7 @@
 use crate::{
     checksum::verify_checksum,
     rom::{detect_region, extract_rom},
-    types::{Region, WmError},
+    types::{Language, Region, WmError},
 };
 use std::path::{Path, PathBuf};
 
@@ -41,7 +41,7 @@ impl RomFolder {
     /// # Errors
     /// Returns `WmError::Io` if required ROM files are missing or cannot be
     /// read, and propagates extraction or region-detection failures.
-    pub fn load(path: &Path) -> Result<Self, WmError> {
+    pub fn load(path: &Path, language: Language) -> Result<Self, WmError> {
         let (folder_path, source_rom_path) = if path.is_file() {
             let output_dir = path.with_extension("");
             extract_rom(path, &output_dir)?;
@@ -53,7 +53,7 @@ impl RomFolder {
         let base = resolve_base(&folder_path);
         let main_dol_path = Self::main_dol_path(&base);
         let brsar_path = Self::brsar_path(&base);
-        let text_dir = Self::files_dir(&base);
+        let text_dir = Self::language_dir(&base, language);
 
         if !main_dol_path.is_file() || !brsar_path.is_file() {
             return Err(WmError::Io(std::io::Error::new(
@@ -144,8 +144,8 @@ impl RomFolder {
             .join(BRSAR_NAME)
     }
 
-    fn files_dir(base: &Path) -> PathBuf {
-        base.join(FILES_DIR)
+    pub(crate) fn language_dir(base: &Path, language: Language) -> PathBuf {
+        base.join(FILES_DIR).join(language.folder_name())
     }
 
     fn rom_image_candidate(path: &Path) -> Option<&Path> {
@@ -187,7 +187,10 @@ mod tests {
             region: Region::US,
             brsar: Vec::new(),
             main_dol: Vec::new(),
-            text_dir: temp.path().join(FILES_DIR),
+            text_dir: temp
+                .path()
+                .join(FILES_DIR)
+                .join(Language::English.folder_name()),
             source_rom_path: None,
         };
 
@@ -236,7 +239,10 @@ mod tests {
             region: Region::US,
             brsar: Vec::new(),
             main_dol: Vec::new(),
-            text_dir: temp.path().join(FILES_DIR),
+            text_dir: temp
+                .path()
+                .join(FILES_DIR)
+                .join(Language::English.folder_name()),
             source_rom_path: None,
         };
 

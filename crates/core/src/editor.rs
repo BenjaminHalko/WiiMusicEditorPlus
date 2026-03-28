@@ -403,22 +403,13 @@ fn read_song_text_impl(
 }
 
 fn locate_message_text_file(text_dir: &Path, from_backup: bool) -> Result<PathBuf, WmError> {
-    let mut candidates = Vec::new();
-    for region in fs::read_dir(text_dir)? {
-        let region_path = region?.path();
-        let normal = region_path.join("Message/message.d/new_music_message.txt");
-        let backup = region_path.join("Message/message.d/new_music_message.txt.backup");
-
-        if from_backup {
-            if backup.is_file() {
-                candidates.push(backup);
-            }
-        } else if normal.is_file() {
-            candidates.push(normal);
-        }
+    let normal = text_dir.join("Message/message.d/new_music_message.txt");
+    let backup = text_dir.join("Message/message.d/new_music_message.txt.backup");
+    let path = if from_backup { &backup } else { &normal };
+    if path.is_file() {
+        return Ok(path.clone());
     }
-
-    candidates.into_iter().next().ok_or_else(|| WmError::Parse {
+    Err(WmError::Parse {
         file: text_dir.display().to_string(),
         offset: 0x00,
         message: "message text file was not found".to_string(),

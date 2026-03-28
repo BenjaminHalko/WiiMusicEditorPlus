@@ -9,15 +9,13 @@ const MESSAGE_ARCHIVE_NAME: &str = "message.carc";
 ///
 /// # Errors
 /// Returns `WmError::Parse` if no `message.carc` is found.
-pub(crate) fn find_message_carc(files_dir: &Path) -> Result<PathBuf, WmError> {
-    for entry in fs::read_dir(files_dir)? {
-        let candidate = entry?.path().join("Message").join(MESSAGE_ARCHIVE_NAME);
-        if candidate.is_file() {
-            return Ok(candidate);
-        }
+pub(crate) fn find_message_carc(text_dir: &Path) -> Result<PathBuf, WmError> {
+    let candidate = text_dir.join("Message").join(MESSAGE_ARCHIVE_NAME);
+    if candidate.is_file() {
+        return Ok(candidate);
     }
     Err(WmError::Parse {
-        file: files_dir.display().to_string(),
+        file: text_dir.display().to_string(),
         offset: 0,
         message: "message.carc not found".to_string(),
     })
@@ -52,8 +50,8 @@ pub struct TextEntry {
 /// # Errors
 /// Returns an error if the message directory cannot be resolved or
 /// filesystem operations fail.
-pub fn extract(rom_folder: &Path) -> Result<(), WmError> {
-    let message_dir = resolve_message_dir(rom_folder)?;
+pub fn extract(text_dir: &Path) -> Result<(), WmError> {
+    let message_dir = resolve_message_dir(text_dir)?;
     let message_archive = message_dir.join(MESSAGE_ARCHIVE_NAME);
     let extracted_dir = message_dir.join(MESSAGE_FOLDER_NAME);
 
@@ -77,8 +75,8 @@ pub fn extract(rom_folder: &Path) -> Result<(), WmError> {
 /// # Errors
 /// Returns an error if the message directory cannot be resolved or
 /// filesystem operations fail.
-pub fn encode(rom_folder: &Path) -> Result<(), WmError> {
-    let message_dir = resolve_message_dir(rom_folder)?;
+pub fn encode(text_dir: &Path) -> Result<(), WmError> {
+    let message_dir = resolve_message_dir(text_dir)?;
     let extracted_dir = message_dir.join(MESSAGE_FOLDER_NAME);
     let message_txt = extracted_dir.join(MESSAGE_TEXT_NAME);
     let message_archive = message_dir.join(MESSAGE_ARCHIVE_NAME);
@@ -191,34 +189,15 @@ fn parse_line(line: &str) -> Option<TextEntry> {
     })
 }
 
-fn resolve_message_dir(rom_folder: &Path) -> Result<PathBuf, WmError> {
-    if rom_folder.join(MESSAGE_ARCHIVE_NAME).is_file() {
-        return Ok(rom_folder.to_path_buf());
+fn resolve_message_dir(text_dir: &Path) -> Result<PathBuf, WmError> {
+    let message_dir = text_dir.join("Message");
+    if message_dir.is_dir() {
+        return Ok(message_dir);
     }
-
-    let files_dir = rom_folder.join("files");
-    if !files_dir.is_dir() {
-        return Err(WmError::Parse {
-            file: rom_folder.display().to_string(),
-            offset: 0x0,
-            message: "Could not locate files/ directory for message.carc".to_string(),
-        });
-    }
-
-    let mut found = None;
-    for region_entry in fs::read_dir(files_dir)? {
-        let region_path = region_entry?.path();
-        let candidate = region_path.join("Message");
-        if candidate.join(MESSAGE_ARCHIVE_NAME).is_file() {
-            found = Some(candidate);
-            break;
-        }
-    }
-
-    found.ok_or_else(|| WmError::Parse {
-        file: rom_folder.display().to_string(),
+    Err(WmError::Parse {
+        file: text_dir.display().to_string(),
         offset: 0x0,
-        message: "Could not locate region Message/message.carc".to_string(),
+        message: "Message directory not found".to_string(),
     })
 }
 

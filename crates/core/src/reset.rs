@@ -149,12 +149,9 @@ fn ensure_backup_exists(path: &Path, label: &str) -> Result<(), WmError> {
 }
 
 fn locate_message_dir(text_dir: &Path) -> Result<std::path::PathBuf, WmError> {
-    for entry in fs::read_dir(text_dir)? {
-        let region_path = entry?.path();
-        let message_dir = region_path.join("Message");
-        if message_dir.is_dir() {
-            return Ok(message_dir);
-        }
+    let message_dir = text_dir.join("Message");
+    if message_dir.is_dir() {
+        return Ok(message_dir);
     }
     Err(WmError::Io(std::io::Error::new(
         std::io::ErrorKind::NotFound,
@@ -203,7 +200,7 @@ mod tests {
             region: Region::US,
             brsar: brsar_data,
             main_dol: dol_data,
-            text_dir: root.join("DATA").join("files"),
+            text_dir: root.join("DATA").join("files").join("US"),
             source_rom_path: None,
         };
 
@@ -342,7 +339,7 @@ mod tests {
             region: Region::US,
             brsar: vec![0x00_u8; 0x10],
             main_dol: vec![0x00_u8; TEST_DOL_SIZE],
-            text_dir: root.join("DATA").join("files"),
+            text_dir: root.join("DATA").join("files").join("US"),
             source_rom_path: None,
         };
 
