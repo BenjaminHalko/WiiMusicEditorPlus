@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-28 16:54+0000\n"
-"PO-Revision-Date: 2026-03-28 16:54\n"
+"POT-Creation-Date: 2026-03-28 17:00+0000\n"
+"PO-Revision-Date: 2026-03-28 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -16,542 +16,307 @@ msgstr ""
 "X-Crowdin-File: editor.pot\n"
 "X-Crowdin-File-ID: 48\n"
 
-#: crates/editor/ui/app-settings.slint:29
-msgctxt "AppSettings"
 msgid "ROM Path"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:31
-msgctxt "AppSettings"
 msgid "Browse Disk..."
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:32
-msgctxt "AppSettings"
 msgid "Browse Folder..."
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:36
-msgctxt "AppSettings"
 msgid "Dolphin Path"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:38
-msgctxt "AppSettings"
 msgid "Browse"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:42
-msgctxt "AppSettings"
 msgid "Language"
 msgstr "言語"
 
-#: crates/editor/ui/app-settings.slint:52
-msgctxt "AppSettings"
 msgid "Fallback Region"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:55
-msgctxt "AppSettings"
 msgid "U.S."
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:55
-msgctxt "AppSettings"
 msgid "Europe"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:55
-msgctxt "AppSettings"
 msgid "Japan"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:55
-msgctxt "AppSettings"
 msgid "Korea"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:63
-msgctxt "AppSettings"
 msgid "Discord RPC"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:64
-msgctxt "AppSettings"
 msgid "Unsafe Mode"
 msgstr ""
 
-#: crates/editor/ui/app-settings.slint:65
-msgctxt "AppSettings"
 msgid "Normalize MIDI"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:35
-msgctxt "AppWindow"
 msgid "Wii Music Editor"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:42
-msgctxt "AppWindow"
 msgid "No Specified Path"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:53
-msgctxt "AppWindow"
 msgid "Loading..."
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:68
-msgctxt "AppWindow"
 msgid "Song Editor"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:69
-msgctxt "AppWindow"
 msgid "Style Editor"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:70
-msgctxt "AppWindow"
 msgid "Text Editor"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:71
-msgctxt "AppWindow"
 msgid "Default Style Editor"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:72
-msgctxt "AppWindow"
 msgid "Remove Songs"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:73
-msgctxt "AppWindow"
 msgid "Pack ROM"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:74
-msgctxt "AppWindow"
 msgid "Riivolution"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:75
-msgctxt "AppWindow"
 msgid "Revert Changes"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:76
-msgctxt "AppWindow"
 msgid "Settings"
 msgstr ""
 
-#: crates/editor/ui/app-window.slint:88 crates/editor/ui/app-window.slint:89
-msgctxt "AppWindow"
 msgid "No file loaded"
 msgstr ""
 
-#: crates/editor/ui/default-style-editor.slint:33
-msgctxt "DefaultStyleEditor"
 msgid "Song"
 msgstr ""
 
-#: crates/editor/ui/default-style-editor.slint:72
-msgctxt "DefaultStyleEditor"
 msgid "Default Style"
 msgstr ""
 
-#: crates/editor/ui/default-style-editor.slint:112
-msgctxt "DefaultStyleEditor"
 msgid "Reset to Default"
 msgstr ""
 
-#: crates/editor/ui/default-style-editor.slint:113
-msgctxt "DefaultStyleEditor"
 msgid "Patch"
 msgstr ""
 
-#: crates/editor/ui/dialog.slint:59
 msgctxt "dialog-button"
 msgid "No"
 msgstr "持っていない"
 
-#: crates/editor/ui/dialog.slint:82
 msgctxt "dialog-button"
 msgid "Yes"
 msgstr "持っている"
 
-#: crates/editor/ui/dialog.slint:82
 msgctxt "dialog-button"
 msgid "OK"
 msgstr "OK"
 
-#: crates/editor/ui/first-setup.slint:18
-msgctxt "FirstSetup"
 msgid "Welcome to Wii Music Editor"
 msgstr ""
 
-#: crates/editor/ui/first-setup.slint:27
-msgctxt "FirstSetup"
 msgid "Select your Wii Music ROM to get started.\n"
 "Supported formats: .iso, .wbfs"
 msgstr ""
 
-#: crates/editor/ui/first-setup.slint:50
-msgctxt "FirstSetup"
 msgid "No file selected"
 msgstr ""
 
-#: crates/editor/ui/first-setup.slint:67
-msgctxt "FirstSetup"
-msgid "Browse Disk..."
-msgstr ""
-
-#: crates/editor/ui/first-setup.slint:83
-msgctxt "FirstSetup"
-msgid "Browse Folder..."
-msgstr ""
-
-#: crates/editor/ui/first-setup.slint:107
-msgctxt "FirstSetup"
 msgid "Continue"
 msgstr ""
 
-#: crates/editor/ui/loading.slint:2
-msgctxt "LoadingOverlay"
-msgid "Loading..."
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:55
-msgctxt "MainMenu"
-msgid "Song Editor"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:56
-msgctxt "MainMenu"
-msgid "Style Editor"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:57
-msgctxt "MainMenu"
-msgid "Text Editor"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:62
-msgctxt "MainMenu"
-msgid "Default Style Editor"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:63
-msgctxt "MainMenu"
-msgid "Remove Songs"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:64
-msgctxt "MainMenu"
-msgid "Pack ROM"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:69
-msgctxt "MainMenu"
-msgid "Riivolution"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:70
-msgctxt "MainMenu"
-msgid "Revert Changes"
-msgstr ""
-
-#: crates/editor/ui/main-menu.slint:71
-msgctxt "MainMenu"
-msgid "Settings"
-msgstr ""
-
-#: crates/editor/ui/pack-rom.slint:20
-msgctxt "PackRom"
 msgid "Pack the ROM filesystem into an ISO or WBFS file."
 msgstr ""
 
-#: crates/editor/ui/pack-rom.slint:29
-msgctxt "PackRom"
 msgid "Output Path"
 msgstr ""
 
-#: crates/editor/ui/pack-rom.slint:31
-msgctxt "PackRom"
-msgid "Browse"
-msgstr ""
-
-#: crates/editor/ui/pack-rom.slint:37
-msgctxt "PackRom"
 msgid "Output Type"
 msgstr ""
 
-#: crates/editor/ui/pack-rom.slint:49
-msgctxt "PackRom"
-msgid "Pack ROM"
-msgstr ""
-
-#: crates/editor/ui/remove-songs.slint:23
-msgctxt "RemoveSongs"
 msgid "Select songs to remove from the game:"
 msgstr ""
 
-#: crates/editor/ui/remove-songs.slint:70
-msgctxt "RemoveSongs"
 msgid "Deselect All"
 msgstr ""
 
-#: crates/editor/ui/remove-songs.slint:73
-msgctxt "RemoveSongs"
 msgid "Remove Selected Songs"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:25
-msgctxt "RevertChanges"
 msgid "Select what you want to revert. All changes to the selected items will be lost!"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:34
-msgctxt "RevertChanges"
 msgid "Songs (BRSAR)"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:35
 msgctxt "revert-item"
 msgid "Styles"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:36
 msgctxt "revert-item"
 msgid "Text"
 msgstr "テキスト"
 
-#: crates/editor/ui/revert-changes.slint:37
-msgctxt "RevertChanges"
 msgid "Main.dol"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:38
-msgctxt "RevertChanges"
 msgid "BRSAR"
 msgstr ""
 
-#: crates/editor/ui/revert-changes.slint:45
 msgctxt "action"
 msgid "Revert"
 msgstr ""
 
-#: crates/editor/ui/riivolution.slint:22
-msgctxt "Riivolution"
 msgid "Create a Riivolution patch for your changes."
 msgstr ""
 
-#: crates/editor/ui/riivolution.slint:29 crates/editor/ui/riivolution.slint:40
 msgctxt "patch-field"
 msgid "Patch Name"
 msgstr ""
 
-#: crates/editor/ui/riivolution.slint:30 crates/editor/ui/riivolution.slint:41
 msgctxt "patch-field"
 msgid "Author"
 msgstr ""
 
-#: crates/editor/ui/riivolution.slint:31 crates/editor/ui/riivolution.slint:42
 msgctxt "patch-field"
 msgid "Version"
 msgstr ""
 
-#: crates/editor/ui/riivolution.slint:50
-msgctxt "Riivolution"
 msgid "Create Patch"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:66 crates/editor/ui/song-editor.slint:67
-msgctxt "SongEditor"
-msgid "No file loaded"
-msgstr ""
-
-#: crates/editor/ui/song-editor.slint:112
 msgctxt "song-type"
 msgid "All"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:113
 msgctxt "song-type"
 msgid "Regular"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:114
 msgctxt "song-type"
 msgid "Maestro"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:118
 msgctxt "song-type"
 msgid "Handbell"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:119
 msgctxt "song-type"
 msgid "Menu"
 msgstr "メニュー"
 
-#: crates/editor/ui/song-editor.slint:180
-msgctxt "SongEditor"
 msgid "MIDI File"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:189
 msgctxt "midi-type"
 msgid "Score"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:206
 msgctxt "midi-type"
 msgid "Song"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:223
-msgctxt "SongEditor"
 msgid "Replace Song"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:250
 msgctxt "song-field"
 msgid "Tempo"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:260
 msgctxt "song-field"
 msgid "Length"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:272
-msgctxt "SongEditor"
 msgid "♩/4"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:273
-msgctxt "SongEditor"
 msgid "♩/3"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:274
 msgctxt "time-unit"
 msgid "Beats"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:275
 msgctxt "time-unit"
 msgid "Measures"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:293
 msgctxt "section-heading"
 msgid "Song Text"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:297
 msgctxt "song-field"
 msgid "Name"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:307
 msgctxt "song-field"
 msgid "Genre"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:315
 msgctxt "song-field"
 msgid "Description"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:329
-msgctxt "SongEditor"
-msgid "Style Editor"
-msgstr ""
-
-#: crates/editor/ui/song-editor.slint:330
-msgctxt "SongEditor"
-msgid "Default Style"
-msgstr ""
-
-#: crates/editor/ui/song-editor.slint:332
 msgctxt "action"
 msgid "Reset"
 msgstr ""
 
-#: crates/editor/ui/song-editor.slint:333
-#: crates/editor/ui/song-editor.slint:333
-#: crates/editor/ui/song-editor.slint:333
 msgctxt "action"
 msgid "Patch"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:55
 msgctxt "section-heading"
 msgid "Styles"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:119
 msgctxt "form-field"
 msgid "Style Name"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:147
 msgctxt "section-heading"
 msgid "Current Instruments"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:150
-#: crates/editor/ui/style-editor.slint:150
 msgctxt "style-part"
 msgid "Melody"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:151
-#: crates/editor/ui/style-editor.slint:151
 msgctxt "style-part"
 msgid "Harmony"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:152
-#: crates/editor/ui/style-editor.slint:152
 msgctxt "style-part"
 msgid "Chords"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:153
-#: crates/editor/ui/style-editor.slint:153
 msgctxt "style-part"
 msgid "Bass"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:154
-#: crates/editor/ui/style-editor.slint:154
 msgctxt "style-part"
 msgid "Perc 1"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:155
-#: crates/editor/ui/style-editor.slint:155
 msgctxt "style-part"
 msgid "Perc 2"
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:198
-msgctxt "StyleEditor"
 msgid "Editing: "
 msgstr ""
 
-#: crates/editor/ui/style-editor.slint:259
 msgctxt "action"
 msgid "Reset Style"
 msgstr ""
 
-#: crates/editor/ui/text-editor.slint:28
-msgctxt "TextEditor"
 msgid "Open in External Editor"
 msgstr ""
 
