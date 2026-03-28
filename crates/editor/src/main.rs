@@ -4,6 +4,7 @@ slint::include_modules!();
 mod discord;
 #[allow(dead_code)]
 mod external_editor;
+#[allow(dead_code)]
 mod settings;
 #[allow(dead_code)]
 mod updater;
