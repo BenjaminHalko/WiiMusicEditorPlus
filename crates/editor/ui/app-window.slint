@@ -1,7 +1,10 @@
 import "../res/fonts/rodin.otf";
 
 import { MainMenu }           from "main-menu.slint";
+import { FirstSetup }         from "first-setup.slint";
 import { BottomBar }          from "bottom-bar.slint";
+import { AppDialog, DialogType } from "dialog.slint";
+import { LoadingOverlay }        from "loading.slint";
 import { SongEditor, SongItem }                from "song-editor.slint";
 import { StyleEditor, StyleItem, InstrumentItem } from "style-editor.slint";
 import { TextEditor }         from "text-editor.slint";
@@ -12,7 +15,7 @@ import { Riivolution }        from "riivolution.slint";
 import { RevertChanges }      from "revert-changes.slint";
 import { AppSettings }        from "app-settings.slint";
 
-export { SongItem, StyleItem, InstrumentItem, RemovableSong }
+export { SongItem, StyleItem, InstrumentItem, RemovableSong, DialogType }
 
 export enum Screen {
     MainMenu,
@@ -37,6 +40,26 @@ export component AppWindow inherits Window {
     // ── Navigation ──────────────────────────────────────────────────────────
     in-out property <Screen> current-screen: Screen.MainMenu;
     in property <string> rom-label: @tr("No Specified Path");
+
+    // ── First Setup ───────────────────────────────────────────────────────────
+    in-out property <string> fs-rom-path;
+    in property <bool> fs-continue-enabled: false;
+    callback fs-browse-rom();
+    callback fs-browse-rom-folder();
+    callback fs-continue();
+
+    // ── Loading overlay ───────────────────────────────────────────────────────
+    in-out property <bool> loading-visible: false;
+    in-out property <string> loading-message: @tr("Loading...");
+    in-out property <float> loading-progress: -1.0;
+
+    // ── Dialog ────────────────────────────────────────────────────────────────
+    in-out property <bool> dialog-visible: false;
+    in-out property <string> dialog-title;
+    in-out property <string> dialog-message;
+    in-out property <DialogType> dialog-type: DialogType.Error;
+    callback dialog-confirmed();
+    callback dialog-dismissed();
 
     pure function is-home() -> bool {
         root.current-screen == Screen.MainMenu || root.current-screen == Screen.FirstSetup
@@ -179,13 +202,16 @@ export component AppWindow inherits Window {
     in-out property <bool> cfg-unsafe-mode: false;
     in-out property <bool> cfg-normalize-midi: false;
     callback cfg-browse-rom();
+    callback cfg-browse-rom-folder();
     callback cfg-browse-dolphin();
     callback cfg-language-changed(int);
     callback cfg-region-changed(int);
-    callback cfg-save();
+    callback cfg-discord-rpc-changed(bool);
+    callback cfg-unsafe-mode-changed(bool);
+    callback cfg-normalize-midi-changed(bool);
 
     // ── Content area ─────────────────────────────────────────────────────────
-    if root.is-home(): MainMenu {
+    if root.current-screen == Screen.MainMenu: MainMenu {
         x: 0; y: 0;
         width: parent.width;
         height: parent.height - bar.height;
@@ -200,6 +226,17 @@ export component AppWindow inherits Window {
             else if (index == 7) { root.current-screen = Screen.RevertChanges; }
             else if (index == 8) { root.current-screen = Screen.AppSettings; }
         }
+    }
+
+    if root.current-screen == Screen.FirstSetup: FirstSetup {
+        x: 0; y: 0;
+        width: parent.width;
+        height: parent.height;
+        rom-path <=> root.fs-rom-path;
+        continue-enabled: root.fs-continue-enabled;
+        browse-rom        => { root.fs-browse-rom(); }
+        browse-rom-folder => { root.fs-browse-rom-folder(); }
+        continue-setup    => { root.fs-continue(); }
     }
 
     if root.current-screen == Screen.SongEditor: SongEditor {
@@ -343,11 +380,14 @@ export component AppWindow inherits Window {
         discord-rpc <=> root.cfg-discord-rpc;
         unsafe-mode <=> root.cfg-unsafe-mode;
         normalize-midi <=> root.cfg-normalize-midi;
-        browse-rom        => { root.cfg-browse-rom(); }
-        browse-dolphin    => { root.cfg-browse-dolphin(); }
-        language-changed(v) => { root.cfg-language-changed(v); }
-        region-changed(v)  => { root.cfg-region-changed(v); }
-        save              => { root.cfg-save(); }
+        browse-rom              => { root.cfg-browse-rom(); }
+        browse-rom-folder       => { root.cfg-browse-rom-folder(); }
+        browse-dolphin          => { root.cfg-browse-dolphin(); }
+        language-changed(v)     => { root.cfg-language-changed(v); }
+        region-changed(v)       => { root.cfg-region-changed(v); }
+        discord-rpc-changed(v)  => { root.cfg-discord-rpc-changed(v); }
+        unsafe-mode-changed(v)  => { root.cfg-unsafe-mode-changed(v); }
+        normalize-midi-changed(v) => { root.cfg-normalize-midi-changed(v); }
     }
 
     // ── Bottom bar — always at the bottom ───────────────────────────────────
@@ -359,5 +399,26 @@ export component AppWindow inherits Window {
         rom-label: root.rom-label;
         screen-title: root.screen-title();
         back => { root.current-screen = Screen.MainMenu; }
+    }
+
+    // ── Loading overlay ──────────────────────────────────────────────────────
+    if root.loading-visible: LoadingOverlay {
+        x: 0; y: 0;
+        width: parent.width;
+        height: parent.height;
+        message: root.loading-message;
+        progress: root.loading-progress;
+    }
+
+    // ── Dialog overlay — rendered last so it appears on top ──────────────────
+    if root.dialog-visible: AppDialog {
+        x: 0; y: 0;
+        width: parent.width;
+        height: parent.height;
+        title: root.dialog-title;
+        message: root.dialog-message;
+        dialog-type: root.dialog-type;
+        confirmed  => { root.dialog-visible = false; root.dialog-confirmed(); }
+        dismissed  => { root.dialog-visible = false; root.dialog-dismissed(); }
     }
 }

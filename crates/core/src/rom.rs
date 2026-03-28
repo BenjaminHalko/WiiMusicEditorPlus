@@ -7,12 +7,17 @@ const BOOT_BIN_REL_PATH: &str = "sys/boot.bin";
 const GAME_ID_LENGTH: usize = 0x06;
 const REGION_PREFIX_LENGTH: usize = 0x04;
 
-/// Extracts a Wii disc image (ISO/WBFS) into a folder.
+/// Extracts a Wii disc image (ISO/WBFS) into a folder, reporting progress
+/// in the range `[0.0, 1.0]` via `on_progress`.
 ///
 /// # Errors
 /// Returns `WmError::Io` if extraction or filesystem operations fail.
-pub fn extract_rom(iso_path: &Path, output_dir: &Path) -> Result<(), WmError> {
-    iso::extract(iso_path, output_dir)
+pub fn extract_rom(
+    iso_path: &Path,
+    output_dir: &Path,
+    on_progress: impl Fn(f32),
+) -> Result<(), WmError> {
+    iso::extract_with_progress(iso_path, output_dir, on_progress)
         .map_err(|e| WmError::Io(std::io::Error::other(e.to_string())))
 }
 

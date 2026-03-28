@@ -16,7 +16,7 @@ pub(super) fn test_rom_extraction(r: &mut Results, wbfs_path: &Path) {
 
     let output_dir = temp_dir.path().join("extracted");
 
-    match extract_rom(wbfs_path, &output_dir) {
+    match extract_rom(wbfs_path, &output_dir, |_| {}) {
         Ok(()) => {
             r.ok(
                 "extract_rom",

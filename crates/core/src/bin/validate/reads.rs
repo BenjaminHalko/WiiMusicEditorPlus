@@ -72,7 +72,7 @@ pub(super) fn test_reads(r: &mut Results, rom_folder: &Path) {
         Err(e) => r.fail("DOL parse for song_info", &e),
     }
 
-    match RomFolder::load(rom_folder, wm_core::types::Language::English) {
+    match RomFolder::load(rom_folder, wm_core::types::Language::English, |_| {}) {
         Ok(rf) => r.ok(
             "RomFolder::load",
             &format!(

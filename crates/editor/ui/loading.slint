@@ -1,0 +1,62 @@
+export component LoadingOverlay inherits Rectangle {
+    in property <string> message: @tr("Loading...");
+    in property <float> progress: -1.0;
+
+    background: rgba(0, 0, 0, 140);
+
+    property <float> bar-pos: 0.0;
+    property <bool> going-right: true;
+
+    Timer {
+        interval: 16ms;
+        running: root.progress < 0.0;
+        triggered => {
+            if root.going-right {
+                root.bar-pos = min(root.bar-pos + 0.025, 1.0);
+                if root.bar-pos >= 1.0 { root.going-right = false; }
+            } else {
+                root.bar-pos = max(root.bar-pos - 0.025, 0.0);
+                if root.bar-pos <= 0.0 { root.going-right = true; }
+            }
+        }
+    }
+
+    Rectangle {
+        background: #FFFFFF;
+        border-radius: 8px;
+        width: 320px;
+        height: card-layout.preferred-height;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+
+        card-layout := VerticalLayout {
+            padding: 24px;
+            spacing: 16px;
+
+            Text {
+                text: root.message;
+                horizontal-alignment: center;
+                font-size: 14px;
+                color: #333333;
+            }
+
+            Rectangle {
+                height: 8px;
+                border-radius: 4px;
+                background: #E8E8E8;
+
+                Rectangle {
+                    width: root.progress < 0.0
+                         ? parent.width * 0.35
+                         : parent.width * max(0.0, min(1.0, root.progress));
+                    x: root.progress < 0.0
+                     ? root.bar-pos * (parent.width - self.width)
+                     : 0;
+                    height: parent.height;
+                    border-radius: 4px;
+                    background: #0066CC;
+                }
+            }
+        }
+    }
+}

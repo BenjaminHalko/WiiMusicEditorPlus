@@ -41,12 +41,17 @@ impl RomFolder {
     /// # Errors
     /// Returns `WmError::Io` if required ROM files are missing or cannot be
     /// read, and propagates extraction or region-detection failures.
-    pub fn load(path: &Path, language: Language) -> Result<Self, WmError> {
+    pub fn load(
+        path: &Path,
+        language: Language,
+        on_progress: impl Fn(f32),
+    ) -> Result<Self, WmError> {
         let (folder_path, source_rom_path) = if path.is_file() {
             let output_dir = path.with_extension("");
-            extract_rom(path, &output_dir)?;
+            extract_rom(path, &output_dir, on_progress)?;
             (output_dir, Some(path.to_path_buf()))
         } else {
+            on_progress(1.0);
             (path.to_path_buf(), None)
         };
 

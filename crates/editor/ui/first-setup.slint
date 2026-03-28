@@ -1,0 +1,117 @@
+import "../res/fonts/rodin.otf";
+
+export component FirstSetup inherits Rectangle {
+    background: #F2F2F2;
+
+    in-out property <string> rom-path;
+    in property <bool> continue-enabled: false;
+    callback browse-rom();
+    callback browse-rom-folder();
+    callback continue-setup();
+
+    VerticalLayout {
+        alignment: center;
+        padding: 40px;
+        spacing: 24px;
+
+        Text {
+            text: @tr("Welcome to Wii Music Editor");
+            font-family: "FOT-RodinNTLG Pro DB";
+            font-size: 28px;
+            font-weight: 700;
+            horizontal-alignment: center;
+            color: #222222;
+        }
+
+        Text {
+            text: @tr("Select your Wii Music ROM to get started.\nSupported formats: .iso, .wbfs");
+            font-size: 14px;
+            color: #666666;
+            horizontal-alignment: center;
+            wrap: word-wrap;
+        }
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 12px;
+            height: 36px;
+
+            Rectangle {
+                width: 360px;
+                border-radius: 4px;
+                background: #FFFFFF;
+                border-width: 1px;
+                border-color: #CCCCCC;
+
+                HorizontalLayout {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    Text {
+                        text: root.rom-path == "" ? @tr("No file selected") : root.rom-path;
+                        color: root.rom-path == "" ? #AAAAAA : #222222;
+                        vertical-alignment: center;
+                        overflow: elide;
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 110px;
+                border-radius: 4px;
+                background: ta-browse.has-hover ? #0044AA : #0066CC;
+                ta-browse := TouchArea {
+                    clicked => { root.browse-rom(); }
+                }
+                Text {
+                    text: @tr("Browse Disk...");
+                    color: #FFFFFF;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                    font-size: 13px;
+                }
+            }
+
+            Rectangle {
+                width: 130px;
+                border-radius: 4px;
+                background: ta-browse-folder.has-hover ? #0044AA : #0066CC;
+                ta-browse-folder := TouchArea {
+                    clicked => { root.browse-rom-folder(); }
+                }
+                Text {
+                    text: @tr("Browse Folder...");
+                    color: #FFFFFF;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                    font-size: 13px;
+                }
+            }
+        }
+
+        HorizontalLayout {
+            alignment: center;
+
+            Rectangle {
+                width: 180px;
+                height: 44px;
+                border-radius: 8px;
+                background: root.continue-enabled
+                          ? (ta-continue.has-hover ? #005500 : #007700)
+                          : #AAAAAA;
+                ta-continue := TouchArea {
+                    enabled: root.continue-enabled;
+                    clicked => { root.continue-setup(); }
+                }
+                Text {
+                    text: @tr("Continue");
+                    color: #FFFFFF;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

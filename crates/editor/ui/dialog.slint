@@ -1,0 +1,92 @@
+export enum DialogType {
+    Error,
+    Warning,
+    Success,
+    Confirm,
+}
+
+export component AppDialog inherits Rectangle {
+    in property <string> title;
+    in property <string> message;
+    in property <DialogType> dialog-type: DialogType.Error;
+    callback confirmed();
+    callback dismissed();
+
+    background: rgba(0, 0, 0, 140);
+
+    Rectangle {
+        background: #FFFFFF;
+        border-radius: 8px;
+        width: min(parent.width * 0.8, 460px);
+        height: inner.preferred-height;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+
+        inner := VerticalLayout {
+            padding: 24px;
+            spacing: 16px;
+
+            Text {
+                text: root.title;
+                font-size: 16px;
+                font-weight: 700;
+                color: root.dialog-type == DialogType.Error   ? #CC0000
+                     : root.dialog-type == DialogType.Warning ? #CC7700
+                     : root.dialog-type == DialogType.Success ? #007700
+                     : #222222;
+            }
+
+            Text {
+                text: root.message;
+                font-size: 13px;
+                color: #444444;
+                wrap: word-wrap;
+            }
+
+            HorizontalLayout {
+                alignment: end;
+                spacing: 8px;
+
+                if root.dialog-type == DialogType.Confirm: Rectangle {
+                    width: 80px;
+                    height: 36px;
+                    border-radius: 4px;
+                    background: ta-no.has-hover ? #D0D0D0 : #E8E8E8;
+                    ta-no := TouchArea {
+                        clicked => { root.dismissed(); }
+                    }
+                    Text {
+                        text: @tr("No");
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                        color: #333333;
+                        font-size: 13px;
+                    }
+                }
+
+                Rectangle {
+                    width: 80px;
+                    height: 36px;
+                    border-radius: 4px;
+                    background: root.dialog-type == DialogType.Error
+                              ? (ta-ok.has-hover ? #AA0000 : #CC0000)
+                              : root.dialog-type == DialogType.Warning
+                              ? (ta-ok.has-hover ? #AA5500 : #CC7700)
+                              : root.dialog-type == DialogType.Success
+                              ? (ta-ok.has-hover ? #005500 : #007700)
+                              : (ta-ok.has-hover ? #0044AA : #0066CC);
+                    ta-ok := TouchArea {
+                        clicked => { root.confirmed(); }
+                    }
+                    Text {
+                        text: root.dialog-type == DialogType.Confirm ? @tr("Yes") : @tr("OK");
+                        color: #FFFFFF;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -114,7 +114,7 @@ fn main() {
     if !cli.rom_folder.is_dir() {
         if let Some(ref wbfs) = cli.wbfs_file {
             println!("\nROM folder not found — extracting from WBFS...");
-            match extract_rom(wbfs, &cli.rom_folder) {
+            match extract_rom(wbfs, &cli.rom_folder, |_| {}) {
                 Ok(()) => println!("Extraction complete: {}\n", cli.rom_folder.display()),
                 Err(e) => {
                     eprintln!("error: extraction failed — {e}");

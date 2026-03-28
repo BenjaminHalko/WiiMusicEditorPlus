@@ -12,33 +12,34 @@ export component AppSettings inherits Rectangle {
     in-out property <bool> normalize-midi: false;
 
     callback browse-rom();
+    callback browse-rom-folder();
     callback browse-dolphin();
     callback language-changed(int);
     callback region-changed(int);
-    callback save();
+    callback discord-rpc-changed(bool);
+    callback unsafe-mode-changed(bool);
+    callback normalize-midi-changed(bool);
 
     VerticalLayout {
         padding: 24px;
         spacing: 16px;
         alignment: start;
 
-        // ROM Path
         HorizontalLayout { height: 36px; spacing: 8px;
-            Text { text: @tr("ROM Path");     font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
+            Text { text: @tr("ROM Path"); font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
             LineEdit { horizontal-stretch: 1; text: root.rom-path; read-only: true; }
-            Button { text: @tr("Browse"); clicked => { root.browse-rom(); } }
+            Button { text: @tr("Browse Disk..."); clicked => { root.browse-rom(); } }
+            Button { text: @tr("Browse Folder..."); clicked => { root.browse-rom-folder(); } }
         }
 
-        // Dolphin Path
         HorizontalLayout { height: 36px; spacing: 8px;
             Text { text: @tr("Dolphin Path"); font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
             LineEdit { horizontal-stretch: 1; text: root.dolphin-path; read-only: true; }
             Button { text: @tr("Browse"); clicked => { root.browse-dolphin(); } }
         }
 
-        // Language
         HorizontalLayout { height: 36px; spacing: 8px;
-            Text { text: @tr("Language");     font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
+            Text { text: @tr("Language"); font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
             ComboBox {
                 width: 200px;
                 model: ["English", "Français", "Español", "Deutsch", "Italiano"];
@@ -47,7 +48,6 @@ export component AppSettings inherits Rectangle {
             }
         }
 
-        // Fallback Region
         HorizontalLayout { height: 36px; spacing: 8px;
             Text { text: @tr("Fallback Region"); font-size: 12px; color: #555555; vertical-alignment: center; width: 130px; }
             ComboBox {
@@ -58,18 +58,11 @@ export component AppSettings inherits Rectangle {
             }
         }
 
-        // Toggles
         VerticalLayout {
             spacing: 10px;
-            CheckBox { text: @tr("Discord RPC");    checked: root.discord-rpc;    toggled => { root.discord-rpc = self.checked; } }
-            CheckBox { text: @tr("Unsafe Mode");    checked: root.unsafe-mode;    toggled => { root.unsafe-mode = self.checked; } }
-            CheckBox { text: @tr("Normalize MIDI"); checked: root.normalize-midi; toggled => { root.normalize-midi = self.checked; } }
-        }
-
-        HorizontalLayout {
-            height: 36px;
-            Rectangle { horizontal-stretch: 1; }
-            Button { text: @tr("Save"); clicked => { root.save(); } }
+            CheckBox { text: @tr("Discord RPC");    checked <=> root.discord-rpc;    toggled => { root.discord-rpc-changed(self.checked); } }
+            CheckBox { text: @tr("Unsafe Mode");    checked <=> root.unsafe-mode;    toggled => { root.unsafe-mode-changed(self.checked); } }
+            CheckBox { text: @tr("Normalize MIDI"); checked <=> root.normalize-midi; toggled => { root.normalize-midi-changed(self.checked); } }
         }
     }
 }
