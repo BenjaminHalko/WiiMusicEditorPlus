@@ -4,7 +4,7 @@ This document serves as a guide for AI agents and developers working on the Rust
 
 ## Project Overview
 
-Wii Music Editor is a desktop application written in Rust using the Iced framework. It is designed for modding the 2008 Nintendo Wii title "Wii Music".
+Wii Music Editor is a desktop application written in Rust using the Slint framework. It is designed for modding the 2008 Nintendo Wii title "Wii Music".
 
 **Core Capabilities:**
 - Replacing in-game songs with custom MIDI files.
@@ -21,7 +21,7 @@ The project is organized as a Cargo workspace with five crates:
 - **`brsar`**: BRSAR sound archive and RSEQ binary sequence handlers, including MIDI↔RSEQ conversion.
 - **`iso`**: Wii/GC disc image extraction wrapper for the `nod` crate.
 - **`wm_core`**: The logic library containing binary parsers and domain models. No GUI or hardcoded runtime paths.
-- **`editor`**: The Iced GUI binary producing the `wii-music-editor` executable.
+- **`editor`**: The Slint GUI binary producing the `wii-music-editor` executable.
 
 ## BRSAR Format Reference
 
