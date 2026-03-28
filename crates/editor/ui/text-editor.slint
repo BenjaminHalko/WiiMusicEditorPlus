@@ -31,7 +31,7 @@ export component TextEditor inherits Rectangle {
             }
             Rectangle { horizontal-stretch: 1; }
             Button {
-                text: @tr("Patch");
+                text: @tr("action" => "Patch");
                 enabled: root.patch-enabled;
                 clicked => { root.patch(); }
             }

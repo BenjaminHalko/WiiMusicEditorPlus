@@ -52,7 +52,7 @@ export component StyleEditor inherits Rectangle {
             spacing: 8px;
 
             Text {
-                text: @tr("Styles");
+                text: @tr("section-heading" => "Styles");
                 font-family: "FOT-RodinNTLG Pro DB";
                 font-size: 11px;
                 color: #888888;
@@ -116,7 +116,7 @@ export component StyleEditor inherits Rectangle {
                 height: 36px;
                 spacing: 8px;
                 Text {
-                    text: @tr("Style Name");
+                    text: @tr("form-field" => "Style Name");
                     font-family: "FOT-RodinNTLG Pro DB";
                     font-size: 12px;
                     color: #555555;
@@ -144,15 +144,15 @@ export component StyleEditor inherits Rectangle {
                     padding: 8px;
                     spacing: 4px;
 
-                    Text { text: @tr("Current Instruments"); font-size: 11px; color: #888888; }
+                    Text { text: @tr("section-heading" => "Current Instruments"); font-size: 11px; color: #888888; }
 
                     for part-info in [
-                        { label: @tr("Melody"),  value: root.part-melody,   idx: 0 },
-                        { label: @tr("Harmony"), value: root.part-harmony,  idx: 1 },
-                        { label: @tr("Chords"),  value: root.part-chords,   idx: 2 },
-                        { label: @tr("Bass"),    value: root.part-bass,     idx: 3 },
-                        { label: @tr("Perc 1"),  value: root.part-perc1,    idx: 4 },
-                        { label: @tr("Perc 2"),  value: root.part-perc2,    idx: 5 },
+                        { label: @tr("style-part" => "Melody"),  value: root.part-melody,   idx: 0 },
+                        { label: @tr("style-part" => "Harmony"), value: root.part-harmony,  idx: 1 },
+                        { label: @tr("style-part" => "Chords"),  value: root.part-chords,   idx: 2 },
+                        { label: @tr("style-part" => "Bass"),    value: root.part-bass,     idx: 3 },
+                        { label: @tr("style-part" => "Perc 1"),  value: root.part-perc1,    idx: 4 },
+                        { label: @tr("style-part" => "Perc 2"),  value: root.part-perc2,    idx: 5 },
                     ]: Rectangle {
                         height: 24px;
                         border-radius: 3px;
@@ -201,12 +201,12 @@ export component StyleEditor inherits Rectangle {
                     vertical-alignment: center;
                 }
                 Text {
-                    text: root.current-part == 0 ? @tr("Melody")
-                        : root.current-part == 1 ? @tr("Harmony")
-                        : root.current-part == 2 ? @tr("Chords")
-                        : root.current-part == 3 ? @tr("Bass")
-                        : root.current-part == 4 ? @tr("Perc 1")
-                        : @tr("Perc 2");
+                    text: root.current-part == 0 ? @tr("style-part" => "Melody")
+                        : root.current-part == 1 ? @tr("style-part" => "Harmony")
+                        : root.current-part == 2 ? @tr("style-part" => "Chords")
+                        : root.current-part == 3 ? @tr("style-part" => "Bass")
+                        : root.current-part == 4 ? @tr("style-part" => "Perc 1")
+                        : @tr("style-part" => "Perc 2");
                     font-family: "FOT-RodinNTLG Pro DB";
                     font-size: 13px;
                     color: #34BEED;
@@ -256,8 +256,8 @@ export component StyleEditor inherits Rectangle {
                 height: 36px;
                 spacing: 8px;
                 Rectangle { horizontal-stretch: 1; }
-                Button { text: @tr("Reset Style"); enabled: root.reset-enabled; clicked => { root.reset(); } }
-                Button { text: @tr("Patch");       enabled: root.patch-enabled; clicked => { root.patch(); } }
+                Button { text: @tr("action" => "Reset Style"); enabled: root.reset-enabled; clicked => { root.reset(); } }
+                Button { text: @tr("action" => "Patch");      enabled: root.patch-enabled; clicked => { root.patch(); } }
             }
         }
     }

@@ -26,9 +26,9 @@ export component Riivolution inherits Rectangle {
         }
 
         for field in [
-            { label: @tr("Patch Name"),   value: root.patch-name },
-            { label: @tr("Author"),       value: root.patch-author },
-            { label: @tr("Version"),      value: root.patch-version },
+            { label: @tr("patch-field" => "Patch Name"), value: root.patch-name },
+            { label: @tr("patch-field" => "Author"),     value: root.patch-author },
+            { label: @tr("patch-field" => "Version"),    value: root.patch-version },
         ]: HorizontalLayout {
             height: 36px;
             spacing: 8px;
@@ -37,9 +37,9 @@ export component Riivolution inherits Rectangle {
                 horizontal-stretch: 1;
                 text: field.value;
                 edited(v) => {
-                    if (field.label == @tr("Patch Name"))  { root.name-changed(v); }
-                    if (field.label == @tr("Author"))      { root.author-changed(v); }
-                    if (field.label == @tr("Version"))     { root.version-changed(v); }
+                    if (field.label == @tr("patch-field" => "Patch Name")) { root.name-changed(v); }
+                    if (field.label == @tr("patch-field" => "Author"))     { root.author-changed(v); }
+                    if (field.label == @tr("patch-field" => "Version"))    { root.version-changed(v); }
                 }
             }
         }

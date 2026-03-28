@@ -109,14 +109,14 @@ export component SongEditor inherits Rectangle {
             // Filter row
             HorizontalLayout {
                 spacing: 4px;
-                FilterBtn { label: @tr("All");      active: root.filter-type == 0; clicked => { root.filter-type = 0; root.filter-changed(0); } }
-                FilterBtn { label: @tr("Regular");  active: root.filter-type == 1; clicked => { root.filter-type = 1; root.filter-changed(1); } }
-                FilterBtn { label: @tr("Maestro");  active: root.filter-type == 2; clicked => { root.filter-type = 2; root.filter-changed(2); } }
+                FilterBtn { label: @tr("song-type" => "All");      active: root.filter-type == 0; clicked => { root.filter-type = 0; root.filter-changed(0); } }
+                FilterBtn { label: @tr("song-type" => "Regular");  active: root.filter-type == 1; clicked => { root.filter-type = 1; root.filter-changed(1); } }
+                FilterBtn { label: @tr("song-type" => "Maestro");  active: root.filter-type == 2; clicked => { root.filter-type = 2; root.filter-changed(2); } }
             }
             HorizontalLayout {
                 spacing: 4px;
-                FilterBtn { label: @tr("Handbell"); active: root.filter-type == 3; clicked => { root.filter-type = 3; root.filter-changed(3); } }
-                FilterBtn { label: @tr("Menu");     active: root.filter-type == 4; clicked => { root.filter-type = 4; root.filter-changed(4); } }
+                FilterBtn { label: @tr("song-type" => "Handbell"); active: root.filter-type == 3; clicked => { root.filter-type = 3; root.filter-changed(3); } }
+                FilterBtn { label: @tr("song-type" => "Menu");     active: root.filter-type == 4; clicked => { root.filter-type = 4; root.filter-changed(4); } }
             }
 
             // Song list
@@ -186,7 +186,7 @@ export component SongEditor inherits Rectangle {
                     HorizontalLayout {
                         spacing: 8px;
                         Button {
-                            text: @tr("Score");
+                            text: @tr("midi-type" => "Score");
                             enabled: root.midi-enabled;
                             clicked => { root.load-midi-score(); }
                         }
@@ -203,7 +203,7 @@ export component SongEditor inherits Rectangle {
                     if root.show-song-file: HorizontalLayout {
                         spacing: 8px;
                         Button {
-                            text: @tr("Song");
+                            text: @tr("midi-type" => "Song");
                             enabled: root.midi-enabled && root.replace-midi;
                             clicked => { root.load-midi-song(); }
                         }
@@ -247,7 +247,7 @@ export component SongEditor inherits Rectangle {
                         alignment: start;
                         VerticalLayout {
                             spacing: 4px;
-                            Text { text: @tr("Tempo"); font-size: 11px; color: #888888; }
+                            Text { text: @tr("song-field" => "Tempo"); font-size: 11px; color: #888888; }
                             SpinBox {
                                 value: root.tempo;
                                 minimum: 1; maximum: 500;
@@ -257,7 +257,7 @@ export component SongEditor inherits Rectangle {
                         }
                         VerticalLayout {
                             spacing: 4px;
-                            Text { text: @tr("Length"); font-size: 11px; color: #888888; }
+                            Text { text: @tr("song-field" => "Length"); font-size: 11px; color: #888888; }
                             SpinBox {
                                 value: root.length;
                                 minimum: 1; maximum: 9999;
@@ -271,8 +271,8 @@ export component SongEditor inherits Rectangle {
                         alignment: start;
                         SigBtn { label: @tr("♩/4"); active: root.time-sig == 4; clicked => { root.time-sig-changed(4); } }
                         SigBtn { label: @tr("♩/3"); active: root.time-sig == 3; clicked => { root.time-sig-changed(3); } }
-                        SigBtn { label: @tr("Beats");    active: root.use-beats;  clicked => { root.use-beats-changed(true); } }
-                        SigBtn { label: @tr("Measures"); active: !root.use-beats; clicked => { root.use-beats-changed(false); } }
+                        SigBtn { label: @tr("time-unit" => "Beats");    active: root.use-beats;  clicked => { root.use-beats-changed(true); } }
+                        SigBtn { label: @tr("time-unit" => "Measures"); active: !root.use-beats; clicked => { root.use-beats-changed(false); } }
                     }
                 }
             }
@@ -290,11 +290,11 @@ export component SongEditor inherits Rectangle {
                     padding: 10px;
                     spacing: 8px;
 
-                    Text { text: @tr("Song Text"); font-size: 11px; color: #888888; }
+                    Text { text: @tr("section-heading" => "Song Text"); font-size: 11px; color: #888888; }
 
                     HorizontalLayout {
                         spacing: 8px;
-                        Text { text: @tr("Name"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
+                        Text { text: @tr("song-field" => "Name"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
                         LineEdit {
                             horizontal-stretch: 1;
                             text: root.song-name;
@@ -304,7 +304,7 @@ export component SongEditor inherits Rectangle {
                     }
                     HorizontalLayout {
                         spacing: 8px;
-                        Text { text: @tr("Genre"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
+                        Text { text: @tr("song-field" => "Genre"); font-size: 12px; color: #555555; vertical-alignment: center; width: 60px; }
                         LineEdit {
                             horizontal-stretch: 1;
                             text: root.song-genre;
@@ -312,7 +312,7 @@ export component SongEditor inherits Rectangle {
                             edited(v) => { root.genre-changed(v); }
                         }
                     }
-                    Text { text: @tr("Description"); font-size: 11px; color: #888888; }
+                    Text { text: @tr("song-field" => "Description"); font-size: 11px; color: #888888; }
                     TextEdit {
                         vertical-stretch: 1;
                         text: root.song-description;
@@ -329,8 +329,8 @@ export component SongEditor inherits Rectangle {
                 Button { text: @tr("Style Editor");   enabled: root.style-enabled; clicked => { root.open-style-editor(); } }
                 Button { text: @tr("Default Style");  enabled: root.style-enabled; clicked => { root.open-default-style-editor(); } }
                 Rectangle { horizontal-stretch: 1; }
-                Button { text: @tr("Reset");  enabled: root.reset-enabled;  clicked => { root.reset(); } }
-                Button { text: @tr("Patch");  enabled: root.patch-enabled;  clicked => { root.patch(); } }
+                Button { text: @tr("action" => "Reset"); enabled: root.reset-enabled;  clicked => { root.reset(); } }
+                Button { text: @tr("action" => "Patch"); enabled: root.patch-enabled;  clicked => { root.patch(); } }
             }
         }
     }

@@ -18,17 +18,19 @@ Purpose: Slint-based GUI binary for the Wii Music Editor.
 
 ## Rust-Side Wiring
 
-Slint is single-threaded. Share mutable state between callbacks with `Rc<RefCell<T>>`:
+`AppState` is shared via `Arc<Mutex<AppState>>` so it can be sent to background threads (ROM loading). Callbacks run on the Slint main thread and use `.lock()`:
 
 ```rust
-let state = Rc::new(RefCell::new(AppState::new()));
+let state = Arc::new(Mutex::new(AppState::new()));
 let app_weak = app.as_weak();
 app.on_cfg_browse_rom({
-    let state = state.clone();
+    let state = Arc::clone(&state);
     let app_weak = app_weak.clone();
-    move || { /* ... */ }
+    move || { /* state.lock().expect("state") */ }
 });
 ```
+
+Background work uses `std::thread::spawn` + `slint::invoke_from_event_loop` (mid-task progress) and `Weak::upgrade_in_event_loop` (final result). Both closures must be `Send`; `Arc<Mutex<>>` and `RomFolder` satisfy this.
 
 Property setters: `app.set_<property>(value)`. Getters: `app.get_<property>()`. Callback registration: `app.on_<callback>(closure)`.
 
@@ -46,3 +48,33 @@ Property setters: `app.set_<property>(value)`. Getters: `app.get_<property>()`. 
 - **Runtime**: `slint::init_translations!(path)` loads `.mo` files from `{path}/{locale}/LC_MESSAGES/editor.mo`. Falls back to the source string when no `.mo` is present (development default).
 - **Extraction**: `slint-tr-extractor --no-default-translation-context ui/*.slint -o i18n/editor.pot`, then `msgcat --no-location` to strip line references.
 - **Crowdin**: Source is `i18n/editor.pot`; translations are `i18n/{locale}/LC_MESSAGES/editor.po`. CI auto-regenerates the `.pot` on `.slint` changes and skips the Crowdin sync when strings are unchanged.
+
+### MANDATORY: Context for ambiguous strings
+
+Every `@tr(…)` call whose meaning a translator could misread **in isolation** MUST include an explicit msgctxt using the `"context" => "string"` form:
+
+```slint
+@tr("song-type" => "Regular")
+@tr("song-type" => "All")
+@tr("action" => "Patch")
+@tr("action" => "Reset")
+```
+
+A string is ambiguous if it is a single word, a short phrase, or a domain-specific term that could belong to multiple UI roles. When in doubt, add context.
+
+Context strings must be **lowercase and hyphenated**, describing the UI role — not the meaning of the string:
+
+| Context | Used for |
+|---|---|
+| `"song-type"` | Song category filter labels (All, Regular, Maestro, …) |
+| `"style-part"` | Instrument part labels within a style (Melody, Harmony, Chords, Bass, Perc 1, Perc 2) |
+| `"action"` | Button labels that trigger an operation (Patch, Reset, Revert, …) |
+| `"dialog-button"` | Dialog confirmation buttons (Yes, No, OK) |
+| `"midi-type"` | MIDI file type buttons (Score, Song) |
+| `"time-unit"` | Time signature unit toggle (Beats, Measures) |
+| `"song-field"` | Song property field labels (Name, Genre, Description, Tempo, Length) |
+| `"section-heading"` | Section header labels inside an editor panel |
+| `"patch-field"` | Riivolution patch metadata fields (Patch Name, Author, Version) |
+| `"revert-item"` | Revert Changes checkbox labels (Styles, Text) |
+| `"form-field"` | Generic form field labels not covered by a more specific context |
+| `"status"` | Status / feedback text shown to the user |

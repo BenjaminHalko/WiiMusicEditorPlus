@@ -56,7 +56,7 @@ export component AppDialog inherits Rectangle {
                         clicked => { root.dismissed(); }
                     }
                     Text {
-                        text: @tr("No");
+                        text: @tr("dialog-button" => "No");
                         horizontal-alignment: center;
                         vertical-alignment: center;
                         color: #333333;
@@ -79,7 +79,7 @@ export component AppDialog inherits Rectangle {
                         clicked => { root.confirmed(); }
                     }
                     Text {
-                        text: root.dialog-type == DialogType.Confirm ? @tr("Yes") : @tr("OK");
+                        text: root.dialog-type == DialogType.Confirm ? @tr("dialog-button" => "Yes") : @tr("dialog-button" => "OK");
                         color: #FFFFFF;
                         horizontal-alignment: center;
                         vertical-alignment: center;

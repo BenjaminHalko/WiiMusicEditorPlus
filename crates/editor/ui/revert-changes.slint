@@ -32,8 +32,8 @@ export component RevertChanges inherits Rectangle {
         VerticalLayout {
             spacing: 10px;
             CheckBox { text: @tr("Songs (BRSAR)");  checked: root.revert-songs;    toggled => { root.revert-songs = self.checked; } }
-            CheckBox { text: @tr("Styles");          checked: root.revert-styles;   toggled => { root.revert-styles = self.checked; } }
-            CheckBox { text: @tr("Text");            checked: root.revert-text;     toggled => { root.revert-text = self.checked; } }
+            CheckBox { text: @tr("revert-item" => "Styles"); checked: root.revert-styles;   toggled => { root.revert-styles = self.checked; } }
+            CheckBox { text: @tr("revert-item" => "Text");   checked: root.revert-text;     toggled => { root.revert-text = self.checked; } }
             CheckBox { text: @tr("Main.dol");        checked: root.revert-main-dol; toggled => { root.revert-main-dol = self.checked; } }
             CheckBox { text: @tr("BRSAR");           checked: root.revert-brsar;    toggled => { root.revert-brsar = self.checked; } }
         }
@@ -42,7 +42,7 @@ export component RevertChanges inherits Rectangle {
             height: 36px;
             Rectangle { horizontal-stretch: 1; }
             Button {
-                text: @tr("Revert");
+                text: @tr("action" => "Revert");
                 enabled: root.any-selected();
                 clicked => { root.revert(); }
             }
