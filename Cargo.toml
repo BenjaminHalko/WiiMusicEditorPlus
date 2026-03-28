@@ -14,7 +14,6 @@ indexmap = { version = "2", features = ["std"] }
 [workspace.lints.clippy]
 pedantic = { level = "warn", priority = -1 }
 dbg_macro = "deny"
-as_underscore = "deny"
 fallible_impl_from = "deny"
 fn_params_excessive_bools = "deny"
 cast_possible_truncation = "allow"

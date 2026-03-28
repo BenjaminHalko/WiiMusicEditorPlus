@@ -1,14 +1,9 @@
 // Settings persistence — INI-based, backward compatible with v1/v2 Python settings.ini
 // Python used `configparser.ConfigParser` which writes standard INI; the `ini` crate wraps the same parser.
 
-use std::collections::HashMap;
 use std::path::Path;
 
 use ini::configparser::ini::Ini;
-
-/// All settings from an INI file, keyed by section then key.
-/// Values are `None` for valueless keys (e.g. `key_without_equals`).
-pub type IniMap = HashMap<String, HashMap<String, Option<String>>>;
 
 /// Loads a setting from an INI file. Returns `default` if the file
 /// doesn't exist, can't be parsed, or the key is missing.
@@ -39,16 +34,6 @@ pub fn save_setting(path: &Path, section: &str, key: &str, value: &str) -> Resul
     config
         .write(path.to_string_lossy().as_ref())
         .map_err(|e| e.to_string())
-}
-
-/// Loads all settings from an INI file as a nested structure.
-/// Returns empty map if file doesn't exist or can't be parsed.
-#[must_use]
-pub fn load_all(path: &Path) -> IniMap {
-    let mut config = Ini::new();
-    config
-        .load(path.to_string_lossy().as_ref())
-        .unwrap_or_default()
 }
 
 #[cfg(test)]

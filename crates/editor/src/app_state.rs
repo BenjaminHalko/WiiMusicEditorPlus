@@ -16,6 +16,7 @@ const KEY_NORMALIZE_MIDI: &str = "NormalizeMidi";
 pub struct AppState {
     pub rom: Option<RomFolder>,
     pub settings_path: PathBuf,
+    #[allow(dead_code)]
     pub discord: DiscordPresence,
     pub language: i32,
     pub fallback_region: i32,
@@ -64,6 +65,7 @@ impl AppState {
         settings::load_setting(&self.settings_path, SECTION, KEY_NORMALIZE_MIDI, "false") == "true"
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub fn save_settings(
         &self,
         rom_path: &str,

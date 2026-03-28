@@ -142,7 +142,6 @@ impl Language {
     #[must_use]
     pub fn from_index(index: i32) -> Self {
         match index {
-            0 => Self::English,
             1 => Self::French,
             2 => Self::Spanish,
             3 => Self::German,

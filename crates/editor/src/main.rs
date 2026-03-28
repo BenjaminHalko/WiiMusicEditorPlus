@@ -20,7 +20,7 @@ use wm_core::{rom_folder::RomFolder, types::Language};
 fn load_rom_async(
     app_weak: slint::Weak<AppWindow>,
     state: Arc<Mutex<AppState>>,
-    new_rom_path: String,
+    new_rom_path: &str,
 ) {
     let Some(app) = app_weak.upgrade() else {
         return;
@@ -39,12 +39,12 @@ fn load_rom_async(
         )
     };
 
-    app.set_cfg_rom_path(new_rom_path.clone().into());
+    app.set_cfg_rom_path(new_rom_path.into());
     app.set_loading_visible(true);
     app.set_loading_progress(-1.0);
     app.set_loading_message("Loading ROM...".into());
 
-    let path = PathBuf::from(&new_rom_path);
+    let path = PathBuf::from(new_rom_path);
     let lang = Language::from_index(language);
 
     std::thread::spawn(move || {
@@ -100,6 +100,7 @@ fn load_rom_async(
     });
 }
 
+#[allow(clippy::too_many_lines)]
 fn main() -> Result<(), slint::PlatformError> {
     slint::init_translations!(concat!(env!("CARGO_MANIFEST_DIR"), "/i18n/"));
     let app = AppWindow::new()?;
@@ -138,11 +139,10 @@ fn main() -> Result<(), slint::PlatformError> {
             if let Some(path) = rfd::FileDialog::new()
                 .add_filter("ROM", &["iso", "wbfs"])
                 .pick_file()
+                && let Some(a) = app_weak.upgrade()
             {
-                if let Some(a) = app_weak.upgrade() {
-                    a.set_fs_rom_path(path.display().to_string().into());
-                    a.set_fs_continue_enabled(true);
-                }
+                a.set_fs_rom_path(path.display().to_string().into());
+                a.set_fs_continue_enabled(true);
             }
         }
     });
@@ -150,11 +150,11 @@ fn main() -> Result<(), slint::PlatformError> {
     app.on_fs_browse_rom_folder({
         let app_weak = app.as_weak();
         move || {
-            if let Some(path) = rfd::FileDialog::new().pick_folder() {
-                if let Some(a) = app_weak.upgrade() {
-                    a.set_fs_rom_path(path.display().to_string().into());
-                    a.set_fs_continue_enabled(true);
-                }
+            if let Some(path) = rfd::FileDialog::new().pick_folder()
+                && let Some(a) = app_weak.upgrade()
+            {
+                a.set_fs_rom_path(path.display().to_string().into());
+                a.set_fs_continue_enabled(true);
             }
         }
     });
@@ -167,7 +167,7 @@ fn main() -> Result<(), slint::PlatformError> {
             let rom_path = a.get_fs_rom_path().to_string();
             let settings_path = state.lock().expect("state").settings_path.clone();
             let _ = settings::save_setting(&settings_path, "Preferences", "RomFolder", &rom_path);
-            load_rom_async(app_weak.clone(), Arc::clone(&state), rom_path);
+            load_rom_async(app_weak.clone(), Arc::clone(&state), &rom_path);
             a.set_current_screen(Screen::MainMenu);
         }
     });
@@ -183,7 +183,7 @@ fn main() -> Result<(), slint::PlatformError> {
                 load_rom_async(
                     app_weak.clone(),
                     Arc::clone(&state),
-                    path.display().to_string(),
+                    &path.display().to_string(),
                 );
             }
         }
@@ -197,7 +197,7 @@ fn main() -> Result<(), slint::PlatformError> {
                 load_rom_async(
                     app_weak.clone(),
                     Arc::clone(&state),
-                    path.display().to_string(),
+                    &path.display().to_string(),
                 );
             }
         }

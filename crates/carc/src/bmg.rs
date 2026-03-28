@@ -29,7 +29,7 @@ impl Bmg {
     /// # Errors
     /// Returns `SzsError::InvalidMagic` for a bad header and `SzsError::InvalidBmg`
     /// for truncated or malformed sections.
-    #[allow(clippy::too_many_lines)]
+    #[allow(clippy::too_many_lines, clippy::similar_names)]
     pub fn from_bytes(data: &[u8]) -> Result<Self, SzsError> {
         if data.len() < 0x20 {
             return Err(SzsError::InvalidBmg("BMG shorter than header".to_string()));
@@ -149,7 +149,6 @@ impl Bmg {
 
                     let n_msg = read_u16_at(data, off + 8)
                         .ok_or_else(|| SzsError::InvalidBmg("MID1 missing n_msg".to_string()))?;
-                    #[allow(clippy::similar_names)]
                     let unknown_0a = read_u16_at(data, off + 10).ok_or_else(|| {
                         SzsError::InvalidBmg("MID1 missing unknown_0a".to_string())
                     })?;
@@ -203,7 +202,6 @@ impl Bmg {
             entries.push(BmgEntry { id: 0, attr, text });
         }
 
-        #[allow(clippy::similar_names)]
         let (has_mid, mid_unknown_0a, mid_unknown_0c) =
             if let Some((mid_n_msg, u0a, u0c, ids)) = mid {
                 if mid_n_msg != inf_n_msg {
