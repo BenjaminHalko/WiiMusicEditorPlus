@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-27 22:51+0000\n"
-"PO-Revision-Date: 2026-03-27 22:58\n"
+"POT-Creation-Date: 2026-03-28 06:32+0000\n"
+"PO-Revision-Date: 2026-03-28 06:32\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,13 +17,19 @@ msgstr ""
 "X-Crowdin-File-ID: 48\n"
 
 msgid "ROM Path"
+msgstr "Ruta de la ROM"
+
+msgid "Browse Disk..."
 msgstr ""
 
-msgid "Browse"
-msgstr "Navegar"
+msgid "Browse Folder..."
+msgstr ""
 
 msgid "Dolphin Path"
 msgstr "Ruta de Dolphin"
+
+msgid "Browse"
+msgstr "Navegar"
 
 msgid "Language"
 msgstr "Idioma"
@@ -32,7 +38,7 @@ msgid "Fallback Region"
 msgstr ""
 
 msgid "U.S."
-msgstr ""
+msgstr "Estados Unidos"
 
 msgid "Europe"
 msgstr "Europa"
@@ -50,16 +56,16 @@ msgid "Unsafe Mode"
 msgstr "Modo inseguro"
 
 msgid "Normalize MIDI"
-msgstr ""
-
-msgid "Save"
-msgstr "Guardar"
+msgstr "Normalizar MIDI"
 
 msgid "Wii Music Editor"
 msgstr "Wii Music Editor Plus"
 
 msgid "No Specified Path"
 msgstr "No hay una ruta especificada"
+
+msgid "Loading..."
+msgstr "Cargando..."
 
 msgid "Song Editor"
 msgstr "Editor de Canciones"
@@ -68,13 +74,13 @@ msgid "Style Editor"
 msgstr "Editor de Estilos"
 
 msgid "Text Editor"
-msgstr ""
+msgstr "Editor de Texto"
 
 msgid "Default Style Editor"
-msgstr ""
+msgstr "Editor de Estilo Predeterminado"
 
 msgid "Remove Songs"
-msgstr ""
+msgstr "Remover Canciones"
 
 msgid "Pack ROM"
 msgstr ""
@@ -89,18 +95,40 @@ msgid "Settings"
 msgstr "Ajustes"
 
 msgid "No file loaded"
-msgstr ""
+msgstr "No hay un archivo cargado"
 
 msgid "Song"
-msgstr ""
+msgstr "Canción"
 
 msgid "Default Style"
-msgstr ""
+msgstr "Estilo Predeterminado"
 
 msgid "Reset to Default"
 msgstr "Reiniciar Valores Predeterminados"
 
 msgid "Patch"
+msgstr "Parchear"
+
+msgid "No"
+msgstr "No"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "OK"
+msgstr ""
+
+msgid "Welcome to Wii Music Editor"
+msgstr ""
+
+msgid "Select your Wii Music ROM to get started.\n"
+"Supported formats: .iso, .wbfs"
+msgstr ""
+
+msgid "No file selected"
+msgstr ""
+
+msgid "Continue"
 msgstr ""
 
 msgid "Pack the ROM filesystem into an ISO or WBFS file."
@@ -116,16 +144,16 @@ msgid "Select songs to remove from the game:"
 msgstr ""
 
 msgid "Deselect All"
-msgstr ""
+msgstr "Deseleccionar todo"
 
 msgid "Remove Selected Songs"
-msgstr ""
+msgstr "Remover canciones seleccionadas"
 
 msgid "Select what you want to revert. All changes to the selected items will be lost!"
 msgstr "Selecciona lo que quieras revertir. ¡Todos los cambios en los elementos seleccionados se perderán!"
 
 msgid "Songs (BRSAR)"
-msgstr ""
+msgstr "Canciones (BRSAR)"
 
 msgid "Styles"
 msgstr "Estilos"
@@ -134,10 +162,10 @@ msgid "Text"
 msgstr "Texto"
 
 msgid "Main.dol"
-msgstr ""
+msgstr "Main.dol"
 
 msgid "BRSAR"
-msgstr ""
+msgstr "BRSAR"
 
 msgid "Revert"
 msgstr "Revertir"
@@ -158,22 +186,22 @@ msgid "Create Patch"
 msgstr "Crear Parche"
 
 msgid "All"
-msgstr ""
+msgstr "Todo"
 
 msgid "Regular"
 msgstr ""
 
 msgid "Maestro"
-msgstr ""
+msgstr "Director"
 
 msgid "Handbell"
-msgstr ""
+msgstr "Campanillas"
 
 msgid "Menu"
 msgstr "Menú"
 
 msgid "MIDI File"
-msgstr ""
+msgstr "Archivo MIDI"
 
 msgid "Score"
 msgstr ""
@@ -182,7 +210,7 @@ msgid "Replace Song"
 msgstr "Reemplazar Canción"
 
 msgid "Tempo"
-msgstr ""
+msgstr "Tempo"
 
 msgid "Length"
 msgstr "Duración"
@@ -200,7 +228,7 @@ msgid "Measures"
 msgstr "Compases"
 
 msgid "Song Text"
-msgstr ""
+msgstr "Texto De La Canción"
 
 msgid "Name"
 msgstr "Nombre"
@@ -215,10 +243,10 @@ msgid "Reset"
 msgstr "Reiniciar"
 
 msgid "Style Name"
-msgstr ""
+msgstr "Nombre del Estilo"
 
 msgid "Current Instruments"
-msgstr ""
+msgstr "Instrumentos actuales"
 
 msgid "Melody"
 msgstr "Melodía"
@@ -233,17 +261,17 @@ msgid "Bass"
 msgstr "Bajo"
 
 msgid "Perc 1"
-msgstr "Percu 1"
+msgstr "Perc 1"
 
 msgid "Perc 2"
-msgstr "Percu 2"
+msgstr "Perc 2"
 
 msgid "Editing: "
 msgstr ""
 
 msgid "Reset Style"
-msgstr ""
+msgstr "Restablecer estilo"
 
 msgid "Open in External Editor"
-msgstr ""
+msgstr "Abrir en un editor externo"
 

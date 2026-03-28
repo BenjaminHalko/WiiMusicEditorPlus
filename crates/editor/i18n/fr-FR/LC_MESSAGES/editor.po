@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-27 22:51+0000\n"
-"PO-Revision-Date: 2026-03-27 22:58\n"
+"POT-Creation-Date: 2026-03-28 06:32+0000\n"
+"PO-Revision-Date: 2026-03-28 06:32\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -19,11 +19,17 @@ msgstr ""
 msgid "ROM Path"
 msgstr ""
 
-msgid "Browse"
-msgstr "Naviguer"
+msgid "Browse Disk..."
+msgstr ""
+
+msgid "Browse Folder..."
+msgstr ""
 
 msgid "Dolphin Path"
 msgstr "Chemin de Dolphin"
+
+msgid "Browse"
+msgstr "Naviguer"
 
 msgid "Language"
 msgstr "Langue"
@@ -52,14 +58,14 @@ msgstr "Mode non sécurisé"
 msgid "Normalize MIDI"
 msgstr ""
 
-msgid "Save"
-msgstr "Sauvegarder"
-
 msgid "Wii Music Editor"
 msgstr "Wii Music Editor"
 
 msgid "No Specified Path"
 msgstr "Pas de chemin spécifié"
+
+msgid "Loading..."
+msgstr ""
 
 msgid "Song Editor"
 msgstr "Éditeur de morceau"
@@ -102,6 +108,28 @@ msgstr "Retour aux valeurs par défaut"
 
 msgid "Patch"
 msgstr "Patch"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "OK"
+msgstr ""
+
+msgid "Welcome to Wii Music Editor"
+msgstr ""
+
+msgid "Select your Wii Music ROM to get started.\n"
+"Supported formats: .iso, .wbfs"
+msgstr ""
+
+msgid "No file selected"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
 
 msgid "Pack the ROM filesystem into an ISO or WBFS file."
 msgstr ""

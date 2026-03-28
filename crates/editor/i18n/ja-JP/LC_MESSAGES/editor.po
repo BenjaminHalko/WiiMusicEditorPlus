@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-27 22:51+0000\n"
-"PO-Revision-Date: 2026-03-27 22:58\n"
+"POT-Creation-Date: 2026-03-28 06:32+0000\n"
+"PO-Revision-Date: 2026-03-28 06:32\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -19,10 +19,16 @@ msgstr ""
 msgid "ROM Path"
 msgstr ""
 
-msgid "Browse"
+msgid "Browse Disk..."
+msgstr ""
+
+msgid "Browse Folder..."
 msgstr ""
 
 msgid "Dolphin Path"
+msgstr ""
+
+msgid "Browse"
 msgstr ""
 
 msgid "Language"
@@ -52,13 +58,13 @@ msgstr ""
 msgid "Normalize MIDI"
 msgstr ""
 
-msgid "Save"
-msgstr ""
-
 msgid "Wii Music Editor"
 msgstr ""
 
 msgid "No Specified Path"
+msgstr ""
+
+msgid "Loading..."
 msgstr ""
 
 msgid "Song Editor"
@@ -101,6 +107,28 @@ msgid "Reset to Default"
 msgstr ""
 
 msgid "Patch"
+msgstr ""
+
+msgid "No"
+msgstr "持っていない"
+
+msgid "Yes"
+msgstr "持っている"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Welcome to Wii Music Editor"
+msgstr ""
+
+msgid "Select your Wii Music ROM to get started.\n"
+"Supported formats: .iso, .wbfs"
+msgstr ""
+
+msgid "No file selected"
+msgstr ""
+
+msgid "Continue"
 msgstr ""
 
 msgid "Pack the ROM filesystem into an ISO or WBFS file."
