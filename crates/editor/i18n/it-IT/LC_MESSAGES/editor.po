@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-28 06:32+0000\n"
-"PO-Revision-Date: 2026-03-28 06:32\n"
+"POT-Creation-Date: 2026-03-28 16:48+0000\n"
+"PO-Revision-Date: 2026-03-28 16:48\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -109,12 +109,15 @@ msgstr ""
 msgid "Patch"
 msgstr ""
 
+msgctxt "dialog-button"
 msgid "No"
 msgstr "No"
 
+msgctxt "dialog-button"
 msgid "Yes"
 msgstr "Sì"
 
+msgctxt "dialog-button"
 msgid "OK"
 msgstr "OK"
 
@@ -155,9 +158,11 @@ msgstr ""
 msgid "Songs (BRSAR)"
 msgstr ""
 
+msgctxt "revert-item"
 msgid "Styles"
 msgstr ""
 
+msgctxt "revert-item"
 msgid "Text"
 msgstr "Testo"
 
@@ -167,51 +172,67 @@ msgstr ""
 msgid "BRSAR"
 msgstr ""
 
+msgctxt "action"
 msgid "Revert"
 msgstr ""
 
 msgid "Create a Riivolution patch for your changes."
 msgstr ""
 
+msgctxt "patch-field"
 msgid "Patch Name"
 msgstr ""
 
+msgctxt "patch-field"
 msgid "Author"
 msgstr ""
 
+msgctxt "patch-field"
 msgid "Version"
 msgstr ""
 
 msgid "Create Patch"
 msgstr ""
 
+msgctxt "song-type"
 msgid "All"
 msgstr ""
 
+msgctxt "song-type"
 msgid "Regular"
 msgstr ""
 
+msgctxt "song-type"
 msgid "Maestro"
 msgstr ""
 
+msgctxt "song-type"
 msgid "Handbell"
 msgstr ""
 
+msgctxt "song-type"
 msgid "Menu"
 msgstr "Menù"
 
 msgid "MIDI File"
 msgstr ""
 
+msgctxt "midi-type"
 msgid "Score"
+msgstr ""
+
+msgctxt "midi-type"
+msgid "Song"
 msgstr ""
 
 msgid "Replace Song"
 msgstr ""
 
+msgctxt "song-field"
 msgid "Tempo"
 msgstr ""
 
+msgctxt "song-field"
 msgid "Length"
 msgstr ""
 
@@ -221,54 +242,78 @@ msgstr ""
 msgid "♩/3"
 msgstr ""
 
+msgctxt "time-unit"
 msgid "Beats"
 msgstr ""
 
+msgctxt "time-unit"
 msgid "Measures"
 msgstr ""
 
+msgctxt "section-heading"
 msgid "Song Text"
 msgstr ""
 
+msgctxt "song-field"
 msgid "Name"
 msgstr ""
 
+msgctxt "song-field"
 msgid "Genre"
 msgstr ""
 
+msgctxt "song-field"
 msgid "Description"
 msgstr ""
 
+msgctxt "action"
 msgid "Reset"
 msgstr ""
 
+msgctxt "action"
+msgid "Patch"
+msgstr ""
+
+msgctxt "section-heading"
+msgid "Styles"
+msgstr ""
+
+msgctxt "form-field"
 msgid "Style Name"
 msgstr ""
 
+msgctxt "section-heading"
 msgid "Current Instruments"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Melody"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Harmony"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Chords"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Bass"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Perc 1"
 msgstr ""
 
+msgctxt "style-part"
 msgid "Perc 2"
 msgstr ""
 
 msgid "Editing: "
 msgstr ""
 
+msgctxt "action"
 msgid "Reset Style"
 msgstr ""
 

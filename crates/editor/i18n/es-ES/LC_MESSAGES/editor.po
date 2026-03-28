@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wii-music-editor\n"
-"POT-Creation-Date: 2026-03-28 06:32+0000\n"
-"PO-Revision-Date: 2026-03-28 06:32\n"
+"POT-Creation-Date: 2026-03-28 16:48+0000\n"
+"PO-Revision-Date: 2026-03-28 16:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,10 +20,10 @@ msgid "ROM Path"
 msgstr "Ruta de la ROM"
 
 msgid "Browse Disk..."
-msgstr ""
+msgstr "Buscar ROM..."
 
 msgid "Browse Folder..."
-msgstr ""
+msgstr "Buscar Carpeta"
 
 msgid "Dolphin Path"
 msgstr "Ruta de Dolphin"
@@ -35,7 +35,7 @@ msgid "Language"
 msgstr "Idioma"
 
 msgid "Fallback Region"
-msgstr ""
+msgstr "Región Predeterminada"
 
 msgid "U.S."
 msgstr "Estados Unidos"
@@ -50,13 +50,13 @@ msgid "Korea"
 msgstr "Corea"
 
 msgid "Discord RPC"
-msgstr ""
+msgstr "Mostrar Actividad En Discord"
 
 msgid "Unsafe Mode"
 msgstr "Modo inseguro"
 
 msgid "Normalize MIDI"
-msgstr "Normalizar MIDI"
+msgstr "Regular MIDI"
 
 msgid "Wii Music Editor"
 msgstr "Wii Music Editor Plus"
@@ -83,10 +83,10 @@ msgid "Remove Songs"
 msgstr "Remover Canciones"
 
 msgid "Pack ROM"
-msgstr ""
+msgstr "Comprimir ROM"
 
 msgid "Riivolution"
-msgstr ""
+msgstr "Parche Riivolution"
 
 msgid "Revert Changes"
 msgstr "Revertir Cambios"
@@ -109,45 +109,48 @@ msgstr "Reiniciar Valores Predeterminados"
 msgid "Patch"
 msgstr "Parchear"
 
+msgctxt "dialog-button"
 msgid "No"
 msgstr "No"
 
+msgctxt "dialog-button"
 msgid "Yes"
 msgstr "Sí"
 
+msgctxt "dialog-button"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "Welcome to Wii Music Editor"
-msgstr ""
+msgstr "Bienvenido Al Editor de Wii Music"
 
 msgid "Select your Wii Music ROM to get started.\n"
 "Supported formats: .iso, .wbfs"
-msgstr ""
+msgstr "Selecciona la ROM de Wii Music para empezar. Se admiten los formatos: .ISO y .WBFS"
 
 msgid "No file selected"
-msgstr ""
+msgstr "No Hay Archivo Seleccionado"
 
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 msgid "Pack the ROM filesystem into an ISO or WBFS file."
-msgstr ""
+msgstr "Comprimir El Archivo En ISO O WFBS."
 
 msgid "Output Path"
-msgstr ""
+msgstr "Ruta De Salida"
 
 msgid "Output Type"
-msgstr ""
+msgstr "Tipo De Salida"
 
 msgid "Select songs to remove from the game:"
-msgstr ""
+msgstr "Selecciona Las Canciones Para Removerlas Del Juego"
 
 msgid "Deselect All"
-msgstr "Deseleccionar todo"
+msgstr "Deseleccionar Todo"
 
 msgid "Remove Selected Songs"
-msgstr "Remover canciones seleccionadas"
+msgstr "Remover Todas Las Canciones Seleccionadas"
 
 msgid "Select what you want to revert. All changes to the selected items will be lost!"
 msgstr "Selecciona lo que quieras revertir. ¡Todos los cambios en los elementos seleccionados se perderán!"
@@ -155,9 +158,11 @@ msgstr "Selecciona lo que quieras revertir. ¡Todos los cambios en los elementos
 msgid "Songs (BRSAR)"
 msgstr "Canciones (BRSAR)"
 
+msgctxt "revert-item"
 msgid "Styles"
 msgstr "Estilos"
 
+msgctxt "revert-item"
 msgid "Text"
 msgstr "Texto"
 
@@ -167,111 +172,151 @@ msgstr "Main.dol"
 msgid "BRSAR"
 msgstr "BRSAR"
 
+msgctxt "action"
 msgid "Revert"
 msgstr "Revertir"
 
 msgid "Create a Riivolution patch for your changes."
 msgstr "Crear un parche Riivolution para tus cambios."
 
+msgctxt "patch-field"
 msgid "Patch Name"
 msgstr "Nombre del Parche"
 
+msgctxt "patch-field"
 msgid "Author"
 msgstr "Autor"
 
+msgctxt "patch-field"
 msgid "Version"
 msgstr "Versión"
 
 msgid "Create Patch"
 msgstr "Crear Parche"
 
+msgctxt "song-type"
 msgid "All"
 msgstr "Todo"
 
+msgctxt "song-type"
 msgid "Regular"
-msgstr ""
+msgstr "Regular"
 
+msgctxt "song-type"
 msgid "Maestro"
 msgstr "Director"
 
+msgctxt "song-type"
 msgid "Handbell"
 msgstr "Campanillas"
 
+msgctxt "song-type"
 msgid "Menu"
 msgstr "Menú"
 
 msgid "MIDI File"
 msgstr "Archivo MIDI"
 
+msgctxt "midi-type"
 msgid "Score"
-msgstr ""
+msgstr "Guía"
+
+msgctxt "midi-type"
+msgid "Song"
+msgstr "Canción"
 
 msgid "Replace Song"
 msgstr "Reemplazar Canción"
 
+msgctxt "song-field"
 msgid "Tempo"
-msgstr "Tempo"
+msgstr ""
 
+msgctxt "song-field"
 msgid "Length"
-msgstr "Duración"
+msgstr ""
 
 msgid "♩/4"
-msgstr ""
+msgstr "♩/4"
 
 msgid "♩/3"
+msgstr "♩/3"
+
+msgctxt "time-unit"
+msgid "Beats"
 msgstr ""
 
-msgid "Beats"
-msgstr "Ritmos"
-
+msgctxt "time-unit"
 msgid "Measures"
-msgstr "Compases"
+msgstr ""
 
+msgctxt "section-heading"
 msgid "Song Text"
-msgstr "Texto De La Canción"
+msgstr ""
 
+msgctxt "song-field"
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
+msgctxt "song-field"
 msgid "Genre"
-msgstr "Género"
+msgstr ""
 
+msgctxt "song-field"
 msgid "Description"
-msgstr "Descripción"
+msgstr ""
 
+msgctxt "action"
 msgid "Reset"
-msgstr "Reiniciar"
+msgstr ""
 
+msgctxt "action"
+msgid "Patch"
+msgstr ""
+
+msgctxt "section-heading"
+msgid "Styles"
+msgstr ""
+
+msgctxt "form-field"
 msgid "Style Name"
-msgstr "Nombre del Estilo"
+msgstr ""
 
+msgctxt "section-heading"
 msgid "Current Instruments"
-msgstr "Instrumentos actuales"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Melody"
-msgstr "Melodía"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Harmony"
-msgstr "Armonía"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Chords"
-msgstr "Acordes"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Bass"
-msgstr "Bajo"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Perc 1"
-msgstr "Perc 1"
+msgstr ""
 
+msgctxt "style-part"
 msgid "Perc 2"
-msgstr "Perc 2"
+msgstr ""
 
 msgid "Editing: "
+msgstr "Edición:"
+
+msgctxt "action"
+msgid "Reset Style"
 msgstr ""
 
-msgid "Reset Style"
-msgstr "Restablecer estilo"
-
 msgid "Open in External Editor"
-msgstr "Abrir en un editor externo"
+msgstr "Abrir Con Un Editor Externo"
 
